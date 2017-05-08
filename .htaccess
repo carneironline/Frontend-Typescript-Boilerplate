@@ -1,0 +1,2 @@
+Options Indexes
+Header set Cache-control "public, max-age=1800"
