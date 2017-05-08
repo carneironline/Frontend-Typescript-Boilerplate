@@ -128,15 +128,15 @@
     transition: all 500ms ease-in-out;
 }
 #barra-assine .barra-inicial span.onda-1 {
-    background-image: url(https://ogcss.infoglobo.com.br/1491833322/img/onda-1.svg);
+    background-image: url(../img/onda-1.svg);
     z-index: 3;
 }
 #barra-assine .barra-inicial span.onda-2 {
-    background-image: url(https://ogcss.infoglobo.com.br/1491833322/img/onda-2.svg);
+    background-image: url(../img/onda-2.svg);
     z-index: 2;
 }
 #barra-assine .barra-inicial span.onda-3 {
-    background-image: url(https://ogcss.infoglobo.com.br/1491833322/img/onda-3.svg);
+    background-image: url(../img/onda-3.svg);
     z-index: 1;
 }
 #barra-assine .barra-inicial span.onda-1 {
@@ -393,7 +393,7 @@
 #barra-assine .arrow span {
     width: 16px;
     height: 16px;
-    background: url(https://ogcss.infoglobo.com.br/1491833322/img/up-arrow.svg) 50% 50% no-repeat;
+    background: url(../img/up-arrow.svg) 50% 50% no-repeat;
     background-size: 16px;
     display: block;
     margin: 16px auto;
