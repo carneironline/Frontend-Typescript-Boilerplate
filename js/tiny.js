@@ -1,5 +1,31 @@
 window["dataLayer"] = window["dataLayer"] || [];
 var loginPiano = 'loginPiano', segmentacoesKrux = 'kxglobo_segs';
+var jsonConfiguracaoTinyPass = {
+		'int': {
+			'idSandboxTinypass':'dXu7dvFKRi',
+			'setSandBox':'true',
+			'urlSandboxPiano':'https://sandbox.tinypass.com/xbuilder/experience/load?aid=dXu7dvFKRi',
+			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/funcionalidade/4975/autorizacao-acesso?v=2',
+			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
+			'urlDominioSiteOGlobo':'globostg.globoi.com/'
+		},
+		'qlt':{
+			'idSandboxTinypass':'GTCopIDc5z',
+			'setSandBox':'false',
+			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
+			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/funcionalidade/4975/autorizacao-acesso?v=2',
+			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
+			'urlDominioSiteOGlobo':'globostg.globoi.com/'
+		},
+		'prd':{
+			'idSandboxTinypass':'GTCopIDc5z',
+			'setSandBox':'false',
+			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
+			'urlVerificaLeitor':'https://api.infoglobo.com.br/funcionalidade/4975/autorizacao-acesso?v=2',
+			'urlDominioPaywall':'https://assinatura.oglobo.globo.com/',
+			'urlDominioSiteOGlobo':'oglobo.globo.com/'
+		}
+};
 
 var Piano = {};
 
@@ -135,7 +161,7 @@ function validaExistenciaDoParametro(paramName) {
 		return true;
 	}
 	return false;
-}
+};
 
 function pegaValorKruxEMandaParaPiano() {
 	var segmentacoes = window.localStorage.getItem(segmentacoesKrux).split(',');
@@ -160,23 +186,29 @@ function pegaValorKruxEMandaParaPiano() {
 			EVENTO_SEM_ACAO: 'sem ação'
 		}
 	};
-
-	function getCookieTiny(name) {
-		match = document.cookie.match(new RegExp(name+'=([^;]+)'));
-		var cookieTiny = match ? unescape(match[1].toString()) : "";
-		return cookieTiny;
-	};
-
 	var glbid = getCookieTiny(Const.Cookie.GCOM);
 	var utp = getCookieTiny(Const.Cookie.UTP);
 	var urlBarreira = window.location.origin.substr( ( window.location.protocol + "//" ).length ) + "/";
 	var urlPaginaAtual = window.location.href.substr( ( window.location.protocol + "//" ).length );
 	var urlPaginaAnterior = urlBarreira + "registro/?";
 	urlBarreira = urlBarreira + "?passouBarreira";
-
 	_GAContagem = "-";
 	_GALimite = "-";
 	_GAEvento = Const.Metricas.EVENTO_SEM_ACAO;
+	var listaStringsAmbientesAceitos = ["int", "qlt", "prd"];
+	
+	if (typeof window.ambienteUtilizadoPiano == 'undefined' || !listaStringsAmbientesAceitos.includes(ambienteUtilizadoPiano)) {
+		ambienteUtilizadoPiano = "prd";
+	}; 
+	
+	if (window.localStorage.getItem('localStorageAmbientePiano')) {
+		ambienteUtilizadoPiano = window.localStorage.getItem('localStorageAmbientePiano');
+	};
+	
+	if (typeof window.tipoConteudoPiano == 'undefined') {
+		console.log('Variável tipoConteudoPiano não está definida');
+		return;
+	};
 
 	function verificaUrlAnteriorEGuardaNoCookie(urlPaginaAtual, urlPaginaAnterior, urlBarreira) {
 		if (urlPaginaAtual.match(urlPaginaAnterior) == null && urlPaginaAtual != urlBarreira) {
@@ -187,14 +219,21 @@ function pegaValorKruxEMandaParaPiano() {
 	verificaUrlAnteriorEGuardaNoCookie(urlPaginaAtual, urlPaginaAnterior, urlBarreira);
 	initTp();
 
-	if(tpTipoUrl == "secao") {
+	if(window.tipoConteudoPiano == "section") {
 		recuperarEProcessarMetricas();
+	};
+	
+	function getCookieTiny(name) {
+		match = document.cookie.match(new RegExp(name+'=([^;]+)'));
+		var cookieTiny = match ? unescape(match[1].toString()) : "";
+		return cookieTiny;
 	};
 
 	function initTp() {
 		tp = window["tp"] || [];
-		tp.push(["setAid", idSandboxTinypass]);
-		tp.push(["setSandbox", setSandBox]);
+		tp.push(["setTags", [tipoConteudoPiano]]);
+		tp.push(["setAid", jsonConfiguracaoTinyPass[ambienteUtilizadoPiano].idSandboxTinypass]);
+		tp.push(["setSandbox", jsonConfiguracaoTinyPass[ambienteUtilizadoPiano].setSandBox]);
 		tp.push(["setDebug", true]);
 		var clean_url = window.location.href.split("?")[0];
 		tp.push(["setPageURL",clean_url]);
@@ -258,7 +297,7 @@ function pegaValorKruxEMandaParaPiano() {
 			"codigoProduto": Const.Prod.COD
 		};
 		$.ajax({
-			url: urlVerificaLeitor,
+			url: jsonConfiguracaoTinyPass[ambienteUtilizadoPiano].urlVerificaLeitor,
 			type: 'POST',
 			contentType: formato,
 			async : false,
@@ -416,4 +455,4 @@ function pegaValorKruxEMandaParaPiano() {
 	a.src = src;
 	var b = document.getElementsByTagName("script")[0];
 	b.parentNode.insertBefore(a, b);
-})(urlSandboxPiano);
+})(jsonConfiguracaoTinyPass[ambienteUtilizadoPiano].urlSandboxPiano);
