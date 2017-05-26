@@ -140,7 +140,7 @@ function enviaEventosGA() {
 };
 
 function redirecionarBarreira(url) {
-	if (!regrasTiny.fluxo.indexOf('paywall') != -1) {
+	if (regrasTiny.fluxo.indexOf('paywall') == -1) {
 		criaCookieAposContagemRegisterExpirada();
 	}
 	exibiuBarreira = true;
@@ -197,7 +197,7 @@ function pegaValorKruxEMandaParaPiano() {
 	_GAEvento = Const.Metricas.EVENTO_SEM_ACAO;
 	var listaStringsAmbientesAceitos = ["int", "qlt", "prd"];
 	
-	if (typeof window.ambienteUtilizadoPiano == 'undefined' || !listaStringsAmbientesAceitos.indexOf(ambienteUtilizadoPiano) != -1) {
+	if (typeof window.ambienteUtilizadoPiano == 'undefined' || listaStringsAmbientesAceitos.indexOf(ambienteUtilizadoPiano) == -1) {
 		ambienteUtilizadoPiano = "prd";
 	}; 
 	
