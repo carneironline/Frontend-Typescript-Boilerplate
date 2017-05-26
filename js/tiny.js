@@ -433,9 +433,9 @@ function pegaValorKruxEMandaParaPiano() {
 		if(jsonRTIEX.maxViews == 1){
 			limiteAdicional = 1;
 		}	
-		if(regrasTiny.views + limiteAdicional > jsonRTIEX.maxViews && jsonRTIEX.fluxo.indefOf("hardwall") == -1) {
+		if(regrasTiny.views + limiteAdicional > jsonRTIEX.maxViews && jsonRTIEX.fluxo.indexOf("hardwall") == -1) {
 			passagem = 'register-contagem-passou';
-		} else if(jsonRTIEX.fluxo.indefOf("hardwall") != -1) {
+		} else if(jsonRTIEX.fluxo.indexOf("hardwall") != -1) {
 			passagem = 'register-hardwall-passou';
 		}
 		return passagem;
