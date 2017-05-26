@@ -41,3 +41,8 @@
 .footer-venda-oglobo-capas.open .produtos-oglobo .chamada-fixa .chamada-abre-oferta {top: 200px; }
 .footer-venda-oglobo-capas.open .produtos-oglobo .chamada-fixa h2 {top: 200px; }
 .footer-venda-oglobo-capas.open .produtos-oglobo .chamada-fixa .chamada-telefone {top: 0px; }
+.links-institucionais {padding-bottom: 60px;}
+.footer-venda-oglobo-capas .produtos-oglobo .container-conteudos .lista-de-produtos-oglobo li .preco-produto a {text-decoration: none;}
+.footer-venda-oglobo-capas .grid-capa-total .grid-capa-util .fechar, .footer-venda-oglobo-capas .produtos-oglobo .chamada-fixa .chamada-abre-oferta {box-sizing: border-box;}
+.footer-venda-oglobo-capas .produtos-oglobo .container-conteudos .lista-de-produtos-oglobo li .titulo-produto h2 {padding: 0;}
+.footer-venda-oglobo-capas .produtos-oglobo .container-conteudos .lista-de-produtos-oglobo li .titulo-produto .oglobo-logo {background: url(../images/oglobo_novo_final.svg) no-repeat 0 50%;height: 10px;display: block;}
