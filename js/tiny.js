@@ -140,7 +140,7 @@ function enviaEventosGA() {
 };
 
 function redirecionarBarreira(url) {
-	if (!regrasTiny.fluxo.includes('paywall')) {
+	if (regrasTiny.fluxo.indexOf('paywall') == -1) {
 		criaCookieAposContagemRegisterExpirada();
 	}
 	exibiuBarreira = true;
@@ -157,7 +157,7 @@ function criaCookieAposContagemRegisterExpirada() {
 
 function validaExistenciaDoParametro(paramName) {
 	var parametros = location.search;
-	if (parametros.includes(paramName)) {
+	if (parametros.indexOf(paramName) != -1) {
 		return true;
 	}
 	return false;
@@ -188,8 +188,8 @@ function pegaValorKruxEMandaParaPiano() {
 	};
 	var glbid = getCookieTiny(Const.Cookie.GCOM);
 	var utp = getCookieTiny(Const.Cookie.UTP);
-	var urlBarreira = window.location.origin.substr( ( window.location.protocol + "//" ).length ) + "/";
-	var urlPaginaAtual = window.location.href.substr( ( window.location.protocol + "//" ).length );
+	var urlBarreira = window.location.hostname + "/";
+	var urlPaginaAtual = window.location.hostname + window.location.pathname;
 	var urlPaginaAnterior = urlBarreira + "registro/?";
 	urlBarreira = urlBarreira + "?passouBarreira";
 	_GAContagem = "-";
@@ -197,7 +197,7 @@ function pegaValorKruxEMandaParaPiano() {
 	_GAEvento = Const.Metricas.EVENTO_SEM_ACAO;
 	var listaStringsAmbientesAceitos = ["int", "qlt", "prd"];
 	
-	if (typeof window.ambienteUtilizadoPiano == 'undefined' || !listaStringsAmbientesAceitos.includes(ambienteUtilizadoPiano)) {
+	if (typeof window.ambienteUtilizadoPiano == 'undefined' || listaStringsAmbientesAceitos.indexOf(ambienteUtilizadoPiano) == -1) {
 		ambienteUtilizadoPiano = "prd";
 	}; 
 	
@@ -348,7 +348,7 @@ function pegaValorKruxEMandaParaPiano() {
 
 		for (var idxParamCampanha = 0; idxParamCampanha < chavesCampanha.length; idxParamCampanha++) {
 			var chaveCampanha = chavesCampanha[idxParamCampanha];
-			if (url.includes(chaveCampanha + '=')) {
+			if (url.indexOf(chaveCampanha + '=') != -1) {
 				var regex = new RegExp("[\?(&)]" + chaveCampanha + "=([^&#]*)");
 				var valorCampanha = url.match(regex)[1];
 				if(valorCampanha){
@@ -359,7 +359,7 @@ function pegaValorKruxEMandaParaPiano() {
 		if (valoresCampanha.length > 0) {
 			tp.push(["setCustomVariable", "utm", valoresCampanha.join(";")]);
 		}
-		if (url.includes('utm_campaign=')) {
+		if (url.indexOf('utm_campaign=') != -1) {
 			var regex = new RegExp("utm_campaign=(\\w+)");
 			var campanha = url.match(regex)[1];
 			if(campanha){
@@ -433,9 +433,9 @@ function pegaValorKruxEMandaParaPiano() {
 		if(jsonRTIEX.maxViews == 1){
 			limiteAdicional = 1;
 		}	
-		if(regrasTiny.views + limiteAdicional > jsonRTIEX.maxViews && !jsonRTIEX.fluxo.includes("hardwall")) {
+		if(regrasTiny.views + limiteAdicional > jsonRTIEX.maxViews && jsonRTIEX.fluxo.indefOf("hardwall") == -1) {
 			passagem = 'register-contagem-passou';
-		} else if(jsonRTIEX.fluxo.includes("hardwall")) {
+		} else if(jsonRTIEX.fluxo.indefOf("hardwall") != -1) {
 			passagem = 'register-hardwall-passou';
 		}
 		return passagem;
