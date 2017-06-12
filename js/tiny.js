@@ -267,11 +267,7 @@ function pegaValorKruxEMandaParaPiano() {
 	};
 
 	function verificaPermissaoDoIdServico() {
-		if (autorizadoNossoServico) {
-			return true;
-		}
-		if (validaExistenciaDoParametro(loginPiano)) {
-			setCookieTiny(Const.Cookie.AUTH, true, 30);
+		if (validaExistenciaDoParametro(loginPiano) || autorizadoNossoServico) {
 			return true;
 		}
 		return false;
@@ -284,7 +280,7 @@ function pegaValorKruxEMandaParaPiano() {
 			if (glbid == _leitor.glbid) {
 				tp.push(["setCustomVariable", "autorizado", _leitor.autorizado]);
 				tp.push(["setCustomVariable", "motivo", _leitor.motivo]);
-				tp.push(["setCustomVariable", "logado", isLogadoCadun(_leitor.temTermoDeUso, _leitor.motivo)]);
+				tp.push(["setCustomVariable", "logado", isLogadoCadun(_leitor.temTermoDeUso, _leitor.motivo, _leitor.autorizado)]);
 				tp.push(["setCustomVariable", "temTermo", _leitor.temTermoDeUso]);
 				return;
 			}
@@ -316,13 +312,14 @@ function pegaValorKruxEMandaParaPiano() {
 				if (typeof respJson.temTermoDeUso != "undefined") {
 					respostaDeTermoDeUso = respJson.temTermoDeUso;
 				}
-				tp.push(["setCustomVariable", "logado", isLogadoCadun(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado)]);
+				var logadoCadun = isLogadoCadun(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado);
+				tp.push(["setCustomVariable", "logado", logadoCadun]);
 				tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
 				tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
 				var _jsonLeitor = {
 						"autorizado" : respJson.autorizado,
 						"motivo": respostaDeMotivo,
-						"logado": isLogadoCadun(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado),
+						"logado": logadoCadun,
 						"temTermoDeUso": respostaDeTermoDeUso,
 						"glbid": glbid
 					};
@@ -334,6 +331,7 @@ function pegaValorKruxEMandaParaPiano() {
 				tp.push(["setCustomVariable", "logado", true]);
 				tp.push(["setCustomVariable", "autorizado", true]);
 				tp.push(["setCustomVariable", "motivo", 'erro']);
+				setCookieTiny(Const.Cookie.AUTH, "", -1);
 			}
 		});
 	};
@@ -343,7 +341,7 @@ function pegaValorKruxEMandaParaPiano() {
 			setCookieTiny(Const.Cookie.AUTH, true, 1);
 			return true;
 		}
-		if (termoDeUso != false || autorizado) {
+		if (autorizado || termoDeUso != false) {
 			setCookieTiny(Const.Cookie.AUTH, true, 30);
 			return true;
 		};
