@@ -11,8 +11,8 @@ var jsonConfiguracaoTinyPass = {
 	},
 	'qlt':{
 		'idSandboxTinypass':'GTCopIDc5z',
-		'setSandBox':'false',
-		'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
+		'setSandBox':'true',
+		'urlSandboxPiano':'https://sandbox.tinypass.com/xbuilder/experience/load?aid=dXu7dvFKRi',
 		'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/funcionalidade/4975/autorizacao-acesso?v=2',
 		'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
 		'urlDominioSiteOGlobo':'globostg.globoi.com/'
