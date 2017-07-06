@@ -1,4 +1,4 @@
-body {margin: 0px; background: red;}
+body {margin: 0px; background: red; overflow: hidden;}
 @import url(https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i,900);
 #login-barreira {
 	background: white;
@@ -101,7 +101,7 @@ body {margin: 0px; background: red;}
 	}
 }
 
-@media only screen and (min-width: 650px) {
+@media only screen and (min-width: 765px) {
 	#login-barreira {
 		top: 0;
 		background: rgba(38, 42, 56, 0.97);
@@ -119,6 +119,58 @@ body {margin: 0px; background: red;}
 				float: left;
 				border-radius: 3px 0 0 3px;
 				background-color: #1d4c9c;
+				.conteudo-produto {
+					width: 462px;
+					margin-top: 64px;
+					img {
+						float: none;
+						width: 100%;
+					}
+					h2 {
+						letter-spacing: -0.5px;
+						text-align: center;
+						font-size: 64px;
+						padding: 18px 0 28px 0;
+					}
+					p {
+						font-size: 32px;
+						line-height: 1.13;
+						letter-spacing: -1.1px;
+						text-align: left;
+						color: #ffffff;
+						width: 230px;
+						margin-right: 24px;
+						float: left;
+						padding: 0;
+						.preco-menor {
+							color: #55d1ff ;
+						}
+					}
+					a {
+						float: right;
+						position: inherit;
+						width: 190px;
+						height: 72px;
+						border-radius: 100px;
+						background: #00aeef url(../images/icArrowRight.svg) no-repeat 155px 30px;
+						font-size: 24px;
+						font-weight: 900;
+						line-height: 1;
+						letter-spacing: -0.5px;
+						text-align: left;
+						color: #ffffff;
+						display: inline-block;
+						right: auto;
+						top: inherit;
+						transform: inherit;
+						box-sizing: border-box;
+						padding: 24px 0 24px 32px;
+						transition: all .3s ease-in-out;
+						&:hover {
+							background-color: #73d9ff;
+						}
+					}
+				}
 
 			}
 			#login-barreira-iframe {
@@ -135,7 +187,7 @@ body {margin: 0px; background: red;}
 					}				
 				}
 				iframe {
-					margin-top: 50px;
+					margin-top: 40px;
 				}
 			}
 		}
