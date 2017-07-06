@@ -1,5 +1,5 @@
 window["dataLayer"] = window["dataLayer"] || [];
-var loginPiano = 'loginPiano', segmentacoesKrux = 'kxglobo_segs';
+var segmentacoesKrux = 'kxglobo_segs';
 var jsonConfiguracaoTinyPass = {
 	'int': {
 		'idSandboxTinypass':'dXu7dvFKRi',
@@ -10,7 +10,7 @@ var jsonConfiguracaoTinyPass = {
 		'urlDominioSiteOGlobo':'globostg.globoi.com/'
 	},
 	'qlt':{
-		'idSandboxTinypass':'GTCopIDc5z',
+		'idSandboxTinypass':'dXu7dvFKRi',
 		'setSandBox':'true',
 		'urlSandboxPiano':'https://sandbox.tinypass.com/xbuilder/experience/load?aid=dXu7dvFKRi',
 		'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/funcionalidade/4975/autorizacao-acesso?v=2',
@@ -265,7 +265,7 @@ function pegaValorKruxEMandaParaPiano() {
 
 	function verificaAutorizacao(glbid, utp) {
 
-		if (utp && !validaExistenciaDoParametro(loginPiano)) {
+		if (utp) {
 			var _leitor = JSON.parse(decodeURI(atob(utp)));
 			if (glbid == _leitor.glbid) {
 				tp.push(["setCustomVariable", "autorizado", _leitor.autorizado]);
