@@ -1,4 +1,8 @@
-body {margin: 0px; background: red; overflow: hidden;}
+/* remove */
+body {margin: 0px; background: red;}
+/**/
+
+body {overflow: hidden;-webkit-font-smoothing: antialiased;}
 @import url(https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i,900);
 #login-barreira {
 	background: white;
@@ -40,6 +44,9 @@ body {margin: 0px; background: red; overflow: hidden;}
 					font-weight: 900;
 					font-size: 24px;
 					line-height: 1;
+					span {
+						display: none;
+					}
 				}
 				p {
 					display: block;
@@ -82,7 +89,7 @@ body {margin: 0px; background: red; overflow: hidden;}
 				line-height: 1;
 				font-weight: 400;
 				padding: 11px 0;
-				border-radius: 0 3px 0 0;
+				border-radius: 0 4px 0 0;
 				background: #eceff1;
 				border-bottom: 1px solid #cfd8dc;
 				span {
@@ -96,6 +103,7 @@ body {margin: 0px; background: red; overflow: hidden;}
 			iframe {
 				border: 0px;
 				height: 390px;
+				width: 315px;
 			}
 		}
 	}
@@ -103,42 +111,47 @@ body {margin: 0px; background: red; overflow: hidden;}
 
 @media only screen and (min-width: 765px) {
 	#login-barreira {
+		zoom: 1;
 		top: 0;
 		background: rgba(38, 42, 56, 0.97);
 		.conteudo-barreira {
 			position: relative;
 			top: 175px;
-			width: 900px;
+			width: 748px;
 			height: 560px;
 			margin: 0 auto;
 			background: transparent;
+			box-shadow: 0 10px 200px 50px rgba(0,0,0,0.50);
 			#login-promocao {
 				position: inherit;
-				width: 540px;
+				width: 388px;
 				height: 560px;
 				float: left;
-				border-radius: 3px 0 0 3px;
+				border-radius: 4px 0 0 4px;
 				background-color: #1d4c9c;
 				.conteudo-produto {
-					width: 462px;
+					width: 352px;
 					margin-top: 64px;
 					img {
 						float: none;
 						width: 100%;
 					}
-					h2 {
-						letter-spacing: -0.5px;
-						text-align: center;
-						font-size: 64px;
-						padding: 18px 0 28px 0;
-					}
-					p {
-						font-size: 32px;
-						line-height: 1.13;
+					h2 {						
 						letter-spacing: -1.1px;
 						text-align: left;
+						font-size: 49px;
+						padding: 9px 0 27px 0; 
+						span {
+							display: inline;
+						}
+					}
+					p {
+						font-size: 24px;
+						line-height: 1.13;
+						letter-spacing: -0.8px;
+						text-align: left;
 						color: #ffffff;
-						width: 230px;
+						width: 100px;
 						margin-right: 24px;
 						float: left;
 						padding: 0;
@@ -164,6 +177,7 @@ body {margin: 0px; background: red; overflow: hidden;}
 						top: inherit;
 						transform: inherit;
 						box-sizing: border-box;
+						margin-top: 5px;
 						padding: 24px 0 24px 32px;
 						transition: all .3s ease-in-out;
 						&:hover {
@@ -178,16 +192,46 @@ body {margin: 0px; background: red; overflow: hidden;}
 				height: 560px;
 				float: left;
 				padding-bottom: 0px;
-				border-radius: 0 3px 3px 0;
+				border-radius: 0 4px 4px 0;
 				h2 {
 					padding: 19px 0;
-					border-radius: 0 3px 0 0;
+					border-radius: 0 4px 0 0;
 					span {
 						padding-top: 5px;
 					}				
 				}
 				iframe {
 					margin-top: 40px;
+					width: 331px;
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (min-width: 769px) {
+	#login-barreira {
+		.conteudo-barreira {
+			width: 900px;
+			height: 560px;
+			#login-promocao {
+				width: 540px;
+    			height: 560px;
+    			.conteudo-produto {
+					width: 462px;
+					margin-top: 29px;
+					h2 {
+						letter-spacing: -1px;
+						padding: 18px 0 28px 0;
+					}
+					p {
+						font-size: 32px;
+						width: 230px;
+						letter-spacing: -1.1px;
+					}
+					a {
+						margin-top: 0px;
+					}
 				}
 			}
 		}
