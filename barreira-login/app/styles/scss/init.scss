@@ -1,8 +1,8 @@
 /* remove */
-body {margin: 0px; background: red;}
+body {margin: 0px;}
 /**/
 
-body {overflow: hidden;-webkit-font-smoothing: antialiased;}
+body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 @import url(https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i,900);
 #login-barreira {
 	background: white;
@@ -236,4 +236,14 @@ body {overflow: hidden;-webkit-font-smoothing: antialiased;}
 			}
 		}
 	}
+}
+
+/* fixes */
+
+.borders {position:relative !important; z-index: 99 !important;}
+aside#sidebar, .link-top, #relacionadas-topo  {z-index: 1 !important;}
+@media only screen and (max-width: 760px) {
+	body#article .top-header {position: fixed !important;top: 0px !important;}
+	body#article .header-container {height: 55px !important;}
+	body#article .borders {z-index: 1 !important;}
 }

@@ -67,7 +67,7 @@ body {
           -webkit-transform: translate(0px, -50%);
               -ms-transform: translate(0px, -50%);
                   transform: translate(0px, -50%);
-          background: url(../images/icArrowRight.svg) no-repeat right 50%;
+          background: url(../img/icArrowRight.svg) no-repeat right 50%;
           font-size: 0px;
           height: 30px;
           width: 30px; }
@@ -152,7 +152,7 @@ body {
             width: 190px;
             height: 72px;
             border-radius: 100px;
-            background: #00aeef url(../images/icArrowRight.svg) no-repeat 155px 30px;
+            background: #00aeef url(../img/icArrowRight.svg) no-repeat 155px 30px;
             font-size: 24px;
             font-weight: 900;
             line-height: 1;
