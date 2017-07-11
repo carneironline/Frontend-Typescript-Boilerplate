@@ -36,14 +36,8 @@ $(".conteudo-produto a").click(function(a){
 
 var uri = encodeURIComponent(document.location.href);
 
-if (window.location.href.indexOf("globoi.com") > -1) {
-    $("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/4975?urlPosCadastroLogada='+uri);
+if (window.ambienteUtilizadoPiano == 'prd') {
+    $("#iframeCadun").attr("src" , 'https://login.globo.com/login/4975?url='+uri);  
 } else {
-    $("#iframeCadun").attr("src" , 'https://login.globo.com/login/4975?urlPosCadastroLogada='+uri);
+    $("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/4975?url='+uri);
 }
-
-
-// se o usuário estiver logado, ele não carrega a experiência
-
-// https://login.globo.com/login/4728?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4728%26urlIntervencao%3D%2F%2Fs.glbimg.com%2Fgl%2Fba%2Fbarra-globocom.callback.html%2523https%253A%252F%252Foglobo.globo.com%252Fbrasil%252Faliados-de-temer-dao-como-certa-apresentacao-de-relatorio-alternativo-21575264
-// https://oglobo.globo.com/brasil/aliados-de-temer-dao-como-certa-apresentacao-de-relatorio-alternativo-21575264
