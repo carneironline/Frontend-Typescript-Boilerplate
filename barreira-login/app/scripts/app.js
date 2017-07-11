@@ -34,7 +34,7 @@ $(".conteudo-produto a").click(function(a){
 
 // pega url
 
-var uri = encodeURI(document.location.href);
+var uri = encodeURIComponent(document.location.href);
 
 if (window.location.href.indexOf("globoi.com") > -1) {
     $("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/4975?urlPosCadastroLogada='+uri);
