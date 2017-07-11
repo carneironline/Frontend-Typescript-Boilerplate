@@ -67,7 +67,7 @@ body {
           -webkit-transform: translate(0px, -50%);
               -ms-transform: translate(0px, -50%);
                   transform: translate(0px, -50%);
-          background: url(../img/icArrowRight.svg) no-repeat right 50%;
+          background: url(../images/icArrowRight.svg) no-repeat right 50%;
           font-size: 0px;
           height: 30px;
           width: 30px; }
@@ -98,7 +98,8 @@ body {
       #login-barreira .conteudo-barreira #login-barreira-iframe iframe {
         border: 0px;
         height: 390px;
-        width: 315px; }
+        width: 315px;
+        overflow-x: hidden; }
 
 @media only screen and (min-width: 765px) {
   #login-barreira {
@@ -152,7 +153,7 @@ body {
             width: 190px;
             height: 72px;
             border-radius: 100px;
-            background: #00aeef url(../img/icArrowRight.svg) no-repeat 155px 30px;
+            background: #00aeef url(../images/icArrowRight.svg) no-repeat 155px 30px;
             font-size: 24px;
             font-weight: 900;
             line-height: 1;
@@ -184,9 +185,16 @@ body {
           border-radius: 0 4px 0 0; }
           #login-barreira .conteudo-barreira #login-barreira-iframe h2 span {
             padding-top: 5px; }
+        #login-barreira .conteudo-barreira #login-barreira-iframe .segura-cadun {
+          position: relative;
+          overflow: hidden;
+          height: 459px; }
         #login-barreira .conteudo-barreira #login-barreira-iframe iframe {
-          margin-top: 40px;
-          width: 331px; } }
+          position: relative;
+          top: -81px;
+          height: 540px;
+          margin-top: 0px;
+          width: 336px; } }
 
 @media only screen and (min-width: 769px) {
   #login-barreira .conteudo-barreira {
