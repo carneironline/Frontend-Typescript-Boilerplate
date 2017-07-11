@@ -98,7 +98,8 @@ body {
       #login-barreira .conteudo-barreira #login-barreira-iframe iframe {
         border: 0px;
         height: 390px;
-        width: 315px; }
+        width: 315px;
+        overflow-x: hidden; }
 
 @media only screen and (min-width: 765px) {
   #login-barreira {
@@ -184,9 +185,16 @@ body {
           border-radius: 0 4px 0 0; }
           #login-barreira .conteudo-barreira #login-barreira-iframe h2 span {
             padding-top: 5px; }
+        #login-barreira .conteudo-barreira #login-barreira-iframe .segura-cadun {
+          position: relative;
+          overflow: hidden;
+          height: 459px; }
         #login-barreira .conteudo-barreira #login-barreira-iframe iframe {
-          margin-top: 40px;
-          width: 331px; } }
+          position: relative;
+          top: -81px;
+          height: 540px;
+          margin-top: 0px;
+          width: 336px; } }
 
 @media only screen and (min-width: 769px) {
   #login-barreira .conteudo-barreira {

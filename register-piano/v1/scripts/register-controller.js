@@ -38,8 +38,8 @@ $(".conteudo-produto a").click(function(a){
 var uri = encodeURIComponent(document.location.href);
 
 if (window.ambienteUtilizadoPiano == 'prd') {
-	$("#iframeCadun").attr("src" , 'https://login.globo.com/login/4975?url='+uri);	
+	$("#iframeCadun").attr("src" , 'https://login.globo.com/login/4975?urlIntervencao%3Dhttps%3A%2F%2Fs.glbimg.com%2Fgl%2Fba%2Fbarra-globocom.callback.html%23'+uri);	
 } else {
-	$("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/4975?url='+uri);
+	$("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/4975?urlIntervencao%3Dhttps%3A%2F%2Fs.glbimg.com%2Fgl%2Fba%2Fbarra-globocom.callback.html%23'+uri);
 }
 
