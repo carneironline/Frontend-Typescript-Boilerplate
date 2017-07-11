@@ -17,7 +17,7 @@ if (typeof linkProduto != 'undefined' && linkProduto != null && linkProduto != '
 	$(".conteudo-produto a").attr("href", linkProduto);
 }
 
-
+/*
 // GA
 
 window['dataLayer'] = window['dataLayer'] || [];
@@ -30,6 +30,7 @@ $(".conteudo-produto a").click(function(a){
 	a.preventDefault(),
 	window.open($(".conteudo-produto a").attr("href")),EventoGaPiano.disparaEvento(!0,"Barreira Login","Clique","Ir oferta",!1);
 });
+*/
 
 
 // pega url
