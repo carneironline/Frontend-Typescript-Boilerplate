@@ -37,7 +37,8 @@ $(".conteudo-produto a").click(function(a){
 var uri = encodeURIComponent(document.location.href);
 
 if (window.ambienteUtilizadoPiano == 'prd') {
-    $("#iframeCadun").attr("src" , 'https://login.globo.com/login/4975?url='+uri);  
+    $("#iframeCadun").attr("src" , 'https://login.globo.com/login/4975?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri); 
 } else {
-    $("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/4975?url='+uri);
+    $("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/4975?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri);
 }
+
