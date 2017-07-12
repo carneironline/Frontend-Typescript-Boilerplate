@@ -150,6 +150,19 @@ function redirecionarBarreira(url) {
 	setTimeout(function() {window.location = url;}, 200);
 };
 
+function mostrarBarreiraRegisterPiano(versao) {
+	_GAEvento = "Barreira: " + regrasTiny.nomeExperiencia;
+	enviaEventosGA();
+	setCookieTiny(Const.Cookie.UTP, "", -1);
+	var concatenaUrlHomologacao = '';
+	if (window.ambienteUtilizadoPiano != 'prd') {
+		concatenaUrlHomologacao = '-stg';
+	}
+	$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>");
+	$("head").append("<script src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/register-view.js'><\/script>");
+	$("head").append("<script src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/register-controller.js'><\/script>");
+};
+
 function criaCookieAposContagemRegisterExpirada() {
 	var cookieMeterExpired = btoa(encodeURI(JSON.stringify(regrasTiny)));
 	setCookieTiny(Const.Cookie.RTIEX, cookieMeterExpired, 1);
