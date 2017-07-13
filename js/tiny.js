@@ -159,7 +159,7 @@ function mostrarBarreiraRegisterPiano(versao) {
 	$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>");
 	$("head").append("<script src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/register-view.js'><\/script>");
 	$("head").append("<script src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/register-controller.js'><\/script>");
-	_GAEvento = "Barreira: " + regrasTiny.nomeExperiencia;
+	_GAEvento = "Exibicao Register - " + regrasTiny.nomeExperiencia;
 	enviaEventosGA();
 };
 
