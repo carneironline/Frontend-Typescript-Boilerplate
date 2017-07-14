@@ -79,7 +79,7 @@ body {
       #login-barreira .conteudo-barreira #login-barreira-iframe h2 {
         font-style: italic;
         margin: 0;
-        font-size: 20px;
+        font-size: 18px;
         letter-spacing: -0.3px;
         color: #071c37;
         font-style: inherit;
@@ -91,7 +91,7 @@ body {
         border-bottom: 1px solid #cfd8dc; }
         #login-barreira .conteudo-barreira #login-barreira-iframe h2 span {
           display: block;
-          font-size: 16px;
+          font-size: 15px;
           letter-spacing: -0.1px;
           color: #78909c;
           padding-top: 5px; }
@@ -105,12 +105,12 @@ body {
   #login-barreira {
     zoom: 1;
     top: 0;
-    background: rgba(38, 42, 56, 0.97); }
+    background: rgba(38, 42, 56, 0.9); }
     #login-barreira .conteudo-barreira {
       position: relative;
-      top: 175px;
+      top: 120px;
       width: 748px;
-      height: 560px;
+      height: 540px;
       margin: 0 auto;
       background: transparent;
       -webkit-box-shadow: 0 10px 200px 50px rgba(0, 0, 0, 0.5);
@@ -118,7 +118,7 @@ body {
       #login-barreira .conteudo-barreira #login-promocao {
         position: inherit;
         width: 388px;
-        height: 560px;
+        height: 540px;
         float: left;
         border-radius: 4px 0 0 4px;
         background-color: #1d4c9c; }
@@ -153,12 +153,12 @@ body {
             width: 190px;
             height: 72px;
             border-radius: 100px;
-            background: #00aeef url(../images/icArrowRight.svg) no-repeat 155px 30px;
+            background: #00aeef;
             font-size: 24px;
             font-weight: 900;
             line-height: 1;
             letter-spacing: -0.5px;
-            text-align: left;
+            text-align: center;
             color: #ffffff;
             display: inline-block;
             right: auto;
@@ -169,22 +169,24 @@ body {
             -webkit-box-sizing: border-box;
                     box-sizing: border-box;
             margin-top: 5px;
-            padding: 24px 0 24px 32px;
+            padding: 24px 0 24px 0;
             -webkit-transition: all .3s ease-in-out;
             transition: all .3s ease-in-out; }
             #login-barreira .conteudo-barreira #login-promocao .conteudo-produto a:hover {
               background-color: #73d9ff; }
       #login-barreira .conteudo-barreira #login-barreira-iframe {
         width: 360px;
-        height: 560px;
+        height: 540px;
         float: left;
         padding-bottom: 0px;
         border-radius: 0 4px 4px 0; }
         #login-barreira .conteudo-barreira #login-barreira-iframe h2 {
           padding: 19px 0;
-          border-radius: 0 4px 0 0; }
+          border-radius: 0 4px 0 0;
+          font-size: 19px; }
           #login-barreira .conteudo-barreira #login-barreira-iframe h2 span {
-            padding-top: 5px; }
+            padding-top: 5px;
+            font-size: 16px; }
         #login-barreira .conteudo-barreira #login-barreira-iframe .segura-cadun {
           position: relative;
           overflow: hidden;
@@ -199,10 +201,10 @@ body {
 @media only screen and (min-width: 769px) {
   #login-barreira .conteudo-barreira {
     width: 900px;
-    height: 560px; }
+    height: 540px; }
     #login-barreira .conteudo-barreira #login-promocao {
       width: 540px;
-      height: 560px; }
+      height: 540px; }
       #login-barreira .conteudo-barreira #login-promocao .conteudo-produto {
         width: 462px;
         margin-top: 29px; }
@@ -215,6 +217,11 @@ body {
           letter-spacing: -1.1px; }
         #login-barreira .conteudo-barreira #login-promocao .conteudo-produto a {
           margin-top: 0px; } }
+
+@media only screen and (min-height: 1025px) {
+  #login-barreira .conteudo-barreira {
+    top: 50%;
+    margin-top: -270px; } }
 
 /* fixes */
 .borders {
