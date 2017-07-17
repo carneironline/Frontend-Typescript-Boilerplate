@@ -10,9 +10,9 @@ var jsonConfiguracaoTinyPass = {
 			'urlDominioSiteOGlobo':'globostg.globoi.com/'
 		},
 		'qlt':{
-			'idSandboxTinypass':'GTCopIDc5z',
-			'setSandBox':'false',
-			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
+			'idSandboxTinypass':'dXu7dvFKRi',
+			'setSandBox':'true',
+			'urlSandboxPiano':'https://sandbox.tinypass.com/xbuilder/experience/load?aid=dXu7dvFKRi',
 			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/funcionalidade/4975/autorizacao-acesso?v=2',
 			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
 			'urlDominioSiteOGlobo':'globostg.globoi.com/'
@@ -151,6 +151,10 @@ function redirecionarBarreira(url) {
 };
 
 function mostrarBarreiraRegisterPiano(versao) {
+	if (regrasTiny.fluxo.indexOf('paywall') == -1) {
+		criaCookieAposContagemRegisterExpirada();
+	}
+	exibiuBarreira = true;
 	setCookieTiny(Const.Cookie.UTP, "", -1);
 	var concatenaUrlHomologacao = '';
 	if (window.ambienteUtilizadoPiano != 'prd') {

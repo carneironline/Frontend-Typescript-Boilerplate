@@ -6,10 +6,10 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 
 @keyframes fadeRegister {
 	0% {
-		opacity: 0;
+		background: rgba(38, 42, 56, 0);
 	}
 	100% {
-		opacity: 1;
+		background: rgba(38, 42, 56, 0.9);
 	}
 }
 
@@ -142,14 +142,12 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 	#login-barreira {
 		zoom: 1;
 		top: 0;
-		background: rgba(38, 42, 56, 0.9);
-		opacity: 0;
+		background: rgba(38, 42, 56, 0);
 		animation: fadeRegister 2s;
 		-moz-animation: fadeRegister 2s;
 		-webkit-animation: fadeRegister 2s;
 		-o-animation: fadeRegister 2s;
-		
-		opacity: 1;
+		background: rgba(38, 42, 56, 0.9);
 
 		.conteudo-barreira {
 			position: relative;
