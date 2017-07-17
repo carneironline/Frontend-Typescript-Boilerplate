@@ -133,35 +133,36 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 }
 
 @media only screen and (min-width: 765px) {
+	#login-barreira, #login-barreira .conteudo-barreira {
+		animation-fill-mode: forwards;
+		-moz-animation-fill-mode: forwards;
+		-webkit-animation-fill-mode: forwards;
+		-o-animation-fill-mode: forwards;
+	}
 	#login-barreira {
 		zoom: 1;
 		top: 0;
 		background: rgba(38, 42, 56, 0.9);
 		opacity: 0;
-		animation-delay: 2s;
-		-moz-animation-delay: 2s;
-		-webkit-animation-delay: 2s;
-		-o-animation-delay: 2s;
 		animation: fadeRegister 2s;
 		-moz-animation: fadeRegister 2s;
 		-webkit-animation: fadeRegister 2s;
 		-o-animation: fadeRegister 2s;
-		animation-fill-mode: forwards;
-		-moz-animation-fill-mode: forwards;
-		-webkit-animation-fill-mode: forwards;
-		-o-animation-fill-mode: forwards;
+		
+		opacity: 1;
 
 		.conteudo-barreira {
 			position: relative;
 			top: -1000px;
+			animation-delay: 2s;
+			-moz-animation-delay: 2s;
+			-webkit-animation-delay: 2s;
+			-o-animation-delay: 2s;
 			animation: slideRegister 2s;
 			-moz-animation: slideRegister 2s;
 			-webkit-animation: slideRegister 2s;
 			-o-animation: slideRegister 2s;
-			animation-fill-mode: forwards;
-			-moz-animation-fill-mode: forwards;
-			-webkit-animation-fill-mode: forwards;
-			-o-animation-fill-mode: forwards;
+			top: 120px;
 			width: 748px;
 			height: 540px;
 			margin: 0 auto;
