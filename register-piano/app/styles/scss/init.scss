@@ -3,7 +3,27 @@ body {margin: 0px;}
 /**/
 
 body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
-@import url(https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i,900);
+
+@keyframes fadeRegister {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes slideRegister {
+	0% {
+		top: -1000px;
+	}
+	100% {
+		top: 120px;
+	}
+}
+
+
+@import url(https://fonts.googleapis.com/css?family=Lato:400,400i,900);
 #login-barreira {
 	background: white;
 	width: 100%;
@@ -12,6 +32,7 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 	top: 55px;
 	z-index: 98;
 	font-family: "Lato", sans-serif;
+
 	a {
 		text-decoration: none;
 	}
@@ -39,10 +60,10 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 				h2 {
 					display: block;
 					margin: 0;
-					padding:8px 0 0 0;
+					padding:10px 0 0 0;
 					color: #fff;
 					font-weight: 900;
-					font-size: 24px;
+					font-size: 18px;
 					line-height: 1;
 					span {
 						display: none;
@@ -52,10 +73,11 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 					display: block;
 					margin: 0;
 					padding: 3px 0 0 0;
-					font-size: 15px;
+					font-size: 18px;
 					line-height: 1;
-					color: #005896;
-					font-style: italic;
+					color: #fff;
+					font-weight: 900;
+					
 					letter-spacing: -0.5px;
 					.preco-menor {
 						color: #fff;
@@ -69,7 +91,7 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 					background: url(../images/icArrowRight.svg) no-repeat right 50%;
 					font-size: 0px;
 					height: 30px;
-					width: 30px;
+					width: 300px;
 
 				}
 			}
@@ -115,9 +137,31 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 		zoom: 1;
 		top: 0;
 		background: rgba(38, 42, 56, 0.9);
+		opacity: 0;
+		animation-delay: 2s;
+		-moz-animation-delay: 2s;
+		-webkit-animation-delay: 2s;
+		-o-animation-delay: 2s;
+		animation: fadeRegister 2s;
+		-moz-animation: fadeRegister 2s;
+		-webkit-animation: fadeRegister 2s;
+		-o-animation: fadeRegister 2s;
+		animation-fill-mode: forwards;
+		-moz-animation-fill-mode: forwards;
+		-webkit-animation-fill-mode: forwards;
+		-o-animation-fill-mode: forwards;
+
 		.conteudo-barreira {
 			position: relative;
-			top: 120px;
+			top: -1000px;
+			animation: slideRegister 2s;
+			-moz-animation: slideRegister 2s;
+			-webkit-animation: slideRegister 2s;
+			-o-animation: slideRegister 2s;
+			animation-fill-mode: forwards;
+			-moz-animation-fill-mode: forwards;
+			-webkit-animation-fill-mode: forwards;
+			-o-animation-fill-mode: forwards;
 			width: 748px;
 			height: 540px;
 			margin: 0 auto;
@@ -137,7 +181,7 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 						float: none;
 						width: 100%;
 					}
-					h2 {						
+					h2 {									
 						letter-spacing: -1.1px;
 						text-align: left;
 						font-size: 49px;
@@ -147,6 +191,8 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 						}
 					}
 					p {
+						font-style: italic;	
+						font-weight: 400;
 						font-size: 24px;
 						line-height: 1.13;
 						letter-spacing: -0.8px;
