@@ -230,6 +230,10 @@ body {
 
 aside#sidebar, .link-top, #relacionadas-topo {
   z-index: 1 !important; }
+.videos #photoGallery .sharing, .msg-paywall-new {
+  display:none !important;}
+#photoGallery .gallery .details, #photoGallery .gallery {
+  z-index: 97 !important;}
 
 @media only screen and (max-width: 760px) {
   body#article .top-header {
