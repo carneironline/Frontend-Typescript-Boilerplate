@@ -1,20 +1,37 @@
 
 // Ver se Variaves do piano existem
 
-if (typeof precoMenor != 'undefined' && precoMenor != null && precoMenor != '' ) {
-	$(".preco-menor").text(precoMenor);    
+if (typeof precoRegister != 'undefined' && precoRegister != null && precoRegister != '' ) {
+	$(".preco-menor").text(precoRegister);    
 }
 
-if (typeof quantidadeMes != 'undefined' && quantidadeMes != null && quantidadeMes != '' ) {
-	$(".quantidade-mes").text(quantidadeMes);   
+if (typeof periodoPrecoRegister != 'undefined' && periodoPrecoRegister != null && periodoPrecoRegister != '' ) {
+	$(".quantidade-mes").text(periodoPrecoRegister);   
 }
 
-if (typeof linkImg != 'undefined' && linkImg != null && linkImg != '' ) {
-	$(".conteudo-produto img").attr("src", linkImg);
+if (typeof imagemRegister != 'undefined' && imagemRegister != null && imagemRegister != '' ) {
+	$(".conteudo-produto img").attr("src", imagemRegister);
 }
 
-if (typeof linkProduto != 'undefined' && linkProduto != null && linkProduto != '' ) {
-	$(".conteudo-produto a").attr("href", linkProduto);
+if (typeof linkOfertaRegister != 'undefined' && linkOfertaRegister != null && linkOfertaRegister != '' ) {
+	$(".conteudo-produto a").attr("href", linkOfertaRegister);
+}
+
+if (typeof textoBotaoOfertaRegister != 'undefined' && textoBotaoOfertaRegister != null && textoBotaoOfertaRegister != '' ) {
+	$(".conteudo-produto a").text(textoBotaoOfertaRegister);
+}
+
+if (typeof textoOfertaRegister != 'undefined' && textoOfertaRegister != null && textoOfertaRegister != '' ) {
+	$(".conteudo-produto h2").html(textoOfertaRegister);
+}
+
+if (typeof textoOfertaChamadaRegister != 'undefined' && textoOfertaChamadaRegister != null && textoOfertaChamadaRegister != '' ) {
+	$(".conteudo-produto p").text(textoOfertaChamadaRegister);
+}
+
+
+if (typeof textoLoginRegister != 'undefined' && textoLoginRegister != null && textoLoginRegister != '' ) {
+	$("#login-barreira-iframe h2").html(textoLoginRegister);
 }
 
 

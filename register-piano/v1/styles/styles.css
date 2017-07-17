@@ -1,5 +1,5 @@
 /* remove */
-@import url(https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i,900);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,400i,900);
 body {
   margin: 0px; }
 
@@ -7,6 +7,30 @@ body {
 body {
   overflow-y: hidden;
   -webkit-font-smoothing: antialiased; }
+
+@-webkit-keyframes fadeRegister {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+@keyframes fadeRegister {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+@-webkit-keyframes slideRegister {
+  0% {
+    top: -1000px; }
+  100% {
+    top: 120px; } }
+
+@keyframes slideRegister {
+  0% {
+    top: -1000px; }
+  100% {
+    top: 120px; } }
 
 #login-barreira {
   background: white;
@@ -42,10 +66,10 @@ body {
         #login-barreira .conteudo-barreira #login-promocao .conteudo-produto h2 {
           display: block;
           margin: 0;
-          padding: 8px 0 0 0;
+          padding: 10px 0 0 0;
           color: #fff;
           font-weight: 900;
-          font-size: 24px;
+          font-size: 18px;
           line-height: 1; }
           #login-barreira .conteudo-barreira #login-promocao .conteudo-produto h2 span {
             display: none; }
@@ -53,10 +77,10 @@ body {
           display: block;
           margin: 0;
           padding: 3px 0 0 0;
-          font-size: 15px;
+          font-size: 18px;
           line-height: 1;
-          color: #005896;
-          font-style: italic;
+          color: #fff;
+          font-weight: 900;
           letter-spacing: -0.5px; }
           #login-barreira .conteudo-barreira #login-promocao .conteudo-produto p .preco-menor {
             color: #fff; }
@@ -70,7 +94,7 @@ body {
           background: url(../images/icArrowRight.svg) no-repeat right 50%;
           font-size: 0px;
           height: 30px;
-          width: 30px; }
+          width: 300px; }
     #login-barreira .conteudo-barreira #login-barreira-iframe {
       text-align: center;
       padding-bottom: 60px;
@@ -105,10 +129,31 @@ body {
   #login-barreira {
     zoom: 1;
     top: 0;
-    background: rgba(38, 42, 56, 0.9); }
+    background: rgba(38, 42, 56, 0.9);
+    opacity: 0;
+    animation-delay: 2s;
+    -moz-animation-delay: 2s;
+    -webkit-animation-delay: 2s;
+    -o-animation-delay: 2s;
+    animation: fadeRegister 2s;
+    -moz-animation: fadeRegister 2s;
+    -webkit-animation: fadeRegister 2s;
+    -o-animation: fadeRegister 2s;
+    animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards; }
     #login-barreira .conteudo-barreira {
       position: relative;
-      top: 120px;
+      top: -1000px;
+      animation: slideRegister 2s;
+      -moz-animation: slideRegister 2s;
+      -webkit-animation: slideRegister 2s;
+      -o-animation: slideRegister 2s;
+      animation-fill-mode: forwards;
+      -moz-animation-fill-mode: forwards;
+      -webkit-animation-fill-mode: forwards;
+      -o-animation-fill-mode: forwards;
       width: 748px;
       height: 540px;
       margin: 0 auto;
@@ -136,6 +181,8 @@ body {
             #login-barreira .conteudo-barreira #login-promocao .conteudo-produto h2 span {
               display: inline; }
           #login-barreira .conteudo-barreira #login-promocao .conteudo-produto p {
+            font-style: italic;
+            font-weight: 400;
             font-size: 24px;
             line-height: 1.13;
             letter-spacing: -0.8px;
@@ -230,10 +277,12 @@ body {
 
 aside#sidebar, .link-top, #relacionadas-topo {
   z-index: 1 !important; }
+
 .videos #photoGallery .sharing, .msg-paywall-new {
-  display:none !important;}
+  display: none !important; }
+
 #photoGallery .gallery .details, #photoGallery .gallery {
-  z-index: 97 !important;}
+  z-index: 97 !important; }
 
 @media only screen and (max-width: 760px) {
   body#article .top-header {
