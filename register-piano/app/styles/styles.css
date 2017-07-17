@@ -10,15 +10,15 @@ body {
 
 @-webkit-keyframes fadeRegister {
   0% {
-    opacity: 0; }
+    background: rgba(38, 42, 56, 0); }
   100% {
-    opacity: 1; } }
+    background: rgba(38, 42, 56, 0.9); } }
 
 @keyframes fadeRegister {
   0% {
-    opacity: 0; }
+    background: rgba(38, 42, 56, 0); }
   100% {
-    opacity: 1; } }
+    background: rgba(38, 42, 56, 0.9); } }
 
 @-webkit-keyframes slideRegister {
   0% {
@@ -134,13 +134,12 @@ body {
   #login-barreira {
     zoom: 1;
     top: 0;
-    background: rgba(38, 42, 56, 0.9);
-    opacity: 0;
+    background: rgba(38, 42, 56, 0);
     animation: fadeRegister 2s;
     -moz-animation: fadeRegister 2s;
     -webkit-animation: fadeRegister 2s;
     -o-animation: fadeRegister 2s;
-    opacity: 1; }
+    background: rgba(38, 42, 56, 0.9); }
     #login-barreira .conteudo-barreira {
       position: relative;
       top: -1000px;
