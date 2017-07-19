@@ -119,6 +119,8 @@ body {
 					letter-spacing: -0.1px;
 					color: #78909c;
 					padding-top: 5px; }
+				#login-barreira .conteudo-barreira #login-barreira-iframe h2 strong {
+          			font-weight: 400; }
 			#login-barreira .conteudo-barreira #login-barreira-iframe iframe {
 				border: 0px;
 				height: 390px;
