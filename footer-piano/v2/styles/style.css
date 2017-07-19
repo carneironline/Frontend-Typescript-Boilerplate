@@ -28,6 +28,7 @@
 .footer-venda-oglobo-capas .produtos-oglobo .container-conteudos .lista-de-produtos-oglobo li .preco-produto strong {font-size: 30px;line-height: 0.93;letter-spacing: -0.6px;color: #ffffff;font-weight: 900;padding-right: 10px; }
 .footer-venda-oglobo-capas .produtos-oglobo .container-conteudos .lista-de-produtos-oglobo li .preco-produto small {width: 80px;font-size: 11px;color: #ffffff;display: inline-block; }
 .footer-venda-oglobo-capas .produtos-oglobo .container-conteudos .lista-de-produtos-oglobo li .preco-produto small span {font-size: 14px;line-height: 1;letter-spacing: -0.6px;color: #00aeef;display: block; }
+.footer-venda-oglobo-capas .produtos-oglobo .container-conteudos .lista-de-produtos-oglobo li .preco-produto small b {font-weight: 400;}
 .footer-venda-oglobo-capas .produtos-oglobo .chamada-fixa {height: 60px;background: #1d4c9c;-webkit-box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.5);box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.5);position: relative; }
 .footer-venda-oglobo-capas .produtos-oglobo .chamada-fixa .logo-slogan {width: 356px;height: 33px;background: url("../images/logo-slogan-branco.svg") no-repeat 50% 50%;display: inline-block;margin: 14px 0 0 25px; }
 .footer-venda-oglobo-capas .produtos-oglobo .chamada-fixa .chamada-telefone {font-size: 15px;font-weight: 700;color: #bdbec1;position: absolute;top: 50px;right: 0;margin: 21px 25px 0 0;cursor: inherit; text-decoration: none;}

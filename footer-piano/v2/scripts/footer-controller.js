@@ -17,12 +17,32 @@ $(".footer-venda-oglobo-capas .produto-digital-premium .titulo-produto a").click
 	window.open($(".footer-venda-oglobo-capas .produto-digital-premium .titulo-produto a").attr("href")),EventoGaPiano.disparaEvento(!0,"Banner Footer","Clique","Saiba mais - Digital",!1)});
 
 
+if (typeof preco0 != 'undefined' && preco0 != null && preco0 != '' ) {
+	$(".chamada-fixa h2 strong").text(preco0);
+}
+
+if (typeof precoQant0 != 'undefined' && precoQant0 != null && precoQant0 != '' ) {
+	$(".chamada-fixa h2 span").text(precoQant0);
+}
+
+if (typeof abrirBanner != 'undefined' && abrirBanner != null && abrirBanner != '' ) {
+	$(".chamada-fixa .chamada-abre-oferta").text(abrirBanner);
+}
+
 if (typeof preco1 != 'undefined' && preco1 != null && preco1 != '' ) {
-	$(".produto-digital .preco-produto strong span").text(preco1);
+	$(".produto-digital .preco-produto strong").text(preco1);
 }
 
 if (typeof preco2 != 'undefined' && preco2 != null && preco2 != '' ) {
-	$(".produto-digital-premium .preco-produto strong span").text(preco2);
+	$(".produto-digital-premium .preco-produto strong").text(preco2);
+}
+
+if (typeof precoDel1 != 'undefined' && precoDel1 != null && precoDel1 != '' ) {
+	$(".produto-digital .preco-produto del").text(precoDel1);
+}
+
+if (typeof precoDel2 != 'undefined' && precoDel2 != null && precoDel2 != '' ) {
+	$(".produto-digital-premium .preco-produto del").text(precoDel2);
 }
 
 if (typeof texto1 != 'undefined' && texto1 != null && texto1 != '' ) {
@@ -55,4 +75,66 @@ if (typeof linkMain1 != 'undefined' && linkMain1 != null && linkMain1 != '' ) {
 
 if (typeof linkMain2 != 'undefined' && linkMain2 != null && linkMain2 != '' ) {
 	$(".produto-digital-premium .preco-produto a").attr("href", linkMain2);
+}
+
+if (typeof textoBtnAssine1 != 'undefined' && textoBtnAssine1 != null && textoBtnAssine1 != '' ) {
+	$(".produto-digital .preco-produto a").text(textoBtnAssine1);
+}
+
+if (typeof textoBtnAssine2 != 'undefined' && textoBtnAssine2 != null && textoBtnAssine2 != '' ) {
+	$(".produto-digital-premium .preco-produto a").text(textoBtnAssine2);
+}
+
+if (typeof telefoneCampanha != 'undefined' && telefoneCampanha != null && telefoneCampanha != '' ) {
+	$(".chamada-fixa .chamada-telefone").text(telefoneCampanha);
+}
+
+
+if (typeof quantDesconto1 != 'undefined' && quantDesconto1 != null && quantDesconto1 != '' ) {
+	$(".produto-digital .preco-produto small span").text(quantDesconto1);
+}
+
+if (typeof quantTempoDec1 != 'undefined' && quantTempoDec1 != null && quantTempoDec1 != '' ) {
+	$(".produto-digital .preco-produto small b").text(quantTempoDec1);
+}
+
+
+if (typeof quantDesconto2 != 'undefined' && quantDesconto2 != null && quantDesconto2 != '' ) {
+	$(".produto-digital-premium .preco-produto small span").text(quantDesconto2);
+}
+
+if (typeof quantTempoDec2 != 'undefined' && quantTempoDec2 != null && quantTempoDec2 != '' ) {
+	$(".produto-digital-premium .preco-produto small b").text(quantTempoDec2);
+}
+
+if (typeof tituloProduto1 != 'undefined' && tituloProduto1 != null && tituloProduto1 != '' ) {
+	$(".produto-digital .titulo-produto h2").text(tituloProduto1);
+}
+
+if (typeof tituloProduto2 != 'undefined' && tituloProduto2 != null && tituloProduto2 != '' ) {
+	$(".produto-digital-premium .titulo-produto h2").text(tituloProduto2);
+}
+
+if (typeof subTituloProduto1 != 'undefined' && subTituloProduto1 != null && subTituloProduto1 != '' ) {
+	$(".produto-digital .titulo-produto h3").text(subTituloProduto1);
+}
+
+if (typeof subTituloProduto2 != 'undefined' && subTituloProduto2 != null && subTituloProduto2 != '' ) {
+	$(".produto-digital-premium .titulo-produto h3").text(subTituloProduto2);
+}
+
+if (typeof textoLinkSaibaMais1 != 'undefined' && textoLinkSaibaMais1 != null && textoLinkSaibaMais1 != '' ) {
+	$(".produto-digital .titulo-produto a u").text(textoLinkSaibaMais1);
+}
+
+if (typeof textoLinkSaibaMais2 != 'undefined' && textoLinkSaibaMais2 != null && textoLinkSaibaMais2 != '' ) {
+	$(".produto-digital-premium .titulo-produto a u").text(textoLinkSaibaMais2);
+}
+
+if (typeof textoInfomacoesProduto1 != 'undefined' && textoInfomacoesProduto1 != null && textoInfomacoesProduto1 != '' ) {
+	$(".produto-digital .informacao-produto").html(textoInfomacoesProduto1);
+}
+
+if (typeof textoInfomacoesProduto2 != 'undefined' && textoInfomacoesProduto2 != null && textoInfomacoesProduto2 != '' ) {
+	$(".produto-digital-premium .informacao-produto").html(textoInfomacoesProduto2);
 }
