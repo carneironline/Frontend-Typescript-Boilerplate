@@ -1,12 +1,11 @@
-
 // Ver se Variaves do piano existem
 
 if (typeof precoRegister != 'undefined' && precoRegister != null && precoRegister != '' ) {
-	$(".preco-menor").text(precoRegister);    
+	$(".preco-menor").text(precoRegister);
 }
 
 if (typeof periodoPrecoRegister != 'undefined' && periodoPrecoRegister != null && periodoPrecoRegister != '' ) {
-	$(".quantidade-mes").text(periodoPrecoRegister);   
+	$(".quantidade-mes").text(periodoPrecoRegister);
 }
 
 if (typeof imagemRegister != 'undefined' && imagemRegister != null && imagemRegister != '' ) {
@@ -29,11 +28,13 @@ if (typeof textoOfertaChamadaRegister != 'undefined' && textoOfertaChamadaRegist
 	$(".conteudo-produto p").text(textoOfertaChamadaRegister);
 }
 
-
 if (typeof textoLoginRegister != 'undefined' && textoLoginRegister != null && textoLoginRegister != '' ) {
-	$("#login-barreira-iframe h2").html(textoLoginRegister);
+	$("#login-barreira-iframe h2 strong").text(textoLoginRegister);
 }
 
+if (typeof textoFacaLoginRegister != 'undefined' && textoFacaLoginRegister != null && textoFacaLoginRegister != '' ) {
+	$("#login-barreira-iframe h2 span").text(textoFacaLoginRegister);
+}
 
 // GA
 
@@ -54,4 +55,3 @@ if (window.ambienteUtilizadoPiano == 'prd') {
 } else {
 	$("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/4975?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri);
 }
-
