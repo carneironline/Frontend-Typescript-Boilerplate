@@ -150,28 +150,25 @@ function redirecionarBarreira(url) {
 	setTimeout(function() {window.location = url;}, 200);
 };
 
+function geraScriptNaPagina(urlScript) {
+	$.ajax({
+		url: urlScript,
+		dataType: "script",
+		cache: true,
+		success: function(result){
+			$("head").append(result);
+		}
+	});
+}
+
 function mostrarBarreiraRegisterPiano(versao) {
 	var concatenaUrlHomologacao = '';
 	if (window.ambienteUtilizadoPiano != 'prd') {
 		concatenaUrlHomologacao = '-stg';
 	}
 	$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>");
-	$.ajax({
-		url: "https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/register-view.js",
-		dataType: "script",
-		cache: true,
-		success: function(result){
-			$("head").append(result);
-		}
-	});
-	$.ajax({
-		url: "https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/register-controller.js",
-		dataType: "script",
-		cache: true,
-		success: function(result){
-			$("head").append(result);
-		}
-	});
+	geraScriptNaPagina("https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/register-view.js");
+	geraScriptNaPagina("https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/register-controller.js");
 	if (regrasTiny.fluxo.indexOf('paywall') == -1) {
 		criaCookieAposContagemRegisterExpirada();
 	}
