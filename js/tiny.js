@@ -151,18 +151,32 @@ function redirecionarBarreira(url) {
 };
 
 function mostrarBarreiraRegisterPiano(versao) {
-	if (regrasTiny.fluxo.indexOf('paywall') == -1) {
-		criaCookieAposContagemRegisterExpirada();
-	}
-	exibiuBarreira = true;
-	setCookieTiny(Const.Cookie.UTP, "", -1);
 	var concatenaUrlHomologacao = '';
 	if (window.ambienteUtilizadoPiano != 'prd') {
 		concatenaUrlHomologacao = '-stg';
 	}
 	$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>");
-	$("head").append("<script src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/register-view.js'><\/script>");
-	$("head").append("<script src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/register-controller.js'><\/script>");
+	$.ajax({
+		url: "https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/register-view.js",
+		dataType: "script",
+		cache: true,
+		success: function(result){
+			$("head").append(result);
+		}
+	});
+	$.ajax({
+		url: "https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/register-controller.js",
+		dataType: "script",
+		cache: true,
+		success: function(result){
+			$("head").append(result);
+		}
+	});
+	if (regrasTiny.fluxo.indexOf('paywall') == -1) {
+		criaCookieAposContagemRegisterExpirada();
+	}
+	exibiuBarreira = true;
+	setCookieTiny(Const.Cookie.UTP, "", -1);
 	_GAEvento = "Exibicao Register - " + regrasTiny.nomeExperiencia;
 	enviaEventosGA();
 };
