@@ -13,7 +13,11 @@ if (typeof imagemRegister != 'undefined' && imagemRegister != null && imagemRegi
 }
 
 if (typeof linkOfertaRegister != 'undefined' && linkOfertaRegister != null && linkOfertaRegister != '' ) {
-	$(".conteudo-produto a").attr("href", linkOfertaRegister+'&url_retorno='+window.location.href);
+	if (linkOfertaRegister.indexOf('?') != -1) {
+		$(".conteudo-produto a").attr("href", linkOfertaRegister+'&url_retorno='+window.location.href);
+	} else {
+		$(".conteudo-produto a").attr("href", linkOfertaRegister+'?url_retorno='+window.location.href);
+	}
 }
 
 if (typeof textoBotaoOfertaRegister != 'undefined' && textoBotaoOfertaRegister != null && textoBotaoOfertaRegister != '' ) {
