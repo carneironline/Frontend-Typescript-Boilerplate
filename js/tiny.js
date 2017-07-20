@@ -167,6 +167,28 @@ function mostrarBarreiraRegisterPiano(versao) {
 	enviaEventosGA();
 };
 
+function mostrarBannerFooterPiano(versao) {
+	var concatenaUrlHomologacao = '';
+	if (window.ambienteUtilizadoPiano != 'prd') {
+		concatenaUrlHomologacao = '-stg';
+	}
+	$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/footer-piano/"+versao+"/styles/styles.css'>");
+	$("head").append("<script src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/footer-view.js'><\/script>");
+	$("head").append("<script src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/footer-controller.js'><\/script>");
+};
+
+/*
+// ajuste com cache
+$.ajax({
+	url: "https://static.infoglobo.com.br/paywall/footer-piano/v2/js/footer-append.min.js",
+	dataType: "script",
+	cache: true,
+	success: function(result){
+		$("head").append(result);
+	}
+});
+*/
+
 function criaCookieAposContagemRegisterExpirada() {
 	var cookieMeterExpired = btoa(encodeURI(JSON.stringify(regrasTiny)));
 	setCookieTiny(Const.Cookie.RTIEX, cookieMeterExpired, 1);
