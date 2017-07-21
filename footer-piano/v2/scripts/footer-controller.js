@@ -16,36 +16,6 @@ $(".footer-venda-oglobo-capas .produto-digital .titulo-produto a").click(functio
 $(".footer-venda-oglobo-capas .produto-digital-premium .titulo-produto a").click(function(a){a.preventDefault(),
 	window.open($(".footer-venda-oglobo-capas .produto-digital-premium .titulo-produto a").attr("href")),EventoGaPiano.disparaEvento(!0,"Banner Footer","Clique","Saiba mais - Digital",!1)});
 
-preco0 = "preco0";
-preco0Texto1 = "preco0Texto1";
-preco0Texto2 = "preco0Texto2";
-abrirBanner = "abrirBanner";
-preco1 = "preco1";
-preco2 = "preco2";
-precoBanca1 = "precoBanca1";
-precoBanca2 = "precoBanca2";
-urlImg1 = "urlImg1";
-urlImg2 = "urlImg2";
-linkInfo1 = "linkInfo1";
-linkInfo2 = "linkInfo2";
-linkVenda1 = "linkVenda1";
-linkVenda2 = "linkVenda2";
-textoBtnAssine1 = "textoBtnAssine1";
-textoBtnAssine2 = "textoBtnAssine2";
-telefone = "telefone";
-quantDesconto1 = "quantDesconto1";
-quantTempoDec1 = "quantTempoDec1";
-quantDesconto2 = "quantDesconto2";
-quantTempoDec2 = "quantTempoDec2";
-nomePacote1 = "nomePacote1";
-nomePacote2 = "nomePacote2";
-descricaoPacote1 = "descricaoPacote1";
-descricaoPacote2 = "descricaoPacote2";
-textoLinkSaibaMais1 = "textoLinkSaibaMais1";
-textoLinkSaibaMais2 = "textoLinkSaibaMais2";
-listaProdutos1 = "listaProdutos1";
-listaProdutos2 = "listaProdutos2";
-
 if (typeof preco0 != 'undefined' && preco0 != null && preco0 != '' ) {
 	$(".chamada-fixa h2 strong").text(preco0);
 }
