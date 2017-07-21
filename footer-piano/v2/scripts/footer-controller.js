@@ -22,7 +22,11 @@ if (typeof preco0 != 'undefined' && preco0 != null && preco0 != '' ) {
 }
 
 if (typeof precoQant0 != 'undefined' && precoQant0 != null && precoQant0 != '' ) {
-	$(".chamada-fixa h2 span").text(precoQant0);
+	$(".chamada-fixa h2 .assine-fim").text(precoQant0);
+}
+
+if (typeof comecoFrase != 'undefined' && comecoFrase != null && comecoFrase != '' ) {
+	$(".chamada-fixa h2 .assine-comeco").text(comecoFrase);
 }
 
 if (typeof abrirBanner != 'undefined' && abrirBanner != null && abrirBanner != '' ) {
