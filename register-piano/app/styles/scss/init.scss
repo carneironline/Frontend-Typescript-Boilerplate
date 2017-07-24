@@ -122,11 +122,16 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 					padding-top: 5px;
 				}				
 			}
+			.segura-cadun {
+				overflow: hidden;
+			}
 			iframe {
 				border: 0px;
-				height: 390px;
+				height: 470px;
 				width: 315px;
 				overflow-x: hidden;
+				position: relative;
+				top: -81px;
 			}
 		}
 	}
@@ -249,13 +254,9 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 					}				
 				}
 				.segura-cadun {
-					position:relative;
-					overflow: hidden;
 					height: 459px;
 				}
 				iframe {
-					position: relative;
-					top: -81px;
 					height: 540px;
 					margin-top: 0px;
 					width: 336px;
