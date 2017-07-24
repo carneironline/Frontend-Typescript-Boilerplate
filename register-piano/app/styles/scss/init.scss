@@ -122,11 +122,16 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 					padding-top: 5px;
 				}				
 			}
+			.segura-cadun {
+				overflow: hidden;
+			}
 			iframe {
 				border: 0px;
-				height: 390px;
+				height: 470px;
 				width: 315px;
 				overflow-x: hidden;
+				position: relative;
+				top: -81px;
 			}
 		}
 	}
@@ -249,13 +254,9 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 					}				
 				}
 				.segura-cadun {
-					position:relative;
-					overflow: hidden;
 					height: 459px;
 				}
 				iframe {
-					position: relative;
-					top: -81px;
 					height: 540px;
 					margin-top: 0px;
 					width: 336px;
@@ -310,6 +311,7 @@ aside#sidebar, .link-top, #relacionadas-topo  {z-index: 1 !important;}
 #photoGallery .gallery .details, #photoGallery .gallery, #article #menu {z-index: 97 !important;}
 .borders {position:relative !important; z-index: 99 !important;}
 .videos #photoGallery .sharing, .msg-paywall-new, [id^='adm-'], [id*=' adm-'] {display:none !important;}
+.materia .site-header, .materia .site-header--is-hidden, .materia site-header--is-fixed, .materia .site-header, .materia site-header {top: 0px !important;transform: translateY(0px) !important;opacity: 1 !important; position: fixed !important; transition: none !important;}
 
 @media only screen and (max-width: 760px) {
 	body#article .top-header {position: fixed !important;top: 0px !important;}
