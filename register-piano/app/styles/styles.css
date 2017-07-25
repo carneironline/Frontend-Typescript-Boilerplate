@@ -123,12 +123,11 @@ body {
         overflow: hidden; }
       #login-barreira .conteudo-barreira #login-barreira-iframe iframe {
         border: 0px;
-        height: 470px;
+        height: 540px;
         width: 315px;
         overflow: hidden;
         position: relative;
-        top: -82px;
-        border: 0px none; }
+        top: -82px; }
 
 @media only screen and (min-width: 765px) {
   #login-barreira, #login-barreira .conteudo-barreira {
