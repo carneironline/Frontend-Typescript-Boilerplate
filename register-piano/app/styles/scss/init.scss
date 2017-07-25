@@ -129,9 +129,10 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 				border: 0px;
 				height: 470px;
 				width: 315px;
-				overflow-x: hidden;
+				overflow: hidden;
 				position: relative;
 				top: -82px;
+				border: 0px none;
 			}
 		}
 	}
@@ -266,6 +267,18 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 	}
 }
 
+@media only screen and (max-width: 767px) {
+	.scroll-cadun {
+		height: 397px;
+		overflow-y: scroll;
+		-webkit-overflow-scrolling: touch;
+	}
+	body.materia {
+		position: fixed;
+		z-index: 10;
+	}
+}
+
 @media only screen and (min-width: 769px) {
 	#login-barreira {
 		.conteudo-barreira {
@@ -310,7 +323,7 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 aside#sidebar, .link-top, #relacionadas-topo  {z-index: 1 !important;}
 #photoGallery .gallery .details, #photoGallery .gallery, #article #menu {z-index: 97 !important;}
 .borders {position:relative !important; z-index: 99 !important;}
-.videos #photoGallery .sharing, .msg-paywall-new, [id^='adm-'], [id*=' adm-'] {display:none !important;}
+.videos #photoGallery .sharing, .msg-paywall-new, [id^='adm-'], [id*=' adm-'], #pub-floating {display:none !important;}
 .materia .site-header, .materia .site-header--is-hidden, .materia site-header--is-fixed, .materia .site-header, .materia site-header {top: 0px !important;transform: translateY(0px) !important;opacity: 1 !important; position: fixed !important; transition: none !important;}
 
 @media only screen and (max-width: 760px) {
