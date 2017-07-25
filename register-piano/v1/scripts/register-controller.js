@@ -24,12 +24,12 @@ if (typeof textoBotaoOfertaRegister != 'undefined' && textoBotaoOfertaRegister !
 	$(".conteudo-produto a").text(textoBotaoOfertaRegister);
 }
 
-if (typeof textoOfertaRegister != 'undefined' && textoOfertaRegister != null && textoOfertaRegister != '' ) {
-	$(".conteudo-produto h2").html(textoOfertaRegister);
+if (typeof textoOfertaRegister1 != 'undefined' && textoOfertaRegister1 != null && textoOfertaRegister1 != '' ) {
+	$(".conteudo-produto h2").text(textoOfertaRegister1);
 }
 
-if (typeof textoOfertaChamadaRegister != 'undefined' && textoOfertaChamadaRegister != null && textoOfertaChamadaRegister != '' ) {
-	$(".conteudo-produto p").text(textoOfertaChamadaRegister);
+if (typeof textoOfertaRegister2 != 'undefined' && textoOfertaRegister2 != null && textoOfertaRegister2 != '' ) {
+	$(".conteudo-produto p").text(textoOfertaRegister2);
 }
 
 if (typeof textoLoginRegister != 'undefined' && textoLoginRegister != null && textoLoginRegister != '' ) {

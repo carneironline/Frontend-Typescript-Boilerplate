@@ -1,12 +1,11 @@
-
 // Ver se Variaves do piano existem
 
 if (typeof precoRegister != 'undefined' && precoRegister != null && precoRegister != '' ) {
-    $(".preco-menor").text(precoRegister);    
+    $(".preco-menor").text(precoRegister);
 }
 
 if (typeof periodoPrecoRegister != 'undefined' && periodoPrecoRegister != null && periodoPrecoRegister != '' ) {
-    $(".quantidade-mes").text(periodoPrecoRegister);   
+    $(".quantidade-mes").text(periodoPrecoRegister);
 }
 
 if (typeof imagemRegister != 'undefined' && imagemRegister != null && imagemRegister != '' ) {
@@ -14,26 +13,32 @@ if (typeof imagemRegister != 'undefined' && imagemRegister != null && imagemRegi
 }
 
 if (typeof linkOfertaRegister != 'undefined' && linkOfertaRegister != null && linkOfertaRegister != '' ) {
-    $(".conteudo-produto a").attr("href", linkOfertaRegister);
+    if (linkOfertaRegister.indexOf('?') != -1) {
+        $(".conteudo-produto a").attr("href", linkOfertaRegister+'&url_retorno='+window.location.href);
+    } else {
+        $(".conteudo-produto a").attr("href", linkOfertaRegister+'?url_retorno='+window.location.href);
+    }
 }
 
 if (typeof textoBotaoOfertaRegister != 'undefined' && textoBotaoOfertaRegister != null && textoBotaoOfertaRegister != '' ) {
     $(".conteudo-produto a").text(textoBotaoOfertaRegister);
 }
 
-if (typeof textoOfertaRegister != 'undefined' && textoOfertaRegister != null && textoOfertaRegister != '' ) {
-    $(".conteudo-produto h2").html(textoOfertaRegister);
+if (typeof textoOfertaRegister1 != 'undefined' && textoOfertaRegister1 != null && textoOfertaRegister1 != '' ) {
+    $(".conteudo-produto h2").text(textoOfertaRegister1);
 }
 
-if (typeof textoOfertaChamadaRegister != 'undefined' && textoOfertaChamadaRegister != null && textoOfertaChamadaRegister != '' ) {
-    $(".conteudo-produto p").text(textoOfertaChamadaRegister);
+if (typeof textoOfertaRegister2 != 'undefined' && textoOfertaRegister2 != null && textoOfertaRegister2 != '' ) {
+    $(".conteudo-produto p").text(textoOfertaRegister2);
 }
-
 
 if (typeof textoLoginRegister != 'undefined' && textoLoginRegister != null && textoLoginRegister != '' ) {
-    $("#login-barreira-iframe h2").html(textoLoginRegister);
+    $("#login-barreira-iframe h2 strong").text(textoLoginRegister);
 }
 
+if (typeof textoFacaLoginRegister != 'undefined' && textoFacaLoginRegister != null && textoFacaLoginRegister != '' ) {
+    $("#login-barreira-iframe h2 span").text(textoFacaLoginRegister);
+}
 
 // GA
 
@@ -54,4 +59,3 @@ if (window.ambienteUtilizadoPiano == 'prd') {
 } else {
     $("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/4975?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri);
 }
-
