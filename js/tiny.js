@@ -136,7 +136,7 @@ function setCookieTiny(c_name, value, expiredays) {
 };
 
 function enviaEventosGA() {
-	dataLayer.push({'event': 'EventoGAPiano', 'eventoGACategoria': 'Piano', 'eventoGAAcao': _GAEvento});
+	dataLayer.push({'event': 'EventoGAPiano', 'eventoGACategoria': 'Piano', 'eventoGAAcao': _GAAcao, 'eventoGARotulo':_GARotulo});
 };
 
 function redirecionarBarreira(url) {
@@ -144,7 +144,8 @@ function redirecionarBarreira(url) {
 		criaCookieAposContagemRegisterExpirada();
 	}
 	exibiuBarreira = true;
-	_GAEvento = "Barreira: " + regrasTiny.nomeExperiencia;
+	_GAAcao = "Barreira";
+	_GARotulo = montaRotuloGA();
 	enviaEventosGA();
 	setCookieTiny(Const.Cookie.UTP, "", -1);
 	setTimeout(function() {window.location = url;}, 200);
@@ -158,13 +159,21 @@ function mostrarBarreiraRegisterPiano(versao) {
 	setCookieTiny(Const.Cookie.UTP, "", -1);
 	var concatenaUrlHomologacao = '';
 	if (window.ambienteUtilizadoPiano != 'prd') {
-		concatenaUrlHomologacao = '-stg';
-	}
-	$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>");
+		concatenaUrlHomologacao = '-stg'
+;	}
+	$('head').append("<link rel='stylesheet' type='text/css' href=h'ttps://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>");
 	$("head").append("<script src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/register-view.js'><\/script>");
 	$("head").append("<script src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/register-controller.js'><\/script>");
-	_GAEvento = "Exibicao Register - " + regrasTiny.nomeExperiencia;
+	_GAAcao = "Exibicao Register";
+	_GARotulo = montaRotuloGA();
 	enviaEventosGA();
+};
+
+function montaRotuloGA() {
+	if(typeof subsegmentacaoPiano == 'undefined' || subsegmentacaoPiano == ''){
+		return regrasTiny.nomeExperiencia;;
+	}
+	return _GARotulo + " - " + subsegmentacaoPiano;
 };
 
 function criaCookieAposContagemRegisterExpirada() {
@@ -210,7 +219,8 @@ function pegaValorKruxEMandaParaPiano() {
 	urlBarreira = urlBarreira + "?passouBarreira";
 	_GAContagem = "-";
 	_GALimite = "-";
-	_GAEvento = Const.Metricas.EVENTO_SEM_ACAO;
+	_GAAcao = Const.Metricas.EVENTO_SEM_ACAO;
+	_GARotulo = ""
 	var listaStringsAmbientesAceitos = ["int", "qlt", "prd"];
 
 	if (typeof window.ambienteUtilizadoPiano == 'undefined' || listaStringsAmbientesAceitos.indexOf(ambienteUtilizadoPiano) == -1) {
@@ -430,7 +440,8 @@ function pegaValorKruxEMandaParaPiano() {
 		var cookieRTIEX = decodeURI(atob(getCookieTiny(Const.Cookie.RTIEX)));
 		if (cookieRTIEX != "") {
 			var jsonRTIEX = JSON.parse(cookieRTIEX);
-			_GAEvento = identificarPassagem(jsonRTIEX);
+			_GAAcao = identificarPassagem(jsonRTIEX);
+			_GARotulo = montaRotuloGA();
 			setCookieTiny(Const.Cookie.RTIEX, "", -1);
 		}
 	};
