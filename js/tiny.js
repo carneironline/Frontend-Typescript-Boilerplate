@@ -173,8 +173,7 @@ function mostrarBannerFooterPiano(versao) {
 		concatenaUrlHomologacao = '-stg';
 	}
 	$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/footer-piano/"+versao+"/styles/styles.css'>");
-	geraScriptNaPagina("https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/footer-view.js");
-	geraScriptNaPagina("https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/footer-controller.js");
+	geraScriptNaPagina("https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/novo-banner-footer.js");
 };
 
 

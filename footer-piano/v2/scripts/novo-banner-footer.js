@@ -1,3 +1,90 @@
+$("body").append("" +
+"<div class='footer-venda-oglobo-capas'>" +
+"   <div class='grid-capa-total'>" +
+"       <div class='grid-capa-util'>" +
+"           <div class='produtos-oglobo'>" +
+"               <div class='container-conteudos'>" +
+"                   <ul class='lista-de-produtos-oglobo'>" +
+"                       <li class='produto-digital'>" +
+"                           <ul>" +
+"                               <li class='img-produto'>" +
+"                                   <img alt='pacote 1' src='https://static.infoglobo.com.br/paywall/footer-piano/v2/images/digital-light.png'>" +
+"                               </li>" +
+"                               <li class='titulo-produto'>" +
+"                                   <div class='oglobo-logo'></div>" +
+"                                   <h2>Digital</h2>" +
+"                                   <h3>A informação na medida" +
+"                                       <br/> certa para você." +
+"                                   </h3>" +
+"                                   <a target='_blank' href='#'>" +
+"                                       <u>Saiba mais</u> ›" +
+"                                   </a>" +
+"                               </li>" +
+"                               <li class='informacao-produto'>Site " +
+"                                   <br/>App O Globo Notícias" +
+"                               </li>" +
+"                               <li class='preco-produto'>" +
+"                                   <del>R$ 9,90</del>" +
+"                                   <strong>R$ 1,90</strong>" +
+"                                   <small>" +
+"                                       <span>/ MÊS</span>" +
+"                                       <b>no primeiro mês</b>" +
+"                                   </small>" +
+"                                   <a target='_blank' href='#'>Assine já</a>" +
+"                               </li>" +
+"                           </ul>" +
+"                       </li>" +
+"                       <li class='produto-digital-premium'>" +
+"                           <ul>" +
+"                               <li class='img-produto'>" +
+"                                   <img alt='pacote 2' src='https://static.infoglobo.com.br/paywall/footer-piano/v2/images/digital.png'>" +
+"                                   </li>" +
+"                               <li class='titulo-produto'>" +
+"                                   <div class='oglobo-logo'></div>" +
+"                                   <h2>Digital Premium</h2>" +
+"                                   <h3>Acesso ilimitado a todos os produtos digitais do Globo.</h3>" +
+"                                   <a target='_blank' href='#'>" +
+"                                       <u>Saiba mais</u> ›" +
+"                                   </a>" +
+"                               </li>" +
+"                               <li class='informacao-produto'>Site " +
+"                                   <br/>App O Globo Notícias" +
+"                                   <br/>App Globo Mais" +
+"                                   <br/>Jornal Digital" +
+"                                   <br/>Acervo" +
+"                                   <br/>Clube O Globo Sou+Rio" +
+"                               </li>" +
+"                               <li class='preco-produto'>" +
+"                                   <del>R$ 29,90</del>" +
+"                                   <strong>R$ 5,90</strong>" +
+"                                   <small>" +
+"                                       <span>/ MÊS</span>" +
+"                                       <b>por 3 meses</b>" +
+"                                   </small>" +
+"                                   <a target='_blank' href='#'>Assine já</a>" +
+"                               </li>" +
+"                           </ul>" +
+"                       </li>" +
+"                   </ul>" +
+"                   <span class='fechar' >×</span>" +
+"               </div>" +
+"               <div class='chamada-fixa'>" +
+"                   <div class='logo-slogan'></div>" +
+"                   <a class='chamada-telefone'>Televendas: (21) 2534-4301</a>" +
+"                   <h2>" +
+"                       <span class='assine-comeco'>Assine por apenas</span>" +
+"                       <strong>R$ 1,90</strong>" +
+"                       <span class='assine-fim'>no 1º mês.<span>" +
+"                   </h2>" +
+"                   <span class='chamada-abre-oferta'>Ver ofertas</span>" +
+"               </div>" +
+"           </div>" +
+"       </div>" +
+"   </div>" +
+"   <div class='white-drop'></div>" +
+"</div>");
+
+
 window['dataLayer'] = window['dataLayer'] || [];
 var EventoGaPiano = {disparaEvento : function (naoInterativo, categoria, acao, rotulo, redirecionaComAtraso, elemento) {if (naoInterativo === false) {dataLayer.push({'event': 'EventoGA', 'eventoGACategoria': categoria, 'eventoGAAcao': acao, 'eventoGARotulo': rotulo});} else if (naoInterativo === true) {dataLayer.push({'event': 'EventoGA', 'eventoGACategoria': categoria, 'eventoGAAcao': acao, 'eventoGARotulo': rotulo, 'eventoGAInteracao': 'true'});}if (redirecionaComAtraso) {if ((elemento.attr("target") == "blank") || (elemento.attr("rel") == "external" || (elemento.attr("rel") == "nofollow external"))){window.open(elemento.attr("href"));} else {setTimeout(function() {window.location = elemento.attr("href");}, 300);}}}}
 EventoGaPiano.disparaEvento(!0,"Piano","Footer de venda exibido","Capas",!1);
