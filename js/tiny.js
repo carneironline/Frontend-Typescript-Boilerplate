@@ -171,9 +171,9 @@ function mostrarBarreiraRegisterPiano(versao) {
 
 function montaRotuloGA() {
 	if(typeof subsegmentacaoPiano == 'undefined' || subsegmentacaoPiano == ''){
-		return regrasTiny.nomeExperiencia;;
+		return regrasTiny.nomeExperiencia;
 	}
-	return _GARotulo + " - " + subsegmentacaoPiano;
+	return regrasTiny.nomeExperiencia + " - " + subsegmentacaoPiano;
 };
 
 function criaCookieAposContagemRegisterExpirada() {
