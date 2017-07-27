@@ -168,7 +168,7 @@ function geraScriptNaPagina(urlScript) {
 function mostrarBarreiraRegisterPiano(versao) {
 	versaoAmbiente = versao;
 	$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>");
-	geraScriptNaPagina("https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/register-view.js");
+	geraScriptNaPagina("https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/nova-tela-register.js");
 	if (regrasTiny.fluxo.indexOf('paywall') == -1) {
 		criaCookieAposContagemRegisterExpirada();
 	}

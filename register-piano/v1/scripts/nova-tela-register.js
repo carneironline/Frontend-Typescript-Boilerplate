@@ -1,3 +1,4 @@
+// Monta a parte do HTML
 $('body').append("" +
 		"<div id='login-barreira'>" +
 		"	<div class='conteudo-barreira'>" +
@@ -18,16 +19,14 @@ $('body').append("" +
 		"			</h2>" +
 		"			<div class='segura-cadun'>" +
 		"				<div class='scroll-cadun'>" +
-		"					<iframe id='iframeCadun' src='https://login.globo.com/login/4975?tam=widget&amp;url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%3A%2F%2Fstatic.infoglobo.com.br%2Fpaywall%2Fregister-piano%2Fv1%2Fredirect.html%2523https%253A%252F%252Foglobo.globo.com.br%252F'></iframe>" +
+		"					<iframe id='iframeCadun' src='https://login.globo.com/login/4975?tam=widget&amp;url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523https%253A%252F%252Foglobo.globo.com.br%252F'></iframe>" +
 		"				</div>" +
 		"			</div>" +
 		"		</div>" +
 		"	</div>" +
 		"</div>");
 
-
-
-//pega url
+//Controla e edita o HTML
 
 var uri = encodeURIComponent(document.location.href);
 
@@ -88,3 +87,10 @@ if (window.ambienteUtilizadoPiano == 'prd') {
 } else {
 	$("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/4975?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri);
 }
+
+(function() {
+	var s = document.createElement("script");
+	s.type = "text/javascript"; s.async = true; s.defer = true; s.charset = "utf-8";
+	s.src = "https://s.glbimg.com/gl/ba/js/barra-globocom.min.js";
+	var ss = document.getElementsByTagName("script")[0]; ss.parentNode.insertBefore(s, ss);
+})();
