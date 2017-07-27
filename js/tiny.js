@@ -168,10 +168,6 @@ function mostrarBarreiraRegisterPiano(versao) {
 };
 
 function mostrarBannerFooterPiano(versao) {
-	var concatenaUrlHomologacao = '';
-	if (window.ambienteUtilizadoPiano != 'prd') {
-		concatenaUrlHomologacao = '-stg';
-	}
 	$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/footer-piano/"+versao+"/styles/styles.css'>");
 	geraScriptNaPagina("https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/novo-banner-footer.js");
 };
