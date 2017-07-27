@@ -178,6 +178,12 @@ function mostrarBarreiraRegisterPiano(versao) {
 	enviaEventosGA();
 };
 
+function mostrarBannerFooterPiano(versao) {
+	$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/footer-piano/"+versao+"/styles/styles.css'>");
+	geraScriptNaPagina("https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/novo-banner-footer.js");
+};
+
+
 function criaCookieAposContagemRegisterExpirada() {
 	var cookieMeterExpired = btoa(encodeURI(JSON.stringify(regrasTiny)));
 	setCookieTiny(Const.Cookie.RTIEX, cookieMeterExpired, 1);
