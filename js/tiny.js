@@ -1,5 +1,9 @@
 window["dataLayer"] = window["dataLayer"] || [];
 var segmentacoesKrux = 'kxglobo_segs';
+concatenaUrlHomologacao = '';
+if (window.ambienteUtilizadoPiano != 'prd') {
+	concatenaUrlHomologacao = '-stg';
+}
 var jsonConfiguracaoTinyPass = {
 		'int': {
 			'idSandboxTinypass':'dXu7dvFKRi',
@@ -10,9 +14,9 @@ var jsonConfiguracaoTinyPass = {
 			'urlDominioSiteOGlobo':'globostg.globoi.com/'
 		},
 		'qlt':{
-			'idSandboxTinypass':'dXu7dvFKRi',
-			'setSandBox':'true',
-			'urlSandboxPiano':'https://sandbox.tinypass.com/xbuilder/experience/load?aid=dXu7dvFKRi',
+			'idSandboxTinypass':'GTCopIDc5z',
+			'setSandBox':'false',
+			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
 			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/funcionalidade/4975/autorizacao-acesso?v=2',
 			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
 			'urlDominioSiteOGlobo':'globostg.globoi.com/'
@@ -151,22 +155,34 @@ function redirecionarBarreira(url) {
 	setTimeout(function() {window.location = url;}, 200);
 };
 
+function geraScriptNaPagina(urlScript) {
+	$.ajax({
+		url: urlScript,
+		dataType: "script",
+		cache: true,
+		success: function(result){
+			$("head").append(result);
+		}
+	});
+}
+
 function mostrarBarreiraRegisterPiano(versao) {
+	versaoAmbiente = versao;
+	$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>");
+	geraScriptNaPagina("https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/nova-tela-register.js");
 	if (regrasTiny.fluxo.indexOf('paywall') == -1) {
 		criaCookieAposContagemRegisterExpirada();
 	}
 	exibiuBarreira = true;
 	setCookieTiny(Const.Cookie.UTP, "", -1);
-	var concatenaUrlHomologacao = '';
-	if (window.ambienteUtilizadoPiano != 'prd') {
-		concatenaUrlHomologacao = '-stg'
-;	}
-	$('head').append("<link rel='stylesheet' type='text/css' href=h'ttps://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>");
-	$("head").append("<script src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/register-view.js'><\/script>");
-	$("head").append("<script src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/register-controller.js'><\/script>");
 	_GAAcao = "Exibicao Register";
 	_GARotulo = montaRotuloGA();
 	enviaEventosGA();
+};
+
+function mostrarBannerFooterPiano(versao) {
+	$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/footer-piano/"+versao+"/styles/styles.css'>");
+	geraScriptNaPagina("https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/novo-banner-footer.js");
 };
 
 function montaRotuloGA() {
