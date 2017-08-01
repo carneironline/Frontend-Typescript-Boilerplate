@@ -186,9 +186,9 @@ function mostrarBannerFooterPiano(versao) {
 };
 
 function montaRotuloGA() {
-	if(typeof regrasTiny.nomeExperiencia == 'undefined' || regrasTiny.nomeExperiencia == ''){
+	if(typeof regrasTiny == 'undefined'){
 		return "";
-	}	
+	}
 	if(typeof subsegmentacaoPiano == 'undefined' || subsegmentacaoPiano == ''){
 		return regrasTiny.nomeExperiencia;
 	}
