@@ -186,6 +186,9 @@ function mostrarBannerFooterPiano(versao) {
 };
 
 function montaRotuloGA() {
+	if(typeof regrasTiny.nomeExperiencia == 'undefined' || regrasTiny.nomeExperiencia == ''){
+		return "";
+	}	
 	if(typeof subsegmentacaoPiano == 'undefined' || subsegmentacaoPiano == ''){
 		return regrasTiny.nomeExperiencia;
 	}
@@ -406,6 +409,7 @@ function pegaValorKruxEMandaParaPiano() {
 		regrasTiny = meterData;
 		executaAposPageview();
 		if(meterData.maxViews != 1){
+			_GARotulo = montaRotuloGA();
 			enviaEventosGA();
 		}
 	};
