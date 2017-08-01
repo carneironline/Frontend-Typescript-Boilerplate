@@ -409,7 +409,6 @@ function pegaValorKruxEMandaParaPiano() {
 		regrasTiny = meterData;
 		executaAposPageview();
 		if(meterData.maxViews != 1){
-			_GARotulo = montaRotuloGA();
 			enviaEventosGA();
 		}
 	};
@@ -424,7 +423,7 @@ function pegaValorKruxEMandaParaPiano() {
 			tpContext = '-';
 		}
 		regrasTiny.fluxo = tpContext.toLowerCase();
-		regrasTiny.nomeExperiencia = nomeExperiencia; 
+		regrasTiny.nomeExperiencia = nomeExperiencia;
 		defineVariaveisDeMetricas(regrasTiny);
 		var _metricas = btoa(encodeURI(JSON.stringify(regrasTiny)));
 		setCookieTiny(Const.Cookie.RTI, _metricas, 30);
@@ -438,6 +437,7 @@ function pegaValorKruxEMandaParaPiano() {
 			_GAContagem = "0" + _GAContagem;
 		}
 		_GALimite = metricas.nomeExperiencia +" : "+ metricas.maxViews;
+		_GARotulo = montaRotuloGA();
 	};
 
 	function recuperarEProcessarMetricas() {
