@@ -132,6 +132,12 @@ Piano.janelaAnonima = {
 
 };
 
+Piano.variaveis = {
+	isConteudoExclusivo: function() {
+		return window.conteudoExclusivo ? true : false;
+	}
+};
+
 function setCookieTiny(c_name, value, expiredays) {
 	var exdate = new Date();
 	exdate.setDate(exdate.getDate() + expiredays);
@@ -285,6 +291,10 @@ function pegaValorKruxEMandaParaPiano() {
 		Piano.janelaAnonima.detectPrivateMode(function (is_private) {
 			tp.push(["setCustomVariable", "anonimo", is_private]);
 		});
+
+		if (Piano.variaveis.isConteudoExclusivo()) {
+			tp.push(["setCustomVariable", "conteudoExclusivo", true]);
+		}
 
 		if (verificaAutenticacao(glbid, utp)) {
 			verificaAutorizacao(glbid, utp);
