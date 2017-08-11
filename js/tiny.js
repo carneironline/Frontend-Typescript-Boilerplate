@@ -155,7 +155,8 @@ Piano.variaveis = {
 			COD: 'OG03'
 		},
 		metricas: {
-			EVENTO_SEM_ACAO: 'sem ação'
+			EVENTO_SEM_ACAO: 'sem ação',
+			ERRO: 'Erro'
 		},
 		krux: {
 			SEGMENTACOES: 'kxglobo_segs'
@@ -275,7 +276,7 @@ Piano.util = {
 	},
 	isTipoConteudoUndefined: function() {
 		if (typeof Piano.variaveis.getTipoConteudoPiano() == 'undefined') {
-			Piano.metricas.enviaEventosGA("Erro", "Variavel tipoConteudoPiano nao esta definida");
+			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Variavel tipoConteudoPiano nao esta definida");
 			console.log('Variavel tipoConteudoPiano nao esta definida');
 			return;
 		};
