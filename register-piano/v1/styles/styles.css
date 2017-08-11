@@ -1,9 +1,8 @@
-/* remove */
 @import url(https://fonts.googleapis.com/css?family=Lato:400,400i,900);
+@import url("../../../fix/fix.css");
 body {
   margin: 0px; }
 
-/**/
 body {
   overflow-y: hidden;
   -webkit-font-smoothing: antialiased; }
@@ -279,36 +278,3 @@ body {
   #login-barreira .conteudo-barreira {
     top: 50%;
     margin-top: -270px; } }
-
-/* fixes */
-aside#sidebar, .link-top, #relacionadas-topo {
-  z-index: 1 !important; }
-
-#photoGallery .gallery .details, #photoGallery .gallery, #article #menu {
-  z-index: 97 !important; }
-
-.borders {
-  position: relative !important;
-  z-index: 99 !important; }
-
-.videos #photoGallery .sharing, .msg-paywall-new, [id^='adm-'], [id*=' adm-'], #pub-floating, .site-footer {
-  display: none !important; }
-
-.materia .site-header, .materia .site-header--is-hidden, .materia site-header--is-fixed, .materia .site-header, .materia site-header {
-  top: 0px !important;
-  -webkit-transform: translateY(0px) !important;
-      -ms-transform: translateY(0px) !important;
-          transform: translateY(0px) !important;
-  opacity: 1 !important;
-  position: fixed !important;
-  -webkit-transition: none !important;
-  transition: none !important; }
-
-@media only screen and (max-width: 760px) {
-  body#article .top-header {
-    position: fixed !important;
-    top: 0px !important; }
-  body#article .header-container {
-    height: 58px !important; }
-  body#article .borders {
-    z-index: 1 !important; } }

@@ -8,7 +8,7 @@ $("body").append("" +
 "                       <li class='produto-digital'>" +
 "                           <ul>" +
 "                               <li class='img-produto'>" +
-"                                   <img alt='pacote 1' src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/footer-piano/v2/images/digital-light.png'>" +
+"                                   <img alt='pacote 1' src='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/v2/images/digital-light.png'>" +
 "                               </li>" +
 "                               <li class='titulo-produto'>" +
 "                                   <div class='oglobo-logo'></div>" +
@@ -37,7 +37,7 @@ $("body").append("" +
 "                       <li class='produto-digital-premium'>" +
 "                           <ul>" +
 "                               <li class='img-produto'>" +
-"                                   <img alt='pacote 2' src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/footer-piano/v2/images/digital.png'>" +
+"                                   <img alt='pacote 2' src='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/v2/images/digital.png'>" +
 "                                   </li>" +
 "                               <li class='titulo-produto'>" +
 "                                   <div class='oglobo-logo'></div>" +

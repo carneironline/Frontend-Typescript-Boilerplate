@@ -4,7 +4,7 @@ $('body').append("" +
 		"	<div class='conteudo-barreira'>" +
 		"		<div id='login-promocao'>" +
 		"			<div class='conteudo-produto'>" +
-		"				<img src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/v1/images/produto.png'>" +
+		"				<img src='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/v1/images/produto.png'>" +
 		"				<h2>Assine agora e tenha acesso ilimitado</h2>" +
 		"				<p>A partir de <span class='preco-menor'>R$1,90</span> " +
 		"					<span class='quantidade-mes'>no 1º mês</span>" +
@@ -88,11 +88,13 @@ if (window.ambienteUtilizadoPiano == 'prd') {
 	$("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/4975?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri);
 }
 
-if ($('#barra-globocom').length < 1) {
-	(function() {
-		var s = document.createElement("script");
-		s.type = "text/javascript"; s.async = true; s.defer = true; s.charset = "utf-8";
-		s.src = "https://s.glbimg.com/gl/ba/js/barra-globocom.min.js";
-		var ss = document.getElementsByTagName("script")[0]; ss.parentNode.insertBefore(s, ss);
-	})();	
-}
+setTimeout(function() {
+	if ($('#barra-globocom').length < 1) {
+		(function() {
+			var s = document.createElement("script");
+			s.type = "text/javascript"; s.async = true; s.defer = true; s.charset = "utf-8";
+			s.src = "https://s.glbimg.com/gl/ba/js/barra-globocom.min.js";
+			var ss = document.getElementsByTagName("script")[0]; ss.parentNode.insertBefore(s, ss);
+		})();	
+	}
+}, 200);
