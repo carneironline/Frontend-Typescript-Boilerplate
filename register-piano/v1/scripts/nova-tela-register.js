@@ -1,4 +1,4 @@
-if (window.idServico) idServico = '4975';
+if (!window.idServico) idServico = '4975';
 // Monta a parte do HTML
 $('body').append("" +
 		"<div id='login-barreira'>" +
