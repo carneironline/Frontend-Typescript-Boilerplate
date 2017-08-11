@@ -161,7 +161,8 @@ Piano.variaveis = {
 			SEGMENTACOES: 'kxglobo_segs'
 		},
 		util: {
-			IP: "127.0.0.1"
+			IP: "127.0.0.1",
+			DEBUG: "debugPiano"
 		}
 	},
 	isConteudoExclusivo: function() {
@@ -274,6 +275,7 @@ Piano.util = {
 	},
 	isTipoConteudoUndefined: function() {
 		if (typeof Piano.variaveis.getTipoConteudoPiano() == 'undefined') {
+			Piano.metricas.enviaEventosGA("Erro", "Variavel tipoConteudoPiano nao esta definida");
 			console.log('Variavel tipoConteudoPiano nao esta definida');
 			return;
 		};
@@ -313,6 +315,29 @@ Piano.util = {
 	},
 	montaUrlStg: function() {
 		return Piano.variaveis.getAmbientePiano() != 'prd' ? '-stg' : '';
+	},
+	temParametroNaUrl: function(paramName) {
+		var parametros = window.location.search;
+		return parametros.indexOf(paramName) != -1 ? true : false;
+	},
+	getValorParametroNaUrl: function(parametro) {
+		if (Piano.util.temParametroNaUrl(parametro)) {
+			var parametros = window.location.search;
+			var regex = new RegExp("[\?(&)]" + parametro + "=([^&#]*)");
+			return parametros.match(regex)[1];
+		}
+		return "";
+	},
+	isDebug: function(name) {
+		var valorParametro = Piano.util.getValorParametroNaUrl(name);
+		if (valorParametro == 'true') {
+			Piano.cookies.set(name, valorParametro, 1);
+			return valorParametro;
+		}
+		if (Piano.cookies.get(name)) {
+			return Piano.cookies.get(name);
+		}
+		return false;
 	},
 	callbackMeter: function(meterData) {
 		regrasTiny = meterData;
@@ -421,7 +446,7 @@ Piano.construtor = {
 		tp.push(["setTags", [Piano.variaveis.getTipoConteudoPiano()]]);
 		tp.push(["setAid", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].idSandboxTinypass]);
 		tp.push(["setSandbox", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].setSandBox]);
-		tp.push(["setDebug", true]);
+		tp.push(["setDebug", Piano.util.isDebug(Piano.variaveis.constante.util.DEBUG)]);
 		var clean_url = window.location.href.split("?")[0];
 		tp.push(["setPageURL",clean_url]);
 		Piano.janelaAnonima.detectPrivateMode(function (is_private) {
