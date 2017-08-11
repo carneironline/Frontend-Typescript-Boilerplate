@@ -1,4 +1,3 @@
-if (!window.idServico) idServico = '4975';
 // Monta a parte do HTML
 $('body').append("" +
 		"<div id='login-barreira'>" +
@@ -73,6 +72,8 @@ if (typeof textoFacaLoginRegister != 'undefined' && textoFacaLoginRegister != nu
 	$("#login-barreira-iframe h2 span").text(textoFacaLoginRegister);
 }
 
+if (!window.idServico) idServico = '4975';
+
 // GA
 
 window['dataLayer'] = window['dataLayer'] || [];
@@ -84,9 +85,9 @@ $(".conteudo-produto a").click(function(a){
 });
 
 if (window.ambienteUtilizadoPiano == 'prd') {
-	$("#iframeCadun").attr("src" , 'https://login.globo.com/login/4975?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri);	
+	$("#iframeCadun").attr("src" , 'https://login.globo.com/login/'+idServico+'?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D'+idServico+'%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri);	
 } else {
-	$("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/4975?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri);
+	$("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/'+idServico+'?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D'+idServico+'%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri);
 }
 
 if ($('#barra-globocom').length < 1) {
