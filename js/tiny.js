@@ -149,7 +149,8 @@ Piano.variaveis = {
 		cookie: {
 			GCOM: 'GLBID',
 			UTP: '_utp',
-			RTIEX: '_rtiex'
+			RTIEX: '_rtiex',
+			AMBIENTE: 'ambientePiano'
 		},
 		produto: {
 			COD: 'OG03'
@@ -163,15 +164,23 @@ Piano.variaveis = {
 		},
 		util: {
 			IP: "127.0.0.1",
-			DEBUG: "debugPiano"
+			AMBIENTE: "ambiente-desejado",
+			DEBUG: "debug-piano"
 		}
 	},
 	isConteudoExclusivo: function() {
 		return window.conteudoExclusivo ? true : false;
 	},
 	getAmbientePiano: function() {
-		if (Piano.cookies.get('ambientePiano') && Piano.variaveis.ambientesAceitos.indexOf(Piano.cookies.get('ambientePiano')) > -1) {
-			return Piano.cookies.get('ambientePiano');
+		if (Piano.variaveis.ambientesAceitos.indexOf(Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE)) > -1) {
+			Piano.cookies.set(Piano.variaveis.constante.cookie.AMBIENTE, Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE), 1);
+			return Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE);
+		}
+		if (Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE) == false) {
+			Piano.cookies.set(Piano.variaveis.constante.cookie.AMBIENTE, "", -1);
+		}
+		if (Piano.cookies.get(Piano.variaveis.constante.cookie.AMBIENTE)) {
+			return Piano.cookies.get(Piano.variaveis.constante.cookie.AMBIENTE);
 		};
 		return Piano.variaveis.ambientesAceitos.indexOf(window.ambienteUtilizadoPiano) > -1 ? window.ambienteUtilizadoPiano ? window.ambienteUtilizadoPiano : 'prd' : 'prd';
 	},
@@ -329,14 +338,19 @@ Piano.util = {
 		}
 		return "";
 	},
-	isDebug: function(name) {
-		var valorParametro = Piano.util.getValorParametroNaUrl(name);
+	isDebug: function() {
+		var parametro = Piano.variaveis.constante.util.DEBUG;
+		var valorParametro = Piano.util.getValorParametroNaUrl(parametro);
 		if (valorParametro == 'true') {
-			Piano.cookies.set(name, valorParametro, 1);
+			Piano.cookies.set(parametro, valorParametro, 1);
 			return valorParametro;
 		}
-		if (Piano.cookies.get(name)) {
-			return Piano.cookies.get(name);
+		if (valorParametro == 'false') {
+			Piano.cookies.set(parametro, "", -1);
+			return valorParametro;
+		}
+		if (Piano.cookies.get(Piano.variaveis.constante.util.DEBUG)) {
+			return Piano.cookies.get(parametro);
 		}
 		return false;
 	},
@@ -447,7 +461,7 @@ Piano.construtor = {
 		tp.push(["setTags", [Piano.variaveis.getTipoConteudoPiano()]]);
 		tp.push(["setAid", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].idSandboxTinypass]);
 		tp.push(["setSandbox", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].setSandBox]);
-		tp.push(["setDebug", Piano.util.isDebug(Piano.variaveis.constante.util.DEBUG)]);
+		tp.push(["setDebug", Piano.util.isDebug()]);
 		var clean_url = window.location.href.split("?")[0];
 		tp.push(["setPageURL",clean_url]);
 		Piano.janelaAnonima.detectPrivateMode(function (is_private) {
