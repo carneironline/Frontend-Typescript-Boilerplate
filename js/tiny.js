@@ -66,15 +66,17 @@ Piano.janelaAnonima = {
 		var is_private;
 
 		if (window.webkitRequestFileSystem) {
-			window.webkitRequestFileSystem(
-				window.TEMPORARY, 1,
-				function() {
-					is_private = false;
-				},
-				function(e) {
-					is_private = true;
-				}
-			);
+			setTimeout(function() {
+				window.webkitRequestFileSystem(
+					window.TEMPORARY, 1,
+					function() {
+						is_private = false;
+					},
+					function(e) {
+						is_private = true;
+					}
+				);
+			}, 300);
 		} else if (window.indexedDB && /Firefox/.test(window.navigator.userAgent)) {
 			var db;
 			try {
