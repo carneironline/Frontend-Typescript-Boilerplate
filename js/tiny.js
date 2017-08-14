@@ -286,7 +286,7 @@ Piano.util = {
 	isTipoConteudoUndefined: function() {
 		if (typeof Piano.variaveis.getTipoConteudoPiano() == 'undefined') {
 			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Variavel tipoConteudoPiano nao esta definida");
-			console.log('Variavel tipoConteudoPiano nao esta definida');
+			console.log('ERRO - Variavel tipoConteudoPiano nao esta definida');
 			return;
 		};
 	},
@@ -411,7 +411,8 @@ Piano.ajax = {
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
 			},
 			error: function (xhr, status, error) {
-				console.log('erro na requisição: ' + xhr.status);
+				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Barramento respondeu com erro ao obter autorização");
+				console.log('ERRO - na requisição ao barramento: ' + xhr.status);
 				tp.push(["setCustomVariable", "logado", true]);
 				tp.push(["setCustomVariable", "autorizado", true]);
 				tp.push(["setCustomVariable", "motivo", 'erro']);
