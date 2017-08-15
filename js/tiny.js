@@ -66,17 +66,15 @@ Piano.janelaAnonima = {
 		var is_private;
 
 		if (window.webkitRequestFileSystem) {
-			setTimeout(function() {
-				window.webkitRequestFileSystem(
-					window.TEMPORARY, 1,
-					function() {
-						is_private = false;
-					},
-					function(e) {
-						is_private = true;
-					}
-				);
-			}, 300);
+			window.webkitRequestFileSystem(
+				window.TEMPORARY, 1,
+				function() {
+					is_private = false;
+				},
+				function(e) {
+					is_private = true;
+				}
+			);
 		} else if (window.indexedDB && /Firefox/.test(window.navigator.userAgent)) {
 			var db;
 			try {
@@ -178,7 +176,7 @@ Piano.variaveis = {
 			Piano.cookies.set(Piano.variaveis.constante.cookie.AMBIENTE, Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE), 1);
 			return Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE);
 		}
-		if (Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE) == false) {
+		if (Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE) == 'false') {
 			Piano.cookies.set(Piano.variaveis.constante.cookie.AMBIENTE, "", -1);
 		}
 		if (Piano.cookies.get(Piano.variaveis.constante.cookie.AMBIENTE)) {
@@ -243,8 +241,8 @@ Piano.metricas = {
 		regrasTiny.fluxo = window.tpContext ? tpContext.toLowerCase() : '-';
 		regrasTiny.nomeExperiencia = window.nomeExperiencia ? window.nomeExperiencia : '';
 		Piano.metricas.setLimiteContagem(regrasTiny);
-		if (!window.expirou) Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(jsonRTIEX, window.passou), Piano.metricas.montaRotuloGA());
-		if (window.expirou && !Piano.autenticacao.isLogadoCadun(Piano.cookies.get(Piano.variaveis.constante.cookie.GCOM))) Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
+		if (typeof expirou == 'undefined') Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
+		if (typeof expirou != 'undefined' && !Piano.autenticacao.isLogadoCadun(Piano.cookies.get(Piano.variaveis.constante.cookie.GCOM))) Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
 	}
 };
 
@@ -345,14 +343,14 @@ Piano.util = {
 		var valorParametro = Piano.util.getValorParametroNaUrl(parametro);
 		if (valorParametro == 'true') {
 			Piano.cookies.set(parametro, valorParametro, 1);
-			return valorParametro;
+			return true;
 		}
 		if (valorParametro == 'false') {
 			Piano.cookies.set(parametro, "", -1);
-			return valorParametro;
+			return false;
 		}
 		if (Piano.cookies.get(Piano.variaveis.constante.util.DEBUG)) {
-			return Piano.cookies.get(parametro);
+			return true;
 		}
 		return false;
 	},
