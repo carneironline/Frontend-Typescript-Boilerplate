@@ -227,11 +227,12 @@ Piano.metricas = {
 	},
 	identificarPassagemRegister: function(jsonRTIEX) {
 		var passagem = Piano.variaveis.constante.metricas.EVENTO_SEM_ACAO;
-		if(Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX) && jsonRTIEX.fluxo.indexOf("hardwall") == -1) {
+		var isLogado = Piano.autenticacao.isLogadoCadun(Piano.cookies.get(Piano.variaveis.constante.cookie.GCOM));
+		if(isLogado && Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX) && jsonRTIEX.fluxo.indexOf("hardwall") == -1) {
 			passagem = 'register-contagem-passou';
 			Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, "", -1)
 		}
-		if(Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX) && jsonRTIEX.fluxo.indexOf("hardwall") != -1) {
+		if(isLogado && Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX) && jsonRTIEX.fluxo.indexOf("hardwall") != -1) {
 			passagem = 'register-hardwall-passou';
 			Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, "", -1)
 		}
@@ -267,7 +268,7 @@ Piano.paywall = {
 	redirecionarBarreira: function(url) {
 		exibiuBarreira = true;
 		Piano.metricas.enviaEventosGA("Barreira", Piano.metricas.montaRotuloGA());
-		setCookieTiny(constante.cookie.UTP, "", -1);
+		Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 		setTimeout(function() {window.location = url;}, 200);
 	}
 };
@@ -437,7 +438,7 @@ Piano.autenticacao = {
 				if (glbid == _leitor.glbid) {
 					tp.push(["setCustomVariable", "autorizado", _leitor.autorizado]);
 					tp.push(["setCustomVariable", "motivo", _leitor.motivo]);
-					tp.push(["setCustomVariable", "logado", isLogadoCadun(_leitor.temTermoDeUso, _leitor.motivo, _leitor.autorizado)]);
+					tp.push(["setCustomVariable", "logado", Piano.autenticacao.isLogadoCadun(_leitor.temTermoDeUso, _leitor.motivo, _leitor.autorizado)]);
 					tp.push(["setCustomVariable", "temTermo", _leitor.temTermoDeUso]);
 					return;
 				}
