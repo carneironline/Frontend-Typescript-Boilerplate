@@ -157,7 +157,8 @@ Piano.variaveis = {
 		},
 		metricas: {
 			EVENTO_SEM_ACAO: 'sem ação',
-			ERRO: 'Erro'
+			ERRO: 'Erro',
+			REGISTER: 'register-passou'
 		},
 		krux: {
 			SEGMENTACOES: 'kxglobo_segs'
@@ -225,14 +226,13 @@ Piano.metricas = {
 		}
 		_GALimite = metricas.nomeExperiencia +" : "+ metricas.maxViews;
 	},
-	identificarPassagemRegister: function(jsonRTIEX) {
+	identificarPassagemRegister: function(regras) {
 		var passagem = Piano.variaveis.constante.metricas.EVENTO_SEM_ACAO;
-		var isLogado = Piano.autenticacao.isLogadoCadun(Piano.cookies.get(Piano.variaveis.constante.cookie.GCOM));
-		if(isLogado && Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX) && jsonRTIEX.fluxo.indexOf("hardwall") == -1) {
+		if(Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.metricas.REGISTER) == 'true' && Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX) && regras.fluxo.indexOf("hardwall") == -1) {
 			passagem = 'register-contagem-passou';
 			Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, "", -1)
 		}
-		if(isLogado && Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX) && jsonRTIEX.fluxo.indexOf("hardwall") != -1) {
+		if(Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.metricas.REGISTER) == 'true' && Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX) && regras.fluxo.indexOf("hardwall") != -1) {
 			passagem = 'register-hardwall-passou';
 			Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, "", -1)
 		}
@@ -260,13 +260,12 @@ Piano.register = {
 		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/nova-tela-register.js");
 		Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 		Piano.metricas.enviaEventosGA("Exibicao Register", Piano.metricas.montaRotuloGA());
-		if (!window.regrasTiny && !Piano.autenticacao.isLogadoCadun(Piano.cookies.get(Piano.variaveis.constante.cookie.GCOM))) Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
+		if (!window.regrasTiny) Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
 	}
 };
 
 Piano.paywall = {
 	redirecionarBarreira: function(url) {
-		exibiuBarreira = true;
 		Piano.metricas.enviaEventosGA("Barreira", Piano.metricas.montaRotuloGA());
 		Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 		setTimeout(function() {window.location = url;}, 200);
@@ -278,7 +277,7 @@ Piano.comunicado = {
 		$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/styles/styles.css'>");
 		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/scripts/comunicacao-piano.js");
 	}
-}
+};
 
 Piano.util = {
 	isSection: function() {
