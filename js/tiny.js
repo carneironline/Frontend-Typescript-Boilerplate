@@ -450,6 +450,7 @@ Piano.util = {
 
 Piano.construtor = {
 	initTp: function() {
+		Piano.util.isTipoConteudoUndefined();
 		tp = window["tp"] || [];
 		tp.push(["setTags", [Piano.variaveis.getTipoConteudoPiano()]]);
 		tp.push(["setAid", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].idSandboxTinypass]);
@@ -477,8 +478,6 @@ Piano.construtor = {
 };
 
 (function () {
-	Piano.util.isTipoConteudoUndefined();
-
 	Piano.construtor.initTp();
 })();
 
