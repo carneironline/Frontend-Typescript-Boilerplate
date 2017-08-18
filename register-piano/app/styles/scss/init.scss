@@ -120,6 +120,10 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 					letter-spacing: -0.1px;
 					color: #78909c;
 					padding-top: 5px;
+					width: 300px;
+					margin: 0 auto;
+					background: url(../images/chave.jpg) no-repeat 25px 10px;
+					font-weight: normal;
 				}				
 			}
 			.segura-cadun {
@@ -183,12 +187,14 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 					margin-top: 64px;
 					img {
 						float: none;
-						width: 100%;
+						width: auto;
+						display: block;
+						margin: 0 auto;
 					}
 					h2 {									
 						letter-spacing: -1.1px;
 						text-align: left;
-						font-size: 49px;
+						font-size: 42px;
 						padding: 9px 0 27px 0; 
 						span {
 							display: inline;
@@ -201,8 +207,8 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 						line-height: 1.13;
 						letter-spacing: -0.8px;
 						text-align: left;
-						color: #ffffff;
-						width: 100px;
+						color: #bbb;
+						width: 130px;
 						margin-right: 24px;
 						float: left;
 						padding: 0;
@@ -300,9 +306,10 @@ body {overflow-y: hidden;-webkit-font-smoothing: antialiased;}
 					h2 {
 						letter-spacing: -1px;
 						padding: 18px 0 28px 0;
+						font-size: 49px;
 					}
 					p {
-						font-size: 32px;
+						font-size: 30px;
 						width: 230px;
 						letter-spacing: -1.1px;
 					}
