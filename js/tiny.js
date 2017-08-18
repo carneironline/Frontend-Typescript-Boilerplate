@@ -178,7 +178,7 @@ Piano.variaveis = {
 		if (Piano.cookies.get(Piano.variaveis.constante.cookie.AMBIENTE)) {
 			return Piano.cookies.get(Piano.variaveis.constante.cookie.AMBIENTE);
 		};
-		return Piano.variaveis.ambientesAceitos.indexOf(window.ambienteUtilizadoPiano) > -1 ? window.ambienteUtilizadoPiano ? window.ambienteUtilizadoPiano : 'prd' : 'prd';
+		return Piano.variaveis.ambientesAceitos.indexOf(window.ambienteUtilizadoPiano) > -1 ? window.ambienteUtilizadoPiano : 'prd';
 	},
 	getTipoConteudoPiano: function() {
 		return window.tipoConteudoPiano;
