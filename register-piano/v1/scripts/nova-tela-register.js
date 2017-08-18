@@ -29,7 +29,6 @@ $('body').append("" +
 //Controla e edita o HTML
 
 var uri = encodeURIComponent(document.location.href);
-var parametroRegisterPassou = uri.indexOf('?') > -1 ? '%26register-passou%3Dtrue' : '%3Fregister-passou%3Dtrue';
 
 // Ver se Variaves do piano existem
 
@@ -47,7 +46,7 @@ if (typeof imagemRegister != 'undefined' && imagemRegister != null && imagemRegi
 
 if (typeof linkOfertaRegister != 'undefined' && linkOfertaRegister != null && linkOfertaRegister != '' ) {
 	var parametroUrlRetorno = linkOfertaRegister.indexOf('?') != -1 ? '&url_retorno=' : '?url_retorno=';
-	$(".conteudo-produto a").attr("href", linkOfertaRegister + parametroUrlRetorno + uri + parametroRegisterPassou);
+	$(".conteudo-produto a").attr("href", linkOfertaRegister + parametroUrlRetorno + uri);
 }
 
 if (typeof textoBotaoOfertaRegister != 'undefined' && textoBotaoOfertaRegister != null && textoBotaoOfertaRegister != '' ) {
@@ -81,13 +80,13 @@ $(".conteudo-produto a").click(function(a){
 });
 
 if (window.ambienteUtilizadoPiano == 'prd') {
-	$("#iframeCadun").attr("src" , 'https://login.globo.com/login/4975?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523' + uri + parametroRegisterPassou);	
+	$("#iframeCadun").attr("src" , 'https://login.globo.com/login/4975?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri);	
 } else {
-	$("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/4975?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523' + uri + parametroRegisterPassou);
+	$("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/4975?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri);
 }
 
-setTimeout(function() {
-	if ($('#barra-globocom').length < 1) {
+$(document).ready(function() {
+	if (!$('#barra-globocom').length) {
 		(function() {
 			var s = document.createElement("script");
 			s.type = "text/javascript"; s.async = true; s.defer = true; s.charset = "utf-8";
@@ -95,4 +94,4 @@ setTimeout(function() {
 			var ss = document.getElementsByTagName("script")[0]; ss.parentNode.insertBefore(s, ss);
 		})();	
 	}
-}, 1000);
+});

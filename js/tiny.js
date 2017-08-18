@@ -31,7 +31,6 @@ Piano.configuracao = {
 };
 
 Piano.janelaAnonima = {
-
 	retry : function(isDone, next) {
 		var current_trial = 0, max_retry = 50, interval = 10, is_timeout = false;
 		var id = window.setInterval(
@@ -49,7 +48,6 @@ Piano.janelaAnonima = {
 			10
 		);
 	},
-
 	isIE10OrLater : function(user_agent) {
 		var ua = user_agent.toLowerCase();
 		if (ua.indexOf('msie') === 0 && ua.indexOf('trident') === 0) {
@@ -61,7 +59,6 @@ Piano.janelaAnonima = {
 		}
 		return false;
 	},
-
 	detectPrivateMode : function(callback) {
 		var is_private;
 
@@ -126,7 +123,6 @@ Piano.janelaAnonima = {
 			}
 		);
 	}
-
 };
 
 Piano.cookies = {
@@ -157,8 +153,7 @@ Piano.variaveis = {
 		},
 		metricas: {
 			EVENTO_SEM_ACAO: 'sem ação',
-			ERRO: 'Erro',
-			REGISTER: 'register-passou'
+			ERRO: 'Erro'
 		},
 		krux: {
 			SEGMENTACOES: 'kxglobo_segs'
@@ -228,13 +223,9 @@ Piano.metricas = {
 	},
 	identificarPassagemRegister: function(regras) {
 		var passagem = Piano.variaveis.constante.metricas.EVENTO_SEM_ACAO;
-		if(Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.metricas.REGISTER) == 'true' && Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX) && regras.fluxo.indexOf("hardwall") == -1) {
-			passagem = 'register-contagem-passou';
-			Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, "", -1)
-		}
-		if(Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.metricas.REGISTER) == 'true' && Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX) && regras.fluxo.indexOf("hardwall") != -1) {
-			passagem = 'register-hardwall-passou';
-			Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, "", -1)
+		if(Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX)) {
+			passagem = regras.fluxo.indexOf("hardwall") != -1 ? 'register-hardwall-passou' : 'register-contagem-passou';
+			Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, "", -1);
 		}
 		return passagem;
 	},
@@ -243,24 +234,23 @@ Piano.metricas = {
 		regrasTiny.nomeExperiencia = window.nomeExperiencia ? window.nomeExperiencia : '';
 		Piano.metricas.setLimiteContagem(regrasTiny);
 		if (typeof expirou == 'undefined') Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
-		if (typeof expirou != 'undefined' && !Piano.autenticacao.isLogadoCadun(Piano.cookies.get(Piano.variaveis.constante.cookie.GCOM))) Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
 	}
 };
 
 Piano.banner = {
 	mostrarFooter: function(versao) {
 		$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/styles/styles.css'>");
-		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/novo-banner-footer.js");
+		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/novo-banner-footer.js", true, true);
 	}
 };
 
 Piano.register = {
 	mostrarBarreira: function(versao) {
 		$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>");
-		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/nova-tela-register.js");
+		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/nova-tela-register.js", true, false);
 		Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 		Piano.metricas.enviaEventosGA("Exibicao Register", Piano.metricas.montaRotuloGA());
-		if (!window.regrasTiny) Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
+		Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
 	}
 };
 
@@ -275,11 +265,106 @@ Piano.paywall = {
 Piano.comunicado = {
 	mostrarInformacao: function(versao) {
 		$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/styles/styles.css'>");
-		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/scripts/comunicacao-piano.js");
+		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/scripts/comunicacao-piano.js", true, false);
+	}
+};
+
+Piano.ajax = {
+	geraScriptNaPagina: function(urlScript, async, defer) {
+		$.ajax({
+			url: urlScript,
+			dataType: "script",
+			async: async,
+			defer: defer,
+			cache: true,
+			success: function(result) {
+				$("head").append(result);
+			}
+		});
+	},
+	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
+		var data = {"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.constante.produto.COD};
+		$.ajax({
+			url: Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor,
+			type: 'POST',
+			contentType: "application/json",
+			async : false,
+			headers: {
+				Accept: "application/json"
+			},
+			dataType: "json",
+			data: JSON.stringify(data),
+			success: function (respJson) {
+				tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
+				var respostaDeTermoDeUso = false, respostaDeMotivo = '';
+				if (typeof respJson.motivo != "undefined") {
+					respostaDeMotivo = respJson.motivo.toLowerCase();
+				}
+				if (typeof respJson.temTermoDeUso != "undefined") {
+					respostaDeTermoDeUso = respJson.temTermoDeUso;
+				}
+				var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado);
+				tp.push(["setCustomVariable", "logado", isAutorizado]);
+				tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
+				tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
+				var _jsonLeitor = {
+						"autorizado" : respJson.autorizado,
+						"motivo": respostaDeMotivo,
+						"logado": isAutorizado,
+						"temTermoDeUso": respostaDeTermoDeUso,
+						"glbid": glbid
+					};
+				_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
+				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
+			},
+			error: function (xhr, status, error) {
+				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Barramento respondeu com erro ao obter autorização");
+				console.log('ERRO - na requisição ao barramento: ' + xhr.status);
+				tp.push(["setCustomVariable", "logado", true]);
+				tp.push(["setCustomVariable", "autorizado", true]);
+				tp.push(["setCustomVariable", "motivo", 'erro']);
+			}
+		});
+	}
+};
+
+Piano.autenticacao = {
+	isLogadoCadun: function(glbid, utp) {
+		if (!glbid) {
+			if (utp) Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
+			if (Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX)) Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, "", -1);
+		}
+		return glbid != '';
+	},
+	verificaUsuarioLogadoNoBarramento: function(glbid, utp) {
+		if (Piano.autenticacao.isLogadoCadun(glbid, utp)) {
+			Piano.util.validaUtp(glbid, utp);
+			Piano.ajax.fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid);
+		}
+	},
+	isAutorizado: function(termoDeUso, motivo, autorizado) {
+		if (autorizado || motivo == "indisponivel" || termoDeUso != false) {
+			return true;
+		};
+		if (Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX)) Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, "", -1);
+		return false;
 	}
 };
 
 Piano.util = {
+	validaUtp: function(glbid, utp) {
+		if (utp) {
+			var _leitor = JSON.parse(decodeURI(atob(utp)));
+			if (glbid == _leitor.glbid) {
+				tp.push(["setCustomVariable", "autorizado", _leitor.autorizado]);
+				tp.push(["setCustomVariable", "motivo", _leitor.motivo]);
+				tp.push(["setCustomVariable", "logado", _leitor.logado]);
+				tp.push(["setCustomVariable", "temTermo", _leitor.temTermoDeUso]);
+				return;
+			}
+			Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
+		}
+	},
 	isSection: function() {
 		return Piano.variaveis.getTipoConteudoPiano() == "section" ? true : false;
 	},
@@ -361,98 +446,6 @@ Piano.util = {
 	callbackMeterExpired: function(meterData) {
 		regrasTiny = meterData;
 		Piano.metricas.executaAposPageview(true);
-	}
-};
-
-Piano.ajax = {
-	geraScriptNaPagina: function(urlScript) {
-		$.ajax({
-			url: urlScript,
-			dataType: "script",
-			cache: true,
-			success: function(result) {
-				$("head").append(result);
-			}
-		});
-	},
-	fazRequisicaoBarramento: function(glbid) {
-		var data = {"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.constante.produto.COD};
-		$.ajax({
-			url: Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor,
-			type: 'POST',
-			contentType: "application/json",
-			async : false,
-			headers: {
-				Accept: "application/json"
-			},
-			dataType: "json",
-			data: JSON.stringify(data),
-			success: function (respJson) {
-				tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
-				var respostaDeTermoDeUso = false, respostaDeMotivo = '';
-				if (typeof respJson.motivo != "undefined") {
-					respostaDeMotivo = respJson.motivo.toLowerCase();
-				}
-				if (typeof respJson.temTermoDeUso != "undefined") {
-					respostaDeTermoDeUso = respJson.temTermoDeUso;
-				}
-				var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado);
-				tp.push(["setCustomVariable", "logado", isAutorizado]);
-				tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
-				tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
-				var _jsonLeitor = {
-						"autorizado" : respJson.autorizado,
-						"motivo": respostaDeMotivo,
-						"logado": isAutorizado,
-						"temTermoDeUso": respostaDeTermoDeUso,
-						"glbid": glbid
-					};
-				_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
-				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
-			},
-			error: function (xhr, status, error) {
-				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Barramento respondeu com erro ao obter autorização");
-				console.log('ERRO - na requisição ao barramento: ' + xhr.status);
-				tp.push(["setCustomVariable", "logado", true]);
-				tp.push(["setCustomVariable", "autorizado", true]);
-				tp.push(["setCustomVariable", "motivo", 'erro']);
-			}
-		});
-	}
-};
-
-Piano.autenticacao = {
-	isLogadoCadun: function(glbid, utp) {
-		if (!glbid) {
-			if (window.utp) {
-				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
-			}
-		}
-		return glbid != '';
-	},
-	verificaUsuarioLogadoNoBarramento: function(glbid, utp) {
-		if (Piano.autenticacao.isLogadoCadun(glbid, utp)) {
-			if (utp) {
-				var _leitor = JSON.parse(decodeURI(atob(utp)));
-				if (glbid == _leitor.glbid) {
-					tp.push(["setCustomVariable", "autorizado", _leitor.autorizado]);
-					tp.push(["setCustomVariable", "motivo", _leitor.motivo]);
-					tp.push(["setCustomVariable", "logado", Piano.autenticacao.isLogadoCadun(_leitor.temTermoDeUso, _leitor.motivo, _leitor.autorizado)]);
-					tp.push(["setCustomVariable", "temTermo", _leitor.temTermoDeUso]);
-					return;
-				}
-				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
-			}
-
-			Piano.ajax.fazRequisicaoBarramento(glbid);
-
-		}
-	},
-	isAutorizado: function(termoDeUso, motivo, autorizado) {
-		if (autorizado || motivo == "indisponivel" || termoDeUso != false) {
-			return true;
-		};
-		return false;
 	}
 };
 
