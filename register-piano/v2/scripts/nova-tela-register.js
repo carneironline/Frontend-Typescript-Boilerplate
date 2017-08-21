@@ -4,7 +4,8 @@ $('body').append("" +
 "	<div class='conteudo-barreira'>" +
 "		<div id='login-promocao'>" +
 "			<div class='conteudo-produto'>" +
-"				<img src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/v1/images/box-assinantes.png'>" +
+"				<img class='img-mobi' src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/v2/images/produto.png'>" +
+"				<img class='img-desk' src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/v2/images/box-assinantes.png'>" +
 "				<h2>O melhor conteúdo exclusivo para você</h2>" +
 "				<p>Assine agora e tenha acesso ilimitado</p>" +
 "				<a href='https://assinatura.oglobo.globo.com/VitrineDigital.aspx' target='_blank'>Eu quero!</a>" +
@@ -35,8 +36,12 @@ if (typeof periodoPrecoRegister != 'undefined' && periodoPrecoRegister != null &
 	$(".quantidade-mes").text(periodoPrecoRegister);
 }
 
-if (typeof imagemRegister != 'undefined' && imagemRegister != null && imagemRegister != '' ) {
-	$(".conteudo-produto img").attr("src", imagemRegister);
+if (typeof imagemRegisterMobi != 'undefined' && imagemRegisterMobi != null && imagemRegisterMobi != '' ) {
+	$(".conteudo-produto img.img-mobi").attr("src", imagemRegisterMobi);
+}
+
+if (typeof imagemRegisterDesk != 'undefined' && imagemRegisterDesk != null && imagemRegisterDesk != '' ) {
+	$(".conteudo-produto img.img-desk").attr("src", imagemRegisterDesk);
 }
 
 if (typeof linkOfertaRegister != 'undefined' && linkOfertaRegister != null && linkOfertaRegister != '' ) {
