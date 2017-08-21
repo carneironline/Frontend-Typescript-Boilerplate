@@ -4,8 +4,8 @@ $('body').append("" +
 "	<div class='conteudo-barreira'>" +
 "		<div id='login-promocao'>" +
 "			<div class='conteudo-produto'>" +
-"				<img class='img-mobi' src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/v2/images/produto.png'>" +
-"				<img class='img-desk' src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/v2/images/box-assinantes.png'>" +
+"				<img class='img-mobi' src='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/v2/images/produto.png'>" +
+"				<img class='img-desk' src='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/v2/images/box-assinantes.png'>" +
 "				<h2>O melhor conteúdo exclusivo para você</h2>" +
 "				<p>Assine agora e tenha acesso ilimitado</p>" +
 "				<a href='https://assinatura.oglobo.globo.com/VitrineDigital.aspx' target='_blank'>Eu quero!</a>" +
@@ -26,7 +26,8 @@ $('body').append("" +
 
 var uri = encodeURIComponent(document.location.href);
 
-// Ver se Variaves do piano existem
+// Ver se Variaves do piano existem.
+
 
 if (typeof precoRegister != 'undefined' && precoRegister != null && precoRegister != '' ) {
 	$(".preco-menor").text(precoRegister);
@@ -45,11 +46,8 @@ if (typeof imagemRegisterDesk != 'undefined' && imagemRegisterDesk != null && im
 }
 
 if (typeof linkOfertaRegister != 'undefined' && linkOfertaRegister != null && linkOfertaRegister != '' ) {
-	if (linkOfertaRegister.indexOf('?') != -1) {
-		$(".conteudo-produto a").attr("href", linkOfertaRegister+'&url_retorno='+uri);
-	} else {
-		$(".conteudo-produto a").attr("href", linkOfertaRegister+'?url_retorno='+uri);
-	}
+	var parametroUrlRetorno = linkOfertaRegister.indexOf('?') != -1 ? '&url_retorno=' : '?url_retorno=';
+	$(".conteudo-produto a").attr("href", linkOfertaRegister + parametroUrlRetorno + uri);
 }
 
 if (typeof textoBotaoOfertaRegister != 'undefined' && textoBotaoOfertaRegister != null && textoBotaoOfertaRegister != '' ) {
@@ -72,8 +70,6 @@ if (typeof textoFacaLoginRegister != 'undefined' && textoFacaLoginRegister != nu
 	$("#login-barreira-iframe h2 span").text(textoFacaLoginRegister);
 }
 
-if (!window.idServico) idServico = '4975';
-
 // GA
 
 window['dataLayer'] = window['dataLayer'] || [];
@@ -85,16 +81,18 @@ $(".conteudo-produto a").click(function(a){
 });
 
 if (window.ambienteUtilizadoPiano == 'prd') {
-	$("#iframeCadun").attr("src" , 'https://login.globo.com/login/'+idServico+'?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D'+idServico+'%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri);	
+	$("#iframeCadun").attr("src" , 'https://login.globo.com/login/4975?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri);	
 } else {
-	$("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/'+idServico+'?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D'+idServico+'%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri);
+	$("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/4975?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri);
 }
 
-if ($('#barra-globocom').length < 1) {
-	(function() {
-		var s = document.createElement("script");
-		s.type = "text/javascript"; s.async = true; s.defer = true; s.charset = "utf-8";
-		s.src = "https://s.glbimg.com/gl/ba/js/barra-globocom.min.js";
-		var ss = document.getElementsByTagName("script")[0]; ss.parentNode.insertBefore(s, ss);
-	})();	
-}
+$(document).ready(function() {
+	if (!$('#barra-globocom').length) {
+		(function() {
+			var s = document.createElement("script");
+			s.type = "text/javascript"; s.async = true; s.defer = true; s.charset = "utf-8";
+			s.src = "https://s.glbimg.com/gl/ba/js/barra-globocom.min.js";
+			var ss = document.getElementsByTagName("script")[0]; ss.parentNode.insertBefore(s, ss);
+		})();	
+	}
+});
