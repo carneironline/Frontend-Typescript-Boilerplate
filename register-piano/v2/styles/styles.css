@@ -1,10 +1,8 @@
-/* remove */
 @import url(https://fonts.googleapis.com/css?family=Lato:400,400i,900);
+@import url("../../../fix/fix.css");
 body {
-  margin: 0px; }
-
-/**/
-body {
+  margin: 0px;
+  padding: 0px;
   overflow-y: hidden;
   -webkit-font-smoothing: antialiased; }
 
@@ -121,7 +119,7 @@ body {
           padding-top: 5px;
           width: 300px;
           margin: 0 auto;
-          background: url(../images/chave.jpg) no-repeat 25px 10px;
+          background: url(../images/chave.svg) no-repeat 25px 10px;
           font-weight: normal; }
       #login-barreira .conteudo-barreira #login-barreira-iframe .segura-cadun {
         overflow: hidden; }
@@ -274,9 +272,8 @@ body {
         width: 462px;
         margin-top: 29px; }
         #login-barreira .conteudo-barreira #login-promocao .conteudo-produto h2 {
-          letter-spacing: -1px;
           padding: 18px 0 28px 0;
-          font-size: 49px; }
+          font-size: 53px; }
         #login-barreira .conteudo-barreira #login-promocao .conteudo-produto p {
           font-size: 30px;
           width: 230px;
@@ -288,36 +285,3 @@ body {
   #login-barreira .conteudo-barreira {
     top: 50%;
     margin-top: -270px; } }
-
-/* fixes */
-aside#sidebar, .link-top, #relacionadas-topo {
-  z-index: 1 !important; }
-
-#photoGallery .gallery .details, #photoGallery .gallery, #article #menu {
-  z-index: 97 !important; }
-
-.borders {
-  position: relative !important;
-  z-index: 99 !important; }
-
-.videos #photoGallery .sharing, .msg-paywall-new, [id^='adm-'], [id*=' adm-'], #pub-floating, .site-footer {
-  display: none !important; }
-
-.materia .site-header, .materia .site-header--is-hidden, .materia site-header--is-fixed, .materia .site-header, .materia site-header {
-  top: 0px !important;
-  -webkit-transform: translateY(0px) !important;
-      -ms-transform: translateY(0px) !important;
-          transform: translateY(0px) !important;
-  opacity: 1 !important;
-  position: fixed !important;
-  -webkit-transition: none !important;
-  transition: none !important; }
-
-@media only screen and (max-width: 760px) {
-  body#article .top-header {
-    position: fixed !important;
-    top: 0px !important; }
-  body#article .header-container {
-    height: 58px !important; }
-  body#article .borders {
-    z-index: 1 !important; } }

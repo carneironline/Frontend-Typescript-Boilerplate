@@ -4,7 +4,7 @@ $('body').append("" +
 "	<div class='conteudo-barreira'>" +
 "		<div id='login-promocao'>" +
 "			<div class='conteudo-produto'>" +
-"				<img src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/v1/images/conteudo1.jpg'>" +
+"				<img src='https://static"+concatenaUrlHomologacao+".infoglobo.com.br/paywall/register-piano/v1/images/box-assinantes.png'>" +
 "				<h2>O melhor conteúdo exclusivo para você</h2>" +
 "				<p>Assine agora e tenha acesso ilimitado</p>" +
 "				<a href='https://assinatura.oglobo.globo.com/VitrineDigital.aspx' target='_blank'>Eu quero!</a>" +
