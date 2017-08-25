@@ -12,7 +12,7 @@ $('body').append("" +
 "			</div>" +
 "		</div>" +
 "		<div id='login-barreira-iframe'>" +
-"			<h2><strong>Conteúdo exclusivo para assinantes <strong> <span>Já é assinante ? Identifique-se</span></h2>" +
+"			<h2><strong>Conteúdo exclusivo para assinantes </strong> <span>Já é assinante ? Identifique-se</span></h2>" +
 "			<div class='segura-cadun'>" +
 "				<div class='scroll-cadun'>" +
 "					<iframe id='iframeCadun' src='https://login.globo.com/login/4975?tam=widget&amp;url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523https%253A%252F%252Foglobo.globo.com.br%252F'></iframe>" +
