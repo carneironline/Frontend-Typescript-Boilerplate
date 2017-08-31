@@ -182,7 +182,10 @@ Piano.variaveis = {
 	},
 	getTipoConteudoPiano: function() {
 		return window.tipoConteudoPiano;
-	}
+	},
+	executouPageview: function() {
+		return window.executouPageview ? true : false;
+	}  
 };
 
 Piano.krux = {
@@ -233,7 +236,8 @@ Piano.metricas = {
 		regrasTiny.fluxo = window.tpContext ? tpContext.toLowerCase() : '-';
 		regrasTiny.nomeExperiencia = window.nomeExperiencia ? window.nomeExperiencia : '';
 		Piano.metricas.setLimiteContagem(regrasTiny);
-		if (typeof expirou == 'undefined') Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
+		if (typeof expirou == 'undefined' && !window.executouPageview) Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
+		window.executouPageview = true
 	}
 };
 
