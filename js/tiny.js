@@ -233,11 +233,13 @@ Piano.metricas = {
 		return passagem;
 	},
 	executaAposPageview: function(expirou) {
-		regrasTiny.fluxo = window.tpContext ? tpContext.toLowerCase() : '-';
-		regrasTiny.nomeExperiencia = window.nomeExperiencia ? window.nomeExperiencia : '';
-		Piano.metricas.setLimiteContagem(regrasTiny);
-		if (typeof expirou == 'undefined' && !window.executouPageview) Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
-		window.executouPageview = true
+		if (!Piano.variaveis.executouPageview()) {
+			regrasTiny.fluxo = window.tpContext ? tpContext.toLowerCase() : '-';
+			regrasTiny.nomeExperiencia = window.nomeExperiencia ? window.nomeExperiencia : '';
+			Piano.metricas.setLimiteContagem(regrasTiny);
+			if (typeof expirou == 'undefined') Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
+			executouPageview = true;
+		}
 	}
 };
 
