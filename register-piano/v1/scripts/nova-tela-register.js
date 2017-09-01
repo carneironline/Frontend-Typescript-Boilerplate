@@ -1,34 +1,34 @@
 var uri = encodeURIComponent(document.location.href);
 
-$(document).ready(function() {
-	// Monta a parte do HTML
-	$('body').append("" +
-	"<div id='login-barreira'>" +
-	"	<div class='conteudo-barreira'>" +
-	"		<div id='login-promocao'>" +
-	"			<div class='conteudo-produto'>" +
-	"				<img src='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/v1/images/produto.png'>" +
-	"				<h2>Assine agora e tenha acesso ilimitado</h2>" +
-	"				<p>A partir de <span class='preco-menor'>R$1,90</span> " +
-	"					<span class='quantidade-mes'>no 1Âº mÃªs</span>" +
-	"				</p>" +
-	"				<a href='https://assinatura.oglobo.globo.com/VitrineDigital.aspx' target='_blank'>Ver ofertas</a>" +
-	"			</div>" +
-	"		</div>" +
-	"		<div id='login-barreira-iframe'>" +
-	"			<h2>" +
-	"				<strong>Acesso para assinantes e cadastrados </strong>" +
-	"				<span>FaÃ§a seu login ou cadastre-se para continuar</span>" +
-	"			</h2>" +
-	"			<div class='segura-cadun'>" +
-	"				<div class='scroll-cadun'>" +
-	"					<iframe id='iframeCadun' src='https://login.globo.com/login/4975?tam=widget&amp;url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523"+uri+"'></iframe>" +
-	"				</div>" +
-	"			</div>" +
-	"		</div>" +
-	"	</div>" +
-	"</div>");
+//Monta a parte do HTML
+$('body').append("" +
+"<div id='login-barreira'>" +
+"	<div class='conteudo-barreira'>" +
+"		<div id='login-promocao'>" +
+"			<div class='conteudo-produto'>" +
+"				<img src='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/v1/images/produto.png'>" +
+"				<h2>Assine agora e tenha acesso ilimitado</h2>" +
+"				<p>A partir de <span class='preco-menor'>R$1,90</span> " +
+"					<span class='quantidade-mes'>no 1Âº mÃªs</span>" +
+"				</p>" +
+"				<a href='https://assinatura.oglobo.globo.com/VitrineDigital.aspx' target='_blank'>Ver ofertas</a>" +
+"			</div>" +
+"		</div>" +
+"		<div id='login-barreira-iframe'>" +
+"			<h2>" +
+"				<strong>Acesso para assinantes e cadastrados </strong>" +
+"				<span>FaÃ§a seu login ou cadastre-se para continuar</span>" +
+"			</h2>" +
+"			<div class='segura-cadun'>" +
+"				<div class='scroll-cadun'>" +
+"					<iframe id='iframeCadun' src='https://login.globo.com/login/4975?tam=widget&amp;url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523"+uri+"'></iframe>" +
+"				</div>" +
+"			</div>" +
+"		</div>" +
+"	</div>" +
+"</div>");
 
+$(document).ready(function() {
 	if (!$('#barra-globocom').length) {
 		(function() {
 			var s = document.createElement("script");
