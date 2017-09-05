@@ -323,7 +323,7 @@ Piano.ajax = {
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
 			},
 			error: function (xhr, status, error) {
-				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Barramento respondeu com erro ao obter autorização");
+				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizaÃ§Ã£o - " + xhr.status + " - " + glbid);
 				console.log('ERRO - na requisição ao barramento: ' + xhr.status);
 				tp.push(["setCustomVariable", "logado", true]);
 				tp.push(["setCustomVariable", "autorizado", true]);
