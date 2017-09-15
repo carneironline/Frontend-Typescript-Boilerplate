@@ -153,7 +153,7 @@ Piano.variaveis = {
 			COD: 'OG03'
 		},
 		metricas: {
-			EVENTO_SEM_ACAO: 'sem aÃ§Ã£o',
+			EVENTO_SEM_ACAO: 'sem ação',
 			ERRO: 'Erro'
 		},
 		krux: {
