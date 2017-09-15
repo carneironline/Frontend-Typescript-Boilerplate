@@ -325,7 +325,7 @@ Piano.ajax = {
 			},
 			error: function (xhr, status, error) {
 				if (Piano.variaveis.statusHttpObterAutorizacaoAcesso.indexOf(xhr.status) > -1) {
-					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao - " + xhr.status + glbid);
+					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + glbid);
 					tp.push(["setCustomVariable", "autorizado", true]);
 				} else {
 					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao - " + xhr.statusText);
