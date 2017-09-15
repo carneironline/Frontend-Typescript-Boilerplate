@@ -141,6 +141,7 @@ Piano.cookies = {
 
 Piano.variaveis = {
 	ambientesAceitos: ["int", "qlt", "prd"],
+	statusHttpObterAutorizacaoAcesso: ["400", "404", "406", "500", "502", "504"],
 	constante: {
 		cookie: {
 			GCOM: 'GLBID',
@@ -152,7 +153,7 @@ Piano.variaveis = {
 			COD: 'OG03'
 		},
 		metricas: {
-			EVENTO_SEM_ACAO: 'sem ação',
+			EVENTO_SEM_ACAO: 'sem aÃ§Ã£o',
 			ERRO: 'Erro'
 		},
 		krux: {
@@ -323,10 +324,15 @@ Piano.ajax = {
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
 			},
 			error: function (xhr, status, error) {
-				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizaÃ§Ã£o - " + xhr.status + " - " + glbid);
-				console.log('ERRO - na requisição ao barramento: ' + xhr.status);
+				if (Piano.variaveis.statusHttpObterAutorizacaoAcesso.indexOf(xhr.status) > -1) {
+					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao - " + xhr.status + glbid);
+					tp.push(["setCustomVariable", "autorizado", true]);
+				} else {
+					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao - " + xhr.statusText);
+					tp.push(["setCustomVariable", "autorizado", false]);
+				}
 				tp.push(["setCustomVariable", "logado", true]);
-				tp.push(["setCustomVariable", "autorizado", true]);
+				console.log('ERRO - na requisiÃ§Ã£o ao barramento: ' + xhr.status);
 				tp.push(["setCustomVariable", "motivo", 'erro']);
 			}
 		});
@@ -372,7 +378,7 @@ Piano.util = {
 	},
 	isTipoConteudoUndefined: function() {
 		if (typeof Piano.variaveis.getTipoConteudoPiano() == 'undefined') {
-			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Variavel tipoConteudoPiano nao esta definida");
+			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Variavel tipoConteudoPiano nao esta definida nesta url - " + document.location.href);
 			console.log('ERRO - Variavel tipoConteudoPiano nao esta definida');
 			return;
 		};
