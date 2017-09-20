@@ -157,6 +157,7 @@ Piano.variaveis = {
 		},
 		krux: {
 			SEGMENTACOES: 'kxglobo_segs'
+			KRUXLIGADO: 'krux-ligado'
 		},
 		util: {
 			IP: "127.0.0.1",
@@ -189,8 +190,24 @@ Piano.krux = {
 	tem: function() {
 		return window.localStorage.getItem(Piano.variaveis.constante.krux.SEGMENTACOES) ? true : false;
 	},
+	ligado: function() {
+		var parametro = Piano.variaveis.constante.krux.KRUXLIGADO;
+		var valorParametro = Piano.util.getValorParametroNaUrl(parametro);
+		if (valorParametro == 'false' && Piano.variaveis.getAmbientePiano() != "prd") {
+			Piano.cookies.set(parametro, valorParametro, 1);
+			return false;
+		}
+		if (valorParametro == 'true' || Piano.variaveis.getAmbientePiano() == "prd") {
+			Piano.cookies.set(parametro, "", -1);
+			return true;
+		}
+		if (Piano.cookies.get(Piano.variaveis.constante.krux.KRUXLIGADO)) {
+			return false;
+		}
+		return true;
+	},
 	obtemSegmentacao: function() {
-		if (Piano.krux.tem()) {
+		if (Piano.krux.tem() && Piano.krux.ligado()) {
 			var segmentacoes = window.localStorage.getItem(Piano.variaveis.constante.krux.SEGMENTACOES).split(',');
 			for (var i = 0; i < segmentacoes.length; i++) {
 				tp.push(["setCustomVariable", segmentacoes[i], segmentacoes[i]]);
