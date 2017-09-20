@@ -8,11 +8,11 @@ $("body").append("" +
 "	<div class='back-drop'></div>" +
 "</div>");
 
-if (typeof tituloComunicacao != 'undefined' && tituloComunicacao != null && tituloComunicacao != '' ) {
+if (window.tituloComunicacao) {
 	$(".comunicacao-piano h2").html(tituloComunicacao);
 }
 
-if (typeof textoComunicacao != 'undefined' && textoComunicacao != null && textoComunicacao != '' ) {
+if (window.textoComunicacao) {
 	$(".comunicacao-piano p").html(textoComunicacao);
 }
 $(document).off("click", ".comunicacao-piano .fechar-modal, .comunicacao-piano .back-drop").on("click", ".comunicacao-piano .fechar-modal, .comunicacao-piano .back-drop", function () {

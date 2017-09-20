@@ -7,10 +7,10 @@ $("body").append("" +
 "	<div class='back-drop'></div>" +
 "</div>");
 
-if (typeof tituloComunicacao != 'undefined' && tituloComunicacao != null && tituloComunicacao != '' ) {
-	$(".comunicacao-piano h2").text(tituloComunicacao);
+if (window.tituloComunicacao) {
+	$(".comunicacao-piano h2").html(tituloComunicacao);
 }
 
-if (typeof textoComunicacao != 'undefined' && textoComunicacao != null && textoComunicacao != '' ) {
+if (window.textoComunicacao) {
 	$(".comunicacao-piano p").html(textoComunicacao);
 }
