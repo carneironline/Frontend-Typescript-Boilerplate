@@ -141,6 +141,7 @@ Piano.cookies = {
 
 Piano.variaveis = {
 	ambientesAceitos: ["int", "qlt", "prd"],
+	statusHttpObterAutorizacaoAcesso: ["400", "404", "406", "500", "502", "504"],
 	constante: {
 		cookie: {
 			GCOM: 'GLBID',
@@ -183,7 +184,10 @@ Piano.variaveis = {
 	},
 	getTipoConteudoPiano: function() {
 		return window.tipoConteudoPiano;
-	}
+	},
+	executouPageview: function() {
+		return window.executouPageview ? true : false;
+	}  
 };
 
 Piano.krux = {
@@ -247,10 +251,13 @@ Piano.metricas = {
 		return passagem;
 	},
 	executaAposPageview: function(expirou) {
-		regrasTiny.fluxo = window.tpContext ? tpContext.toLowerCase() : '-';
-		regrasTiny.nomeExperiencia = window.nomeExperiencia ? window.nomeExperiencia : '';
-		Piano.metricas.setLimiteContagem(regrasTiny);
-		if (typeof expirou == 'undefined') Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
+		if (!Piano.variaveis.executouPageview()) {
+			regrasTiny.fluxo = window.tpContext ? tpContext.toLowerCase() : '-';
+			regrasTiny.nomeExperiencia = window.nomeExperiencia ? window.nomeExperiencia : '';
+			Piano.metricas.setLimiteContagem(regrasTiny);
+			if (typeof expirou == 'undefined') Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
+			executouPageview = true;
+		}
 	}
 };
 
@@ -334,10 +341,15 @@ Piano.ajax = {
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
 			},
 			error: function (xhr, status, error) {
-				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Barramento respondeu com erro ao obter autorização");
-				console.log('ERRO - na requisição ao barramento: ' + xhr.status);
+				if (Piano.variaveis.statusHttpObterAutorizacaoAcesso.indexOf(xhr.status) > -1) {
+					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + glbid);
+					tp.push(["setCustomVariable", "autorizado", true]);
+				} else {
+					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao - " + xhr.statusText);
+					tp.push(["setCustomVariable", "autorizado", false]);
+				}
 				tp.push(["setCustomVariable", "logado", true]);
-				tp.push(["setCustomVariable", "autorizado", true]);
+				console.log('ERRO - na requisiÃ§Ã£o ao barramento: ' + xhr.status);
 				tp.push(["setCustomVariable", "motivo", 'erro']);
 			}
 		});
@@ -383,7 +395,7 @@ Piano.util = {
 	},
 	isTipoConteudoUndefined: function() {
 		if (typeof Piano.variaveis.getTipoConteudoPiano() == 'undefined') {
-			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Variavel tipoConteudoPiano nao esta definida");
+			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Variavel tipoConteudoPiano nao esta definida nesta url - " + document.location.href);
 			console.log('ERRO - Variavel tipoConteudoPiano nao esta definida');
 			return;
 		};
@@ -452,21 +464,19 @@ Piano.util = {
 		}
 		return false;
 	},
-
 	detectaAdBlock: function() {
 		document.cookie = "__adblocker=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-    	var setNptTechAdblockerCookie = function(adblocker) {
-	        var d = new Date();
-	        d.setTime(d.getTime() + 60 * 60 * 24 * 2 * 1000);
-	        document.cookie = "__adblocker=" + (adblocker ? "true" : "false") + "; expires=" + d.toUTCString() + "; path=/";
-    	}
-	    var script = document.createElement("script");
-	    script.setAttribute("async", true);
-	    script.setAttribute("src", "//www.npttech.com/advertising.js");
-	    script.setAttribute("onerror", "setNptTechAdblockerCookie(true);");
-	    document.getElementsByTagName("head")[0].appendChild(script);
+		var setNptTechAdblockerCookie = function(adblocker) {
+			var d = new Date();
+			d.setTime(d.getTime() + 60 * 60 * 24 * 2 * 1000);
+			document.cookie = "__adblocker=" + (adblocker ? "true" : "false") + "; expires=" + d.toUTCString() + "; path=/";
+		}
+		var script = document.createElement("script");
+		script.setAttribute("async", true);
+		script.setAttribute("src", "//www.npttech.com/advertising.js");
+		script.setAttribute("onerror", "setNptTechAdblockerCookie(true);");
+		document.getElementsByTagName("head")[0].appendChild(script);
 	},
-
 	callbackMeter: function(meterData) {
 		regrasTiny = meterData;
 		Piano.metricas.executaAposPageview();
