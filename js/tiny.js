@@ -140,8 +140,8 @@ Piano.cookies = {
 };
 
 Piano.variaveis = {
-	ambientesAceitos: "int,qlt,prd",
-	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,504",
+	ambientesAceitos: ["int", "qlt", "prd"],
+	statusHttpObterAutorizacaoAcesso: ["400", "404", "406", "500", "502", "504"],
 	constante: {
 		cookie: {
 			GCOM: 'GLBID',
