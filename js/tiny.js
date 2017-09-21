@@ -140,8 +140,8 @@ Piano.cookies = {
 };
 
 Piano.variaveis = {
-	ambientesAceitos: ["int", "qlt", "prd"],
-	statusHttpObterAutorizacaoAcesso: ["400", "404", "406", "500", "502", "504"],
+	ambientesAceitos: "int,qlt,prd",
+	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,504",
 	constante: {
 		cookie: {
 			GCOM: 'GLBID',
@@ -153,7 +153,7 @@ Piano.variaveis = {
 			COD: 'OG03'
 		},
 		metricas: {
-			EVENTO_SEM_ACAO: 'sem ação',
+			EVENTO_SEM_ACAO: 'sem aÃ§Ã£o',
 			ERRO: 'Erro'
 		},
 		krux: {
@@ -225,12 +225,12 @@ Piano.metricas = {
 		dataLayer.push({'event': 'EventoGAPiano', 'eventoGACategoria': 'Piano', 'eventoGAAcao': _GAAcao, 'eventoGARotulo':_GARotulo});
 	},
 	montaRotuloGA: function() {
-		if(typeof regrasTiny != 'undefined') {
+		if(window.regrasTiny.nomeExperiencia) {
 			return window.subsegmentacaoPiano ? regrasTiny.nomeExperiencia + " - " + subsegmentacaoPiano : regrasTiny.nomeExperiencia;
 		} else if (window.nomeExperiencia) {
 			return window.subsegmentacaoPiano ? window.nomeExperiencia + " - " + subsegmentacaoPiano : window.nomeExperiencia;
 		}
-		return "";
+		return " ";
 	},
 	setLimiteContagem: function(metricas) {
 		_GALimite = "-";
@@ -349,7 +349,7 @@ Piano.ajax = {
 					tp.push(["setCustomVariable", "autorizado", false]);
 				}
 				tp.push(["setCustomVariable", "logado", true]);
-				console.log('ERRO - na requisiÃ§Ã£o ao barramento: ' + xhr.status);
+				console.log('ERRO - na requisiÃƒÂ§ÃƒÂ£o ao barramento: ' + xhr.status);
 				tp.push(["setCustomVariable", "motivo", 'erro']);
 			}
 		});
