@@ -170,7 +170,7 @@ Piano.variaveis = {
 		return window.conteudoExclusivo ? true : false;
 	},
 	getAmbientePiano: function() {
-		if (Piano.variaveis.ambientesAceitos.indexOf(Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE)) > -1) {
+		if (Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE).indexOf(Piano.variaveis.ambientesAceitos) > -1) {
 			Piano.cookies.set(Piano.variaveis.constante.cookie.AMBIENTE, Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE), 1);
 			return Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE);
 		}
