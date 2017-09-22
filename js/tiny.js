@@ -225,7 +225,7 @@ Piano.metricas = {
 		dataLayer.push({'event': 'EventoGAPiano', 'eventoGACategoria': 'Piano', 'eventoGAAcao': _GAAcao, 'eventoGARotulo':_GARotulo});
 	},
 	montaRotuloGA: function() {
-		if(window.regrasTiny.nomeExperiencia) {
+		if(window.regrasTiny && window.regrasTiny.nomeExperiencia) {
 			return window.subsegmentacaoPiano ? regrasTiny.nomeExperiencia + " - " + subsegmentacaoPiano : regrasTiny.nomeExperiencia;
 		} else if (window.nomeExperiencia) {
 			return window.subsegmentacaoPiano ? window.nomeExperiencia + " - " + subsegmentacaoPiano : window.nomeExperiencia;
