@@ -296,6 +296,16 @@ Piano.comunicado = {
 	}
 };
 
+Piano.botao = {
+	mostrarBotao: function(versao) {
+		$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/botao-piano/"+versao+"/styles/styles.css'>");
+		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/botao-piano/"+versao+"/scripts/botao-piano.js", true);
+	},
+	removerBotao: function() {
+		$("footer .footer #banner-assinatura-footer, .top-header ul.menu-interacao>li#banner-assinatura, .top-header ul.menu-interacao > li#banner-assinatura, footer .bar .assine").remove();
+	}
+};
+
 Piano.ajax = {
 	geraScriptNaPagina: function(urlScript, assincrono) {
 		$.ajax({
