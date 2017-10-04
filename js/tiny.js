@@ -140,8 +140,7 @@ Piano.cookies = {
 };
 
 Piano.variaveis = {
-	ambientesAceitos: "int,qlt,prd",
-	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,504",
+	ambientesAceitos: ["int", "qlt", "prd"],
 	constante: {
 		cookie: {
 			GCOM: 'GLBID',
@@ -153,12 +152,11 @@ Piano.variaveis = {
 			COD: 'OG03'
 		},
 		metricas: {
-			EVENTO_SEM_ACAO: 'sem acao',
+			EVENTO_SEM_ACAO: 'sem ação',
 			ERRO: 'Erro'
 		},
 		krux: {
-			SEGMENTACOES: 'kxglobo_segs',
-			KRUXLIGADO: 'krux-ligado'
+			SEGMENTACOES: 'kxglobo_segs'
 		},
 		util: {
 			IP: "127.0.0.1",
@@ -170,7 +168,7 @@ Piano.variaveis = {
 		return window.conteudoExclusivo ? true : false;
 	},
 	getAmbientePiano: function() {
-		if (Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE).indexOf(Piano.variaveis.ambientesAceitos) > -1) {
+		if (Piano.variaveis.ambientesAceitos.indexOf(Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE)) > -1) {
 			Piano.cookies.set(Piano.variaveis.constante.cookie.AMBIENTE, Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE), 1);
 			return Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE);
 		}
@@ -185,33 +183,17 @@ Piano.variaveis = {
 	getTipoConteudoPiano: function() {
 		return window.tipoConteudoPiano;
 	},
-	executouPageview: function() {
-		return window.executouPageview ? true : false;
-	}  
+	getNomeProdutoPiano: function() {
+		return window.nomeProdutoPiano;
+	}
 };
 
 Piano.krux = {
 	tem: function() {
 		return window.localStorage.getItem(Piano.variaveis.constante.krux.SEGMENTACOES) ? true : false;
 	},
-	ligado: function() {
-		var parametro = Piano.variaveis.constante.krux.KRUXLIGADO;
-		var valorParametro = Piano.util.getValorParametroNaUrl(parametro);
-		if (valorParametro == 'false' && window.ambienteUtilizadoPiano != "prd") {
-			Piano.cookies.set(parametro, valorParametro, 1);
-			return false;
-		}
-		if (valorParametro == 'true' || window.ambienteUtilizadoPiano == "prd") {
-			Piano.cookies.set(parametro, "", -1);
-			return true;
-		}
-		if (Piano.cookies.get(Piano.variaveis.constante.krux.KRUXLIGADO) == "false") {
-			return false;
-		}
-		return true;
-	},
 	obtemSegmentacao: function() {
-		if (Piano.krux.tem() && Piano.krux.ligado()) {
+		if (Piano.krux.tem()) {
 			var segmentacoes = window.localStorage.getItem(Piano.variaveis.constante.krux.SEGMENTACOES).split(',');
 			for (var i = 0; i < segmentacoes.length; i++) {
 				tp.push(["setCustomVariable", segmentacoes[i], segmentacoes[i]]);
@@ -225,12 +207,12 @@ Piano.metricas = {
 		dataLayer.push({'event': 'EventoGAPiano', 'eventoGACategoria': 'Piano', 'eventoGAAcao': _GAAcao, 'eventoGARotulo':_GARotulo});
 	},
 	montaRotuloGA: function() {
-		if(window.regrasTiny && window.regrasTiny.nomeExperiencia) {
+		if(typeof regrasTiny != 'undefined') {
 			return window.subsegmentacaoPiano ? regrasTiny.nomeExperiencia + " - " + subsegmentacaoPiano : regrasTiny.nomeExperiencia;
 		} else if (window.nomeExperiencia) {
 			return window.subsegmentacaoPiano ? window.nomeExperiencia + " - " + subsegmentacaoPiano : window.nomeExperiencia;
 		}
-		return " ";
+		return "";
 	},
 	setLimiteContagem: function(metricas) {
 		_GALimite = "-";
@@ -251,13 +233,10 @@ Piano.metricas = {
 		return passagem;
 	},
 	executaAposPageview: function(expirou) {
-		if (!Piano.variaveis.executouPageview()) {
-			regrasTiny.fluxo = window.tpContext ? tpContext.toLowerCase() : '-';
-			regrasTiny.nomeExperiencia = window.nomeExperiencia ? window.nomeExperiencia : '';
-			Piano.metricas.setLimiteContagem(regrasTiny);
-			if (typeof expirou == 'undefined') Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
-			executouPageview = true;
-		}
+		regrasTiny.fluxo = window.tpContext ? tpContext.toLowerCase() : '-';
+		regrasTiny.nomeExperiencia = window.nomeExperiencia ? window.nomeExperiencia : '';
+		Piano.metricas.setLimiteContagem(regrasTiny);
+		if (typeof expirou == 'undefined') Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
 	}
 };
 
@@ -341,15 +320,10 @@ Piano.ajax = {
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
 			},
 			error: function (xhr, status, error) {
-				if (Piano.variaveis.statusHttpObterAutorizacaoAcesso.indexOf(xhr.status) > -1) {
-					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + glbid);
-					tp.push(["setCustomVariable", "autorizado", true]);
-				} else {
-					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao - " + xhr.statusText);
-					tp.push(["setCustomVariable", "autorizado", false]);
-				}
+				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Barramento respondeu com erro ao obter autorização");
+				console.log('ERRO - na requisição ao barramento: ' + xhr.status);
 				tp.push(["setCustomVariable", "logado", true]);
-				console.log('ERRO - na requisiÃƒÂ§ÃƒÂ£o ao barramento: ' + xhr.status);
+				tp.push(["setCustomVariable", "autorizado", true]);
 				tp.push(["setCustomVariable", "motivo", 'erro']);
 			}
 		});
@@ -395,7 +369,7 @@ Piano.util = {
 	},
 	isTipoConteudoUndefined: function() {
 		if (typeof Piano.variaveis.getTipoConteudoPiano() == 'undefined') {
-			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Variavel tipoConteudoPiano nao esta definida nesta url - " + document.location.href);
+			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Variavel tipoConteudoPiano nao esta definida");
 			console.log('ERRO - Variavel tipoConteudoPiano nao esta definida');
 			return;
 		};
@@ -464,19 +438,21 @@ Piano.util = {
 		}
 		return false;
 	},
+
 	detectaAdBlock: function() {
 		document.cookie = "__adblocker=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-		var setNptTechAdblockerCookie = function(adblocker) {
-			var d = new Date();
-			d.setTime(d.getTime() + 60 * 60 * 24 * 2 * 1000);
-			document.cookie = "__adblocker=" + (adblocker ? "true" : "false") + "; expires=" + d.toUTCString() + "; path=/";
-		}
-		var script = document.createElement("script");
-		script.setAttribute("async", true);
-		script.setAttribute("src", "//www.npttech.com/advertising.js");
-		script.setAttribute("onerror", "setNptTechAdblockerCookie(true);");
-		document.getElementsByTagName("head")[0].appendChild(script);
+    	var setNptTechAdblockerCookie = function(adblocker) {
+	        var d = new Date();
+	        d.setTime(d.getTime() + 60 * 60 * 24 * 2 * 1000);
+	        document.cookie = "__adblocker=" + (adblocker ? "true" : "false") + "; expires=" + d.toUTCString() + "; path=/";
+    	}
+	    var script = document.createElement("script");
+	    script.setAttribute("async", true);
+	    script.setAttribute("src", "//www.npttech.com/advertising.js");
+	    script.setAttribute("onerror", "setNptTechAdblockerCookie(true);");
+	    document.getElementsByTagName("head")[0].appendChild(script);
 	},
+
 	callbackMeter: function(meterData) {
 		regrasTiny = meterData;
 		Piano.metricas.executaAposPageview();
@@ -497,6 +473,7 @@ Piano.construtor = {
 		tp.push(["setDebug", Piano.util.isDebug()]);
 		var clean_url = window.location.href.split("?")[0];
 		tp.push(["setPageURL",clean_url]);
+		tp.push(["setCustomVariable", "nomeProduto", Piano.variaveis.getNomeProdutoPiano()])
 		Piano.janelaAnonima.detectPrivateMode(function (is_private) {
 			tp.push(["setCustomVariable", "anonimo", is_private]);
 		});
