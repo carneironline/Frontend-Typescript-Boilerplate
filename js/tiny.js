@@ -187,7 +187,10 @@ Piano.variaveis = {
 	},
 	executouPageview: function() {
 		return window.executouPageview ? true : false;
-	}  
+	},
+	getNomeProdutoPiano: function() {
+		return window.nomeProdutoPiano;
+	}
 };
 
 Piano.krux = {
@@ -497,6 +500,7 @@ Piano.construtor = {
 		tp.push(["setDebug", Piano.util.isDebug()]);
 		var clean_url = window.location.href.split("?")[0];
 		tp.push(["setPageURL",clean_url]);
+		tp.push(["setCustomVariable", "nomeProduto", Piano.variaveis.getNomeProdutoPiano()]);
 		Piano.janelaAnonima.detectPrivateMode(function (is_private) {
 			tp.push(["setCustomVariable", "anonimo", is_private]);
 		});
