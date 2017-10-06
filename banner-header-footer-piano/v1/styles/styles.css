@@ -9,6 +9,7 @@ footer .footer #banner-assinatura-footer a, .top-header ul.menu-interacao>li#ban
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-color: transparent;
+	background-position: 0 50%;
 	width: 82px;
 	height: 54px;
 	overflow: hidden;
