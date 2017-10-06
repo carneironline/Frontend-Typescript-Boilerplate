@@ -487,7 +487,7 @@ Piano.util = {
 	detectaBurlesco: function() {
 		$(window).load(function() {
 			if(typeof addControlContent == "undefined"){
-				dataLayer.push({'event': 'EventoGA', 'eventoGACategoria': 'ExtensaoBurlesco', 'eventoGAAcao': 'Sim', 'eventoGARotulo':''});
+				dataLayer.push({'event': 'EventoGAPiano', 'eventoGACategoria': 'ExtensaoBurlesco', 'eventoGAAcao': 'Sim', 'eventoGARotulo': '', 'eventoGAInteracao': 'true'});
 			}; 
 		});
 	},
