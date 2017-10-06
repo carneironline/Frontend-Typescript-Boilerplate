@@ -484,6 +484,13 @@ Piano.util = {
 		script.setAttribute("onerror", "setNptTechAdblockerCookie(true);");
 		document.getElementsByTagName("head")[0].appendChild(script);
 	},
+	detectaBurlesco: function() {
+		$(window).load(function() {
+			if(typeof addControlContent == "undefined"){
+				dataLayer.push({'event': 'EventoGA', 'eventoGACategoria': 'ExtensaoBurlesco', 'eventoGAAcao': 'Sim', 'eventoGARotulo':''});
+			}; 
+		});
+	},
 	callbackMeter: function(meterData) {
 		regrasTiny = meterData;
 		Piano.metricas.executaAposPageview();
@@ -496,6 +503,8 @@ Piano.util = {
 
 Piano.construtor = {
 	initTp: function() {
+		Piano.util.detectaAdBlock();
+		Piano.util.detectaBurlesco();
 		Piano.util.isTipoConteudoUndefined();
 		tp = window["tp"] || [];
 		tp.push(["setTags", [Piano.variaveis.getTipoConteudoPiano()]]);
@@ -525,7 +534,6 @@ Piano.construtor = {
 };
 
 (function () {
-	Piano.util.detectaAdBlock();
 	Piano.construtor.initTp();
 })();
 
