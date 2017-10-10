@@ -142,7 +142,7 @@ Piano.cookies = {
 Piano.variaveis = {
 	ambientesAceitos: "int,qlt,prd",
 	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,503,504",
-	statusHttpObterAssinaturaInadimplente: "400,404,502,503,504",
+	statusHttpObterAssinaturaInadimplente: "400,404,500,502,503,504",
 	constante: {
 		cookie: {
 			GCOM: 'GLBID',
