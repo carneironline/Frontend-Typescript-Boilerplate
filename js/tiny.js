@@ -141,7 +141,8 @@ Piano.cookies = {
 
 Piano.variaveis = {
 	ambientesAceitos: "int,qlt,prd",
-	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,504",
+	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,503,504",
+	statusHttpObterAssinaturaInadimplente: "400,404,500,502,503,504",
 	constante: {
 		cookie: {
 			GCOM: 'GLBID',
@@ -170,7 +171,7 @@ Piano.variaveis = {
 		return window.conteudoExclusivo ? true : false;
 	},
 	getAmbientePiano: function() {
-		if (Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE).indexOf(Piano.variaveis.ambientesAceitos) > -1) {
+		if (Piano.variaveis.ambientesAceitos.indexOf(Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE)) > -1) {
 			Piano.cookies.set(Piano.variaveis.constante.cookie.AMBIENTE, Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE), 1);
 			return Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE);
 		}
@@ -300,6 +301,15 @@ Piano.comunicado = {
 	}
 };
 
+Piano.inadimplente = {
+	getLinkAssinatura: function(link) {
+		for (var i = 0; i < link.length; i++) {
+			if (link[i].rel == 'assinatura') return link[i].href;
+		}
+		return " ";
+	}
+};
+
 Piano.ajax = {
 	geraScriptNaPagina: function(urlScript, assincrono) {
 		$.ajax({
@@ -309,6 +319,28 @@ Piano.ajax = {
 			cache: true,
 			success: function(result) {
 				$("head").append(result);
+			}
+		});
+	},
+	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
+		$.ajax({
+			url: hrefAssinaturaInadimplente,
+			type: 'GET',
+			contentType: "application/json",
+			headers: {
+				Accept: "application/json"
+			},
+			async : false,
+			dataType: "json",
+			success: function (respJson) {
+				var situacaoPagamento = respJson.situacaoPagamento.toLowerCase();
+				tp.push(["setCustomVariable", "situacaoPagamento", situacaoPagamento]);
+			},
+			error: function (xhr, status, error) {
+				if (xhr.status != 0 && Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(xhr.status) > -1) {
+					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente da API - " + xhr.status);
+				}
+				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
 			}
 		});
 	},
@@ -326,14 +358,17 @@ Piano.ajax = {
 			data: JSON.stringify(data),
 			success: function (respJson) {
 				tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
-				var respostaDeTermoDeUso = false, respostaDeMotivo = '';
+				var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
 				if (typeof respJson.motivo != "undefined") {
 					respostaDeMotivo = respJson.motivo.toLowerCase();
 				}
 				if (typeof respJson.temTermoDeUso != "undefined") {
 					respostaDeTermoDeUso = respJson.temTermoDeUso;
 				}
-				var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado);
+				if (typeof respJson.link != "undefined") {
+					hrefAssinaturaInadimplente = Piano.inadimplente.getLinkAssinatura(respJson.link);
+				}
+				var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado, hrefAssinaturaInadimplente);
 				tp.push(["setCustomVariable", "logado", isAutorizado]);
 				tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
 				tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
@@ -348,15 +383,14 @@ Piano.ajax = {
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
 			},
 			error: function (xhr, status, error) {
-				if (Piano.variaveis.statusHttpObterAutorizacaoAcesso.indexOf(xhr.status) > -1) {
-					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + glbid);
+				if (xhr.status != 0 && Piano.variaveis.statusHttpObterAutorizacaoAcesso.indexOf(xhr.status) > -1) {
+					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
 					tp.push(["setCustomVariable", "autorizado", true]);
 				} else {
-					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao - " + xhr.statusText);
+					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao - " + xhr.status + " - " + xhr.statusText);
 					tp.push(["setCustomVariable", "autorizado", false]);
 				}
 				tp.push(["setCustomVariable", "logado", true]);
-				console.log('ERRO - na requisiÃƒÂ§ÃƒÂ£o ao barramento: ' + xhr.status);
 				tp.push(["setCustomVariable", "motivo", 'erro']);
 			}
 		});
@@ -387,8 +421,9 @@ Piano.autenticacao = {
 			Piano.ajax.fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid);
 		}
 	},
-	isAutorizado: function(termoDeUso, motivo, autorizado) {
+	isAutorizado: function(termoDeUso, motivo, autorizado, hrefAssinaturaInadimplente) {
 		if (autorizado || motivo == "indisponivel" || termoDeUso != false) {
+			if (autorizado && hrefAssinaturaInadimplente) Piano.ajax.fazRequisicaoBarramentoApiObterAssinaturaInadimplente(hrefAssinaturaInadimplente);
 			return true;
 		};
 		if (Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX)) Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, "", -1);
@@ -453,7 +488,7 @@ Piano.util = {
 			var regex = new RegExp("[\?(&)]" + parametro + "=([^&#]*)");
 			return parametros.match(regex)[1];
 		}
-		return "";
+		return "sem parametro";
 	},
 	isDebug: function() {
 		var parametro = Piano.variaveis.constante.util.DEBUG;
