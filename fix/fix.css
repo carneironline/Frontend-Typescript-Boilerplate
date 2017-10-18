@@ -30,3 +30,7 @@ aside#sidebar, .link-top, #relacionadas-topo {
     height: 58px !important; }
   body#article .borders {
     z-index: 1 !important; } }
+    
+  #fotogaleria .gallery{
+  z-index:10!important;} 
+   
