@@ -31,6 +31,6 @@ aside#sidebar, .link-top, #relacionadas-topo {
   body#article .borders {
     z-index: 1 !important; } }
     
-  #fotogaleria .gallery{
+  #fotogaleria .gallery, .galeria div.tab-result{
   z-index:10!important;} 
    
