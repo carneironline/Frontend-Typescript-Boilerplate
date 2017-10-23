@@ -126,7 +126,7 @@ body {
         width: 315px;
         overflow: hidden;
         position: relative;
-        top: -82px; }
+        top: -86px; }
 
 @media only screen and (min-width: 765px) {
   #login-barreira, #login-barreira .conteudo-barreira {
@@ -283,6 +283,6 @@ body {
     #login-barreira .conteudo-barreira #login-promocao{
         display: none; }
     #login-barreira .conteudo-barreira #login-barreira-iframe iframe {height: 800px;}
-    #login-barreira .conteudo-barreira #login-barreira-iframe h2{display: none}}
+    #login-barreira .conteudo-barreira #login-barreira-iframe h2{display: none;}}
 
 
