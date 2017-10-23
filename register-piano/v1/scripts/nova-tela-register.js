@@ -9,7 +9,7 @@ $('body').append("" +
 "				<img src='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/v1/images/produto.png'>" +
 "				<h2>Assine agora e tenha acesso ilimitado</h2>" +
 "				<p>A partir de <span class='preco-menor'>R$1,90</span> " +
-"					<span class='quantidade-mes'>no 1Ã‚Âº mÃƒÂªs</span>" +
+"					<span class='quantidade-mes'>no 1º mês</span>" +
 "				</p>" +
 "				<a href='https://assinatura.oglobo.globo.com/VitrineDigital.aspx' target='_blank'>Ver ofertas</a>" +
 "			</div>" +
@@ -17,7 +17,7 @@ $('body').append("" +
 "		<div id='login-barreira-iframe'>" +
 "			<h2>" +
 "				<strong>Acesso para assinantes e cadastrados </strong>" +
-"				<span>FaÃƒÂ§a seu login ou cadastre-se para continuar</span>" +
+"				<span>Faça seu login ou cadastre-se para continuar</span>" +
 "			</h2>" +
 "			<div class='segura-cadun'>" +
 "				<div class='scroll-cadun'>" +
