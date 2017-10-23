@@ -281,4 +281,8 @@ body {
 
 @media only screen and (max-height: 480px){
     #login-barreira .conteudo-barreira #login-promocao{
-        display: none; } }
+        display: none; }
+    #login-barreira .conteudo-barreira #login-barreira-iframe iframe {height: 800px;}
+    #login-barreira .conteudo-barreira #login-barreira-iframe h2{display: none}}
+
+
