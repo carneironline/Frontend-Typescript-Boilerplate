@@ -278,3 +278,7 @@ body {
   #login-barreira .conteudo-barreira {
     top: 50%;
     margin-top: -270px; } }
+
+@media only screen and (max-height: 480px){
+    #login-barreira .conteudo-barreira #login-promocao{
+        display: none; } }
