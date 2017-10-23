@@ -8,13 +8,13 @@ $('body').append("" +
 "			<div class='conteudo-produto'>" +
 "				<img class='img-mobi' src='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/v2/images/produto.png'>" +
 "				<img class='img-desk' src='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/v2/images/box-assinantes.png'>" +
-"				<h2>O melhor conteÃƒÂºdo exclusivo para vocÃƒÂª</h2>" +
+"				<h2>O melhor conteúdo exclusivo para você</h2>" +
 "				<p>Assine agora e tenha acesso ilimitado</p>" +
 "				<a href='https://assinatura.oglobo.globo.com/VitrineDigital.aspx' target='_blank'>Eu quero!</a>" +
 "			</div>" +
 "		</div>" +
 "		<div id='login-barreira-iframe'>" +
-"			<h2><strong>ConteÃƒÂºdo exclusivo para assinantes </strong> <span>JÃƒÂ¡ ÃƒÂ© assinante ? Identifique-se</span></h2>" +
+"			<h2><strong>Conteúdo exclusivo para assinantes </strong> <span>Já é assinante ? Identifique-se</span></h2>" +
 "			<div class='segura-cadun'>" +
 "				<div class='scroll-cadun'>" +
 "					<iframe id='iframeCadun' src='https://login.globo.com/login/4975?tam=widget&amp;url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4975%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523"+uri+"'></iframe>" +
