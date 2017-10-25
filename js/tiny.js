@@ -520,11 +520,11 @@ Piano.util = {
 		document.getElementsByTagName("head")[0].appendChild(script);
 	},
 	detectaBurlesco: function() {
-		$(window).load(function() {
+		window.onload = function(){ 
 			if(typeof addControlContent == "undefined"){
 				dataLayer.push({'event': 'EventoGAPiano', 'eventoGACategoria': 'ExtensaoBurlesco', 'eventoGAAcao': 'Sim', 'eventoGARotulo': '', 'eventoGAInteracao': 'true'});
-			}; 
-		});
+			};
+		}
 	},
 	callbackMeter: function(meterData) {
 		regrasTiny = meterData;
