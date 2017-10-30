@@ -297,21 +297,9 @@ body {
     margin-top: -270px; } }
 
 @media only screen and (max-height: 400px){
-    #login-barreira .conteudo-barreira #login-promocao{
-        display: none; }
     #login-barreira .conteudo-barreira #login-barreira-iframe iframe {height: 800px;}
-    #login-barreira .conteudo-barreira #login-barreira-iframe h2{display: none;}}
+    #login-barreira .conteudo-barreira #login-barreira-iframe h2, #login-barreira .conteudo-barreira #login-promocao {display: none;}}
 
-
-body.iphone {
-    position: relative!important;
-    overflow-y: auto!important;
-}
-body.iphone #login-barreira {
-    position: relative !important;
-}
-body.iphone #main  {
-    height: 41px !important;
-    overflow: hidden !important;
-    min-height: auto !important;
+@media only screen and (max-width: 375px) {
+  .iphone #login-barreira .conteudo-barreira #login-barreira-iframe h2, .iphone #login-barreira .conteudo-barreira #login-promocao {display: none;}
 }
