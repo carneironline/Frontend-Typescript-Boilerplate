@@ -94,3 +94,7 @@ $(window).load(function () {
 		})();
 	}
 });
+
+if(/iPhone/.test(navigator.userAgent) && !window.MSStream){
+    $('body').addClass('iphone');
+}
