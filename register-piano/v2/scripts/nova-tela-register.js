@@ -98,3 +98,15 @@ $(window).load(function () {
 if(/iPhone/.test(navigator.userAgent) && !window.MSStream){
     $('body').addClass('iphone');
 }
+
+if(/iPhone/.test(navigator.userAgent) && !window.MSStream){
+    $(window).scroll(function() {
+	    if ($(this).scrollTop() === 1) {
+	        $('body').addClass('iphone');
+	    }
+	    else {
+	    	$('body').removeClass('iphone');
+	    }
+	});
+}
+
