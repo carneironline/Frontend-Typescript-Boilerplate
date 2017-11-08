@@ -45,7 +45,7 @@ $("body").append("" +
 "                               <li class='titulo-produto'>" +
 "                                   <div class='oglobo-logo'></div>" +
 "                                   <h2 class='azul-medio'>Digital</h2>" +
-"                                   <h3 class='compartilha-cor'>A informação na medida certa para você." +
+"                                   <h3 class='compartilha-cor'>A informação na medida certa para você.</h3>" +
 "                                   <a class='azul-medio' target='_blank' href='#'>" +
 "                                       <u>Saiba mais</u> ›" +
 "                                   </a>" +
