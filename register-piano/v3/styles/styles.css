@@ -6,7 +6,7 @@ body {
     overflow-y: hidden;
     -webkit-font-smoothing: antialiased;
 }
-@-webkit-keyframes fadeRegister {
+@keyframes fadeRegister {
     0% {
         background: rgba(38, 42, 56, 0);
     }
@@ -22,7 +22,7 @@ body {
         background: rgba(38, 42, 56, 0.9);
     }
 }
-@-webkit-keyframes slideRegister {
+@keyframes slideRegister {
     0% {
         top: -1000px;
     }
@@ -60,7 +60,7 @@ body {
     bottom: 0px;
     position: fixed;
     background: #000;
-    -webkit-box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.24);
+    box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.24);
     box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.24);
 }
 #login-barreira .conteudo-barreira #login-promocao .conteudo-produto {
@@ -314,11 +314,9 @@ body {
         -webkit-transform: inherit;
         -ms-transform: inherit;
         transform: inherit;
-        -webkit-box-sizing: border-box;
         box-sizing: border-box;
         margin-top: 5px;
         padding: 24px 0 24px 0;
-        -webkit-transition: all .3s ease-in-out;
         transition: all .3s ease-in-out;
     }
     #login-barreira .conteudo-barreira #login-promocao .conteudo-produto p {
@@ -407,11 +405,9 @@ body {
     #login-barreira .conteudo-barreira #login-promocao {
         display: none;
     }
-    @media only screen and (max-width: 350px) {
-        .iphone #login-barreira .conteudo-barreira #login-barreira-iframe h2,
-        .iphone #login-barreira .conteudo-barreira #login-promocao {
-            display: none;
-        }
+    .iphone #login-barreira .conteudo-barreira #login-barreira-iframe h2,
+    .iphone #login-barreira .conteudo-barreira #login-promocao {
+        display: none;
     }
 }
 #login-barreira.register .conteudo-barreira #login-barreira-iframe h2 strong {
