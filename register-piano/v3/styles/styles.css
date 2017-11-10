@@ -429,7 +429,7 @@ body {
         display: none !important;
     }    
 }
-@media only screen and (max-height: 400px) and (max-width: 350px) {
+@media only screen and (max-height: 400px) {
     .iphone #login-barreira .conteudo-barreira #login-barreira-iframe h2,
     .iphone #login-barreira .conteudo-barreira #login-promocao {
         display: none !important;
