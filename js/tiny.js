@@ -7,7 +7,7 @@ Piano.configuracao = {
 			'idSandboxTinypass':'dXu7dvFKRi',
 			'setSandBox':'true',
 			'urlSandboxPiano':'https://sandbox.tinypass.com/xbuilder/experience/load?aid=dXu7dvFKRi',
-			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso',
+			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/funcionalidade/4975/autorizacao-acesso?v=2',
 			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
 			'urlDominioSiteOGlobo':'globostg.globoi.com/'
 		},
@@ -15,7 +15,7 @@ Piano.configuracao = {
 			'idSandboxTinypass':'GTCopIDc5z',
 			'setSandBox':'false',
 			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
-			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso',
+			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/funcionalidade/4975/autorizacao-acesso?v=2',
 			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
 			'urlDominioSiteOGlobo':'globostg.globoi.com/'
 		},
@@ -23,7 +23,7 @@ Piano.configuracao = {
 			'idSandboxTinypass':'GTCopIDc5z',
 			'setSandBox':'false',
 			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
-			'urlVerificaLeitor':'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso',
+			'urlVerificaLeitor':'https://api.infoglobo.com.br/funcionalidade/4975/autorizacao-acesso?v=2',
 			'urlDominioPaywall':'https://assinatura.oglobo.globo.com/',
 			'urlDominioSiteOGlobo':'oglobo.globo.com/'
 		}
@@ -368,7 +368,7 @@ Piano.ajax = {
 				if (typeof respJson.link != "undefined") {
 					hrefAssinaturaInadimplente = Piano.inadimplente.getLinkAssinatura(respJson.link);
 				}
-				var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado, hrefAssinaturaInadimplente);
+				var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, hrefAssinaturaInadimplente);
 				tp.push(["setCustomVariable", "logado", isAutorizado]);
 				tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
 				tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
@@ -421,9 +421,9 @@ Piano.autenticacao = {
 			Piano.ajax.fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid);
 		}
 	},
-	isAutorizado: function(termoDeUso, motivo, autorizado, hrefAssinaturaInadimplente) {
-		if (autorizado || motivo == "indisponivel" || termoDeUso != false) {
-			if (autorizado && hrefAssinaturaInadimplente) Piano.ajax.fazRequisicaoBarramentoApiObterAssinaturaInadimplente(hrefAssinaturaInadimplente);
+	isAutorizado: function(termoDeUso, motivo, hrefAssinaturaInadimplente) {
+		if (motivo == "indisponivel" || termoDeUso != false) {
+			if (hrefAssinaturaInadimplente) Piano.ajax.fazRequisicaoBarramentoApiObterAssinaturaInadimplente(hrefAssinaturaInadimplente);
 			return true;
 		};
 		if (Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX)) Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, "", -1);
