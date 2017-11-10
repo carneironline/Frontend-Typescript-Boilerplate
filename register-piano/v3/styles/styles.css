@@ -102,7 +102,7 @@ body {
     color: #fff;
     font-weight: 900;
     letter-spacing: -0.5px;
-    max-width: 230px;
+    max-width: 245px;
 }
 #login-barreira .conteudo-barreira #login-promocao .conteudo-produto p i {
     color: #ff4100;
@@ -397,19 +397,6 @@ body {
         margin-top: -270px;
     }
 }
-@media only screen and (max-height: 400px) {
-    #login-barreira .conteudo-barreira #login-barreira-iframe iframe {
-        height: 800px;
-    }
-    #login-barreira .conteudo-barreira #login-barreira-iframe h2,
-    #login-barreira .conteudo-barreira #login-promocao {
-        display: none;
-    }
-    .iphone #login-barreira .conteudo-barreira #login-barreira-iframe h2,
-    .iphone #login-barreira .conteudo-barreira #login-promocao {
-        display: none;
-    }
-}
 #login-barreira.register .conteudo-barreira #login-barreira-iframe h2 strong {
     font-size: 19px;
     font-weight: bold;
@@ -431,4 +418,20 @@ body {
 }
 #login-barreira.register .conteudo-barreira #login-barreira-iframe h2:nth-child(2) {
     display: none;
+}
+
+@media only screen and (max-height: 400px) {
+    #login-barreira .conteudo-barreira #login-barreira-iframe iframe {
+        height: 800px;
+    }
+    #login-barreira .conteudo-barreira #login-barreira-iframe h2,
+    #login-barreira .conteudo-barreira #login-promocao {
+        display: none !important;
+    }    
+}
+@media only screen and (max-height: 400px) and (max-width: 350px) {
+    .iphone #login-barreira .conteudo-barreira #login-barreira-iframe h2,
+    .iphone #login-barreira .conteudo-barreira #login-promocao {
+        display: none !important;
+    }
 }
