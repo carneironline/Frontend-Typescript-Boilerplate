@@ -368,7 +368,7 @@ Piano.ajax = {
 				if (typeof respJson.link != "undefined") {
 					hrefAssinaturaInadimplente = Piano.inadimplente.getLinkAssinatura(respJson.link);
 				}
-				var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, hrefAssinaturaInadimplente);
+				var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado, hrefAssinaturaInadimplente);
 				tp.push(["setCustomVariable", "logado", isAutorizado]);
 				tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
 				tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
@@ -421,9 +421,9 @@ Piano.autenticacao = {
 			Piano.ajax.fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid);
 		}
 	},
-	isAutorizado: function(termoDeUso, motivo, hrefAssinaturaInadimplente) {
-		if (motivo == "indisponivel" || termoDeUso != false) {
-			if (hrefAssinaturaInadimplente) Piano.ajax.fazRequisicaoBarramentoApiObterAssinaturaInadimplente(hrefAssinaturaInadimplente);
+	isAutorizado: function(termoDeUso, motivo, autorizado, hrefAssinaturaInadimplente) {
+		if (autorizado || motivo == "indisponivel" || termoDeUso != false) {
+			if (autorizado && hrefAssinaturaInadimplente) Piano.ajax.fazRequisicaoBarramentoApiObterAssinaturaInadimplente(hrefAssinaturaInadimplente);
 			return true;
 		};
 		if (Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX)) Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, "", -1);
