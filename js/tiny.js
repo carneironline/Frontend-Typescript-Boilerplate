@@ -7,7 +7,7 @@ Piano.configuracao = {
 			'idSandboxTinypass':'dXu7dvFKRi',
 			'setSandBox':'true',
 			'urlSandboxPiano':'https://sandbox.tinypass.com/xbuilder/experience/load?aid=dXu7dvFKRi',
-			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/funcionalidade/4975/autorizacao-acesso?v=2',
+			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso',
 			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
 			'urlDominioSiteOGlobo':'globostg.globoi.com/'
 		},
@@ -15,7 +15,7 @@ Piano.configuracao = {
 			'idSandboxTinypass':'GTCopIDc5z',
 			'setSandBox':'false',
 			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
-			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/funcionalidade/4975/autorizacao-acesso?v=2',
+			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso',
 			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
 			'urlDominioSiteOGlobo':'globostg.globoi.com/'
 		},
@@ -23,7 +23,7 @@ Piano.configuracao = {
 			'idSandboxTinypass':'GTCopIDc5z',
 			'setSandBox':'false',
 			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
-			'urlVerificaLeitor':'https://api.infoglobo.com.br/funcionalidade/4975/autorizacao-acesso?v=2',
+			'urlVerificaLeitor':'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso',
 			'urlDominioPaywall':'https://assinatura.oglobo.globo.com/',
 			'urlDominioSiteOGlobo':'oglobo.globo.com/'
 		}
