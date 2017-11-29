@@ -63,37 +63,8 @@ Piano.variaveis = {
 	},
 	getServicoId: function() {
 		var id = window.servicoIdPiano ? window.servicoIdPiano : '4975';
-		if (Piano.variaveis.getNomeProduto() == 'acervo') id = '3981'; 
+		if (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital') id = '3981'; 
 		return id;
-	}
-};
-
-Piano.configuracao = {
-	jsonConfiguracaoTinyPass: {
-		'int': {
-			'idSandboxTinypass':'dXu7dvFKRi',
-			'setSandBox':'true',
-			'urlSandboxPiano':'https://sandbox.tinypass.com/xbuilder/experience/load?aid=dXu7dvFKRi',
-			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/'+Piano.variaveis.getServicoId()+'/autorizacao-acesso',
-			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
-			'urlDominioSiteOGlobo':'globostg.globoi.com/'
-		},
-		'qlt':{
-			'idSandboxTinypass':'GTCopIDc5z',
-			'setSandBox':'false',
-			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
-			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/'+Piano.variaveis.getServicoId()+'/autorizacao-acesso',
-			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
-			'urlDominioSiteOGlobo':'globostg.globoi.com/'
-		},
-		'prd':{
-			'idSandboxTinypass':'GTCopIDc5z',
-			'setSandBox':'false',
-			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
-			'urlVerificaLeitor':'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/'+Piano.variaveis.getServicoId()+'/autorizacao-acesso',
-			'urlDominioPaywall':'https://assinatura.oglobo.globo.com/',
-			'urlDominioSiteOGlobo':'oglobo.globo.com/'
-		}
 	}
 };
 
@@ -539,9 +510,9 @@ Piano.util = {
 			};
 		}
 	},
-	isProdutoOGlobo: function() {
+	isDominioOGlobo: function() {
 		var regex = new RegExp("://(.*?)/"), url = window.location.href;
-		if (url.match(regex)[1].indexOf("oglobo") > -1) {
+		if (url.match(regex)[1].indexOf("oglobo") > -1 || url.match(regex)[1].indexOf("globoi") > -1) {
 			return url.match(regex)[1];
 		}
 		return '';
@@ -550,7 +521,7 @@ Piano.util = {
 		var trocar = false;
 		var utp = Piano.cookies.get(Piano.variaveis.constante.cookie.UTP);
 		if (utp) var cookieUtp = JSON.parse(decodeURI(atob(utp)));
-		if ((window.cookieUtp && window.cookieUtp.produto != Piano.variaveis.getNomeProduto() || !window.cookieUtp) && (Piano.util.isProdutoOGlobo() && (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital')) || ((window.cookieUtp && window.cookieUtp.produto != Piano.variaveis.getNomeProduto() || !window.cookieUtp) && !Piano.util.isProdutoOGlobo())) {
+		if ((window.cookieUtp && window.cookieUtp.produto != Piano.variaveis.getNomeProduto() || !window.cookieUtp) && ((Piano.util.isDominioOGlobo() && (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital')) || !Piano.util.isDominioOGlobo())) {
 			trocar = true;
 		}
 		return trocar;
@@ -564,6 +535,36 @@ Piano.util = {
 		Piano.metricas.executaAposPageview(true);
 	}
 };
+
+Piano.configuracao = {
+	jsonConfiguracaoTinyPass: {
+		'int': {
+			'idSandboxTinypass':'dXu7dvFKRi',
+			'setSandBox':'true',
+			'urlSandboxPiano':'https://sandbox.tinypass.com/xbuilder/experience/load?aid=dXu7dvFKRi',
+			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/'+Piano.variaveis.getServicoId()+'/autorizacao-acesso',
+			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
+			'urlDominioSiteOGlobo':''+Piano.util.isDominioOGlobo()+'/'
+		},
+		'qlt':{
+			'idSandboxTinypass':'GTCopIDc5z',
+			'setSandBox':'false',
+			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
+			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/'+Piano.variaveis.getServicoId()+'/autorizacao-acesso',
+			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
+			'urlDominioSiteOGlobo':''+Piano.util.isDominioOGlobo()+'/'
+		},
+		'prd':{
+			'idSandboxTinypass':'GTCopIDc5z',
+			'setSandBox':'false',
+			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
+			'urlVerificaLeitor':'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/'+Piano.variaveis.getServicoId()+'/autorizacao-acesso',
+			'urlDominioPaywall':'https://assinatura.oglobo.globo.com/',
+			'urlDominioSiteOGlobo':''+Piano.util.isDominioOGlobo()+'/'
+		}
+	}
+};
+
 
 Piano.construtor = {
 	initTp: function() {
