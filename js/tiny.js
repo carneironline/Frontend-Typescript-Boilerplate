@@ -1,13 +1,80 @@
 window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
 
+Piano.produto = {
+	verificaConfiguracoes : function() {
+		if (Piano.util.trocarConfiguracoes()) {
+			Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/js/outros-produtos/configuracoes.js", false);
+		}
+	}
+};
+
+Piano.variaveis = {
+	ambientesAceitos: "int,qlt,prd",
+	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,503,504",
+	statusHttpObterAssinaturaInadimplente: "400,404,500,502,503,504",
+	codigoProduto: 'OG03',
+	fazerRequisicaoBarramento: true,
+	constante: {
+		cookie: {
+			GCOM: 'GLBID',
+			UTP: '_utp',
+			RTIEX: '_rtiex',
+			AMBIENTE: 'ambientePiano'
+		},
+		metricas: {
+			EVENTO_SEM_ACAO: 'sem acao',
+			ERRO: 'Erro'
+		},
+		krux: {
+			SEGMENTACOES: 'kxglobo_segs',
+			KRUXLIGADO: 'krux-ligado'
+		},
+		util: {
+			IP: "127.0.0.1",
+			AMBIENTE: "ambiente-desejado",
+			DEBUG: "debug-piano"
+		}
+	},
+	isConteudoExclusivo: function() {
+		return window.conteudoExclusivo ? true : false;
+	},
+	getAmbientePiano: function() {
+		if (Piano.variaveis.ambientesAceitos.indexOf(Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE)) > -1) {
+			Piano.cookies.set(Piano.variaveis.constante.cookie.AMBIENTE, Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE), 1);
+			return Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE);
+		}
+		if (Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE) == 'false') {
+			Piano.cookies.set(Piano.variaveis.constante.cookie.AMBIENTE, "", -1);
+		}
+		if (Piano.cookies.get(Piano.variaveis.constante.cookie.AMBIENTE)) {
+			return Piano.cookies.get(Piano.variaveis.constante.cookie.AMBIENTE);
+		};
+		return Piano.variaveis.ambientesAceitos.indexOf(window.ambienteUtilizadoPiano) > -1 ? window.ambienteUtilizadoPiano : 'prd';
+	},
+	getTipoConteudoPiano: function() {
+		return window.tipoConteudoPiano;
+	},
+	executouPageview: function() {
+		return window.executouPageview ? true : false;
+	},
+	getNomeProduto: function() {
+		return window.nomeProdutoPiano;
+	},
+	getServicoId: function() {
+		var id = window.servicoIdPiano ? window.servicoIdPiano : '4975';
+		if (Piano.variaveis.getNomeProduto() == 'acervo') id = '3981'; 
+		return id;
+	}
+};
+
 Piano.configuracao = {
 	jsonConfiguracaoTinyPass: {
 		'int': {
 			'idSandboxTinypass':'dXu7dvFKRi',
 			'setSandBox':'true',
 			'urlSandboxPiano':'https://sandbox.tinypass.com/xbuilder/experience/load?aid=dXu7dvFKRi',
-			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/funcionalidade/4975/autorizacao-acesso?v=2',
+			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/'+Piano.variaveis.getServicoId()+'/autorizacao-acesso',
 			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
 			'urlDominioSiteOGlobo':'globostg.globoi.com/'
 		},
@@ -15,7 +82,7 @@ Piano.configuracao = {
 			'idSandboxTinypass':'GTCopIDc5z',
 			'setSandBox':'false',
 			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
-			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/funcionalidade/4975/autorizacao-acesso?v=2',
+			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/'+Piano.variaveis.getServicoId()+'/autorizacao-acesso',
 			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
 			'urlDominioSiteOGlobo':'globostg.globoi.com/'
 		},
@@ -23,7 +90,7 @@ Piano.configuracao = {
 			'idSandboxTinypass':'GTCopIDc5z',
 			'setSandBox':'false',
 			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
-			'urlVerificaLeitor':'https://api.infoglobo.com.br/funcionalidade/4975/autorizacao-acesso?v=2',
+			'urlVerificaLeitor':'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/'+Piano.variaveis.getServicoId()+'/autorizacao-acesso',
 			'urlDominioPaywall':'https://assinatura.oglobo.globo.com/',
 			'urlDominioSiteOGlobo':'oglobo.globo.com/'
 		}
@@ -136,61 +203,6 @@ Piano.cookies = {
 		match = document.cookie.match(new RegExp(name+'=([^;]+)'));
 		var cookieTiny = match ? unescape(match[1].toString()) : "";
 		return cookieTiny;
-	}
-};
-
-Piano.variaveis = {
-	ambientesAceitos: "int,qlt,prd",
-	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,503,504",
-	statusHttpObterAssinaturaInadimplente: "400,404,500,502,503,504",
-	constante: {
-		cookie: {
-			GCOM: 'GLBID',
-			UTP: '_utp',
-			RTIEX: '_rtiex',
-			AMBIENTE: 'ambientePiano'
-		},
-		produto: {
-			COD: 'OG03'
-		},
-		metricas: {
-			EVENTO_SEM_ACAO: 'sem acao',
-			ERRO: 'Erro'
-		},
-		krux: {
-			SEGMENTACOES: 'kxglobo_segs',
-			KRUXLIGADO: 'krux-ligado'
-		},
-		util: {
-			IP: "127.0.0.1",
-			AMBIENTE: "ambiente-desejado",
-			DEBUG: "debug-piano"
-		}
-	},
-	isConteudoExclusivo: function() {
-		return window.conteudoExclusivo ? true : false;
-	},
-	getAmbientePiano: function() {
-		if (Piano.variaveis.ambientesAceitos.indexOf(Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE)) > -1) {
-			Piano.cookies.set(Piano.variaveis.constante.cookie.AMBIENTE, Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE), 1);
-			return Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE);
-		}
-		if (Piano.util.getValorParametroNaUrl(Piano.variaveis.constante.util.AMBIENTE) == 'false') {
-			Piano.cookies.set(Piano.variaveis.constante.cookie.AMBIENTE, "", -1);
-		}
-		if (Piano.cookies.get(Piano.variaveis.constante.cookie.AMBIENTE)) {
-			return Piano.cookies.get(Piano.variaveis.constante.cookie.AMBIENTE);
-		};
-		return Piano.variaveis.ambientesAceitos.indexOf(window.ambienteUtilizadoPiano) > -1 ? window.ambienteUtilizadoPiano : 'prd';
-	},
-	getTipoConteudoPiano: function() {
-		return window.tipoConteudoPiano;
-	},
-	executouPageview: function() {
-		return window.executouPageview ? true : false;
-	},
-	getNomeProdutoPiano: function() {
-		return window.nomeProdutoPiano;
 	}
 };
 
@@ -345,7 +357,7 @@ Piano.ajax = {
 		});
 	},
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
-		var data = {"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.constante.produto.COD};
+		var data = {"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.codigoProduto};
 		$.ajax({
 			url: Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor,
 			type: 'POST',
@@ -377,7 +389,9 @@ Piano.ajax = {
 						"motivo": respostaDeMotivo,
 						"logado": isAutorizado,
 						"temTermoDeUso": respostaDeTermoDeUso,
-						"glbid": glbid
+						"glbid": glbid,
+						"produto": Piano.variaveis.getNomeProduto(),
+						"codProduto": Piano.variaveis.codigoProduto
 					};
 				_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
@@ -418,7 +432,7 @@ Piano.autenticacao = {
 				}
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 			}
-			Piano.ajax.fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid);
+			if (Piano.variaveis.fazerRequisicaoBarramento) Piano.ajax.fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid);
 		}
 	},
 	isAutorizado: function(termoDeUso, motivo, autorizado, hrefAssinaturaInadimplente) {
@@ -438,7 +452,6 @@ Piano.util = {
 	isTipoConteudoUndefined: function() {
 		if (typeof Piano.variaveis.getTipoConteudoPiano() == 'undefined') {
 			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Variavel tipoConteudoPiano nao esta definida nesta url - " + document.location.href);
-			console.log('ERRO - Variavel tipoConteudoPiano nao esta definida');
 			return;
 		};
 	},
@@ -526,6 +539,22 @@ Piano.util = {
 			};
 		}
 	},
+	isProdutoOGlobo: function() {
+		var regex = new RegExp("://(.*?)/"), url = window.location.href;
+		if (url.match(regex)[1].indexOf("oglobo") > -1) {
+			return url.match(regex)[1];
+		}
+		return '';
+	},
+	trocarConfiguracoes: function() {
+		var trocar = false;
+		var utp = Piano.cookies.get(Piano.variaveis.constante.cookie.UTP);
+		if (utp) var cookieUtp = JSON.parse(decodeURI(atob(utp)));
+		if ((window.cookieUtp && window.cookieUtp.produto != Piano.variaveis.getNomeProduto() || !window.cookieUtp) && (Piano.util.isProdutoOGlobo() && (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital')) || ((window.cookieUtp && window.cookieUtp.produto != Piano.variaveis.getNomeProduto() || !window.cookieUtp) && !Piano.util.isProdutoOGlobo())) {
+			trocar = true;
+		}
+		return trocar;
+	},
 	callbackMeter: function(meterData) {
 		regrasTiny = meterData;
 		Piano.metricas.executaAposPageview();
@@ -542,14 +571,15 @@ Piano.construtor = {
 		Piano.util.detectaBurlesco();
 		Piano.util.isTipoConteudoUndefined();
 		tp = window["tp"] || [];
+		Piano.produto.verificaConfiguracoes();
 		tp.push(["setTags", [Piano.variaveis.getTipoConteudoPiano()]]);
 		tp.push(["setAid", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].idSandboxTinypass]);
 		tp.push(["setSandbox", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].setSandBox]);
 		tp.push(["setDebug", Piano.util.isDebug()]);
 		var clean_url = window.location.href.split("?")[0];
 		tp.push(["setPageURL",clean_url]);
-		tp.push(["setZone", Piano.variaveis.getNomeProdutoPiano()]);
-		tp.push(["setCustomVariable", "nomeProduto", Piano.variaveis.getNomeProdutoPiano()]);
+		tp.push(["setZone", Piano.variaveis.getNomeProduto()]);
+		tp.push(["setCustomVariable", "nomeProduto", Piano.variaveis.getNomeProduto()]);
 		Piano.janelaAnonima.detectPrivateMode(function (is_private) {
 			tp.push(["setCustomVariable", "anonimo", is_private]);
 		});
