@@ -9,14 +9,14 @@ $('body').append("" +
 "				<img class='img-mobi' src='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/v3/images/produto-m.png'>" +
 "				<img class='img-desk' src='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/v3/images/produto-d.png'>" +
 "				<h2>BLACK FRIDAY <b>50% OFF POR 1 ANO</b></h2>" +
-"				<p class='img-mobi'>Assine a partir de <i>R$ 4,90</i> por  mÃªs</p>" +
-"				<p class='img-desk'>A partir de <i>R$ 4,90</i> por mÃªs</p>" +
-"				<a href='https://assinatura.oglobo.globo.com/VitrineDigital.aspx' target='_blank'>Assine JÃ¡</a>" +
+"				<p class='img-mobi'>Assine a partir de <i>R$ 4,90</i> por  mês</p>" +
+"				<p class='img-desk'>A partir de <i>R$ 4,90</i> por mês</p>" +
+"				<a href='https://assinatura.oglobo.globo.com/VitrineDigital.aspx' target='_blank'>Assine Já</a>" +
 "			</div>" +
 "		</div>" +
 "		<div id='login-barreira-iframe'>" +
 "			<h2><strong>Acesso para assinantes e cadastrados</strong><span>Cadastre-se e continue lendo O Globo</span></h2>" +
-"			<h2><strong>ConteÃºdo exclusivo para assinantes </strong><span>JÃ¡ Ã© assinante? Identifique-se</span></h2>" +
+"			<h2><strong>Conteúdo exclusivo para assinantes </strong><span>Já é assinante? Identifique-se</span></h2>" +
 "			<div class='segura-cadun'>" +
 "				<div class='scroll-cadun'>" +
 "					<iframe id='iframeCadun' src='https://login.globo.com/login/"+Piano.variaveis.getServicoId()+"?tam=widget&amp;url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D"+Piano.variaveis.getServicoId()+"%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523"+uri+"'></iframe>" +
