@@ -1,20 +1,18 @@
 var Produto = function (nome) {
-	Produto.codigo(nome);
+	Produto.pegaConfiguracao(nome);
 };
 
-Produto.codigo = function(nome) {
-	Piano.variaveis.codigoProduto = Produto.pegaConfiguracao(nome);
-};
+Produto.codigo = '';
 
 Produto.pegaConfiguracao = function(nome) {
 	switch (nome) {
 		case 'acervo':
 			var acervo = new Acervo();
-			return acervo.codigo;
+			Produto.codigo = acervo.codigo;
 			break;
 		case 'jornaldigital':
 			var jornaldigital = new JornalDigital();
-			return jornaldigital.codigo;
+			Produto.codigo = jornaldigital.codigo;
 			break;
 		default:
 			Piano.variaveis.fazerRequisicaoBarramento = false;
@@ -22,10 +20,10 @@ Produto.pegaConfiguracao = function(nome) {
 };
 
 var Acervo = function() {
-	$('.galeria.abas-auto .tab-result.passafoto-auto div ul.pagina').bind('click', function() {
-		tp.push(["setCustomVariable", "paginaDigitalizada", true]);
-		tp.experience.execute();
-	});
+//	$('.galeria.abas-auto .tab-result.passafoto-auto div ul.pagina').bind('click', function() {
+//		tp.push(["setCustomVariable", "paginaDigitalizada", true]);
+//		tp.experience.execute();
+//	});
 	this.codigo = 'OG04';
 };
 
@@ -35,4 +33,6 @@ var JornalDigital = function() {
 
 (function () {
 	Produto(Piano.variaveis.getNomeProduto());
+	Piano.variaveis.codigoProduto = Produto.codigo;
+	Piano.construtor.initTp();
 })();

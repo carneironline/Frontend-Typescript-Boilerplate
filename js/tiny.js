@@ -2,10 +2,12 @@ window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
 
 Piano.produto = {
-	verificaConfiguracoes : function() {
+	validaConfiguracoes : function() {
 		if (Piano.util.trocarConfiguracoes()) {
 			Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/js/outros-produtos/configuracoes.js", false);
+			return true;
 		}
+		return false;
 	}
 };
 
@@ -394,7 +396,7 @@ Piano.autenticacao = {
 		if (Piano.autenticacao.isLogadoCadun(glbid, utp)) {
 			if (utp) {
 				var _leitor = JSON.parse(decodeURI(atob(utp)));
-				if (glbid == _leitor.glbid) {
+				if (glbid == _leitor.glbid && (typeof _leitor.produto == "undefined" || _leitor.produto == Piano.variaveis.getNomeProduto())) {
 					tp.push(["setCustomVariable", "autorizado", _leitor.autorizado]);
 					tp.push(["setCustomVariable", "motivo", _leitor.motivo]);
 					tp.push(["setCustomVariable", "logado", _leitor.logado]);
@@ -521,7 +523,7 @@ Piano.util = {
 		var trocar = false;
 		var utp = Piano.cookies.get(Piano.variaveis.constante.cookie.UTP);
 		if (utp) var cookieUtp = JSON.parse(decodeURI(atob(utp)));
-		if ((window.cookieUtp && window.cookieUtp.produto != Piano.variaveis.getNomeProduto() || !window.cookieUtp) && ((Piano.util.isDominioOGlobo() && (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital')) || !Piano.util.isDominioOGlobo())) {
+		if ((typeof cookieUtp != "undefined" && typeof cookieUtp.produto != "undefined" && cookieUtp.produto != Piano.variaveis.getNomeProduto() || typeof cookieUtp == "undefined") && ((Piano.util.isDominioOGlobo() && (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital')) || !Piano.util.isDominioOGlobo())) {
 			trocar = true;
 		}
 		return trocar;
@@ -572,7 +574,6 @@ Piano.construtor = {
 		Piano.util.detectaBurlesco();
 		Piano.util.isTipoConteudoUndefined();
 		tp = window["tp"] || [];
-		Piano.produto.verificaConfiguracoes();
 		tp.push(["setTags", [Piano.variaveis.getTipoConteudoPiano()]]);
 		tp.push(["setAid", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].idSandboxTinypass]);
 		tp.push(["setSandbox", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].setSandBox]);
@@ -601,6 +602,9 @@ Piano.construtor = {
 };
 
 (function () {
+	if (Piano.produto.validaConfiguracoes()) {
+		return;
+	}
 	Piano.construtor.initTp();
 })();
 
