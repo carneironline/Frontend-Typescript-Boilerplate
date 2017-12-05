@@ -514,7 +514,7 @@ Piano.util = {
 	},
 	isDominioOGlobo: function() {
 		var regex = new RegExp("://(.*?)/"), url = window.location.href;
-		if (url.match(regex)[1].indexOf("oglobo") > -1 || url.match(regex)[1].indexOf("globoi") > -1) {
+		if (url.match(regex)[1].indexOf("oglobo") > -1 || (url.match(regex)[1].indexOf("globoi") > -1 && url.match(regex)[1].indexOf("edg") == -1)) {
 			return url.match(regex)[1];
 		}
 		return '';
