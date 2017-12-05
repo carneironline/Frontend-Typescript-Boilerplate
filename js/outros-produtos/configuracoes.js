@@ -20,10 +20,6 @@ Produto.pegaConfiguracao = function(nome) {
 };
 
 var Acervo = function() {
-//	$('.galeria.abas-auto .tab-result.passafoto-auto div ul.pagina').bind('click', function() {
-//		tp.push(["setCustomVariable", "paginaDigitalizada", true]);
-//		tp.experience.execute();
-//	});
 	this.codigo = 'OG04';
 };
 
