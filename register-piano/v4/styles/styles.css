@@ -307,6 +307,7 @@ body {
     #login-barreira .conteudo-barreira #login-promocao .conteudo-produto p.img-desk {
         padding-left: 30px;
         text-align: right;
+        margin-left: 25px;
     }
     #login-barreira .conteudo-barreira #login-barreira-iframe {
         width: 360px;
@@ -391,7 +392,7 @@ body {
         margin: 0;
     }
     #login-barreira .conteudo-barreira #login-promocao .conteudo-produto h2 {
-        padding: 18px 37px 28px 37px;
+        padding: 25px 37px 40px;
         font-size: 44px;
         text-align: center;
     }
