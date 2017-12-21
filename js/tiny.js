@@ -335,7 +335,7 @@ Piano.ajax = {
 			url: Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor,
 			type: 'POST',
 			contentType: "application/json",
-			async : false,
+			async : true,
 			headers: {
 				Accept: "application/json"
 			},
@@ -370,13 +370,15 @@ Piano.ajax = {
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
 			},
 			error: function (xhr, status, error) {
-				if (xhr.status != 0 && Piano.variaveis.statusHttpObterAutorizacaoAcesso.indexOf(xhr.status) > -1) {
-					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
-					tp.push(["setCustomVariable", "autorizado", true]);
-				} else {
-					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao - " + xhr.status + " - " + xhr.statusText);
-					tp.push(["setCustomVariable", "autorizado", false]);
-				}
+				//if (xhr.status != 0 && Piano.variaveis.statusHttpObterAutorizacaoAcesso.indexOf(xhr.status) > -1) {
+				//	Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
+				//	tp.push(["setCustomVariable", "autorizado", true]);
+				//} else {
+				//	Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao - " + xhr.status + " - " + xhr.statusText);
+				//	tp.push(["setCustomVariable", "autorizado", false]);
+				//}
+				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
+				tp.push(["setCustomVariable", "autorizado", true]);
 				tp.push(["setCustomVariable", "logado", true]);
 				tp.push(["setCustomVariable", "motivo", 'erro']);
 			}
