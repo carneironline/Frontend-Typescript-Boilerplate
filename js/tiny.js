@@ -335,7 +335,7 @@ Piano.ajax = {
 			url: Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor,
 			type: 'POST',
 			contentType: "application/json",
-			async : true,
+			async : false,
 			headers: {
 				Accept: "application/json"
 			},
