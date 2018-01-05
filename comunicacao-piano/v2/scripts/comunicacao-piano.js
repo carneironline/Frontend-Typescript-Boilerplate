@@ -1,20 +1,27 @@
-$("body").append("" +
+var e = document.createElement('div');
+e.innerHTML = "" +
 "<div class='comunicacao-piano'>" +
-"	<div class='box-texto-comunicacao'>" +
+"   <div class='box-texto-comunicacao'>" +
 "       <span class='fechar-modal'>&#x2716;</span>" +
-"		<h2>Informa&#231;&#227;o</h2>" +
-"		<p>Comunica&#231;&#227;o</p>" +
-"	</div>" +
-"	<div class='back-drop'></div>" +
-"</div>");
+"       <h2>Informa&#231;&#227;o</h2>" +
+"       <p>Comunica&#231;&#227;o</p>" +
+"   </div>" +
+"   <div class='back-drop'></div>" +
+"</div>";
+document.body.insertBefore(e, document.body.childNodes[0]);
 
 if (window.tituloComunicacao) {
-	$(".comunicacao-piano h2").html(tituloComunicacao);
+    document.querySelector(".comunicacao-piano h2").innerHTML = tituloComunicacao;
 }
 
 if (window.textoComunicacao) {
-	$(".comunicacao-piano p").html(textoComunicacao);
+    document.querySelector(".comunicacao-piano p").innerHTML = textoComunicacao;
 }
-$(document).off("click", ".comunicacao-piano .fechar-modal, .comunicacao-piano .back-drop").on("click", ".comunicacao-piano .fechar-modal, .comunicacao-piano .back-drop", function () {
-    $(".comunicacao-piano").remove();
+
+document.querySelector('.comunicacao-piano .fechar-modal').addEventListener('click', function() {
+    document.querySelector('.comunicacao-piano').parentNode.removeChild(document.querySelector('.comunicacao-piano'));
+});
+
+document.querySelector('.comunicacao-piano .back-drop').addEventListener('click', function() {
+    document.querySelector('.comunicacao-piano').parentNode.removeChild(document.querySelector('.comunicacao-piano'));
 });
