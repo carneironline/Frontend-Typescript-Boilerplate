@@ -297,7 +297,20 @@ Piano.inadimplente = {
 
 Piano.ajax = {
 	geraScriptNaPagina: function(urlScript, assincrono) {
-		$.ajax({
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", urlScript, assincrono);
+		xhr.send();
+
+		if(xhr.status == 200){
+
+      		$("head").append(result);
+
+	    }else{
+	      console.log(xhr.status);
+	      console.log(xhr.responseText);
+	    }
+
+		/*$.ajax({
 			url: urlScript,
 			dataType: "script",
 			async: assincrono,
@@ -305,10 +318,28 @@ Piano.ajax = {
 			success: function(result) {
 				$("head").append(result);
 			}
-		});
+		});*/
 	},
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
-		$.ajax({
+
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", hrefAssinaturaInadimplente);
+		xhr.send();
+
+		if(xhr.status == 200){
+			var resposta = xhr.responseText;
+      		var respJson = JSON.parse(resposta);
+      		var situacaoPagamento = respJson.situacaoPagamento.toLowerCase();
+			tp.push(["setCustomVariable", "situacaoPagamento", situacaoPagamento]);
+
+	    }else{
+      		if (xhr.status != 0 && Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(xhr.status) > -1) {
+				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente da API - " + xhr.status);
+			}
+			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
+	    }
+
+		/*$.ajax({
 			url: hrefAssinaturaInadimplente,
 			type: 'GET',
 			contentType: "application/json",
@@ -327,11 +358,55 @@ Piano.ajax = {
 				}
 				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
 			}
-		});
+		});*/
 	},
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
-		var data = {"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.codigoProduto};
-		$.ajax({
+		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.codigoProduto});
+
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor);
+		xhr.setRequestHeader("GET", hrefAssinaturaInadimplente);
+		xhr.send(data);
+
+		if(xhr.status == 200){
+			var resposta = xhr.responseText;
+      		var respJson = JSON.parse(resposta);
+
+      		tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
+			var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
+			if (typeof respJson.motivo != "undefined") {
+				respostaDeMotivo = respJson.motivo.toLowerCase();
+			}
+			if (typeof respJson.temTermoDeUso != "undefined") {
+				respostaDeTermoDeUso = respJson.temTermoDeUso;
+			}
+			if (typeof respJson.link != "undefined") {
+				hrefAssinaturaInadimplente = Piano.inadimplente.getLinkAssinatura(respJson.link);
+			}
+			var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado, hrefAssinaturaInadimplente);
+			tp.push(["setCustomVariable", "logado", isAutorizado]);
+			tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
+			tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
+			var _jsonLeitor = {
+					"autorizado" : respJson.autorizado,
+					"motivo": respostaDeMotivo,
+					"logado": isAutorizado,
+					"temTermoDeUso": respostaDeTermoDeUso,
+					"glbid": glbid,
+					"produto": Piano.variaveis.getNomeProduto(),
+					"codProduto": Piano.variaveis.codigoProduto
+				};
+			_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
+			Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
+
+	    }else{
+      		Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
+			tp.push(["setCustomVariable", "autorizado", true]);
+			tp.push(["setCustomVariable", "logado", true]);
+			tp.push(["setCustomVariable", "motivo", 'erro']);
+	    }
+
+		/*$.ajax({
 			url: Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor,
 			type: 'POST',
 			contentType: "application/json",
@@ -382,7 +457,7 @@ Piano.ajax = {
 				tp.push(["setCustomVariable", "logado", true]);
 				tp.push(["setCustomVariable", "motivo", 'erro']);
 			}
-		});
+		});*/
 	}
 };
 
