@@ -2,7 +2,7 @@ var uri = encodeURIComponent(document.location.href);
 
 //Monta a parte do HTML
 $('body').append("" +
-"<div id='login-barreira'>" +
+"<div id='login-barreira' class='register-exclusivo-barreira'>" +
 "	<div class='conteudo-barreira'>" +
 "		<div id='login-promocao'>" +
 "			<div class='conteudo-produto'>" +

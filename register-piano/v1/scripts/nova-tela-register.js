@@ -1,8 +1,10 @@
 var uri = encodeURIComponent(document.location.href);
 
 //Monta a parte do HTML
-$('body').append("" +
-"<div id='login-barreira'>" +
+
+var e = document.createElement('div');
+e.innerHTML = "" +
+"<div id='login-barreira' class='register-barreira'>" +
 "	<div class='conteudo-barreira'>" +
 "		<div id='login-promocao'>" +
 "			<div class='conteudo-produto'>" +
@@ -26,83 +28,94 @@ $('body').append("" +
 "			</div>" +
 "		</div>" +
 "	</div>" +
-"</div>");
+"</div>"
+document.body.insertBefore(e, document.body.childNodes[0]);
+
 
 //Controla e edita o HTML
 // Ver se Variaves do piano existem
 
 if (typeof precoRegister != 'undefined' && precoRegister != null && precoRegister != '' ) {
-	$(".preco-menor").text(precoRegister);
+	document.querySelector(".preco-menor").innerHTML = precoRegister;
 }
 
 if (typeof periodoPrecoRegister != 'undefined' && periodoPrecoRegister != null && periodoPrecoRegister != '' ) {
-	$(".quantidade-mes").text(periodoPrecoRegister);
+	document.querySelector(".quantidade-mes").innerHTML = periodoPrecoRegister;
 }
 
 if (typeof imagemRegister != 'undefined' && imagemRegister != null && imagemRegister != '' ) {
-	$(".conteudo-produto img").attr("src", imagemRegister);
+	document.querySelector(".conteudo-produto img").src = imagemRegister;
 }
 
 if (typeof linkOfertaRegister != 'undefined' && linkOfertaRegister != null && linkOfertaRegister != '' ) {
 	var parametroUrlRetorno = linkOfertaRegister.indexOf('?') != -1 ? '&url_retorno=' : '?url_retorno=';
-	$(".conteudo-produto a").attr("href", linkOfertaRegister + parametroUrlRetorno + uri);
+	document.querySelector(".conteudo-produto a").href = linkOfertaRegister + parametroUrlRetorno + uri;
 }
 
 if (typeof textoBotaoOfertaRegister != 'undefined' && textoBotaoOfertaRegister != null && textoBotaoOfertaRegister != '' ) {
-	$(".conteudo-produto a").text(textoBotaoOfertaRegister);
+	document.querySelector(".conteudo-produto a").innerHTML = textoBotaoOfertaRegister;
 }
 
 if (typeof textoOfertaRegister1 != 'undefined' && textoOfertaRegister1 != null && textoOfertaRegister1 != '' ) {
-	$(".conteudo-produto h2").text(textoOfertaRegister1);
+	document.querySelector(".conteudo-produto h2").innerHTML = textoOfertaRegister1;
 }
 
 if (typeof textoOfertaRegister2 != 'undefined' && textoOfertaRegister2 != null && textoOfertaRegister2 != '' ) {
-	$(".conteudo-produto p").text(textoOfertaRegister2);
+	document.querySelector(".conteudo-produto p").innerHTML  = textoOfertaRegister2;
 }
 
 if (typeof textoLoginRegister != 'undefined' && textoLoginRegister != null && textoLoginRegister != '' ) {
-	$("#login-barreira-iframe h2 strong").text(textoLoginRegister);
+	document.querySelector("#login-barreira-iframe h2 strong").innerHTML  = textoLoginRegister;
 }
 
 if (typeof textoFacaLoginRegister != 'undefined' && textoFacaLoginRegister != null && textoFacaLoginRegister != '' ) {
-	$("#login-barreira-iframe h2 span").text(textoFacaLoginRegister);
+	document.querySelector("#login-barreira-iframe h2 span").innerHTML  = textoFacaLoginRegister;
 }
 
 // GA
 
 window['dataLayer'] = window['dataLayer'] || [];
-var EventoGaPiano = {disparaEvento : function (naoInterativo, categoria, acao, rotulo, redirecionaComAtraso, elemento) {if (naoInterativo === false) {dataLayer.push({'event': 'EventoGA', 'eventoGACategoria': categoria, 'eventoGAAcao': acao, 'eventoGARotulo': rotulo});} else if (naoInterativo === true) {dataLayer.push({'event': 'EventoGA', 'eventoGACategoria': categoria, 'eventoGAAcao': acao, 'eventoGARotulo': rotulo, 'eventoGAInteracao': 'true'});}if (redirecionaComAtraso) {if ((elemento.attr("target") == "blank") || (elemento.attr("rel") == "external" || (elemento.attr("rel") == "nofollow external"))){window.open(elemento.attr("href"));} else {setTimeout(function() {window.location = elemento.attr("href");}, 300);}}}}
 
-$(".conteudo-produto a").click(function(a){
+var EventoGaPiano = {disparaEvento : function (naoInterativo, categoria, acao, rotulo, redirecionaComAtraso, elemento) {
+	if (naoInterativo === false) {dataLayer.push({'event': 'EventoGA', 'eventoGACategoria': categoria, 'eventoGAAcao': acao, 'eventoGARotulo': rotulo});} 
+	else if (naoInterativo === true) {dataLayer.push({'event': 'EventoGA', 'eventoGACategoria': categoria, 'eventoGAAcao': acao, 'eventoGARotulo': rotulo, 'eventoGAInteracao': 'true'});}
+	if (redirecionaComAtraso) {if ((elemento.target == "_blank") || (elemento.rel == "external" || (elemento.rel == "nofollow external"))){window.open(elemento.href);} 
+	else {setTimeout(function() {window.location = elemento.href}, 300);}}}}
+
+document.querySelector('.conteudo-produto a').addEventListener('click', function(a) {
 	a.preventDefault(),
-	window.open($(".conteudo-produto a").attr("href")),EventoGaPiano.disparaEvento(!0,"Register","Clique - Ver ofertas","",!1);
+    window.open(document.querySelector(".conteudo-produto a").href),
+    EventoGaPiano.disparaEvento(!0,"Register","Clique - Ver ofertas","",!1);
 });
+
 
 if (window.ambienteUtilizadoPiano == 'prd') {
-	$("#iframeCadun").attr("src" , 'https://login.globo.com/login/'+Piano.variaveis.getServicoId()+'?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D'+Piano.variaveis.getServicoId()+'%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri);	
+	document.querySelector("#iframeCadun").src = 'https://login.globo.com/login/'+Piano.variaveis.getServicoId()+'?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D'+Piano.variaveis.getServicoId()+'%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri;	
 } else {
-	$("#iframeCadun").attr("src" , 'https://login.qa.globoi.com/login/'+Piano.variaveis.getServicoId()+'?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D'+Piano.variaveis.getServicoId()+'%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri);
+	document.querySelector("#iframeCadun").src = 'https://login.qa.globoi.com/login/'+Piano.variaveis.getServicoId()+'?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D'+Piano.variaveis.getServicoId()+'%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri;
 }
 
-$(window).load(function () {
-	if (!$('#barra-globocom').length) {
-		(function() {
-			var s = document.createElement("script");
-			s.type = "text/javascript"; s.async = true; s.defer = true; s.charset = "utf-8";
-			s.src = "https://s.glbimg.com/gl/ba/js/barra-globocom.min.js";
-			var ss = document.getElementsByTagName("script")[0]; ss.parentNode.insertBefore(s, ss);
-		})();
+document.onreadystatechange = function () {
+	if (document.readyState === 'complete') {
+		if (!document.querySelector('#barra-globocom')) {
+			(function() {
+				var s = document.createElement("script");
+				s.type = "text/javascript"; s.async = true; s.defer = true; s.charset = "utf-8";
+				s.src = "https://s.glbimg.com/gl/ba/js/barra-globocom.min.js";
+				var ss = document.getElementsByTagName("script")[0]; ss.parentNode.insertBefore(s, ss);
+			})();
+		}
 	}
-});
+}
 
 if(/iPhone/.test(navigator.userAgent) && !window.MSStream){
-    $(window).scroll(function() {
-	    if ($(this).scrollTop() > 1) {
-	        $('body').addClass('iphone');
-	    }
-	    else {
-	    	$('body').removeClass('iphone');
-	    }
+	document.addEventListener('scroll', function(a) {
+		if (document.querySelector("html").scrollTop > 1) {
+			document.querySelector("body").classList.add("iphone");
+		}
+		else {
+			document.querySelector("body").classList.remove("iphone");
+		}
 	});
 }
 
