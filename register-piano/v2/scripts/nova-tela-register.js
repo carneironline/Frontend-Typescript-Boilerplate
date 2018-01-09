@@ -1,7 +1,8 @@
 var uri = encodeURIComponent(document.location.href);
 
 //Monta a parte do HTML
-$('body').append("" +
+var e = document.createElement('div');
+e.innerHTML = "" +
 "<div id='login-barreira' class='register-exclusivo-barreira'>" +
 "	<div class='conteudo-barreira'>" +
 "		<div id='login-promocao'>" +
@@ -22,50 +23,51 @@ $('body').append("" +
 "			</div>" +
 "		</div>" +
 "	</div>" +
-"</div>");
+"</div>"
+document.body.insertBefore(e, document.body.childNodes[0]);
 
 //Controla e edita o HTML
 // Verifica se Variaves do piano existem.
 
 if (typeof precoRegister != 'undefined' && precoRegister != null && precoRegister != '' ) {
-	$(".preco-menor").text(precoRegister);
+	document.querySelector(".preco-menor").innerHTML = precoRegister;
 }
 
 if (typeof periodoPrecoRegister != 'undefined' && periodoPrecoRegister != null && periodoPrecoRegister != '' ) {
-	$(".quantidade-mes").text(periodoPrecoRegister);
+	document.querySelector(".quantidade-mes").innerHTML = periodoPrecoRegister;
 }
 
 if (typeof imagemRegisterMobi != 'undefined' && imagemRegisterMobi != null && imagemRegisterMobi != '' ) {
-	$(".conteudo-produto img.img-mobi").attr("src", imagemRegisterMobi);
+	document.querySelector(".conteudo-produto img.img-mobi").src =  imagemRegisterMobi;
 }
 
 if (typeof imagemRegisterDesk != 'undefined' && imagemRegisterDesk != null && imagemRegisterDesk != '' ) {
-	$(".conteudo-produto img.img-desk").attr("src", imagemRegisterDesk);
+	document.querySelector(".conteudo-produto img.img-desk").src =  imagemRegisterDesk;
 }
 
 if (typeof linkOfertaRegister != 'undefined' && linkOfertaRegister != null && linkOfertaRegister != '' ) {
 	var parametroUrlRetorno = linkOfertaRegister.indexOf('?') != -1 ? '&url_retorno=' : '?url_retorno=';
-	$(".conteudo-produto a").attr("href", linkOfertaRegister + parametroUrlRetorno + uri);
+	document.querySelector(".conteudo-produto a").href = linkOfertaRegister + parametroUrlRetorno + uri;
 }
 
 if (typeof textoBotaoOfertaRegister != 'undefined' && textoBotaoOfertaRegister != null && textoBotaoOfertaRegister != '' ) {
-	$(".conteudo-produto a").text(textoBotaoOfertaRegister);
+	document.querySelector(".conteudo-produto a").innerHTML = textoBotaoOfertaRegister;
 }
 
 if (typeof textoOfertaRegister1 != 'undefined' && textoOfertaRegister1 != null && textoOfertaRegister1 != '' ) {
-	$(".conteudo-produto h2").text(textoOfertaRegister1);
+	document.querySelector(".conteudo-produto h2").innerHTML = textoOfertaRegister1;
 }
 
 if (typeof textoOfertaRegister2 != 'undefined' && textoOfertaRegister2 != null && textoOfertaRegister2 != '' ) {
-	$(".conteudo-produto p").text(textoOfertaRegister2);
+	document.querySelector(".conteudo-produto p").innerHTML = textoOfertaRegister2;
 }
 
 if (typeof textoLoginRegister != 'undefined' && textoLoginRegister != null && textoLoginRegister != '' ) {
-	$("#login-barreira-iframe h2 strong").text(textoLoginRegister);
+	document.querySelector("#login-barreira-iframe h2 strong").innerHTML = textoLoginRegister;
 }
 
 if (typeof textoFacaLoginRegister != 'undefined' && textoFacaLoginRegister != null && textoFacaLoginRegister != '' ) {
-	$("#login-barreira-iframe h2 span").text(textoFacaLoginRegister);
+	document.querySelector("#login-barreira-iframe h2 span").innerHTML = textoFacaLoginRegister;
 }
 
 // GA
