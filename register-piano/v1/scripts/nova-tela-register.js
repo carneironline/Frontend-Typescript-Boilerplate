@@ -118,4 +118,3 @@ if(/iPhone/.test(navigator.userAgent) && !window.MSStream){
 		}
 	});
 }
-
