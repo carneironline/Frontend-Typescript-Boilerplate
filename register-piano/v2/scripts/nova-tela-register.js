@@ -91,29 +91,26 @@ if (window.ambienteUtilizadoPiano == 'prd') {
 	document.querySelector("#iframeCadun").src = 'https://login.qa.globoi.com/login/'+Piano.variaveis.getServicoId()+'?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D'+Piano.variaveis.getServicoId()+'%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri;
 }
 
-$(window).load(function () {
-	if (!$('#barra-globocom').length) {
-		(function() {
-			var s = document.createElement("script");
-			s.type = "text/javascript"; s.async = true; s.defer = true; s.charset = "utf-8";
-			s.src = "https://s.glbimg.com/gl/ba/js/barra-globocom.min.js";
-			var ss = document.getElementsByTagName("script")[0]; ss.parentNode.insertBefore(s, ss);
-		})();	
+document.onreadystatechange = function(){
+	if(document.readyState === "complete"){
+		if (!document.querySelector('#barra-globocom')) {
+			(function() {
+				var s = document.createElement("script");
+				s.type = "text/javascript"; s.async = true; s.defer = true; s.charset = "utf-8";
+				s.src = "https://s.glbimg.com/gl/ba/js/barra-globocom.min.js";
+				var ss = document.getElementsByTagName("script")[0]; ss.parentNode.insertBefore(s, ss);
+			})();	
+		}
 	}
-});
-
-if(/iPhone/.test(navigator.userAgent) && !window.MSStream){
-    $('body').addClass('iphone');
 }
 
 if(/iPhone/.test(navigator.userAgent) && !window.MSStream){
-    $(window).scroll(function() {
-	    if ($(this).scrollTop() === 1) {
-	        $('body').addClass('iphone');
-	    }
-	    else {
-	    	$('body').removeClass('iphone');
-	    }
-	});
+	document.addEventListener('scroll', function(a){
+		if(document.querySelector('html').scrollTop > 1){
+			document.querySelector('body').classList.add('iphone');
+		}else{
+			document.querySelector('body').classList.remove('iphone');
+		}
+	})
 }
 
