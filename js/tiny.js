@@ -250,20 +250,22 @@ Piano.metricas = {
 	}
 };
 
+var selH = document.querySelector('head');
+
 Piano.banner = {
 	mostrarFooter: function(versao) {
-		$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/styles/styles.css'>");
+		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/styles/styles.css'>";
 		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/novo-banner-footer.js", true);
 	},
 	mostrarBotaoAssinaturaHeaderFooter: function(versao) {
-		$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/styles/styles.css'>");
+		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/styles/styles.css'>";
 		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/scripts/banner-header-footer-piano.js", true);
 	}
 };
 
 Piano.register = {
 	mostrarBarreira: function(versao) {
-		$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>");
+		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>";
 		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/nova-tela-register.js", true);
 		Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 		Piano.metricas.enviaEventosGA("Exibicao Register", Piano.metricas.montaRotuloGA());
@@ -281,7 +283,7 @@ Piano.paywall = {
 
 Piano.comunicado = {
 	mostrarInformacao: function(versao) {
-		$('head').append("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/styles/styles.css'>");
+		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/styles/styles.css'>";
 		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/scripts/comunicacao-piano.js", true);
 	}
 };
@@ -297,92 +299,83 @@ Piano.inadimplente = {
 
 Piano.ajax = {
 	geraScriptNaPagina: function(urlScript, assincrono) {
-		$.ajax({
-			url: urlScript,
-			dataType: "script",
-			async: assincrono,
-			cache: true,
-			success: function(result) {
-				$("head").append(result);
-			}
-		});
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", urlScript, assincrono);
+		xhr.send();
+
+		if(xhr.status == 200){
+			var resposta = xhr.responseText;			
+			selH.innerHTML += resposta;
+
+		}else{
+			console.log(xhr.status);
+			console.log(xhr.responseText);
+		}
 	},
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
-		$.ajax({
-			url: hrefAssinaturaInadimplente,
-			type: 'GET',
-			contentType: "application/json",
-			headers: {
-				Accept: "application/json"
-			},
-			async : false,
-			dataType: "json",
-			success: function (respJson) {
-				var situacaoPagamento = respJson.situacaoPagamento.toLowerCase();
-				tp.push(["setCustomVariable", "situacaoPagamento", situacaoPagamento]);
-			},
-			error: function (xhr, status, error) {
-				if (xhr.status != 0 && Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(xhr.status) > -1) {
-					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente da API - " + xhr.status);
-				}
-				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
+
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", hrefAssinaturaInadimplente);
+		xhr.send();
+
+		if(xhr.status == 200){
+			var resposta = xhr.responseText;
+			var respJson = JSON.parse(resposta);
+			var situacaoPagamento = respJson.situacaoPagamento.toLowerCase();
+			tp.push(["setCustomVariable", "situacaoPagamento", situacaoPagamento]);
+
+		}else{
+			if (xhr.status != 0 && Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(xhr.status) > -1) {
+				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente da API - " + xhr.status);
 			}
-		});
+			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
+		}
 	},
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
-		var data = {"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.codigoProduto};
-		$.ajax({
-			url: Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor,
-			type: 'POST',
-			contentType: "application/json",
-			async : false,
-			headers: {
-				Accept: "application/json"
-			},
-			dataType: "json",
-			data: JSON.stringify(data),
-			success: function (respJson) {
-				tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
-				var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
-				if (typeof respJson.motivo != "undefined") {
-					respostaDeMotivo = respJson.motivo.toLowerCase();
-				}
-				if (typeof respJson.temTermoDeUso != "undefined") {
-					respostaDeTermoDeUso = respJson.temTermoDeUso;
-				}
-				if (typeof respJson.link != "undefined") {
-					hrefAssinaturaInadimplente = Piano.inadimplente.getLinkAssinatura(respJson.link);
-				}
-				var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado, hrefAssinaturaInadimplente);
-				tp.push(["setCustomVariable", "logado", isAutorizado]);
-				tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
-				tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
-				var _jsonLeitor = {
-						"autorizado" : respJson.autorizado,
-						"motivo": respostaDeMotivo,
-						"logado": isAutorizado,
-						"temTermoDeUso": respostaDeTermoDeUso,
-						"glbid": glbid,
-						"produto": Piano.variaveis.getNomeProduto(),
-						"codProduto": Piano.variaveis.codigoProduto
-					};
-				_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
-				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
-			},
-			error: function (xhr, status, error) {
-				//if (xhr.status != 0 && Piano.variaveis.statusHttpObterAutorizacaoAcesso.indexOf(xhr.status) > -1) {
-				//	Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
-				//	tp.push(["setCustomVariable", "autorizado", true]);
-				//} else {
-				//	Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao - " + xhr.status + " - " + xhr.statusText);
-				//	tp.push(["setCustomVariable", "autorizado", false]);
-				//}
-				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
-				tp.push(["setCustomVariable", "autorizado", true]);
-				tp.push(["setCustomVariable", "logado", true]);
-				tp.push(["setCustomVariable", "motivo", 'erro']);
+		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.codigoProduto});
+
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor);
+		xhr.setRequestHeader("GET", hrefAssinaturaInadimplente);
+		xhr.send(data);
+
+		if(xhr.status == 200){
+			var resposta = xhr.responseText;
+	  		var respJson = JSON.parse(resposta);
+
+	  		tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
+			var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
+			if (typeof respJson.motivo != "undefined") {
+				respostaDeMotivo = respJson.motivo.toLowerCase();
 			}
-		});
+			if (typeof respJson.temTermoDeUso != "undefined") {
+				respostaDeTermoDeUso = respJson.temTermoDeUso;
+			}
+			if (typeof respJson.link != "undefined") {
+				hrefAssinaturaInadimplente = Piano.inadimplente.getLinkAssinatura(respJson.link);
+			}
+			var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado, hrefAssinaturaInadimplente);
+			tp.push(["setCustomVariable", "logado", isAutorizado]);
+			tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
+			tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
+			var _jsonLeitor = {
+					"autorizado" : respJson.autorizado,
+					"motivo": respostaDeMotivo,
+					"logado": isAutorizado,
+					"temTermoDeUso": respostaDeTermoDeUso,
+					"glbid": glbid,
+					"produto": Piano.variaveis.getNomeProduto(),
+					"codProduto": Piano.variaveis.codigoProduto
+				};
+			_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
+			Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
+
+		}else{
+			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
+			tp.push(["setCustomVariable", "autorizado", true]);
+			tp.push(["setCustomVariable", "logado", true]);
+			tp.push(["setCustomVariable", "motivo", 'erro']);
+		}
 	}
 };
 
