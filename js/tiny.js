@@ -250,20 +250,22 @@ Piano.metricas = {
 	}
 };
 
+var selH = document.querySelector('head');
+
 Piano.banner = {
 	mostrarFooter: function(versao) {
-		document.querySelector('head').innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/styles/styles.css'>";
+		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/styles/styles.css'>";
 		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/novo-banner-footer.js", true);
 	},
 	mostrarBotaoAssinaturaHeaderFooter: function(versao) {
-		document.querySelector('head').innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/styles/styles.css'>";
+		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/styles/styles.css'>";
 		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/scripts/banner-header-footer-piano.js", true);
 	}
 };
 
 Piano.register = {
 	mostrarBarreira: function(versao) {
-		document.querySelector('head').innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>";
+		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>";
 		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/nova-tela-register.js", true);
 		Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 		Piano.metricas.enviaEventosGA("Exibicao Register", Piano.metricas.montaRotuloGA());
@@ -281,7 +283,7 @@ Piano.paywall = {
 
 Piano.comunicado = {
 	mostrarInformacao: function(versao) {
-		document.querySelector('head').innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/styles/styles.css'>";
+		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/styles/styles.css'>";
 		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/scripts/comunicacao-piano.js", true);
 	}
 };
@@ -303,7 +305,7 @@ Piano.ajax = {
 
 		if(xhr.status == 200){
 			var resposta = xhr.responseText;			
-			document.querySelector('head').innerHTML += resposta;
+			selH.innerHTML += resposta;
 
 		}else{
 			console.log(xhr.status);

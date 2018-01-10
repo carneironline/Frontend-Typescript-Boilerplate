@@ -124,7 +124,7 @@ el.querySelector(".footer-venda-oglobo-capas .white-drop").addEventListener("cli
 el.querySelector(".footer-venda-oglobo-capas .produto-um .preco-produto a").addEventListener("click",function(a){
 	a.preventDefault(),
 	window.open(el.querySelector(".footer-venda-oglobo-capas .produto-um .preco-produto a").href),
-	EventoGaPiano.disparaEvento(!0,"Banner Footer","Clique","Assine (link para pagamento) - Light",!1);
+	EventoGaPiano.disparaEvento(!0,"Banner Footer","Clique","Assine (link para pagamento) - Premium",!1);
 });
 
 el.querySelector(".footer-venda-oglobo-capas .produto-dois .preco-produto a").addEventListener("click",function(a){
@@ -136,7 +136,7 @@ el.querySelector(".footer-venda-oglobo-capas .produto-dois .preco-produto a").ad
 el.querySelector(".footer-venda-oglobo-capas .produto-um .titulo-produto a").addEventListener("click",function(a){
 	a.preventDefault(),
 	window.open(el.querySelector(".footer-venda-oglobo-capas .produto-um .titulo-produto a").href),
-	EventoGaPiano.disparaEvento(!0, "Banner Footer","Clique","Saiba mais - Light",!1)
+	EventoGaPiano.disparaEvento(!0, "Banner Footer","Clique","Saiba mais - Premium",!1)
 });
 
 el.querySelector(".footer-venda-oglobo-capas .produto-dois .titulo-produto a").addEventListener("click",function(a){
@@ -302,7 +302,7 @@ el.querySelector('head').innerHTML += "<style>" +
 ".footer-venda-oglobo-capas .produtos-oglobo .chamada-fixa .chamada-telefone {color: "+corTelefone+";}" +
 ".footer-venda-oglobo-capas .btn-default{background-color: "+backgroundBotao+"; color: "+corTextoBotao+";}" +
 ".footer-venda-oglobo-capas .btn-default:hover{background-color: "+backgroundBotaoHover+";}" +
-".footer-venda-oglobo-capas .azul-medio {color: "+corDestaque+"}" +
+".footer-venda-oglobo-capas .azul-medio {color: "+corDestaque+";}" +
 ".footer-venda-oglobo-capas .compartilha-cor {color: "+corPadrao+";}" +
 ".footer-venda-oglobo-capas {opacity: 1;}" +
 "</style>";
