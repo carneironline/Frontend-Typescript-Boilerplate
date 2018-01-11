@@ -304,8 +304,5 @@ el.querySelector('head').innerHTML += "<style>" +
 ".footer-venda-oglobo-capas .btn-default:hover{background-color: "+backgroundBotaoHover+";}" +
 ".footer-venda-oglobo-capas .azul-medio {color: "+corDestaque+";}" +
 ".footer-venda-oglobo-capas .compartilha-cor {color: "+corPadrao+";}" +
-"</style>";
-
-setTimeout(function(){ 
-	el.querySelector(".footer-venda-oglobo-capas").setAttribute('style',"opacity: 1");
-}, 1500);
+"</style>"+
+"<script>setTimeout(function(){el.querySelector('.footer-venda-oglobo-capas').setAttribute('style','opacity: 1;');}, 1500);</script>";
