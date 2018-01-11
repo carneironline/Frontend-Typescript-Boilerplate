@@ -307,5 +307,5 @@ el.querySelector('head').innerHTML += "<style>" +
 "</style>";
 
 setTimeout(function(){ 
-	el.querySelector(".footer-venda-oglobo-capas").setAttribute('style',"opacity: 1");
+	el.querySelector(".footer-venda-oglobo-capas").setAttribute('style',"opacity: 1;");
 }, 1500);
