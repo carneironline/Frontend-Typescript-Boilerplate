@@ -302,15 +302,19 @@ Piano.ajax = {
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", urlScript, assincrono);
 		xhr.send();
+		xhr.addEventListener("load", function() {
+			if(xhr.status == 200){
+				var resposta = xhr.responseText;
+				var appendDeScript = document.createElement('script');
+				appendDeScript.innerHTML = resposta;
+				document.head.appendChild(appendDeScript);			
 
-		if(xhr.status == 200){
-			var resposta = xhr.responseText;			
-			selH.innerHTML += resposta;
-
-		}else{
-			console.log(xhr.status);
-			console.log(xhr.responseText);
-		}
+			}else{
+				console.log(xhr.status);
+				console.log(xhr.responseText);
+			}
+		});
+		
 	},
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
 
