@@ -1,10 +1,9 @@
 var uri = encodeURIComponent(document.location.href);
 
 //Monta a parte do HTML
-
 var e = document.createElement('div');
 e.innerHTML = "" +
-"<div id='login-barreira' class='register-barreira'>" +
+"<div id='login-barreira' class='register-barreira' style='opacity: 0; display: none;'>" +
 "	<div class='conteudo-barreira'>" +
 "		<div id='login-promocao'>" +
 "			<div class='conteudo-produto'>" +
@@ -118,3 +117,8 @@ if(/iPhone/.test(navigator.userAgent) && !window.MSStream){
 		}
 	});
 }
+
+
+var appendDeScriptTimeout = document.createElement('script');
+appendDeScriptTimeout.innerHTML = "setTimeout(function(){document.querySelector('#login-barreira').setAttribute('style','display: block; opacity: 1;');}, 1500);";
+document.head.appendChild(appendDeScriptTimeout);	
