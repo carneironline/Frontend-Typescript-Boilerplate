@@ -4,7 +4,7 @@
 	to {transform: scale(1,1);}
 }
 
-footer .footer #banner-assinatura-footer a, .top-header ul.menu-interacao>li#banner-assinatura a, .top-header ul.menu-interacao > li#banner-assinatura a, footer .bar .assine a {
+footer .footer #banner-assinatura-footer a, .top-header ul.menu-interacao>li#banner-assinatura a, .top-header ul.menu-interacao > li#banner-assinatura a, footer .bar .assine a, #banner-assinatura-header a {
 	background: none;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -29,3 +29,6 @@ footer .footer #banner-assinatura-footer a, .top-header ul.menu-interacao>li#ban
 	transform: scale(1,1);
 }
 
+#banner-assinatura-header a {
+	margin-left: 10px;
+}

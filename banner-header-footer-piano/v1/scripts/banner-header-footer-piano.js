@@ -13,3 +13,14 @@ for (i = 0; i < x.length; i++) {
 		x[i].style.backgroundImage = "url("+imagemAssinaturaHeaderFooter+")";
 	}
 }
+
+// novo header do globo temporario
+
+var tagSite = document.getElementById("banner-assinatura-header");
+
+if (!(tagSite === null)) {
+	var aTag = document.createElement('a');
+	aTag.setAttribute('href',linkAssinaturaHeaderFooter);
+	aTag.innerHTML = "Assinatura";
+	tagSite.appendChild(aTag);
+}
