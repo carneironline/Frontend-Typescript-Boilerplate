@@ -308,5 +308,5 @@ el.querySelector('head').innerHTML += "<style>" +
 
 
 var appendDeScriptTimeout = document.createElement('script');
-appendDeScriptTimeout.innerHTML = "setTimeout(function(){el.querySelector('.footer-venda-oglobo-capas').setAttribute('style','display: block; opacity: 1;');}, 1500);";
+appendDeScriptTimeout.innerHTML = "setTimeout(function(){document.querySelector('.footer-venda-oglobo-capas').setAttribute('style','display: block; opacity: 1;');}, 1500);";
 document.head.appendChild(appendDeScriptTimeout);	
