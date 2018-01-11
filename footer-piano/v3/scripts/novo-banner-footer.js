@@ -1,7 +1,7 @@
 el = document;
 var e = el.createElement('div');
 e.innerHTML = "" +
-"<div class='footer-venda-oglobo-capas'>" +
+"<div class='footer-venda-oglobo-capas' style='opacity: 0;'>" +
 "   <div class='grid-capa-total'>" +
 "       <div class='grid-capa-util'>" +
 "           <div class='produtos-oglobo'>" +
@@ -304,5 +304,8 @@ el.querySelector('head').innerHTML += "<style>" +
 ".footer-venda-oglobo-capas .btn-default:hover{background-color: "+backgroundBotaoHover+";}" +
 ".footer-venda-oglobo-capas .azul-medio {color: "+corDestaque+";}" +
 ".footer-venda-oglobo-capas .compartilha-cor {color: "+corPadrao+";}" +
-".footer-venda-oglobo-capas {opacity: 1;}" +
 "</style>";
+
+setTimeout(function(){ 
+	el.querySelector(".footer-venda-oglobo-capas").setAttribute('style',"opacity: 1");
+}, 1500);
