@@ -300,20 +300,19 @@ Piano.inadimplente = {
 Piano.ajax = {
 	geraScriptNaPagina: function(urlScript, assincrono) {
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", urlScript, assincrono);
-		xhr.send();
-		xhr.addEventListener("load", function() {
-			if(xhr.status == 200){
+		xhr.onreadystatechange = function() {
+			if(this.readyState == 4 && this.status == 200){
 				var resposta = xhr.responseText;
 				var appendDeScript = document.createElement('script');
 				appendDeScript.innerHTML = resposta;
-				document.head.appendChild(appendDeScript);			
-
+				document.head.appendChild(appendDeScript);            
 			}else{
 				console.log(xhr.status);
 				console.log(xhr.responseText);
 			}
-		});
+		};
+		xhr.open("GET", urlScript, assincrono);
+		xhr.send();
 		
 	},
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
@@ -345,9 +344,9 @@ Piano.ajax = {
 
 		if(xhr.status == 200){
 			var resposta = xhr.responseText;
-	  		var respJson = JSON.parse(resposta);
+			var respJson = JSON.parse(resposta);
 
-	  		tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
+			tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
 			var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
 			if (typeof respJson.motivo != "undefined") {
 				respostaDeMotivo = respJson.motivo.toLowerCase();
