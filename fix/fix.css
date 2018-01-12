@@ -34,5 +34,6 @@ aside#sidebar, .link-top, #relacionadas-topo {
   #fotogaleria .gallery, .galeria div.tab-result{
   z-index:10!important;} 
 
-.galeria div.tab-result { z-index: 3; }
+.galeria .tab-result.passafoto-auto {z-index: 3 !important;}
+
    
