@@ -80,4 +80,52 @@ describe('Tiny JS', function () {
 
     });
 
+    describe('função isLogadoCadun', function () {
+
+        it('deve retornar "true" quando glbid não é vazio', function () {
+            expect(piano.autenticacao.isLogadoCadun('a', '')).toEqual(true);
+        });
+
+        it('deve retornar "false" quando glbid é vazio', function () {
+            expect(piano.autenticacao.isLogadoCadun('', '')).toEqual(false);
+        });
+
+        it('deve chamar o método cookies.set quando não possui glbid mas possui utp', function () {
+            spyOn(piano.cookies, 'set');
+
+            piano.autenticacao.isLogadoCadun('', 'a');
+            expect(piano.cookies.set).toHaveBeenCalled();
+        });
+
+        it('deve chamar o método cookies.set quando possui o cookie RTIEX', function () {
+            spyOn(piano.cookies, 'get').and.returnValue('asd');
+            spyOn(piano.cookies, 'set');
+
+            piano.autenticacao.isLogadoCadun('', '');
+            expect(piano.cookies.set).toHaveBeenCalled();
+        });
+
+        it('deve chamar o método cookies.set duas vezes quando não possui glbid mas possui utp e o cookie RTIEX', function () {
+            spyOn(piano.cookies, 'get').and.returnValue('asd');
+            spyOn(piano.cookies, 'set');
+
+            piano.autenticacao.isLogadoCadun('', 'a');
+            expect(piano.cookies.set.calls.count()).toEqual(2);
+        });
+
+        it('não deve chamar o método cookies.set quando possui glbid', function () {
+            spyOn(piano.cookies, 'set');
+
+            piano.autenticacao.isLogadoCadun('a', '');
+            expect(piano.cookies.set).not.toHaveBeenCalled();
+        });
+
+        it('não deve chamar o método cookies.set quando não possui glbid, utp e o cookie RTIEX', function () {
+            spyOn(piano.cookies, 'set');
+
+            piano.autenticacao.isLogadoCadun('', '');
+            expect(piano.cookies.set).not.toHaveBeenCalled();
+        });
+    });
+
 })
