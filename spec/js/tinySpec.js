@@ -6,7 +6,7 @@ describe('Tiny JS', function () {
         piano = Piano;
     });
 
-    describe('Piano.autenticação', function () {
+    describe('Piano.autenticacao', function () {
 
         describe('função isAutorizado', function () {
 
@@ -133,51 +133,172 @@ describe('Tiny JS', function () {
         describe('função verificaUsuarioLogadoNoBarramento', function () {
 
             it('deve chamar o método tp.push quarto vezes se glbid é válido e produto tem valor "undefined"', function () {
-                spyOn(window, 'atob').and.returnValue('');
-                spyOn(window, 'decodeURI').and.returnValue('');
-                
                 spyOn(window["tp"], 'push');
-                
                 spyOn(piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
                 spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto(undefined).build());
 
-                piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido','utp');
-                
+                piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
                 expect(window["tp"].push.calls.count()).toEqual(4);
             });
 
             it('deve chamar o método tp.push quarto vezes se glbid é válido e produto é válido', function () {
-                spyOn(window, 'atob').and.returnValue('');
-                spyOn(window, 'decodeURI').and.returnValue('');
-
                 spyOn(window["tp"], 'push');
-                
                 spyOn(piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
-                spyOn(piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido')
+                spyOn(piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
                 spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoValido').build());
 
-                piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido','utp');
-                
+                piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
                 expect(window["tp"].push.calls.count()).toEqual(4);
             });
 
             it('não deve chamar o método tp.push quando glbid é inválido', function () {
-                spyOn(window, 'atob').and.returnValue('');
-                spyOn(window, 'decodeURI').and.returnValue('');
-
                 spyOn(window["tp"], 'push');
-                
                 spyOn(piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
-                spyOn(piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido')
+                spyOn(piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
                 spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidInvalido').setProduto('produtoValido').build());
                 spyOn(piano.ajax, 'fazRequisicaoBarramentoApiAutorizacaoAcesso').and.returnValue('');
 
-                piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido','utp');
-                
+                piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
                 expect(window["tp"].push).not.toHaveBeenCalled();
             });
-            
+
+            it('não deve chamar o método tp.push quando glbid é válido, mas produto é inválido', function () {
+                spyOn(window["tp"], 'push');
+                spyOn(piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
+                spyOn(piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
+                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoInvalido').build());
+                spyOn(piano.ajax, 'fazRequisicaoBarramentoApiAutorizacaoAcesso').and.returnValue('');
+
+                piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
+                expect(window["tp"].push).not.toHaveBeenCalled();
+            });
+
+            it('deve chamar o método cookies.set quando glbid é inválido', function () {
+                spyOn(piano.cookies, 'set');
+                spyOn(piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
+                spyOn(piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
+                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidInvalido').setProduto('produtoValido').build());
+                spyOn(piano.ajax, 'fazRequisicaoBarramentoApiAutorizacaoAcesso').and.returnValue('');
+
+                piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
+                expect(piano.cookies.set).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método cookies.set quando produto é inválido', function () {
+                spyOn(piano.cookies, 'set');
+                spyOn(piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
+                spyOn(piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
+                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoInvalido').build());
+                spyOn(piano.ajax, 'fazRequisicaoBarramentoApiAutorizacaoAcesso').and.returnValue('');
+
+                piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
+                expect(piano.cookies.set).toHaveBeenCalled();
+            });
+
+            it('deve fazer requisição para o barramento quando não possui o cookie utp mas fazerRequisicaoBarramento '
+                + 'possui valor', function () {
+                    spyOn(piano.ajax, 'fazRequisicaoBarramentoApiAutorizacaoAcesso');
+                    piano.variaveis.fazerRequisicaoBarramento = 'asd';
+
+                    piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', '');
+                    expect(piano.ajax.fazRequisicaoBarramentoApiAutorizacaoAcesso).toHaveBeenCalled();
+                });
+
+            it('não deve fazer requisição para o barramento quando não possui o cookie utp e fazerRequisicaoBarramento '
+                + 'não possui valor', function () {
+                    spyOn(piano.ajax, 'fazRequisicaoBarramentoApiAutorizacaoAcesso');
+                    piano.variaveis.fazerRequisicaoBarramento = '';
+
+                    piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', '');
+                    expect(piano.ajax.fazRequisicaoBarramentoApiAutorizacaoAcesso).not.toHaveBeenCalled();
+                });
+
+            it('deve fazer requisição para o barramento quando possui utp, mas possui glbid inválido e '
+                + 'fazerRequisicaoBarramento possui valor', function () {
+                    spyOn(piano.ajax, 'fazRequisicaoBarramentoApiAutorizacaoAcesso');
+                    spyOn(piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
+                    piano.variaveis.fazerRequisicaoBarramento = 'asd';
+                    spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoValido').build());
+
+                    piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidInalido', 'utp');
+                    expect(piano.ajax.fazRequisicaoBarramentoApiAutorizacaoAcesso).toHaveBeenCalled();
+                });
+
+            it('deve fazer requisição para o barramento quando possui utp, mas possui produto inválido e '
+                + 'fazerRequisicaoBarramento possui valor', function () {
+                    spyOn(piano.ajax, 'fazRequisicaoBarramentoApiAutorizacaoAcesso');
+                    spyOn(piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
+                    spyOn(piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
+                    piano.variaveis.fazerRequisicaoBarramento = 'asd';
+                    spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoInvalido').build());
+
+                    piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
+                    expect(piano.ajax.fazRequisicaoBarramentoApiAutorizacaoAcesso).toHaveBeenCalled();
+                });
+
+            it('não deve fazer requisição para o barramento quando possui utp, mas possui glbid inválido e '
+                + 'fazerRequisicaoBarramento não possui valor', function () {
+                    spyOn(piano.ajax, 'fazRequisicaoBarramentoApiAutorizacaoAcesso');
+                    spyOn(piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
+                    piano.variaveis.fazerRequisicaoBarramento = '';
+                    spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoValido').build());
+
+                    piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidInalido', 'utp');
+                    expect(piano.ajax.fazRequisicaoBarramentoApiAutorizacaoAcesso).not.toHaveBeenCalled();
+                });
+
+            it('não deve fazer requisição para o barramento quando possui utp, mas possui produto inválido e '
+                + 'fazerRequisicaoBarramento não possui valor', function () {
+                    spyOn(piano.ajax, 'fazRequisicaoBarramentoApiAutorizacaoAcesso');
+                    spyOn(piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
+                    spyOn(piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
+                    piano.variaveis.fazerRequisicaoBarramento = '';
+                    spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoInvalido').build());
+
+                    piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
+                    expect(piano.ajax.fazRequisicaoBarramentoApiAutorizacaoAcesso).not.toHaveBeenCalled();
+                });
 
         });
     });
+
+    describe('Piano.util', function () {
+
+        describe('função isSection', function () {
+
+            it('deve retornar true quando tipoConteudoPiano tem valor "section"', function () {
+                spyOn(piano.variaveis, 'getTipoConteudoPiano').and.returnValue('section');
+
+                expect(piano.util.isSection()).toEqual(true);
+            });
+
+            it('deve retornar false quando tipoConteudoPiano tem valor diferente de "section"', function () {
+                spyOn(piano.variaveis, 'getTipoConteudoPiano').and.returnValue('asd');
+
+                expect(piano.util.isSection()).toEqual(false);
+            });
+
+        });
+
+        describe('isTipoConteudoUndefined', function () {
+
+            it('deve chamar o método metricas.enviaEventosGA quando getTipoConteudoPiano igual a undefined', function () {
+                spyOn(piano.variaveis, 'getTipoConteudoPiano').and.returnValue(undefined);
+                spyOn(piano.metricas, 'enviaEventosGA');
+
+                piano.util.isTipoConteudoUndefined();
+                expect(piano.metricas.enviaEventosGA).toHaveBeenCalled();
+            });
+
+            it('não deve chamar o método metricas.enviaEventosGA quando getTipoConteudoPiano é diferente de undefined', function () {
+                spyOn(piano.variaveis, 'getTipoConteudoPiano').and.returnValue('asd');
+                spyOn(piano.metricas, 'enviaEventosGA');
+
+                piano.util.isTipoConteudoUndefined();
+                expect(piano.metricas.enviaEventosGA).not.toHaveBeenCalled();
+            });
+        });
+
+    });
+
 });
