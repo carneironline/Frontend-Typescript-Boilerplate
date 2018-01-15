@@ -65,7 +65,7 @@ Piano.variaveis = {
 	},
 	getServicoId: function() {
 		var id = window.servicoIdPiano ? window.servicoIdPiano : '4975';
-		if (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital') id = '3981'; 
+		if (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital') id = '3981';
 		return id;
 	}
 };
@@ -305,7 +305,7 @@ Piano.ajax = {
 				var resposta = xhr.responseText;
 				var appendDeScript = document.createElement('script');
 				appendDeScript.innerHTML = resposta;
-				document.head.appendChild(appendDeScript);            
+				document.head.appendChild(appendDeScript);
 			}else{
 				console.log(xhr.status);
 				console.log(xhr.responseText);
@@ -313,7 +313,7 @@ Piano.ajax = {
 		};
 		xhr.open("GET", urlScript, assincrono);
 		xhr.send();
-		
+
 	},
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
 
@@ -324,7 +324,6 @@ Piano.ajax = {
 				var respJson = JSON.parse(resposta);
 				var situacaoPagamento = respJson.situacaoPagamento.toLowerCase();
 				tp.push(["setCustomVariable", "situacaoPagamento", situacaoPagamento]);
-
 			}else{
 				if (xhr.status != 0 && Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(xhr.status) > -1) {
 					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente da API - " + xhr.status);
@@ -333,7 +332,7 @@ Piano.ajax = {
 			}
 		};
 		xhr.open("GET", hrefAssinaturaInadimplente);
-		xhr.send();	
+		xhr.send();
 	},
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
 		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.codigoProduto});
@@ -367,19 +366,19 @@ Piano.ajax = {
 						"glbid": glbid,
 						"produto": Piano.variaveis.getNomeProduto(),
 						"codProduto": Piano.variaveis.codigoProduto
-				};
+					};
 				_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
-
 			}else{
 				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
 				tp.push(["setCustomVariable", "autorizado", true]);
 				tp.push(["setCustomVariable", "logado", true]);
 				tp.push(["setCustomVariable", "motivo", 'erro']);
-			}	
-		};	
+			}
+		}
 		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor);
-		xhr.send(data);	
+		xhr.send(data);
+	}
 };
 
 Piano.autenticacao = {
@@ -504,7 +503,7 @@ Piano.util = {
 		document.getElementsByTagName("head")[0].appendChild(script);
 	},
 	detectaBurlesco: function() {
-		window.onload = function(){ 
+		window.onload = function(){
 			if(typeof addControlContent == "undefined"){
 				dataLayer.push({'event': 'EventoGAPiano', 'eventoGACategoria': 'ExtensaoBurlesco', 'eventoGAAcao': 'Sim', 'eventoGARotulo': '', 'eventoGAInteracao': 'true'});
 			};
