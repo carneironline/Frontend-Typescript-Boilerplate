@@ -310,13 +310,28 @@ describe('Tiny JS', function () {
             });
         });
 
+        describe('função extraiParametrosCampanhaDaUrl', function () {
+
+            // dificuldade pra alterar o valor de window.location.search
+            // dificuldade usar o spy no valoresCampanha
+
+        });
+
         describe('função isOrigemBuscador', function () {
 
-            it('deve chamar a função tp.push', function () {
+            it('deve chamar a função tp.push com o parametro false quando userAgent não possui valor "ia_archiver"', function () {
                 spyOn(window["tp"], 'push');
 
                 piano.util.isOrigemBuscador();
-                expect(window["tp"].push).toHaveBeenCalled();
+                expect(window["tp"].push).toHaveBeenCalledWith(["setCustomVariable", "buscador", false]);
+            });
+
+            it('deve chamar a função tp.push com o parametro true quando userAgent possui valor "ia_archiver"', function () {
+                spyOn(window["tp"], 'push');
+                helper.setUserAgent('ia_archiver');
+
+                piano.util.isOrigemBuscador();
+                expect(window["tp"].push).toHaveBeenCalledWith(["setCustomVariable", "buscador", true]);
             });
 
         });
@@ -335,15 +350,7 @@ describe('Tiny JS', function () {
             });
         });
 
-        describe('função extraiParametrosCampanhaDaUrl', function () {
-
-            // dificuldade pra alterar o valor de window.location.search
-            // dificuldade usar o spy no valoresCampanha
-
-        });
-
-       
-
+        
     });
 
 });
