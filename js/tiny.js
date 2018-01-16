@@ -318,9 +318,10 @@ Piano.ajax = {
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
 
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", hrefAssinaturaInadimplente);
+		xhr.open("GET", hrefAssinaturaInadimplente, false);
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.setRequestHeader("Accept", "application/json");
+		xhr.responseType = 'json';
 		xhr.send();
 
 		if(xhr.status == 200){
@@ -339,9 +340,10 @@ Piano.ajax = {
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
 		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.codigoProduto});
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor);
+		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor, false);
 		xhr.setRequestHeader("Accept", "application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.responseType = 'json';
 		xhr.send(data);
 
 		if(xhr.status == 200){
