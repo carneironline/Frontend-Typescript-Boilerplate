@@ -318,66 +318,69 @@ Piano.ajax = {
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
 
 		var xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = function(){
-			if(this.readyState == 4 && this.status == 200){
-				var resposta = xhr.responseText;
-				var respJson = JSON.parse(resposta);
-				var situacaoPagamento = respJson.situacaoPagamento.toLowerCase();
-				tp.push(["setCustomVariable", "situacaoPagamento", situacaoPagamento]);
-			}else{
-				if (xhr.status != 0 && Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(xhr.status) > -1) {
-					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente da API - " + xhr.status);
-				}
-				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
-			}
-		};
 		xhr.open("GET", hrefAssinaturaInadimplente);
+		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.setRequestHeader("Accept", "application/json");
 		xhr.send();
+
+		if(xhr.status == 200){
+			var resposta = xhr.responseText;
+			var respJson = JSON.parse(resposta);
+			var situacaoPagamento = respJson.situacaoPagamento.toLowerCase();
+			tp.push(["setCustomVariable", "situacaoPagamento", situacaoPagamento]);
+
+		}else{
+			if (xhr.status != 0 && Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(xhr.status) > -1) {
+				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente da API - " + xhr.status);
+			}
+			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
+		}
 	},
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
 		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.codigoProduto});
-
 		var xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = function(){
-			if(this.readyState == 4 && this.status == 200){
-				var resposta = xhr.responseText;
-				var respJson = JSON.parse(resposta);
-
-				tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
-				var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
-				if (typeof respJson.motivo != "undefined") {
-					respostaDeMotivo = respJson.motivo.toLowerCase();
-				}
-				if (typeof respJson.temTermoDeUso != "undefined") {
-					respostaDeTermoDeUso = respJson.temTermoDeUso;
-				}
-				if (typeof respJson.link != "undefined") {
-					hrefAssinaturaInadimplente = Piano.inadimplente.getLinkAssinatura(respJson.link);
-				}
-				var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado, hrefAssinaturaInadimplente);
-				tp.push(["setCustomVariable", "logado", isAutorizado]);
-				tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
-				tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
-				var _jsonLeitor = {
-						"autorizado" : respJson.autorizado,
-						"motivo": respostaDeMotivo,
-						"logado": isAutorizado,
-						"temTermoDeUso": respostaDeTermoDeUso,
-						"glbid": glbid,
-						"produto": Piano.variaveis.getNomeProduto(),
-						"codProduto": Piano.variaveis.codigoProduto
-					};
-				_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
-				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
-			}else{
-				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
-				tp.push(["setCustomVariable", "autorizado", true]);
-				tp.push(["setCustomVariable", "logado", true]);
-				tp.push(["setCustomVariable", "motivo", 'erro']);
-			}
-		}
 		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor);
+		xhr.setRequestHeader("Accept", "application/json");
+		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.send(data);
+
+		if(xhr.status == 200){
+			var resposta = xhr.responseText;
+			var respJson = JSON.parse(resposta);
+
+			tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
+			var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
+			if (typeof respJson.motivo != "undefined") {
+				respostaDeMotivo = respJson.motivo.toLowerCase();
+			}
+			if (typeof respJson.temTermoDeUso != "undefined") {
+				respostaDeTermoDeUso = respJson.temTermoDeUso;
+			}
+			if (typeof respJson.link != "undefined") {
+				hrefAssinaturaInadimplente = Piano.inadimplente.getLinkAssinatura(respJson.link);
+			}
+			var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado, hrefAssinaturaInadimplente);
+			tp.push(["setCustomVariable", "logado", isAutorizado]);
+			tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
+			tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
+			var _jsonLeitor = {
+					"autorizado" : respJson.autorizado,
+					"motivo": respostaDeMotivo,
+					"logado": isAutorizado,
+					"temTermoDeUso": respostaDeTermoDeUso,
+					"glbid": glbid,
+					"produto": Piano.variaveis.getNomeProduto(),
+					"codProduto": Piano.variaveis.codigoProduto
+				};
+			_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
+			Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
+
+		}else{
+			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
+			tp.push(["setCustomVariable", "autorizado", true]);
+			tp.push(["setCustomVariable", "logado", true]);
+			tp.push(["setCustomVariable", "motivo", 'erro']);
+		}
 	}
 };
 
