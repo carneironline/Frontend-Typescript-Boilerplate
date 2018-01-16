@@ -464,12 +464,12 @@ Piano.util = {
 		return Piano.variaveis.getAmbientePiano() != 'prd' ? '-stg' : '';
 	},
 	temParametroNaUrl: function(paramName) {
-		var parametros = window.location.search;
+		var parametros = Piano.util.getWindowLocationSearch();
 		return parametros.indexOf(paramName) != -1 ? true : false;
 	},
 	getValorParametroNaUrl: function(parametro) {
 		if (Piano.util.temParametroNaUrl(parametro)) {
-			var parametros = window.location.search;
+			var parametros = Piano.util.getWindowLocationSearch();
 			var regex = new RegExp("[\?(&)]" + parametro + "=([^&#]*)");
 			return parametros.match(regex)[1];
 		}
@@ -534,6 +534,9 @@ Piano.util = {
 	callbackMeterExpired: function(meterData) {
 		regrasTiny = meterData;
 		Piano.metricas.executaAposPageview(true);
+	},
+	getWindowLocationSearch: function(){
+		return window.location.search;
 	}
 };
 
