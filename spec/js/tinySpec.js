@@ -1,13 +1,20 @@
 describe('Tiny JS', function () {
 
-    // TODO
-    // Piano.util.extraiParametrosCampanhaDaUrl e temParametroNaUrl
-    //      mockar window.location
-
     var piano;
+    var helper;
+    var defaultUserAgent;
 
     beforeEach(function () {
         piano = Piano;
+        helper = new Helper();
+        defaultUserAgent = navigator.userAgent;
+        console.log(defaultUserAgent);
+    });
+
+    afterEach(function(){
+        console.log(navigator.userAgent);
+        helper.setUserAgent(defaultUserAgent);
+        console.log(navigator.userAgent);
     });
 
     describe('Piano.autenticacao', function () {
@@ -335,7 +342,7 @@ describe('Tiny JS', function () {
 
         });
 
-
+       
 
     });
 
