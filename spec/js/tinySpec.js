@@ -8,13 +8,10 @@ describe('Tiny JS', function () {
         piano = Piano;
         helper = new Helper();
         defaultUserAgent = navigator.userAgent;
-        console.log(defaultUserAgent);
     });
 
-    afterEach(function(){
-        console.log(navigator.userAgent);
+    afterEach(function () {
         helper.setUserAgent(defaultUserAgent);
-        console.log(navigator.userAgent);
     });
 
     describe('Piano.autenticacao', function () {
@@ -312,7 +309,6 @@ describe('Tiny JS', function () {
 
         describe('função extraiParametrosCampanhaDaUrl', function () {
 
-            // dificuldade pra alterar o valor de window.location.search
             // dificuldade usar o spy no valoresCampanha
 
         });
@@ -350,7 +346,72 @@ describe('Tiny JS', function () {
             });
         });
 
-        
+        describe('função temParametroNaUrl', function () {
+
+            it('deve retornar true quando recebe um parâmetro existente na url', function () {
+                spyOn(piano.util, 'getWindowLocationSearch').and.returnValue('parametroValido');
+
+                expect(piano.util.temParametroNaUrl('parametroValido')).toEqual(true);
+            });
+
+            it('deve retornar false quando recebe um parâmetro não existente na url', function () {
+                spyOn(piano.util, 'getWindowLocationSearch').and.returnValue('parametroValido');
+
+                expect(piano.util.temParametroNaUrl('parametroInvalido')).toEqual(false);
+            });
+
+        });
+
+        describe('função getValorParametroNaUrl', function () {
+
+            it('deve retornar o valor do parâemtro informado na url', function () {
+                spyOn(piano.util, 'temParametroNaUrl').and.returnValue(true);
+                spyOn(piano.util, 'getWindowLocationSearch').and.returnValue('?parametro=valor');
+
+                expect(piano.util.getValorParametroNaUrl('parametro')).toEqual('valor')
+            });
+
+            it('deve retornar "sem parametro" caso não tenha parâmetro', function () {
+                spyOn(piano.util, 'temParametroNaUrl').and.returnValue(false);
+
+                expect(piano.util.getValorParametroNaUrl('')).toEqual('sem parametro');
+            });
+
+        });
+
+        describe('função isDebug', function () {
+
+            it('deve retornar true quando o parâmetro possui valor "true"', function () {
+                spyOn(piano.util, 'getValorParametroNaUrl').and.returnValue('true');
+
+                expect(piano.util.isDebug()).toEqual(true);
+            });
+
+            it('deve retornar false quando o parâmetro possui valor "false"', function () {
+                spyOn(piano.util, 'getValorParametroNaUrl').and.returnValue('false');
+
+                expect(piano.util.isDebug()).toEqual(false);
+            });
+
+            it('deve retornar true quando possui o cookie "debug-piano"', function () {
+                spyOn(piano.util, 'getValorParametroNaUrl').and.returnValue('a');
+                spyOn(piano.cookies, 'get').and.returnValue('debug-piano');
+
+                expect(piano.util.isDebug()).toEqual(true);
+            });
+
+        });
+
+        describe('função detectaAdBlock', function(){
+
+            it('deve chamar a função appendChild',function(){
+                spyOn(document.getElementsByTagName("head")[0], 'appendChild');
+
+                piano.util.detectaAdBlock();
+                expect(document.appendChild).toHaveBeenCalled();
+            });
+
+        });
     });
 
 });
