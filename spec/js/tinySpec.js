@@ -1,5 +1,9 @@
 describe('Tiny JS', function () {
 
+    // TODO
+    // Piano.util.extraiParametrosCampanhaDaUrl e temParametroNaUrl
+    //      mockar window.location
+
     var piano;
 
     beforeEach(function () {
@@ -280,7 +284,7 @@ describe('Tiny JS', function () {
 
         });
 
-        describe('isTipoConteudoUndefined', function () {
+        describe('função isTipoConteudoUndefined', function () {
 
             it('deve chamar o método metricas.enviaEventosGA quando getTipoConteudoPiano igual a undefined', function () {
                 spyOn(piano.variaveis, 'getTipoConteudoPiano').and.returnValue(undefined);
@@ -298,6 +302,40 @@ describe('Tiny JS', function () {
                 expect(piano.metricas.enviaEventosGA).not.toHaveBeenCalled();
             });
         });
+
+        describe('função isOrigemBuscador', function () {
+
+            it('deve chamar a função tp.push', function () {
+                spyOn(window["tp"], 'push');
+
+                piano.util.isOrigemBuscador();
+                expect(window["tp"].push).toHaveBeenCalled();
+            });
+
+        });
+
+        describe('função montaUrlStg', function () {
+            it('deve retornar vazio se ambientePiano possui valor "prd"', function () {
+                spyOn(piano.variaveis, 'getAmbientePiano').and.returnValue('prd')
+
+                expect(piano.util.montaUrlStg()).toEqual('');
+            });
+
+            it('deve retornar "-stg" se ambientePiano possui valor diferente te "prd"', function () {
+                spyOn(piano.variaveis, 'getAmbientePiano').and.returnValue('a')
+
+                expect(piano.util.montaUrlStg()).toEqual('-stg');
+            });
+        });
+
+        describe('função extraiParametrosCampanhaDaUrl', function () {
+
+            // dificuldade pra alterar o valor de window.location.search
+            // dificuldade usar o spy no valoresCampanha
+
+        });
+
+
 
     });
 
