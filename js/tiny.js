@@ -306,9 +306,6 @@ Piano.ajax = {
 				var appendDeScript = document.createElement('script');
 				appendDeScript.innerHTML = resposta;
 				document.head.appendChild(appendDeScript);            
-			}else{
-				console.log(xhr.status);
-				console.log(xhr.responseText);
 			}
 		};
 		xhr.open("GET", urlScript, assincrono);
@@ -319,30 +316,35 @@ Piano.ajax = {
 
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", hrefAssinaturaInadimplente);
+		xhr.setRequestHeader("Accept", "application/json");
+		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.send();
+		xhr.onreadystatechange = function(){
+			if(this.readyState == 4 && this.status == 200){
+				var resposta = xhr.responseText;
+				var respJson = JSON.parse(resposta);
+				var situacaoPagamento = respJson.situacaoPagamento.toLowerCase();
+				tp.push(["setCustomVariable", "situacaoPagamento", situacaoPagamento]);
 
-		if(xhr.status == 200){
-			var resposta = xhr.responseText;
-			var respJson = JSON.parse(resposta);
-			var situacaoPagamento = respJson.situacaoPagamento.toLowerCase();
-			tp.push(["setCustomVariable", "situacaoPagamento", situacaoPagamento]);
-
-		}else{
-			if (xhr.status != 0 && Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(xhr.status) > -1) {
-				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente da API - " + xhr.status);
+			}else{
+				if (xhr.status != 0 && Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(xhr.status) > -1) {
+					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente da API - " + xhr.status);
+				}
+				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
 			}
-			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
-		}
+		}	
 	},
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
 		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.codigoProduto});
 
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor);
-		xhr.setRequestHeader("GET", hrefAssinaturaInadimplente);
+		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor + data);
+		xhr.setRequestHeader("Accept","application/json");
+		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.send(data);
 
-		if(xhr.status == 200){
+		xhr.onreadystatechange = function(){
+			if(this.readyState == 4 && this.status == 200){
 			var resposta = xhr.responseText;
 			var respJson = JSON.parse(resposta);
 
@@ -378,7 +380,9 @@ Piano.ajax = {
 			tp.push(["setCustomVariable", "autorizado", true]);
 			tp.push(["setCustomVariable", "logado", true]);
 			tp.push(["setCustomVariable", "motivo", 'erro']);
-		}
+		}	
+	}
+	
 	}
 };
 
