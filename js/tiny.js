@@ -316,28 +316,29 @@ Piano.ajax = {
 
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", hrefAssinaturaInadimplente);
+		xhr.setRequestHeader("Accept", "application/json");
+		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.send();
+		xhr.onreadystatechange = function(){
+			if(this.readyState == 4 && this.status == 200){
+				var resposta = xhr.responseText;
+				var respJson = JSON.parse(resposta);
+				var situacaoPagamento = respJson.situacaoPagamento.toLowerCase();
+				tp.push(["setCustomVariable", "situacaoPagamento", situacaoPagamento]);
 
-		if(xhr.status == 200){
-			var resposta = xhr.responseText;
-			var respJson = JSON.parse(resposta);
-			var situacaoPagamento = respJson.situacaoPagamento.toLowerCase();
-			tp.push(["setCustomVariable", "situacaoPagamento", situacaoPagamento]);
-
-		}else{
-			if (xhr.status != 0 && Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(xhr.status) > -1) {
-				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente da API - " + xhr.status);
+			}else{
+				if (xhr.status != 0 && Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(xhr.status) > -1) {
+					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente da API - " + xhr.status);
+				}
+				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
 			}
-			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
-		}
+		}	
 	},
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
 		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.codigoProduto});
 
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor + data);
-
-		console.log(typeof data);
 		xhr.setRequestHeader("Accept","application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.send(data);
