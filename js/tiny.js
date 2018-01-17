@@ -333,7 +333,8 @@ Piano.ajax = {
 					}
 					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
 				}
-		}	
+			}
+		}		
 	},
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
 		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.codigoProduto});
@@ -343,9 +344,10 @@ Piano.ajax = {
 		xhr.setRequestHeader("Accept","application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.send(data);
-
 		xhr.onreadystatechange = function(){
+
 			if(this.readyState == 4){
+
 				if (this.status == 200){
 					var resposta = xhr.responseText;
 					var respJson = JSON.parse(resposta);
@@ -373,9 +375,10 @@ Piano.ajax = {
 							"glbid": glbid,
 							"produto": Piano.variaveis.getNomeProduto(),
 							"codProduto": Piano.variaveis.codigoProduto
-						};
+					};
 					_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
 					Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
+
 				}else{
 					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
 					tp.push(["setCustomVariable", "autorizado", true]);
