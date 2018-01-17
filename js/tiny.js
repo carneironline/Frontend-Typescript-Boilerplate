@@ -345,7 +345,8 @@ Piano.ajax = {
 		xhr.send(data);
 
 		xhr.onreadystatechange = function(){
-			if(this.readyState == 4 && this.status == 200){
+			if(this.readyState == 4){
+				if (this.status == 200){
 				var resposta = xhr.responseText;
 				var respJson = JSON.parse(resposta);
 
@@ -376,14 +377,14 @@ Piano.ajax = {
 				_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
 
-			}else{
-				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
-				tp.push(["setCustomVariable", "autorizado", true]);
-				tp.push(["setCustomVariable", "logado", true]);
-				tp.push(["setCustomVariable", "motivo", 'erro']);
-			}	
+				}else{
+					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
+					tp.push(["setCustomVariable", "autorizado", true]);
+					tp.push(["setCustomVariable", "logado", true]);
+					tp.push(["setCustomVariable", "motivo", 'erro']);
+				}	
+			}
 		}
-	
 	}
 };
 
