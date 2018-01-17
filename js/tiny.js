@@ -65,7 +65,7 @@ Piano.variaveis = {
 	},
 	getServicoId: function() {
 		var id = window.servicoIdPiano ? window.servicoIdPiano : '4975';
-		if (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital') id = '3981';
+		if (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital') id = '3981'; 
 		return id;
 	}
 };
@@ -305,23 +305,17 @@ Piano.ajax = {
 				var resposta = xhr.responseText;
 				var appendDeScript = document.createElement('script');
 				appendDeScript.innerHTML = resposta;
-				document.head.appendChild(appendDeScript);
-			}else{
-				console.log(xhr.status);
-				console.log(xhr.responseText);
+				document.head.appendChild(appendDeScript);            
 			}
 		};
 		xhr.open("GET", urlScript, assincrono);
 		xhr.send();
-
+		
 	},
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
 
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", hrefAssinaturaInadimplente);
-		xhr.setRequestHeader("Content-Type", "application/json");
-		xhr.setRequestHeader("Accept", "application/json");
-		xhr.responseType = 'json';
 		xhr.send();
 
 		if(xhr.status == 200){
@@ -339,14 +333,17 @@ Piano.ajax = {
 	},
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
 		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.codigoProduto});
+
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor);
-		xhr.setRequestHeader("Accept", "application/json");
+		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor + data);
+
+		console.log(typeof data);
+		xhr.setRequestHeader("Accept","application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
-		xhr.responseType = 'json';
 		xhr.send(data);
 
-		if(xhr.status == 200){
+		xhr.onreadystatechange = function(){
+			if(this.readyState == 4 && this.status == 200){
 			var resposta = xhr.responseText;
 			var respJson = JSON.parse(resposta);
 
@@ -382,7 +379,9 @@ Piano.ajax = {
 			tp.push(["setCustomVariable", "autorizado", true]);
 			tp.push(["setCustomVariable", "logado", true]);
 			tp.push(["setCustomVariable", "motivo", 'erro']);
-		}
+		}	
+	}
+	
 	}
 };
 
@@ -508,7 +507,7 @@ Piano.util = {
 		document.getElementsByTagName("head")[0].appendChild(script);
 	},
 	detectaBurlesco: function() {
-		window.onload = function(){
+		window.onload = function(){ 
 			if(typeof addControlContent == "undefined"){
 				dataLayer.push({'event': 'EventoGAPiano', 'eventoGACategoria': 'ExtensaoBurlesco', 'eventoGAAcao': 'Sim', 'eventoGARotulo': '', 'eventoGAInteracao': 'true'});
 			};
