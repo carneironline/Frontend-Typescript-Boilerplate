@@ -347,36 +347,35 @@ Piano.ajax = {
 		xhr.onreadystatechange = function(){
 			if(this.readyState == 4){
 				if (this.status == 200){
-				var resposta = xhr.responseText;
-				var respJson = JSON.parse(resposta);
+					var resposta = xhr.responseText;
+					var respJson = JSON.parse(resposta);
 
-				tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
-				var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
-				if (typeof respJson.motivo != "undefined") {
-					respostaDeMotivo = respJson.motivo.toLowerCase();
-				}
-				if (typeof respJson.temTermoDeUso != "undefined") {
-					respostaDeTermoDeUso = respJson.temTermoDeUso;
-				}
-				if (typeof respJson.link != "undefined") {
-					hrefAssinaturaInadimplente = Piano.inadimplente.getLinkAssinatura(respJson.link);
-				}
-				var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado, hrefAssinaturaInadimplente);
-				tp.push(["setCustomVariable", "logado", isAutorizado]);
-				tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
-				tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
-				var _jsonLeitor = {
-						"autorizado" : respJson.autorizado,
-						"motivo": respostaDeMotivo,
-						"logado": isAutorizado,
-						"temTermoDeUso": respostaDeTermoDeUso,
-						"glbid": glbid,
-						"produto": Piano.variaveis.getNomeProduto(),
-						"codProduto": Piano.variaveis.codigoProduto
-					};
-				_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
-				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
-
+					tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
+					var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
+					if (typeof respJson.motivo != "undefined") {
+						respostaDeMotivo = respJson.motivo.toLowerCase();
+					}
+					if (typeof respJson.temTermoDeUso != "undefined") {
+						respostaDeTermoDeUso = respJson.temTermoDeUso;
+					}
+					if (typeof respJson.link != "undefined") {
+						hrefAssinaturaInadimplente = Piano.inadimplente.getLinkAssinatura(respJson.link);
+					}
+					var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado, hrefAssinaturaInadimplente);
+					tp.push(["setCustomVariable", "logado", isAutorizado]);
+					tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
+					tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
+					var _jsonLeitor = {
+							"autorizado" : respJson.autorizado,
+							"motivo": respostaDeMotivo,
+							"logado": isAutorizado,
+							"temTermoDeUso": respostaDeTermoDeUso,
+							"glbid": glbid,
+							"produto": Piano.variaveis.getNomeProduto(),
+							"codProduto": Piano.variaveis.codigoProduto
+						};
+					_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
+					Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
 				}else{
 					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
 					tp.push(["setCustomVariable", "autorizado", true]);
