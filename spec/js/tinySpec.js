@@ -489,9 +489,9 @@ describe('Tiny JS', function () {
 
         });
 
-        describe('função callbackMeter', function(){
+        describe('função callbackMeter', function () {
 
-            it('deve chamar o método metricas.executaAposPageview sem nenhum parâmetro',function(){
+            it('deve chamar o método metricas.executaAposPageview sem nenhum parâmetro', function () {
                 spyOn(piano.metricas, 'executaAposPageview');
 
                 piano.util.callbackMeter();
@@ -500,9 +500,9 @@ describe('Tiny JS', function () {
 
         });
 
-        describe('função callbackMeterExpired', function(){
+        describe('função callbackMeterExpired', function () {
 
-            it('deve chamar o método metricas.executaAposPageview com o valor true no parâmetro',function(){
+            it('deve chamar o método metricas.executaAposPageview com o valor true no parâmetro', function () {
                 spyOn(piano.metricas, 'executaAposPageview');
 
                 piano.util.callbackMeterExpired();
@@ -512,4 +512,31 @@ describe('Tiny JS', function () {
         });
     });
 
+    describe('Piano.produto', function () {
+
+        describe('função validaConfiguracoes', function () {
+            
+            it('deve chamar o método ajax.geraScriptNaPagina quando trocarConfiguracoes possuir algum valor', function () {
+                spyOn(piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn(piano.ajax, 'geraScriptNaPagina');
+
+                piano.produto.validaConfiguracoes();
+                expect(piano.ajax.geraScriptNaPagina).toHaveBeenCalled();
+            });
+
+            it('deve retornar "true" quando trocarConfiguracoes possuir algum valor', function () {
+                spyOn(piano.util, 'trocarConfiguracoes').and.returnValue('a');
+
+                expect(piano.produto.validaConfiguracoes()).toEqual(true);
+            });
+
+            it('deve retornar "false" quando trocarConfiguracoes não possuir valor', function () {
+                spyOn(piano.util, 'trocarConfiguracoes').and.returnValue('');
+
+                expect(piano.produto.validaConfiguracoes()).toEqual(false);
+            });
+
+
+        });
+    });
 });
