@@ -4,7 +4,7 @@ var Piano = {};
 Piano.produto = {
 	validaConfiguracoes : function() {
 		if (Piano.util.trocarConfiguracoes()) {
-			Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/js/outros-produtos/configuracoes.js", false);
+			Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/js/outros-produtos/configuracoes.js", false);
 			return true;
 		}
 		return false;
@@ -255,18 +255,18 @@ var selH = document.querySelector('head');
 Piano.banner = {
 	mostrarFooter: function(versao) {
 		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/styles/styles.css'>";
-		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/novo-banner-footer.js", true);
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/novo-banner-footer.js", true);
 	},
 	mostrarBotaoAssinaturaHeaderFooter: function(versao) {
 		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/styles/styles.css'>";
-		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/scripts/banner-header-footer-piano.js", true);
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/scripts/banner-header-footer-piano.js", true);
 	}
 };
 
 Piano.register = {
 	mostrarBarreira: function(versao) {
 		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>";
-		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/nova-tela-register.js", true);
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/nova-tela-register.js", true);
 		Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 		Piano.metricas.enviaEventosGA("Exibicao Register", Piano.metricas.montaRotuloGA());
 		Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
@@ -284,7 +284,7 @@ Piano.paywall = {
 Piano.comunicado = {
 	mostrarInformacao: function(versao) {
 		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/styles/styles.css'>";
-		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/scripts/comunicacao-piano.js", true);
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/scripts/comunicacao-piano.js", true);
 	}
 };
 
@@ -297,7 +297,7 @@ Piano.inadimplente = {
 	}
 };
 
-Piano.ajax = {
+Piano.xmlHttpRequest = {
 	geraScriptNaPagina: function(urlScript, assincrono) {
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", urlScript, assincrono);
@@ -412,12 +412,12 @@ Piano.autenticacao = {
 				}
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 			}
-			if (Piano.variaveis.fazerRequisicaoBarramento) Piano.ajax.fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid);
+			if (Piano.variaveis.fazerRequisicaoBarramento) Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid);
 		}
 	},
 	isAutorizado: function(termoDeUso, motivo, autorizado, hrefAssinaturaInadimplente) {
 		if (autorizado || motivo == "indisponivel" || termoDeUso != false) {
-			if (autorizado && hrefAssinaturaInadimplente) Piano.ajax.fazRequisicaoBarramentoApiObterAssinaturaInadimplente(hrefAssinaturaInadimplente);
+			if (autorizado && hrefAssinaturaInadimplente) Piano.xmlHttpRequest.fazRequisicaoBarramentoApiObterAssinaturaInadimplente(hrefAssinaturaInadimplente);
 			return true;
 		};
 		if (Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX)) Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, "", -1);
