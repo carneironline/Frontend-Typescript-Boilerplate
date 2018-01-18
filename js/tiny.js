@@ -4,7 +4,7 @@ var Piano = {};
 Piano.produto = {
 	validaConfiguracoes : function() {
 		if (Piano.util.trocarConfiguracoes()) {
-			Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/js/outros-produtos/configuracoes.js", false);
+			Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/js/outros-produtos/configuracoes.js", false);
 			return true;
 		}
 		return false;
@@ -255,18 +255,18 @@ var selH = document.querySelector('head');
 Piano.banner = {
 	mostrarFooter: function(versao) {
 		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/styles/styles.css'>";
-		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/novo-banner-footer.js", true);
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/novo-banner-footer.js", true);
 	},
 	mostrarBotaoAssinaturaHeaderFooter: function(versao) {
 		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/styles/styles.css'>";
-		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/scripts/banner-header-footer-piano.js", true);
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/scripts/banner-header-footer-piano.js", true);
 	}
 };
 
 Piano.register = {
 	mostrarBarreira: function(versao) {
 		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>";
-		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/nova-tela-register.js", true);
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/nova-tela-register.js", true);
 		Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 		Piano.metricas.enviaEventosGA("Exibicao Register", Piano.metricas.montaRotuloGA());
 		Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
@@ -284,7 +284,7 @@ Piano.paywall = {
 Piano.comunicado = {
 	mostrarInformacao: function(versao) {
 		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/styles/styles.css'>";
-		Piano.ajax.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/scripts/comunicacao-piano.js", true);
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/scripts/comunicacao-piano.js", true);
 	}
 };
 
@@ -297,9 +297,11 @@ Piano.inadimplente = {
 	}
 };
 
-Piano.ajax = {
+Piano.xmlHttpRequest = {
 	geraScriptNaPagina: function(urlScript, assincrono) {
 		var xhr = new XMLHttpRequest();
+		xhr.open("GET", urlScript, assincrono);
+		xhr.send();
 		xhr.onreadystatechange = function() {
 			if(this.readyState == 4 && this.status == 200){
 				var resposta = xhr.responseText;
@@ -307,82 +309,85 @@ Piano.ajax = {
 				appendDeScript.innerHTML = resposta;
 				document.head.appendChild(appendDeScript);            
 			}
-		};
-		xhr.open("GET", urlScript, assincrono);
-		xhr.send();
+		}
+		
 		
 	},
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
 
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", hrefAssinaturaInadimplente);
+		xhr.open("GET", hrefAssinaturaInadimplente, false);
 		xhr.setRequestHeader("Accept", "application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.send();
-		xhr.onreadystatechange = function(){
-			if(this.readyState == 4 && this.status == 200){
-				var resposta = xhr.responseText;
-				var respJson = JSON.parse(resposta);
-				var situacaoPagamento = respJson.situacaoPagamento.toLowerCase();
-				tp.push(["setCustomVariable", "situacaoPagamento", situacaoPagamento]);
+		
+			if(this.readyState == 4){
+				if(this.status == 200){
+					var resposta = xhr.responseText;
+					var respJson = JSON.parse(resposta);
+					var situacaoPagamento = respJson.situacaoPagamento.toLowerCase();
+					tp.push(["setCustomVariable", "situacaoPagamento", situacaoPagamento]);
 
-			}else{
-				if (xhr.status != 0 && Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(xhr.status) > -1) {
-					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente da API - " + xhr.status);
+				}else{
+					if (xhr.status != 0 && Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(xhr.status) > -1) {
+						Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente da API - " + xhr.status);
+					}
+					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
 				}
-				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
 			}
-		}	
+				
 	},
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
 		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.codigoProduto});
 
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor + data);
+		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor, false);
 		xhr.setRequestHeader("Accept","application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.send(data);
+		
+		
+			if(xhr.readyState == 4){
 
-		xhr.onreadystatechange = function(){
-			if(this.readyState == 4 && this.status == 200){
-			var resposta = xhr.responseText;
-			var respJson = JSON.parse(resposta);
+				if (xhr.status == 200){
+					var resposta = xhr.responseText;
+					var respJson = JSON.parse(resposta);
 
-			tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
-			var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
-			if (typeof respJson.motivo != "undefined") {
-				respostaDeMotivo = respJson.motivo.toLowerCase();
-			}
-			if (typeof respJson.temTermoDeUso != "undefined") {
-				respostaDeTermoDeUso = respJson.temTermoDeUso;
-			}
-			if (typeof respJson.link != "undefined") {
-				hrefAssinaturaInadimplente = Piano.inadimplente.getLinkAssinatura(respJson.link);
-			}
-			var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado, hrefAssinaturaInadimplente);
-			tp.push(["setCustomVariable", "logado", isAutorizado]);
-			tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
-			tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
-			var _jsonLeitor = {
-					"autorizado" : respJson.autorizado,
-					"motivo": respostaDeMotivo,
-					"logado": isAutorizado,
-					"temTermoDeUso": respostaDeTermoDeUso,
-					"glbid": glbid,
-					"produto": Piano.variaveis.getNomeProduto(),
-					"codProduto": Piano.variaveis.codigoProduto
-				};
-			_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
-			Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
+					tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
+					var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
+					if (typeof respJson.motivo != "undefined") {
+						respostaDeMotivo = respJson.motivo.toLowerCase();
+					}
+					if (typeof respJson.temTermoDeUso != "undefined") {
+						respostaDeTermoDeUso = respJson.temTermoDeUso;
+					}
+					if (typeof respJson.link != "undefined") {
+						hrefAssinaturaInadimplente = Piano.inadimplente.getLinkAssinatura(respJson.link);
+					}
+					var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado, hrefAssinaturaInadimplente);
+					tp.push(["setCustomVariable", "logado", isAutorizado]);
+					tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
+					tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
+					var _jsonLeitor = {
+							"autorizado" : respJson.autorizado,
+							"motivo": respostaDeMotivo,
+							"logado": isAutorizado,
+							"temTermoDeUso": respostaDeTermoDeUso,
+							"glbid": glbid,
+							"produto": Piano.variaveis.getNomeProduto(),
+							"codProduto": Piano.variaveis.codigoProduto
+					};
+					_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
+					Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
 
-		}else{
-			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
-			tp.push(["setCustomVariable", "autorizado", true]);
-			tp.push(["setCustomVariable", "logado", true]);
-			tp.push(["setCustomVariable", "motivo", 'erro']);
-		}	
-	}
-	
+				}else{
+					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
+					tp.push(["setCustomVariable", "autorizado", true]);
+					tp.push(["setCustomVariable", "logado", true]);
+					tp.push(["setCustomVariable", "motivo", 'erro']);
+				}	
+			}
+			
 	}
 };
 
@@ -407,12 +412,12 @@ Piano.autenticacao = {
 				}
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 			}
-			if (Piano.variaveis.fazerRequisicaoBarramento) Piano.ajax.fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid);
+			if (Piano.variaveis.fazerRequisicaoBarramento) Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid);
 		}
 	},
 	isAutorizado: function(termoDeUso, motivo, autorizado, hrefAssinaturaInadimplente) {
 		if (autorizado || motivo == "indisponivel" || termoDeUso != false) {
-			if (autorizado && hrefAssinaturaInadimplente) Piano.ajax.fazRequisicaoBarramentoApiObterAssinaturaInadimplente(hrefAssinaturaInadimplente);
+			if (autorizado && hrefAssinaturaInadimplente) Piano.xmlHttpRequest.fazRequisicaoBarramentoApiObterAssinaturaInadimplente(hrefAssinaturaInadimplente);
 			return true;
 		};
 		if (Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX)) Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, "", -1);
