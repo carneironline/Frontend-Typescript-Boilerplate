@@ -255,18 +255,18 @@ var selH = document.querySelector('head');
 Piano.banner = {
 	mostrarFooter: function(versao) {
 		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/styles/styles.css'>";
-		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/novo-banner-footer.js", true);
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/novo-banner-footer.js");
 	},
 	mostrarBotaoAssinaturaHeaderFooter: function(versao) {
 		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/styles/styles.css'>";
-		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/scripts/banner-header-footer-piano.js", true);
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/scripts/banner-header-footer-piano.js");
 	}
 };
 
 Piano.register = {
 	mostrarBarreira: function(versao) {
 		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>";
-		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/nova-tela-register.js", true);
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/nova-tela-register.js");
 		Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 		Piano.metricas.enviaEventosGA("Exibicao Register", Piano.metricas.montaRotuloGA());
 		Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
@@ -284,7 +284,7 @@ Piano.paywall = {
 Piano.comunicado = {
 	mostrarInformacao: function(versao) {
 		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/styles/styles.css'>";
-		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/scripts/comunicacao-piano.js", true);
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/scripts/comunicacao-piano.js");
 	}
 };
 
@@ -298,9 +298,9 @@ Piano.inadimplente = {
 };
 
 Piano.xmlHttpRequest = {
-	geraScriptNaPagina: function(urlScript, assincrono) {
+	geraScriptNaPagina: function(urlScript) {
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", urlScript, assincrono);
+		xhr.open("GET", urlScript);
 		xhr.send();
 		xhr.onreadystatechange = function() {
 			if(this.readyState == 4 && this.status == 200){
@@ -321,8 +321,8 @@ Piano.xmlHttpRequest = {
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.send();
 		
-			if(this.readyState == 4){
-				if(this.status == 200){
+			if(xhr.readyState == 4){
+				if(xhr.status == 200){
 					var resposta = xhr.responseText;
 					var respJson = JSON.parse(resposta);
 					var situacaoPagamento = respJson.situacaoPagamento.toLowerCase();
