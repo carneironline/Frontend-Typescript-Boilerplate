@@ -402,13 +402,111 @@ describe('Tiny JS', function () {
 
         });
 
-        describe('função detectaAdBlock', function(){
+        describe('função detectaAdBlock', function () {
 
-            it('deve chamar a função appendChild',function(){
+            it('deve chamar a função appendChild', function () {
                 spyOn(document.getElementsByTagName("head")[0], 'appendChild');
 
                 piano.util.detectaAdBlock();
-                expect(document.appendChild).toHaveBeenCalled();
+                expect(document.getElementsByTagName("head")[0].appendChild).toHaveBeenCalled();
+            });
+
+        });
+
+        describe('função detectaBurlesco', function () {
+
+            // dificuldade para testar funções com window.onload
+
+        });
+
+        describe('função isDominioOGlobo', function () {
+
+            it('deve retornar a url acessada quando acessar uma url que possui "oglobo"', function () {
+                spyOn(piano.util, 'getWindowLocationHref').and.returnValue('https://oglobo.com/');
+
+                expect(piano.util.isDominioOGlobo()).toEqual('oglobo.com');
+            });
+
+            it('deve retornar a url acessada quando acessar uma url que possui "globoi"', function () {
+                spyOn(piano.util, 'getWindowLocationHref').and.returnValue('https://globoi.com/');
+
+                expect(piano.util.isDominioOGlobo()).toEqual('globoi.com');
+            });
+
+            it('deve retornar "" quando acessar uma url que possui "edg" e "globoi"', function () {
+                spyOn(piano.util, 'getWindowLocationHref').and.returnValue('https://edg.globoi.com/');
+
+                expect(piano.util.isDominioOGlobo()).toEqual('');
+            });
+
+            it('deve retornar "" quando acessar uma url que não possui "oglobo" e nem "globoi"', function () {
+                spyOn(piano.util, 'getWindowLocationHref').and.returnValue('https://google.com/');
+
+                expect(piano.util.isDominioOGlobo()).toEqual('');
+            });
+
+        });
+
+        describe('função trocarConfiguracoes', function () {
+
+            it('deve retornar true quando cookieUtp e cookieUtp.produto são diferentes de undefined e '
+                + 'cookieUtp.produto é diferente de getNomeProduto', function () {
+                    spyOn(piano.cookies, 'get').and.returnValue('a');
+                    spyOn(window, 'atob').and.returnValue('b');
+                    spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setProduto('produto1').build());
+                    spyOn(piano.variaveis, 'getNomeProduto').and.returnValue('produto2');
+
+                    expect(piano.util.trocarConfiguracoes()).toEqual(true);
+                });
+
+            it('deve retornar false quando cookieUtp é undefined e isDominioOGlobo é true', function () {
+                spyOn(piano.util, 'isDominioOGlobo').and.returnValue(true);
+
+                expect(piano.util.trocarConfiguracoes()).toEqual(false);
+            });
+
+            it('deve retornar true quando cookieUtp é undefined e isDominioOGlobo é true', function () {
+                spyOn(piano.util, 'isDominioOGlobo').and.returnValue(false);
+
+                expect(piano.util.trocarConfiguracoes()).toEqual(true);
+            });
+
+            it('deve retornar true quando cookieUtp é undefined, isDominioOGlobo é true e '
+                + 'getNomeProduto é "jornaldigital"', function () {
+                    spyOn(piano.util, 'isDominioOGlobo').and.returnValue(false);
+                    spyOn(piano.variaveis, 'getNomeProduto').and.returnValue('jornaldigital');
+
+                    expect(piano.util.trocarConfiguracoes()).toEqual(true);
+                });
+
+            it('deve retornar true quando cookieUtp é undefined, isDominioOGlobo é true e '
+                + 'getNomeProduto é "acervo"', function () {
+                    spyOn(piano.util, 'isDominioOGlobo').and.returnValue(false);
+                    spyOn(piano.variaveis, 'getNomeProduto').and.returnValue('acervo');
+
+                    expect(piano.util.trocarConfiguracoes()).toEqual(true);
+                });
+
+        });
+
+        describe('função callbackMeter', function(){
+
+            it('deve chamar o método metricas.executaAposPageview sem nenhum parâmetro',function(){
+                spyOn(piano.metricas, 'executaAposPageview');
+
+                piano.util.callbackMeter();
+                expect(piano.metricas.executaAposPageview).toHaveBeenCalledWith();
+            });
+
+        });
+
+        describe('função callbackMeterExpired', function(){
+
+            it('deve chamar o método metricas.executaAposPageview com o valor true no parâmetro',function(){
+                spyOn(piano.metricas, 'executaAposPageview');
+
+                piano.util.callbackMeterExpired();
+                expect(piano.metricas.executaAposPageview).toHaveBeenCalledWith(true);
             });
 
         });
