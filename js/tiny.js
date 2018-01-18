@@ -300,6 +300,8 @@ Piano.inadimplente = {
 Piano.ajax = {
 	geraScriptNaPagina: function(urlScript, assincrono) {
 		var xhr = new XMLHttpRequest();
+		xhr.open("GET", urlScript, assincrono);
+		xhr.send();
 		xhr.onreadystatechange = function() {
 			if(this.readyState == 4 && this.status == 200){
 				var resposta = xhr.responseText;
@@ -307,19 +309,18 @@ Piano.ajax = {
 				appendDeScript.innerHTML = resposta;
 				document.head.appendChild(appendDeScript);            
 			}
-		};
-		xhr.open("GET", urlScript, assincrono);
-		xhr.send();
+		}
+		
 		
 	},
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
 
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", hrefAssinaturaInadimplente);
+		xhr.open("GET", hrefAssinaturaInadimplente, false);
 		xhr.setRequestHeader("Accept", "application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.send();
-		xhr.onreadystatechange = function(){
+		
 			if(this.readyState == 4){
 				if(this.status == 200){
 					var resposta = xhr.responseText;
@@ -334,21 +335,21 @@ Piano.ajax = {
 					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
 				}
 			}
-		}		
+				
 	},
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
 		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.codigoProduto});
 
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor);
+		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor, false);
 		xhr.setRequestHeader("Accept","application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.send(data);
-		xhr.onreadystatechange = function(){
+		
+		
+			if(xhr.readyState == 4){
 
-			if(this.readyState == 4){
-
-				if (this.status == 200){
+				if (xhr.status == 200){
 					var resposta = xhr.responseText;
 					var respJson = JSON.parse(resposta);
 
@@ -386,7 +387,7 @@ Piano.ajax = {
 					tp.push(["setCustomVariable", "motivo", 'erro']);
 				}	
 			}
-		}
+			
 	}
 };
 
