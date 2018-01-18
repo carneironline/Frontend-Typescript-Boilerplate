@@ -512,7 +512,7 @@ Piano.util = {
 		}
 	},
 	isDominioOGlobo: function() {
-		var regex = new RegExp("://(.*?)/"), url = window.location.href;
+		var regex = new RegExp("://(.*?)/"), url = Piano.util.getWindowLocationHref();
 		if (url.match(regex)[1].indexOf("oglobo") > -1 || (url.match(regex)[1].indexOf("globoi") > -1 && url.match(regex)[1].indexOf("edg") == -1)) {
 			return url.match(regex)[1];
 		}
@@ -537,6 +537,9 @@ Piano.util = {
 	},
 	getWindowLocationSearch: function(){
 		return window.location.search;
+	},
+	getWindowLocationHref: function(){
+		return window.location.href;
 	}
 };
 
