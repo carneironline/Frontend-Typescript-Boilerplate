@@ -515,7 +515,7 @@ describe('Tiny JS', function () {
     describe('Piano.produto', function () {
 
         describe('função validaConfiguracoes', function () {
-            
+
             it('deve chamar o método ajax.geraScriptNaPagina quando trocarConfiguracoes possuir algum valor', function () {
                 spyOn(piano.util, 'trocarConfiguracoes').and.returnValue('a');
                 spyOn(piano.ajax, 'geraScriptNaPagina');
@@ -536,7 +536,118 @@ describe('Tiny JS', function () {
                 expect(piano.produto.validaConfiguracoes()).toEqual(false);
             });
 
+        });
+    });
+
+    describe('Piano.variaveis', function () {
+
+        describe('função isConteudoExclusivo', function () {
+
+            it('deve retornar "true" quando window.conteudoExclusivo é "true"', function () {
+                window.conteudoExclusivo = true;
+
+                expect(Piano.variaveis.isConteudoExclusivo()).toEqual(true);
+            });
+
+            it('deve retornar "false" quando window.conteudoExclusivo é "false"', function () {
+                window.conteudoExclusivo = false;
+
+                expect(Piano.variaveis.isConteudoExclusivo()).toEqual(false);
+            });
 
         });
+
+        describe('função getAmbientePiano', function () {
+
+            it('deve setar o cookie "ambientePiano" quando o parâmetro "ambiente-desejado" possui os valores '
+                + '"int", "qlt" ou "prd"', function () {
+                    spyOn(piano.util, 'getValorParametroNaUrl').and.returnValue('int');
+                    spyOn(piano.cookies, 'set');
+
+                    piano.variaveis.getAmbientePiano();
+                    expect(piano.cookies.set.calls.count()).toEqual(1);
+                });
+
+            it('deve retornar o valor do parâmetro  "ambiente-desejado"', function () {
+                spyOn(piano.util, 'getValorParametroNaUrl').and.returnValue('int');
+
+                expect(piano.variaveis.getAmbientePiano()).toEqual('int');
+            });
+
+            it('deve remover o cookie "ambientePiano" quando o parâmetro "ambiente-desejado" possui o valor "false"', function () {
+                spyOn(piano.util, 'getValorParametroNaUrl').and.returnValue('false');
+                spyOn(piano.cookies, 'set');
+
+                piano.variaveis.getAmbientePiano();
+                expect(piano.cookies.set).toHaveBeenCalledWith(piano.variaveis.constante.cookie.AMBIENTE, "", -1);
+            });
+
+            it('deve retornar o valor do cookie "ambientePiano" quando ele existir e não possuir o parâmetro '
+                + '"ambiente-desejado" na url', function () {
+                    spyOn(piano.cookies, 'get').and.returnValue('a');
+
+                    expect(piano.variaveis.getAmbientePiano()).toEqual('a');
+                });
+
+            it('deve retornar window.ambienteUtilizadoPiano quando não possuir o valor na url "ambiente-desejado", '
+                + ' nem possuir o cookie "ambientePiano" e window.ambienteUtilizadoPiano tem o valor "int"', function () {
+                    window.ambienteUtilizadoPiano = 'int';
+
+                    expect(piano.variaveis.getAmbientePiano()).toEqual('int');
+                });
+
+            it('deve retornar "prd" quando não possuir o valor na url "ambiente-desejado", '
+                + ' nem possuir o cookie "ambientePiano" e window.ambienteUtilizadoPiano tem o valor "abc"', function () {
+                    window.ambienteUtilizadoPiano = 'abc';
+
+                    expect(piano.variaveis.getAmbientePiano()).toEqual('prd');
+                });
+
+        });
+
+        describe('função executouPageview', function () {
+
+            it('deve retornar "true" quando  window.executouPageview é "true"', function () {
+                window.executouPageview = true;
+
+                expect(piano.variaveis.executouPageview()).toEqual(true);
+            });
+
+            it('deve retornar "false" quando  window.executouPageview é "false"', function () {
+                window.executouPageview = false;
+
+                expect(piano.variaveis.executouPageview()).toEqual(false);
+            });
+
+        });
+
+        describe('função getServicoId', function () {
+
+            it('deve retornar window.servicoIdPiano quando window.servicoIdPiano estiver preenchido', function () {
+                window.servicoIdPiano = 'abc';
+
+                expect(piano.variaveis.getServicoId()).toEqual('abc');
+            });
+
+            it('deve retornar 4975 quando window.servicoIdPiano não estiver preenchido', function () {
+                window.servicoIdPiano = '';
+
+                expect(piano.variaveis.getServicoId()).toEqual('4975');
+            });
+
+            it('deve retornar 3981 quando Piano.variaveis.getNomeProduto() é "acervo"', function () {
+                spyOn(piano.variaveis, 'getNomeProduto').and.returnValue('acervo');
+
+                expect(piano.variaveis.getServicoId()).toEqual('3981');
+            });
+
+            it('deve retornar 3981 quando Piano.variaveis.getNomeProduto() é "jornaldigital"', function () {
+                spyOn(piano.variaveis, 'getNomeProduto').and.returnValue('jornaldigital');
+
+                expect(piano.variaveis.getServicoId()).toEqual('3981');
+            });
+
+        });
+
     });
 });
