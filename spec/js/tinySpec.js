@@ -785,4 +785,64 @@ describe('Tiny JS', function () {
             });
         });
     });
+
+    describe('Piano.metricas', function () {
+
+        describe('função enviaEventosGA', function () {
+
+            it('deve chamar o método dataLayer.push', function () {
+                spyOn(window["dataLayer"], 'push');
+
+                Piano.metricas.enviaEventosGA('', '');
+                expect(window["dataLayer"].push).toHaveBeenCalled();
+            });
+
+        });
+
+        describe('função montaRotuloGA', function () {
+
+            it('deve retornar nomeExperiencia + subsegmentacaoPiano quando regrasTiny e subsegmentacaoPiano '
+                + 'possuem valor', function () {
+                    window.regrasTiny = { nomeExperiencia: 'nomeExperiencia' };
+                    window.subsegmentacaoPiano = 'subsegmentacao';
+
+                    expect(Piano.metricas.montaRotuloGA()).toEqual('nomeExperiencia - subsegmentacao')
+                });
+
+            it('deve retornar nomeExperiencia quando regrasTiny possui valor mas e subsegmentacaoPiano '
+                + 'não possui valor', function () {
+                    window.regrasTiny = { nomeExperiencia: 'nomeExperiencia' };
+                    window.subsegmentacaoPiano = undefined;
+
+                    expect(Piano.metricas.montaRotuloGA()).toEqual('nomeExperiencia')
+                });
+
+            it('deve retornar nomeExperiencia + subsegmentacaoPiano quando nomeExperiencia e subsegmentacaoPiano '
+                + 'possuem valor', function () {
+                    window.regrasTiny = undefined;
+                    window.nomeExperiencia = 'nomeExperiencia';
+                    window.subsegmentacaoPiano = 'subsegmentacao';
+
+                    expect(Piano.metricas.montaRotuloGA()).toEqual('nomeExperiencia - subsegmentacao')
+                });
+
+            it('deve retornar nomeExperiencia quando nomeExperiencia possui valor mas e subsegmentacaoPiano '
+                + 'não possui valor', function () {
+                    window.regrasTiny = undefined;
+                    window.nomeExperiencia = 'nomeExperiencia';
+                    window.subsegmentacaoPiano = undefined;
+
+                    expect(Piano.metricas.montaRotuloGA()).toEqual('nomeExperiencia')
+                });
+
+            it('deve retornar " " quando não possui regrasTiny e nem nomeExperiencia', function(){
+                window.regrasTiny = undefined;
+                window.nomeExperiencia = undefined;
+
+                expect(Piano.metricas.montaRotuloGA()).toEqual(' ');
+            });
+        });
+
+    });
+
 });
