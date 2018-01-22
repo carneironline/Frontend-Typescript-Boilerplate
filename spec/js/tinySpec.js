@@ -650,4 +650,140 @@ describe('Tiny JS', function () {
         });
 
     });
+	
+	describe('Piano.janelaAnonima', function(){
+		
+
+	});
+
+	describe('Piano.krux', function(){
+		describe('função tem', function(){
+			it('Deve retornar true quando possui valor no localStorage', function(){
+				spyOn(localStorage, 'getItem').and.returnValue(true);
+
+				expect(piano.krux.tem()).toEqual(true);
+			});
+
+
+			it('Deve retornar false quando não possui valor no localStorage', function(){
+				spyOn(localStorage, 'getItem').and.returnValue(false);
+
+				expect(piano.krux.tem()).toEqual(false);
+			});
+		});
+
+		describe('função ligado', function(){
+			it('Deve setar o cookie quando ambienteUtilizadoPiano foi diferente de prd e o valorParametro for false', function(){
+				spyOn(Piano.util, 'getValorParametroNaUrl').and.returnValue('false');
+				window.ambienteUtilizadoPiano = "abc";
+
+				spyOn(piano.cookies, 'set');
+
+				Piano.krux.ligado();
+
+				expect(piano.cookies.set.calls.count()).toEqual(1);
+			});
+
+			it('Deve retornar false quando ambienteUtilizadoPiano foi diferente de prd e o valorParametro for false', function(){
+				spyOn(Piano.util, 'getValorParametroNaUrl').and.returnValue('false');
+				window.ambienteUtilizadoPiano = "abc";
+
+				expect(Piano.krux.ligado()).toEqual(false);
+			});
+
+			it('Deve remover o cookie quando ambienteUtilizadoPiano for igual a prd e o valorParametro for true', function(){
+				spyOn(Piano.util, 'getValorParametroNaUrl').and.returnValue('true');
+				window.ambienteUtilizadoPiano = "prd";
+
+				spyOn(piano.cookies, 'set');
+
+				Piano.krux.ligado();
+
+				expect(piano.cookies.set.calls.count()).toEqual(1);
+			});
+
+
+
+			it('Deve remover o cookie quando o valorParametro for true', function(){
+				spyOn(Piano.util, 'getValorParametroNaUrl').and.returnValue('true');
+				
+				spyOn(piano.cookies, 'set');
+
+				Piano.krux.ligado();
+
+				expect(piano.cookies.set.calls.count()).toEqual(1);
+			});
+
+
+			it('Deve remover o cookie quando o ambienteUtilizadoPiano for prd', function(){
+				window.ambienteUtilizadoPiano = 'prd';
+
+				spyOn(piano.cookies, 'set');
+
+				Piano.krux.ligado();
+
+				expect(piano.cookies.set.calls.count()).toEqual(1);
+			});
+
+			it('Deve retornar true quando ambienteUtilizadoPiano foi igual de prd e o valorParametro for true', function(){
+				spyOn(Piano.util, 'getValorParametroNaUrl').and.returnValue('true');
+				window.ambienteUtilizadoPiano = "prd";
+
+				expect(Piano.krux.ligado()).toEqual(true);
+			});
+
+			it('Deve retornar true quando valorParametro for true', function(){
+				spyOn(Piano.util, 'getValorParametroNaUrl').and.returnValue('true');
+
+				expect(Piano.krux.ligado()).toEqual(true);
+			});
+
+			it('Deve retornar true quando ambienteUtilizadoPiano for igual a prd', function(){
+				window.ambienteUtilizadoPiano = 'prd';
+
+				expect(Piano.krux.ligado()).toEqual(true);
+			});
+
+			it('Deve retornar false quando não possuir o cookie KRUXLIGADO', function(){
+				window.ambienteUtilizadoPiano = 'abc';
+				spyOn(Piano.cookies, 'get').and.returnValue('false');
+
+				expect(Piano.krux.ligado()).toEqual(false);
+			});
+
+			it('Deve retornar true quando valorParametro for nulo, ambienteUtilizadoPiano for diferente de produção e possuir o cookie KRUXLIGADO', function(){
+				window.ambienteUtilizadoPiano = 'abc';
+				spyOn(Piano.cookies, 'get').and.returnValue('true');
+				expect(Piano.krux.ligado()).toEqual(true);
+			});
+		});
+
+		describe('função obtemSegmentacao', function(){
+			it('Deve executar o método tp.push 3x quando os métodos Piano.krux.tem e Piano.krux.ligado forem true e possui 3 valores no localStorage do krux',function(){
+				spyOn(Piano.krux, 'tem').and.returnValue(true);
+				spyOn(Piano.krux, 'ligado').and.returnValue(true);
+				spyOn(window["tp"], 'push');
+
+				spyOn(localStorage, 'getItem').and.returnValue('a, b, c');
+				Piano.krux.obtemSegmentacao();
+				expect(window["tp"].push.calls.count()).toEqual(3);
+			});
+
+			it('Não deve executar o método tp.push quando o método Piano.krux.tem retornar false', function(){
+				spyOn(Piano.krux, 'tem').and.returnValue(false);
+				spyOn(window["tp"], 'push');
+
+				Piano.krux.obtemSegmentacao();
+				expect(window["tp"].push).not.toHaveBeenCalled();
+			});
+
+			it('Não deve executar o método tp.push quando o método Piano.krux.ligado retornar false', function(){
+				spyOn(Piano.krux, 'ligado').and.returnValue(false);
+				spyOn(window["tp"], 'push');
+
+				Piano.krux.obtemSegmentacao();
+				expect(window["tp"].push).not.toHaveBeenCalled();
+			});
+		});
+	});
 });
