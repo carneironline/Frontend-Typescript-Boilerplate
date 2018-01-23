@@ -1004,6 +1004,14 @@ describe('Tiny JS', function () {
 
     });
 
+    describe('Piano.banner',function(){
+
+    });
+
+    describe('Piano.register',function(){
+
+    });
+
     describe('Piano.paywall',function(){
 
         describe('função redirecionarBarreira',function(){
@@ -1030,6 +1038,18 @@ describe('Tiny JS', function () {
                 Piano.paywall.redirecionarBarreira();
                 expect(window.setTimeout).toHaveBeenCalled();
             });
+        });
+
+    });
+
+    describe('Piano.comunicado',function(){
+
+    });
+
+    describe('Piano.inadimplente',function(){
+
+        it('função getLinkAssinatura', function(){
+            
         });
 
     });
