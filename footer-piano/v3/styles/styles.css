@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i,900");
+@import url("../../../fix/fix.css");
 .footer-venda-oglobo-capas {font-family: 'Lato',sans-serif;line-height: 1.2; opacity: 0; transition: opacity .3s ease-in-out; }
 .footer-venda-oglobo-capas * {-webkit-transition: all .3s ease-in-out;transition: all .3s ease-in-out; }
 .footer-venda-oglobo-capas .grid-capa-total {width: 1280px;margin: 0 auto; }
@@ -40,13 +41,13 @@
 .footer-venda-oglobo-capas.open .produtos-oglobo .chamada-fixa .logo-slogan {background-image: url(../images/logo-slogan.svg); }
 .footer-venda-oglobo-capas.open .produtos-oglobo .chamada-fixa .chamada-abre-oferta {top: 200px; }
 .footer-venda-oglobo-capas.open .produtos-oglobo .chamada-fixa h2 {top: 200px; }
-.footer-venda-oglobo-capas.open .produtos-oglobo .chamada-fixa .chamada-telefone {top: 0px; }
+.footer-venda-oglobo-capas.open .produtos-oglobo .chamada-fixa .chamada-telefone {top: 0px; text-align: right; }
 .links-institucionais {padding-bottom: 60px;}
 .footer-venda-oglobo-capas .produtos-oglobo .container-conteudos .lista-de-produtos-oglobo li .preco-produto a {text-decoration: none;}
 .footer-venda-oglobo-capas .grid-capa-total .grid-capa-util .fechar, .footer-venda-oglobo-capas .produtos-oglobo .chamada-fixa .chamada-abre-oferta {box-sizing: border-box;}
 .footer-venda-oglobo-capas .produtos-oglobo .container-conteudos .lista-de-produtos-oglobo li .titulo-produto h2 {padding: 0;}
 .footer-venda-oglobo-capas .produtos-oglobo .container-conteudos .lista-de-produtos-oglobo li .titulo-produto .oglobo-logo {background: url(../images/oglobo_novo_final.svg) no-repeat 0 50%;height: 10px;display: block;}
-.footer-venda-oglobo-capas .btn-default{background-color: #00aeef; color: #fff;}
+.footer-venda-oglobo-capas .btn-default{ border: none; background:transparent; background-color: #00aeef ; color: #fff; text-transform:inherit; font-family: "Lato", arial; }
 .footer-venda-oglobo-capas .btn-default:hover{background-color: #73d9ff;}
 .footer-venda-oglobo-capas .azul-medio {color: #139deb}
 .footer-venda-oglobo-capas .compartilha-cor {color: #fff;}
