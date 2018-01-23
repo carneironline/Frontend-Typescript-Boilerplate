@@ -3,6 +3,7 @@ function MetricasBuilder() {
     var nomeExperiencia = undefined;
     var views = undefined;
     var maxViews = undefined;
+    var fluxo = undefined;
 
     var clazz = {
 
@@ -21,8 +22,13 @@ function MetricasBuilder() {
             return this;
         },
 
+        setFluxo: function (valor) {
+            fluxo = valor;
+            return this;
+        },
+
         build: function () {
-            return { nomeExperiencia, views, maxViews };
+            return { nomeExperiencia, views, maxViews, fluxo };
         }
 
     };

@@ -835,12 +835,104 @@ describe('Tiny JS', function () {
                     expect(Piano.metricas.montaRotuloGA()).toEqual('nomeExperiencia')
                 });
 
-            it('deve retornar " " quando não possui regrasTiny e nem nomeExperiencia', function(){
+            it('deve retornar " " quando não possui regrasTiny e nem nomeExperiencia', function () {
                 window.regrasTiny = undefined;
                 window.nomeExperiencia = undefined;
 
                 expect(Piano.metricas.montaRotuloGA()).toEqual(' ');
             });
+        });
+
+        describe('função setLimiteContagem', function () {
+
+            describe('GALimite', function () {
+
+                it('deve ser "-" se não houver passagem de parâmetro', function () {
+                    Piano.metricas.setLimiteContagem();
+                    expect(_GALimite).toEqual('-')
+                });
+
+                it('deve ser "nomeExperiencia : maxViews" quando houver passagem de parâmetro', function () {
+                    Piano.metricas.setLimiteContagem(new MetricasBuilder().setNomeExperiencia('nomeExperiencia').setMaxViews('maxViews').build());
+                    expect(_GALimite).toEqual('nomeExperiencia : maxViews');
+                });
+
+            });
+
+            describe('GAContagem', function () {
+
+                it('deve ser "-" quando não houver passagem de parâmetro', function () {
+                    Piano.metricas.setLimiteContagem();
+                    expect(_GAContagem).toEqual('-');
+                });
+
+                it('deve adicionar "0" quando views possuir apenas um algarismo', function () {
+                    Piano.metricas.setLimiteContagem(new MetricasBuilder().setViews(1).build());
+                    expect(_GAContagem).toEqual('01');
+                });
+
+                it('não deve adicionar "0" quando views possuir mais de um algarismo', function () {
+                    Piano.metricas.setLimiteContagem(new MetricasBuilder().setViews(10).build());
+                    expect(_GAContagem).toEqual('10');
+                });
+
+            });
+
+
+        });
+
+        describe('função identificarPassagemRegister', function () {
+
+            it('deve retornar Piano.variaveis.constante.metricas.EVENTO_SEM_ACAO quando não '
+                + 'possuir o cookie RTIEX', function () {
+                    Piano.variaveis.constante.metricas.EVENTO_SEM_ACAO = 'abc';
+                    spyOn(Piano.cookies, 'get').and.returnValue('');
+
+                    expect(Piano.metricas.identificarPassagemRegister()).toEqual('abc');
+                });
+
+            it('deve chamar o método cookies.set quando possuir o cookie RTIEX', function () {
+                spyOn(Piano.cookies, 'get').and.returnValue('a');
+                spyOn(Piano.cookies, 'set');
+
+                Piano.metricas.identificarPassagemRegister(new MetricasBuilder().setFluxo('fluxo').build());
+                expect(Piano.cookies.set).toHaveBeenCalled();
+            });
+
+            it('não deve chamar o método cookies.set quando não possuir o cookie RTIEX', function () {
+                spyOn(Piano.cookies, 'get').and.returnValue('');
+                spyOn(Piano.cookies, 'set');
+
+                Piano.metricas.identificarPassagemRegister();
+                expect(Piano.cookies.set).not.toHaveBeenCalled();
+            });
+
+            it('deve retornar "register-hardwall-passou" quando fluxo possuir "hardwall"', function () {
+                spyOn(Piano.cookies, 'get').and.returnValue('a');
+
+                expect(Piano.metricas.identificarPassagemRegister(
+                    new MetricasBuilder().setFluxo('hardwall').build())).toEqual('register-hardwall-passou');
+            });
+
+            it('deve retornar "register-contagem-passou" quando fluxo não possuir "hardwall"', function () {
+                spyOn(Piano.cookies, 'get').and.returnValue('a');
+
+                expect(Piano.metricas.identificarPassagemRegister(
+                    new MetricasBuilder().setFluxo('budega').build())).toEqual('register-contagem-passou');
+            });
+
+        });
+
+        describe('função executaAposPageview', function () {
+
+            it('não deve chamar o método metricas.setLimiteContagem quando executou o pageview', function(){
+                spyOn(Piano.variaveis, 'executouPageview').and.returnValue(true);
+                spyOn(Piano.metricas, 'setLimiteContagem');
+
+                Piano.metricas.executaAposPageview();
+                expect(Piano.metricas.setLimiteContagem).not.toHaveBeenCalled();
+            });
+
         });
 
     });
