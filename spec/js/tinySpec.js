@@ -933,6 +933,14 @@ describe('Tiny JS', function () {
                 expect(Piano.metricas.setLimiteContagem).not.toHaveBeenCalled();
             });
 
+            it('deve chamar o método metricas.setLimiteContagem quando não executou o pageview', function(){
+            	spyOn(Piano.variaveis, 'executouPageview').and.returnValue(false);
+            	spyOn(Piano.metricas, 'setLimiteContagem');
+            	regrasTiny = new MetricasBuilder().setFluxo('fluxo').setNomeExperiencia('nomeExperiencia').build();
+            	Piano.metricas.executaAposPageview();
+            	expect(Piano.metricas.setLimiteContagem).toHaveBeenCalled();
+            });
+
         });
 
     });
