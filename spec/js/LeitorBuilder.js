@@ -1,22 +1,22 @@
-function LeitorBuilder(){
+function LeitorBuilder() {
 
-    var glbid = '';
-    var produto = '';
+    var glbid = undefined;
+    var produto = undefined;
 
     var clazz = {
 
-        setGlbid : function(valor){
+        setGlbid: function (valor) {
             glbid = valor;
             return this;
         },
 
-        setProduto : function(valor){
+        setProduto: function (valor) {
             produto = valor;
             return this;
-        }, 
+        },
 
-        build : function(){
-            return {glbid, produto};
+        build: function () {
+            return { glbid, produto };
         }
 
 
