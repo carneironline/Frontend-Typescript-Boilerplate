@@ -925,7 +925,7 @@ describe('Tiny JS', function () {
 
         describe('função executaAposPageview', function () {
 
-            it('não deve chamar o método metricas.setLimiteContagem quando executou o pageview', function(){
+            it('não deve chamar o método metricas.setLimiteContagem quando executou o pageview', function () {
                 spyOn(Piano.variaveis, 'executouPageview').and.returnValue(true);
                 spyOn(Piano.metricas, 'setLimiteContagem');
 
@@ -933,14 +933,73 @@ describe('Tiny JS', function () {
                 expect(Piano.metricas.setLimiteContagem).not.toHaveBeenCalled();
             });
 
-            it('deve chamar o método metricas.setLimiteContagem quando não executou o pageview', function(){
-            	spyOn(Piano.variaveis, 'executouPageview').and.returnValue(false);
-            	spyOn(Piano.metricas, 'setLimiteContagem');
-            	regrasTiny = new MetricasBuilder().setFluxo('fluxo').setNomeExperiencia('nomeExperiencia').build();
-            	Piano.metricas.executaAposPageview();
-            	expect(Piano.metricas.setLimiteContagem).toHaveBeenCalled();
+            it('deve chamar o método metricas.setLimiteContagem quando não executou o pageview', function () {
+                spyOn(Piano.variaveis, 'executouPageview').and.returnValue(false);
+                spyOn(Piano.metricas, 'setLimiteContagem');
+                regrasTiny = new MetricasBuilder().setFluxo('fluxo').setNomeExperiencia('nomeExperiencia').build();
+                Piano.metricas.executaAposPageview();
+                expect(Piano.metricas.setLimiteContagem).toHaveBeenCalled();
             });
 
+            it('deve setar "regrasTiny.fluxo" com "window.tpContext" quando "window.tpContext" não é vazio e não executou o pageview', function () {
+                spyOn(Piano.variaveis, 'executouPageview').and.returnValue(false);
+                window.tpContext = 'tpcontext';
+
+                Piano.metricas.executaAposPageview();
+                expect(regrasTiny.fluxo).toEqual('tpcontext');
+            });
+
+            it('deve setar "regrasTiny.fluxo" com "-" quando "window.tpContext" é vazio e não executou o pageview', function () {
+                spyOn(Piano.variaveis, 'executouPageview').and.returnValue(false);
+                window.tpContext = undefined;
+
+                Piano.metricas.executaAposPageview();
+                expect(regrasTiny.fluxo).toEqual('-');
+            });
+
+            it('deve setar "regrasTiny.nomeExperiencia" com "window.nomeExperiencia" quando "window.nomeExperiencia" não é vazio'
+                + ' e não executou o pageview', function () {
+                    spyOn(Piano.variaveis, 'executouPageview').and.returnValue(false);
+                    window.nomeExperiencia = 'nomeExperiencia';
+
+                    Piano.metricas.executaAposPageview();
+                    expect(regrasTiny.nomeExperiencia).toEqual('nomeExperiencia');
+                });
+
+            it('deve setar "regrasTiny.nomeExperiencia" com "" quando "window.nomeExperiencia" é vazio e não executou '
+                + 'o pageview', function () {
+                    spyOn(Piano.variaveis, 'executouPageview').and.returnValue(false);
+                    window.nomeExperiencia = undefined;
+
+                    Piano.metricas.executaAposPageview();
+                    expect(regrasTiny.nomeExperiencia).toEqual('');
+                });
+
+            it('deve chamar o método metricas.enviaEventosGA quando expirou é undefined e não executou o pageview', function () {
+                spyOn(Piano.variaveis, 'executouPageview').and.returnValue(false);
+                spyOn(Piano.metricas, 'enviaEventosGA');
+
+                Piano.metricas.executaAposPageview(undefined);
+                expect(Piano.metricas.enviaEventosGA).toHaveBeenCalled();
+            });
+
+            it('não deve chamar o método metricas.enviaEventosGA quando expirou é diferente de undefined e não '
+                + ' executou o pageview', function () {
+                    spyOn(Piano.variaveis, 'executouPageview').and.returnValue(false);
+                    spyOn(Piano.metricas, 'enviaEventosGA');
+
+                    Piano.metricas.executaAposPageview('abc');
+                    expect(Piano.metricas.enviaEventosGA).not.toHaveBeenCalled();
+                });
+
+            it('deve setar "executouPageview" como "true" quando não executou o pageview', function(){
+                executouPageview = false;
+                spyOn(Piano.variaveis, 'executouPageview').and.returnValue(false);
+
+                Piano.metricas.executaAposPageview();
+                expect(executouPageview).toEqual(true);
+            });
+                
         });
 
     });
