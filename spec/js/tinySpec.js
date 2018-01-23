@@ -1048,8 +1048,17 @@ describe('Tiny JS', function () {
 
     describe('Piano.inadimplente',function(){
 
-        it('função getLinkAssinatura', function(){
-            
+        describe('função getLinkAssinatura', function(){
+            it('Deve retornar vazio quando o parametro passado for vazio', function(){
+            	expect(Piano.inadimplente.getLinkAssinatura("")).toEqual(' ');
+            });
+
+            it('Deve retornar o href quando tiver o rel igual a assinatura', function(){
+            	expect(Piano.inadimplente.getLinkAssinatura([{
+            		rel : 'assinatura',
+            		href : 'abc'
+            	}])).toEqual('abc');
+            });
         });
 
     });
