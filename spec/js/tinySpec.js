@@ -992,14 +992,44 @@ describe('Tiny JS', function () {
                     expect(Piano.metricas.enviaEventosGA).not.toHaveBeenCalled();
                 });
 
-            it('deve setar "executouPageview" como "true" quando não executou o pageview', function(){
+            it('deve setar "executouPageview" como "true" quando não executou o pageview', function () {
                 executouPageview = false;
                 spyOn(Piano.variaveis, 'executouPageview').and.returnValue(false);
 
                 Piano.metricas.executaAposPageview();
                 expect(executouPageview).toEqual(true);
             });
-                
+
+        });
+
+    });
+
+    describe('Piano.paywall',function(){
+
+        describe('função redirecionarBarreira',function(){
+
+            it('deve chamar o método metricas.enviaEventosGA',function(){
+                spyOn(Piano.metricas, 'enviaEventosGA');
+                spyOn(window, 'setTimeout');
+
+                Piano.paywall.redirecionarBarreira();
+                expect(Piano.metricas.enviaEventosGA).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método cookies.set',function(){
+                spyOn(Piano.cookies, 'set');
+                spyOn(window, 'setTimeout');
+
+                Piano.paywall.redirecionarBarreira();
+                expect(Piano.cookies.set).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método setTimeout',function(){
+                spyOn(window, 'setTimeout');
+
+                Piano.paywall.redirecionarBarreira();
+                expect(window.setTimeout).toHaveBeenCalled();
+            });
         });
 
     });
