@@ -21,6 +21,7 @@ if (window.textoComunicacao) {
 
 el.querySelector('.comunicacao-piano .fechar-modal').addEventListener('click', function() {
     el.querySelector('.comunicacao-piano').parentNode.removeChild(el.querySelector('.comunicacao-piano'));
+    el.body.style.overflow = "auto";
 });
 
 el.querySelector('.comunicacao-piano .back-drop').addEventListener('click', function() {
