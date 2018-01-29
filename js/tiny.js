@@ -4,7 +4,7 @@ var Piano = {};
 Piano.produto = {
 	validaConfiguracoes : function() {
 		if (Piano.util.trocarConfiguracoes()) {
-			Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/js/outros-produtos/configuracoes.js", false);
+			Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/js/outros-produtos/configuracoes.js");
 			return true;
 		}
 		return false;
