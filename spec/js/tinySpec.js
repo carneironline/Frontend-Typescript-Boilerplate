@@ -6,10 +6,12 @@ describe('Tiny JS', function () {
     beforeEach(function () {
         helper = new Helper();
         defaultUserAgent = navigator.userAgent;
+        jasmine.Ajax.install();
     });
 
     afterEach(function () {
         helper.setUserAgent(defaultUserAgent);
+        jasmine.Ajax.uninstall();
     });
 
     describe('Piano.autenticacao', function () {
@@ -1004,19 +1006,19 @@ describe('Tiny JS', function () {
 
     });
 
-    describe('Piano.banner',function(){
+    describe('Piano.banner', function () {
 
     });
 
-    describe('Piano.register',function(){
+    describe('Piano.register', function () {
 
     });
 
-    describe('Piano.paywall',function(){
+    describe('Piano.paywall', function () {
 
-        describe('função redirecionarBarreira',function(){
+        describe('função redirecionarBarreira', function () {
 
-            it('deve chamar o método metricas.enviaEventosGA',function(){
+            it('deve chamar o método metricas.enviaEventosGA', function () {
                 spyOn(Piano.metricas, 'enviaEventosGA');
                 spyOn(window, 'setTimeout');
 
@@ -1024,7 +1026,7 @@ describe('Tiny JS', function () {
                 expect(Piano.metricas.enviaEventosGA).toHaveBeenCalled();
             });
 
-            it('deve chamar o método cookies.set',function(){
+            it('deve chamar o método cookies.set', function () {
                 spyOn(Piano.cookies, 'set');
                 spyOn(window, 'setTimeout');
 
@@ -1032,7 +1034,7 @@ describe('Tiny JS', function () {
                 expect(Piano.cookies.set).toHaveBeenCalled();
             });
 
-            it('deve chamar o método setTimeout',function(){
+            it('deve chamar o método setTimeout', function () {
                 spyOn(window, 'setTimeout');
 
                 Piano.paywall.redirecionarBarreira();
@@ -1042,22 +1044,22 @@ describe('Tiny JS', function () {
 
     });
 
-    describe('Piano.comunicado',function(){
+    describe('Piano.comunicado', function () {
 
     });
 
-    describe('Piano.inadimplente',function(){
+    describe('Piano.inadimplente', function () {
 
-        describe('função getLinkAssinatura', function(){
-            it('Deve retornar vazio quando o parametro passado for vazio', function(){
-            	expect(Piano.inadimplente.getLinkAssinatura("")).toEqual(' ');
+        describe('função getLinkAssinatura', function () {
+            it('Deve retornar vazio quando o parametro passado for vazio', function () {
+                expect(Piano.inadimplente.getLinkAssinatura("")).toEqual(' ');
             });
 
-            it('Deve retornar o href quando tiver o rel igual a assinatura', function(){
-            	expect(Piano.inadimplente.getLinkAssinatura([{
-            		rel : 'assinatura',
-            		href : 'abc'
-            	}])).toEqual('abc');
+            it('Deve retornar o href quando tiver o rel igual a assinatura', function () {
+                expect(Piano.inadimplente.getLinkAssinatura([{
+                    rel: 'assinatura',
+                    href: 'abc'
+                }])).toEqual('abc');
             });
         });
 
