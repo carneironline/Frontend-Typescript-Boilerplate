@@ -1065,4 +1065,91 @@ describe('Tiny JS', function () {
 
     });
 
+    describe('Piano.xmlHttpRequest', function () {
+
+        describe('função geraScriptNaPagina', function () {
+
+            it('deve possuir a url da requisição mais recente igual a url enviada como parâmetro', function () {
+                Piano.xmlHttpRequest.geraScriptNaPagina('/some/cool/url');
+
+                expect(jasmine.Ajax.requests.mostRecent().url).toBe('/some/cool/url');
+            });
+
+            it('deve chamar o método xhr.open com o parâmetro GET', function () {
+                spyOn(XMLHttpRequest.prototype, 'open');
+
+                Piano.xmlHttpRequest.geraScriptNaPagina();
+                expect(XMLHttpRequest.prototype.open.calls.mostRecent().args[0]).toEqual('GET');
+            });
+
+            it('deve chamar o método xhr.send', function () {
+                spyOn(XMLHttpRequest.prototype, 'send');
+
+                Piano.xmlHttpRequest.geraScriptNaPagina();
+                expect(XMLHttpRequest.prototype.send).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método document.head.appendChild quando a requisição responde com 200', function () {
+                spyOn(document.head, 'appendChild');
+
+                Piano.xmlHttpRequest.geraScriptNaPagina();
+
+                request = jasmine.Ajax.requests.mostRecent();
+                request.respondWith({ status: 200 });
+
+                expect(document.head.appendChild).toHaveBeenCalled();
+            });
+
+            it('não deve chamar o método document.head.appendChild quando a requisição responde com 300', function () {
+                spyOn(document.head, 'appendChild');
+
+                Piano.xmlHttpRequest.geraScriptNaPagina();
+
+                request = jasmine.Ajax.requests.mostRecent();
+                request.respondWith({ status: 300 });
+
+                expect(document.head.appendChild).not.toHaveBeenCalled();
+            });
+
+
+        });
+
+        describe('função fazRequisicaoBarramentoApiObterAssinaturaInadimplente', function () {
+
+            it('deve chamar o método xhr.open com o parâmetro GET', function () {
+                spyOn(XMLHttpRequest.prototype, 'open');
+                spyOn(XMLHttpRequest.prototype, 'setRequestHeader');
+
+                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiObterAssinaturaInadimplente();
+                expect(XMLHttpRequest.prototype.open.calls.mostRecent().args[0]).toEqual('GET');
+            });
+
+            it('deve chamar o método xhr.open com o parâmetro síncrono', function () {
+                spyOn(XMLHttpRequest.prototype, 'open');
+                spyOn(XMLHttpRequest.prototype, 'setRequestHeader');
+
+                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiObterAssinaturaInadimplente();
+                expect(XMLHttpRequest.prototype.open.calls.mostRecent().args[2]).toEqual(false);
+            });
+
+            it('deve chamar o método xht.setRequestHeader com o parâmetro Accept = application/json', function () {
+                spyOn(XMLHttpRequest.prototype, 'setRequestHeader');
+
+                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiObterAssinaturaInadimplente();
+                expect(XMLHttpRequest.prototype.setRequestHeader.calls.first().args[0]).toEqual('Accept');
+                expect(XMLHttpRequest.prototype.setRequestHeader.calls.first().args[1]).toEqual('application/json');
+            });
+
+            it('deve chamar o método xht.setRequestHeader com o parâmetro Content-Type = application/json', function () {
+                spyOn(XMLHttpRequest.prototype, 'setRequestHeader');
+
+                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiObterAssinaturaInadimplente();
+                expect(XMLHttpRequest.prototype.setRequestHeader.calls.mostRecent().args[0]).toEqual('Content-Type');
+                expect(XMLHttpRequest.prototype.setRequestHeader.calls.mostRecent().args[1]).toEqual('application/json');
+            });
+
+        });
+
+    });
+
 });
