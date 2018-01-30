@@ -1094,6 +1094,7 @@ describe('Tiny JS', function () {
 
                 Piano.xmlHttpRequest.geraScriptNaPagina();
 
+                // mockar a resposta da requisição xhr
                 request = jasmine.Ajax.requests.mostRecent();
                 request.respondWith({ status: 200 });
 
@@ -1110,7 +1111,6 @@ describe('Tiny JS', function () {
 
                 expect(document.head.appendChild).not.toHaveBeenCalled();
             });
-
 
         });
 
@@ -1148,6 +1148,222 @@ describe('Tiny JS', function () {
                 expect(XMLHttpRequest.prototype.setRequestHeader.calls.mostRecent().args[1]).toEqual('application/json');
             });
 
+            it('deve chamar o método xhr.send com o parâmetro síncrono', function () {
+                spyOn(XMLHttpRequest.prototype, 'send');
+                spyOn(XMLHttpRequest.prototype, 'setRequestHeader');
+
+                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiObterAssinaturaInadimplente();
+                expect(XMLHttpRequest.prototype.send).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método tp.push com os parâmetros "setCustomVariable" e "situacaoPagamento" quando a '
+                + 'requisição responde com 200', function () {
+                    spyOn(window["tp"], 'push');
+
+                    // mockar a resposta da requisição xhr
+                    jasmine.Ajax.stubRequest(
+                        '/url-de-teste',
+                    ).andReturn({
+                        status: 200,
+                        responseText: '{"situacaoPagamento":"ok"}'
+                    });
+
+                    Piano.xmlHttpRequest.fazRequisicaoBarramentoApiObterAssinaturaInadimplente('/url-de-teste');
+
+                    expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'situacaoPagamento', 'ok']);
+                });
+
+            it('deve chamar o método Piano.metricas.enviaEventosGA com os parâmetros "Erro" e "Ao obter inadimplente - 401" '
+                + 'quando a requisição responde com 401', function () {
+                    spyOn(Piano.metricas, 'enviaEventosGA');
+
+                    jasmine.Ajax.stubRequest(
+                        '/url-de-teste',
+                    ).andReturn({
+                        status: 401
+                    });
+
+                    Piano.xmlHttpRequest.fazRequisicaoBarramentoApiObterAssinaturaInadimplente('/url-de-teste');
+                    expect(Piano.metricas.enviaEventosGA).toHaveBeenCalledWith('Erro', 'Ao obter inadimplente - 401');
+                });
+
+            it('deve chamar o método Piano.metricas.enviaEventosGA com os parâmetros "Erro" e "Ao obter inadimplente da API - 400" '
+                + 'quando a requisição responde com 400', function () {
+                    spyOn(Piano.metricas, 'enviaEventosGA');
+
+                    jasmine.Ajax.stubRequest(
+                        '/url-de-teste',
+                    ).andReturn({
+                        status: 400
+                    });
+
+                    Piano.xmlHttpRequest.fazRequisicaoBarramentoApiObterAssinaturaInadimplente('/url-de-teste');
+                    expect(Piano.metricas.enviaEventosGA.calls.first().args[0]).toEqual('Erro');
+                    expect(Piano.metricas.enviaEventosGA.calls.first().args[1]).toEqual('Ao obter inadimplente da API - 400');
+                });
+
+            it('deve chamar o método Piano.metricas.enviaEventosGA duas vezes quando a requisição responde com 400', function () {
+                spyOn(Piano.metricas, 'enviaEventosGA');
+
+                jasmine.Ajax.stubRequest(
+                    '/url-de-teste',
+                ).andReturn({
+                    status: 400
+                });
+
+                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiObterAssinaturaInadimplente('/url-de-teste');
+                expect(Piano.metricas.enviaEventosGA.calls.count()).toEqual(2);
+            });
+
+        });
+
+        describe('fazRequisicaoBarramentoApiAutorizacaoAcesso', function () {
+
+            it('deve chamar o método Piano.metricas.enviaEventosGA com os parâmetros "Erro" e '
+                + '"Ao obter autorizacao da API - 400 - abc" quando envia "abc" como parâmetro e a requisição retorna 400', function () {
+                    spyOn(Piano.metricas, 'enviaEventosGA');
+
+                    jasmine.Ajax.stubRequest(
+                        'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                    ).andReturn({
+                        status: 400
+                    });
+
+                    Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso('abc');
+
+                    expect(Piano.metricas.enviaEventosGA).toHaveBeenCalledWith('Erro', 'Ao obter autorizacao da API - 400 - abc');
+                });
+
+            it('deve chamar o método tp.push com os parâmetros "autorizado" e "true" quando a requisição retorna 400"', function () {
+                spyOn(window["tp"], 'push');
+
+                jasmine.Ajax.stubRequest(
+                    'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                ).andReturn({
+                    status: 400
+                });
+
+                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
+                expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'autorizado', true]);
+            });
+
+            it('deve chamar o método tp.push com os parâmetros "logado" e "true" quando a requisição retorna 400"', function () {
+                spyOn(window["tp"], 'push');
+
+                jasmine.Ajax.stubRequest(
+                    'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                ).andReturn({
+                    status: 400
+                });
+
+                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
+                expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'logado', true]);
+            });
+
+            it('deve chamar o método tp.push com os parâmetros "motivo" e "erro" quando a requisição retorna 400"', function () {
+                spyOn(window["tp"], 'push');
+
+                jasmine.Ajax.stubRequest(
+                    'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                ).andReturn({
+                    status: 400
+                });
+
+                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
+                expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'motivo', 'erro']);
+            });
+
+            it('deve chamar o método tp.push com o parâmetro "autorizado" quando a requisição retorna 200', function () {
+                spyOn(window["tp"], 'push');
+
+                jasmine.Ajax.stubRequest(
+                    'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                ).andReturn({
+                    status: 200,
+                    responseText: '{"autorizado":"autorizado"}'
+                });
+
+                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
+                expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'autorizado', 'autorizado']);
+            });
+
+            it('deve chamar o método tp.push com os parâmetros "logado" e algum valor quando a requisição retorna 200', function () {
+                spyOn(window["tp"], 'push');
+                spyOn(Piano.autenticacao, 'isAutorizado').and.returnValue('abc');
+
+                jasmine.Ajax.stubRequest(
+                    'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                ).andReturn({
+                    status: 200,
+                    responseText: '{"temTermoDeUso":"teste"}'
+                });
+
+                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
+                expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'logado', 'abc']);
+            });
+
+            it('deve chamar o método tp.push com os parâmetros "temTermo" e algum valor quando a resposta da requisição '
+                + 'contém o campo temTermoDeUso e retorna 200', function () {
+                    spyOn(window["tp"], 'push');
+                    spyOn(Piano.autenticacao, 'isAutorizado');
+
+                    jasmine.Ajax.stubRequest(
+                        'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                    ).andReturn({
+                        status: 200,
+                        responseText: '{"temTermoDeUso":"teste"}'
+                    });
+
+                    Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
+                    expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'temTermo', 'teste']);
+                });
+
+            it('deve chamar o método tp.push com os parâmetros "temTermo" e "false" quando a resposta da requisição '
+                + 'não contém o campo temTermoDeUso e retorna 200', function () {
+                    spyOn(window["tp"], 'push');
+                    spyOn(Piano.autenticacao, 'isAutorizado');
+
+                    jasmine.Ajax.stubRequest(
+                        'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                    ).andReturn({
+                        status: 200,
+                        responseText: '{}'
+                    });
+
+                    Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
+                    expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'temTermo', false]);
+                });
+
+
+            it('deve chamar o método tp.push com os parâmetros "motivo" e algum valor quando a resposta da requisição '
+                + 'contém o campo motivo e retorna 200', function () {
+                    spyOn(window["tp"], 'push');
+
+                    jasmine.Ajax.stubRequest(
+                        'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                    ).andReturn({
+                        status: 200,
+                        responseText: '{"motivo":"abc"}'
+                    });
+
+                    Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
+                    expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'motivo', 'abc']);
+                });
+
+            it('deve chamar o método tp.push com os parâmetros "motivo" e "" quando a resposta da requisição '
+                + 'não contém o campo motivo e retorna 200', function () {
+                    spyOn(window["tp"], 'push');
+
+                    jasmine.Ajax.stubRequest(
+                        'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                    ).andReturn({
+                        status: 200,
+                        responseText: '{}'
+                    });
+
+                    Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
+                    expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'motivo', '']);
+                });
         });
 
     });
