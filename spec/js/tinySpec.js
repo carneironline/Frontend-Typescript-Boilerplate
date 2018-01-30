@@ -309,8 +309,6 @@ describe('Tiny JS', function () {
 
         describe('função extraiParametrosCampanhaDaUrl', function () {
 
-            // dificuldade usar o spy no valoresCampanha
-
         });
 
         describe('função isOrigemBuscador', function () {
@@ -414,8 +412,6 @@ describe('Tiny JS', function () {
         });
 
         describe('função detectaBurlesco', function () {
-
-            // dificuldade para testar funções com window.onload
 
         });
 
@@ -1008,9 +1004,84 @@ describe('Tiny JS', function () {
 
     describe('Piano.banner', function () {
 
+        describe('função mostrarFooter', function () {
+
+            it('deve chamar a função adicionarCss', function () {
+                spyOn(Piano.util, 'adicionarCss');
+
+                Piano.banner.mostrarFooter();
+                expect(Piano.util.adicionarCss).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () { 
+                spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
+
+                Piano.banner.mostrarFooter();
+                expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
+            });
+
+        });
+
+        describe('função mostrarBotaoAssinaturaHeaderFooter', function () {
+
+            it('deve chamar a função util.adicionarCss', function () {
+                spyOn(Piano.util, 'adicionarCss');
+
+                Piano.banner.mostrarBotaoAssinaturaHeaderFooter();
+                expect(Piano.util.adicionarCss).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () { 
+                spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
+
+                Piano.banner.mostrarBotaoAssinaturaHeaderFooter();
+                expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
+            });
+
+        });
+
     });
 
     describe('Piano.register', function () {
+
+        describe('função mostrarBarreira',function(){
+
+            it('deve chamar o método util.adicionarCss', function(){
+                spyOn(Piano.util, 'adicionarCss');
+
+                Piano.register.mostrarBarreira();
+                expect(Piano.util.adicionarCss).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina',function(){
+                spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
+
+                Piano.register.mostrarBarreira();
+                expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
+            });
+
+            it('deve remover o cookie UTP através do método cookies.set',function(){
+                spyOn(Piano.cookies, 'set');
+
+                Piano.register.mostrarBarreira();
+                expect(Piano.cookies.set).toHaveBeenCalledWith(Piano.variaveis.constante.cookie.UTP, '', -1);
+            });
+
+            it('deve chamar o método metricas.enviaEventosGA', function(){
+                spyOn(Piano.metricas, 'enviaEventosGA');
+
+                Piano.register.mostrarBarreira();
+                expect(Piano.metricas.enviaEventosGA).toHaveBeenCalled();
+            });
+
+            it('deve setarr o cookie RTIEX através do método cookies.set',function(){
+                spyOn(Piano.cookies, 'set');
+
+                Piano.register.mostrarBarreira();
+                expect(Piano.cookies.set).toHaveBeenCalledWith(Piano.variaveis.constante.cookie.RTIEX, true, 1);
+            });
+
+        });
 
     });
 
@@ -1045,6 +1116,24 @@ describe('Tiny JS', function () {
     });
 
     describe('Piano.comunicado', function () {
+
+        describe('função mostrarInformacao', function () {
+
+            it('deve chamar a função util.adicionarCss', function () {
+                spyOn(Piano.util, 'adicionarCss');
+
+                Piano.comunicado.mostrarInformacao();
+                expect(Piano.util.adicionarCss).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () { 
+                spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
+
+                Piano.comunicado.mostrarInformacao();
+                expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
+            });
+
+        });
 
     });
 
