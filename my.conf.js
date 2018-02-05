@@ -6,7 +6,8 @@ module.exports = function(config) {
     files: [
 	    'js/tiny.js',
 	    'spec/js/*.js',
-	    'lib/mock-ajax.js'
+      'lib/mock-ajax.js',
+      'js/outros-produtos/configuracoes.js'
     ],
     browsers: ['Chrome'],
 
