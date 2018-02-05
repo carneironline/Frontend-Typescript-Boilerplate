@@ -436,7 +436,7 @@ Piano.util = {
 		};
 	},
 	extraiParametrosCampanhaDaUrl: function() {
-		var url = window.location.search;
+		var url = Piano.util.getWindowLocationSearch();
 		var chavesCampanha = ['utm_medium','utm_source'];
 		var valoresCampanha = [];
 
@@ -594,7 +594,7 @@ Piano.construtor = {
 		tp.push(["setAid", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].idSandboxTinypass]);
 		tp.push(["setSandbox", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].setSandBox]);
 		tp.push(["setDebug", Piano.util.isDebug()]);
-		var clean_url = window.location.href.split("?")[0];
+		var clean_url = Piano.util.getWindowLocationHref().split("?")[0];
 		tp.push(["setPageURL",clean_url]);
 		tp.push(["setZone", Piano.variaveis.getNomeProduto()]);
 		tp.push(["setCustomVariable", "nomeProduto", Piano.variaveis.getNomeProduto()]);
