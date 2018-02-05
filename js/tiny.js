@@ -4,7 +4,7 @@ var Piano = {};
 Piano.produto = {
 	validaConfiguracoes : function() {
 		if (Piano.util.trocarConfiguracoes()) {
-			Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/js/outros-produtos/configuracoes.js", false);
+			Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/js/outros-produtos/configuracoes.js");
 			return true;
 		}
 		return false;
@@ -254,18 +254,18 @@ var selH = document.querySelector('head');
 
 Piano.banner = {
 	mostrarFooter: function(versao) {
-		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/styles/styles.css'>";
+		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/styles/styles.css'>");
 		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-piano/"+versao+"/scripts/novo-banner-footer.js");
 	},
 	mostrarBotaoAssinaturaHeaderFooter: function(versao) {
-		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/styles/styles.css'>";
+		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/styles/styles.css'>");
 		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/scripts/banner-header-footer-piano.js");
 	}
 };
 
 Piano.register = {
 	mostrarBarreira: function(versao) {
-		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>";
+		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>");
 		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/nova-tela-register.js");
 		Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 		Piano.metricas.enviaEventosGA("Exibicao Register", Piano.metricas.montaRotuloGA());
@@ -283,7 +283,7 @@ Piano.paywall = {
 
 Piano.comunicado = {
 	mostrarInformacao: function(versao) {
-		selH.innerHTML += "<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/styles/styles.css'>";
+		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/styles/styles.css'>");
 		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/scripts/comunicacao-piano.js");
 	}
 };
@@ -436,7 +436,7 @@ Piano.util = {
 		};
 	},
 	extraiParametrosCampanhaDaUrl: function() {
-		var url = window.location.search;
+		var url = Piano.util.getWindowLocationSearch();
 		var chavesCampanha = ['utm_medium','utm_source'];
 		var valoresCampanha = [];
 
@@ -472,12 +472,12 @@ Piano.util = {
 		return Piano.variaveis.getAmbientePiano() != 'prd' ? '-stg' : '';
 	},
 	temParametroNaUrl: function(paramName) {
-		var parametros = window.location.search;
+		var parametros = Piano.util.getWindowLocationSearch();
 		return parametros.indexOf(paramName) != -1 ? true : false;
 	},
 	getValorParametroNaUrl: function(parametro) {
 		if (Piano.util.temParametroNaUrl(parametro)) {
-			var parametros = window.location.search;
+			var parametros = Piano.util.getWindowLocationSearch();
 			var regex = new RegExp("[\?(&)]" + parametro + "=([^&#]*)");
 			return parametros.match(regex)[1];
 		}
@@ -520,7 +520,7 @@ Piano.util = {
 		}
 	},
 	isDominioOGlobo: function() {
-		var regex = new RegExp("://(.*?)/"), url = window.location.href;
+		var regex = new RegExp("://(.*?)/"), url = Piano.util.getWindowLocationHref();
 		if (url.match(regex)[1].indexOf("oglobo") > -1 || (url.match(regex)[1].indexOf("globoi") > -1 && url.match(regex)[1].indexOf("edg") == -1)) {
 			return url.match(regex)[1];
 		}
@@ -542,6 +542,15 @@ Piano.util = {
 	callbackMeterExpired: function(meterData) {
 		regrasTiny = meterData;
 		Piano.metricas.executaAposPageview(true);
+	},
+	getWindowLocationSearch: function(){
+		return window.location.search;
+	},
+	getWindowLocationHref: function(){
+		return window.location.href;
+	},
+	adicionarCss: function(cssPath){
+		selH.innerHTML += cssPath;
 	}
 };
 
@@ -585,7 +594,7 @@ Piano.construtor = {
 		tp.push(["setAid", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].idSandboxTinypass]);
 		tp.push(["setSandbox", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].setSandBox]);
 		tp.push(["setDebug", Piano.util.isDebug()]);
-		var clean_url = window.location.href.split("?")[0];
+		var clean_url = Piano.util.getWindowLocationHref().split("?")[0];
 		tp.push(["setPageURL",clean_url]);
 		tp.push(["setZone", Piano.variaveis.getNomeProduto()]);
 		tp.push(["setCustomVariable", "nomeProduto", Piano.variaveis.getNomeProduto()]);
