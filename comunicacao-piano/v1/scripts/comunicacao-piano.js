@@ -7,7 +7,7 @@ e.innerHTML = "" +
 "   </div>" +
 "   <div class='back-drop'></div>" +
 "</div>";
-document.body.insertBefore(e, document.body.childNodes[0]);
+document.body.insertBefore(e, document.body.lastChild);
 
 if (window.tituloComunicacao) {
 	document.querySelector(".comunicacao-piano h2").innerHTML = tituloComunicacao;

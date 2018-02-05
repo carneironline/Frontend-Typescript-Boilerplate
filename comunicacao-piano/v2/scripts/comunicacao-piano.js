@@ -9,7 +9,7 @@ e.innerHTML = "" +
 "   </div>" +
 "   <div class='back-drop'></div>" +
 "</div>";
-el.body.insertBefore(e, el.body.childNodes[0]);
+el.body.insertBefore(e, el.body.lastChild);
 el.body.style.overflow = "hidden";
 if (window.tituloComunicacao) {
     el.querySelector(".comunicacao-piano h2").innerHTML = tituloComunicacao;
