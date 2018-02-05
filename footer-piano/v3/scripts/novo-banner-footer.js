@@ -85,7 +85,7 @@ e.innerHTML = "" +
 "   </div>" +
 "   <div class='white-drop'></div>" +
 "</div>"
-el.body.insertBefore(e, el.body.childNodes[0]);
+el.body.insertBefore(e, el.body.lastChild);
 
 window['dataLayer'] = window['dataLayer'] || [];
 var EventoGaPiano = {

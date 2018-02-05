@@ -24,7 +24,7 @@ e.innerHTML = "" +
 "		</div>" +
 "	</div>" +
 "</div>"
-document.body.insertBefore(e, document.body.childNodes[0]);
+document.body.insertBefore(e, document.body.lastChild);
 
 //Controla e edita o HTML
 // Verifica se Variaves do piano existem.
