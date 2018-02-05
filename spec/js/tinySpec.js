@@ -309,6 +309,38 @@ describe('Tiny JS', function () {
 
         describe('função extraiParametrosCampanhaDaUrl', function () {
 
+            it('deve chamar o método tp.push quando tiver o parâmetro utm_medium na url', function () {
+                spyOn(window["tp"], 'push');
+                spyOn(Piano.util, 'getWindowLocationSearch').and.returnValue('?utm_medium=abc');
+
+                Piano.util.extraiParametrosCampanhaDaUrl();
+                expect(window["tp"].push).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método tp.push quando tiver o parâmetro utm_source na url', function () {
+                spyOn(window["tp"], 'push');
+                spyOn(Piano.util, 'getWindowLocationSearch').and.returnValue('?utm_source=abc');
+
+                Piano.util.extraiParametrosCampanhaDaUrl();
+                expect(window["tp"].push).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método tp.push quando tiver o parâmetro utm_campaign na url', function () {
+                spyOn(window["tp"], 'push');
+                spyOn(Piano.util, 'getWindowLocationSearch').and.returnValue('?utm_campaign=abc');
+
+                Piano.util.extraiParametrosCampanhaDaUrl();
+                expect(window["tp"].push).toHaveBeenCalled();
+            });
+
+            it('não deve chamar o método tp.push quando os parâmetros utm_medium, utm_source e utm_campaign na url', function () {
+                spyOn(window["tp"], 'push');
+                spyOn(Piano.util, 'getWindowLocationSearch').and.returnValue('');
+
+                Piano.util.extraiParametrosCampanhaDaUrl();
+                expect(window["tp"].push).not.toHaveBeenCalled();
+            });
+
         });
 
         describe('função isOrigemBuscador', function () {
@@ -508,6 +540,175 @@ describe('Tiny JS', function () {
         });
     });
 
+    describe('Piano.construtor', function () {
+
+        describe('função initTp', function () {
+
+            beforeEach(function () {
+                spyOn(Piano.util, 'detectaAdBlock');
+            });
+
+            it('deve chamar o método Piano.util.detectaAdBlock', function () {
+                Piano.construtor.initTp();
+                expect(Piano.util.detectaAdBlock).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método Piano.util.detectaBurlesco', function () {
+                spyOn(Piano.util, 'detectaBurlesco');
+
+                Piano.construtor.initTp();
+                expect(Piano.util.detectaBurlesco).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método Piano.util.isTipoConteudoUndefined', function () {
+                spyOn(Piano.util, 'isTipoConteudoUndefined');
+
+                Piano.construtor.initTp();
+                expect(Piano.util.isTipoConteudoUndefined).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método tp.push com o parâmetro "setTags"', function () {
+                spyOn(window["tp"], 'push');
+                spyOn(Piano.variaveis, 'getTipoConteudoPiano').and.returnValue('abc');
+
+                Piano.construtor.initTp();
+                expect(window["tp"].push).toHaveBeenCalledWith(['setTags', ['abc']]);
+            });
+
+            it('deve chamar o método tp.push com o parâmetro "setAid"', function () {
+                spyOn(window["tp"], 'push');
+                spyOn(Piano.variaveis, 'getAmbientePiano').and.returnValue('qlt');
+                Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].idSandboxTinypass = 'abc';
+
+                Piano.construtor.initTp();
+                expect(window["tp"].push).toHaveBeenCalledWith(['setAid', 'abc']);
+            });
+
+            it('deve chamar o método tp.push com o parâmetro "setSandbox"', function () {
+                spyOn(window["tp"], 'push');
+                spyOn(Piano.variaveis, 'getAmbientePiano').and.returnValue('qlt');
+                Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].setSandBox = 'abc';
+
+                Piano.construtor.initTp();
+                expect(window["tp"].push).toHaveBeenCalledWith(['setSandbox', 'abc']);
+            });
+
+            it('deve chamar o método tp.push com o parâmetro "setDebug"', function () {
+                spyOn(window["tp"], 'push');
+                spyOn(Piano.util, 'isDebug').and.returnValue('abc');
+
+                Piano.construtor.initTp();
+                expect(window["tp"].push).toHaveBeenCalledWith(['setDebug', 'abc']);
+            });
+
+            it('deve chamar o método tp.push com o parâmetro "setPageURL"', function () {
+                spyOn(window["tp"], 'push');
+                spyOn(Piano.util, 'getWindowLocationHref').and.returnValue('abc?def');
+
+                Piano.construtor.initTp();
+                expect(window["tp"].push).toHaveBeenCalledWith(['setPageURL', 'abc']);
+            });
+
+            it('deve chamar o método tp.push com o parâmetro "setZone"', function () {
+                spyOn(window["tp"], 'push');
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('abc');
+
+                Piano.construtor.initTp();
+                expect(window["tp"].push).toHaveBeenCalledWith(['setZone', 'abc']);
+            });
+
+            it('deve chamar o método tp.push com os parâmetros "setCustomVariable" e "nomeProduto"', function () {
+                spyOn(window["tp"], 'push');
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('abc');
+
+                Piano.construtor.initTp();
+                expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'nomeProduto', 'abc']);
+            });
+
+            it('deve chamar o método Piano.janelaAnonima.detectPrivateMode', function () {
+                spyOn(Piano.janelaAnonima, 'detectPrivateMode');
+
+                Piano.construtor.initTp();
+                expect(Piano.janelaAnonima.detectPrivateMode).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método tp.push com os parâmetros "setCustomVariable" e "conteudoExclusivo" quando '
+                + 'Piano.variaveis.isConteudoExclusivo é true', function () {
+                    spyOn(window["tp"], 'push');
+                    spyOn(Piano.variaveis, 'isConteudoExclusivo').and.returnValue(true);
+
+                    Piano.construtor.initTp();
+                    expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'conteudoExclusivo', true]);
+
+                });
+
+            it('não deve chamar o método tp.push com os parâmetros "setCustomVariable" e "conteudoExclusivo" quando '
+                + 'Piano.variaveis.isConteudoExclusivo é false', function () {
+                    spyOn(window["tp"], 'push');
+                    spyOn(Piano.variaveis, 'isConteudoExclusivo').and.returnValue(false);
+
+                    Piano.construtor.initTp();
+                    expect(window["tp"].push).not.toHaveBeenCalledWith(['setCustomVariable', 'conteudoExclusivo', true]);
+                });
+
+            it('deve chamar o método Piano.autenticacao.verificaUsuarioLogadoNoBarramento', function () {
+                spyOn(Piano.autenticacao, 'verificaUsuarioLogadoNoBarramento');
+
+                Piano.construtor.initTp();
+                expect(Piano.autenticacao.verificaUsuarioLogadoNoBarramento).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método Piano.krux.obtemSegmentacao', function () {
+                spyOn(Piano.krux, 'obtemSegmentacao');
+
+                Piano.construtor.initTp();
+                expect(Piano.krux.obtemSegmentacao).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método tp.push com os parâmetros "setCustomVariable" e "bannerContadorLigado"', function () {
+                spyOn(window["tp"], 'push');
+
+                Piano.construtor.initTp();
+                expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'bannerContadorLigado', true]);
+            });
+
+            it('deve chamar o método Piano.util.isOrigemBuscador', function () {
+                spyOn(Piano.util, 'isOrigemBuscador');
+
+                Piano.construtor.initTp();
+                expect(Piano.util.isOrigemBuscador).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método Piano.util.extraiParametrosCampanhaDaUrl quando '
+                + ' Piano.util.isOrigemBuscador é falso', function () {
+                    spyOn(Piano.util, 'isOrigemBuscador').and.returnValue(false);
+                    spyOn(Piano.util, 'extraiParametrosCampanhaDaUrl');
+
+                    Piano.construtor.initTp();
+                    expect(Piano.util.extraiParametrosCampanhaDaUrl).toHaveBeenCalled();
+                });
+
+            it('deve chamar o método tp.push com os parâmetros "addHandler" e "meterActive"', function (){
+                spyOn(window["tp"], 'push');
+                Piano.util.callbackMeter = 'abc';
+
+                Piano.construtor.initTp();
+                expect(window["tp"].push).toHaveBeenCalledWith(['addHandler', 'meterActive', 'abc']);
+            });
+
+            it('deve chamar o método tp.push com os parâmetros "addHandler" e "meterExpired"', function (){
+                spyOn(window["tp"], 'push');
+                Piano.util.callbackMeterExpired = 'abc';
+
+                Piano.construtor.initTp();
+                expect(window["tp"].push).toHaveBeenCalledWith(['addHandler', 'meterExpired', 'abc']);
+            });
+
+        });
+
+    });
+
+
     describe('Piano.produto', function () {
 
         describe('função validaConfiguracoes', function () {
@@ -644,11 +845,6 @@ describe('Tiny JS', function () {
             });
 
         });
-
-    });
-
-    describe('Piano.janelaAnonima', function () {
-
 
     });
 
@@ -1013,7 +1209,7 @@ describe('Tiny JS', function () {
                 expect(Piano.util.adicionarCss).toHaveBeenCalled();
             });
 
-            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () { 
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
                 spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
 
                 Piano.banner.mostrarFooter();
@@ -1031,7 +1227,7 @@ describe('Tiny JS', function () {
                 expect(Piano.util.adicionarCss).toHaveBeenCalled();
             });
 
-            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () { 
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
                 spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
 
                 Piano.banner.mostrarBotaoAssinaturaHeaderFooter();
@@ -1044,37 +1240,37 @@ describe('Tiny JS', function () {
 
     describe('Piano.register', function () {
 
-        describe('função mostrarBarreira',function(){
+        describe('função mostrarBarreira', function () {
 
-            it('deve chamar o método util.adicionarCss', function(){
+            it('deve chamar o método util.adicionarCss', function () {
                 spyOn(Piano.util, 'adicionarCss');
 
                 Piano.register.mostrarBarreira();
                 expect(Piano.util.adicionarCss).toHaveBeenCalled();
             });
 
-            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina',function(){
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
                 spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
 
                 Piano.register.mostrarBarreira();
                 expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
             });
 
-            it('deve remover o cookie UTP através do método cookies.set',function(){
+            it('deve remover o cookie UTP através do método cookies.set', function () {
                 spyOn(Piano.cookies, 'set');
 
                 Piano.register.mostrarBarreira();
                 expect(Piano.cookies.set).toHaveBeenCalledWith(Piano.variaveis.constante.cookie.UTP, '', -1);
             });
 
-            it('deve chamar o método metricas.enviaEventosGA', function(){
+            it('deve chamar o método metricas.enviaEventosGA', function () {
                 spyOn(Piano.metricas, 'enviaEventosGA');
 
                 Piano.register.mostrarBarreira();
                 expect(Piano.metricas.enviaEventosGA).toHaveBeenCalled();
             });
 
-            it('deve setarr o cookie RTIEX através do método cookies.set',function(){
+            it('deve setarr o cookie RTIEX através do método cookies.set', function () {
                 spyOn(Piano.cookies, 'set');
 
                 Piano.register.mostrarBarreira();
@@ -1126,7 +1322,7 @@ describe('Tiny JS', function () {
                 expect(Piano.util.adicionarCss).toHaveBeenCalled();
             });
 
-            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () { 
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
                 spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
 
                 Piano.comunicado.mostrarInformacao();
@@ -1149,6 +1345,12 @@ describe('Tiny JS', function () {
                     rel: 'assinatura',
                     href: 'abc'
                 }])).toEqual('abc');
+            });
+
+            it('deve retornar " " quando rel for diferente a assinatura', function () {
+                expect(Piano.inadimplente.getLinkAssinatura([{
+                    rel: 'abc'
+                }])).toEqual(' ');
             });
         });
 
@@ -1295,10 +1497,10 @@ describe('Tiny JS', function () {
                 spyOn(Piano.metricas, 'enviaEventosGA');
 
                 jasmine.Ajax.stubRequest(
-                    '/url-de-teste',
-                ).andReturn({
-                    status: 400
-                });
+                    '/url-de-teste'
+                ).andReturn(
+                    { status: 400 }
+                    );
 
                 Piano.xmlHttpRequest.fazRequisicaoBarramentoApiObterAssinaturaInadimplente('/url-de-teste');
                 expect(Piano.metricas.enviaEventosGA.calls.count()).toEqual(2);
@@ -1453,6 +1655,21 @@ describe('Tiny JS', function () {
                     Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
                     expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'motivo', '']);
                 });
+
+            it('deve chamar o método Piano.inadimplente.getLinkAssinatura quando respJson.link é diferente de undefined', function () {
+                spyOn(Piano.inadimplente, 'getLinkAssinatura');
+
+                jasmine.Ajax.stubRequest(
+                    'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                ).andReturn({
+                    status: 200,
+                    responseText: '{"link":"abc"}'
+                });
+
+                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
+                expect(Piano.inadimplente.getLinkAssinatura).toHaveBeenCalled();
+            });
+
         });
 
     });
