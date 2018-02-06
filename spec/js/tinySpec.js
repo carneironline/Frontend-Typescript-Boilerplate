@@ -1453,7 +1453,7 @@ describe('Tiny JS', function () {
 
                     // mockar a resposta da requisição xhr
                     jasmine.Ajax.stubRequest(
-                        '/url-de-teste',
+                        '/url-de-teste'
                     ).andReturn({
                         status: 200,
                         responseText: '{"situacaoPagamento":"ok"}'
@@ -1469,7 +1469,7 @@ describe('Tiny JS', function () {
                     spyOn(Piano.metricas, 'enviaEventosGA');
 
                     jasmine.Ajax.stubRequest(
-                        '/url-de-teste',
+                        '/url-de-teste'
                     ).andReturn({
                         status: 401
                     });
@@ -1483,7 +1483,7 @@ describe('Tiny JS', function () {
                     spyOn(Piano.metricas, 'enviaEventosGA');
 
                     jasmine.Ajax.stubRequest(
-                        '/url-de-teste',
+                        '/url-de-teste'
                     ).andReturn({
                         status: 400
                     });
