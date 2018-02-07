@@ -36,4 +36,8 @@ aside#sidebar, .link-top, #relacionadas-topo {
 
 .galeria .tab-result.passafoto-auto {z-index: 3 !important;}
 
+
+body.materia .preload {
+    z-index: 97!important;
+}
    
