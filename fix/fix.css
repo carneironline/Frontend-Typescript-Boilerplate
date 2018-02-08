@@ -40,4 +40,12 @@ aside#sidebar, .link-top, #relacionadas-topo {
 .preload {
     z-index: 97!important;
 }
+
+.box-medial .navMedial a{
+  z-index: :96!important;
+}
+
+.fullscreen{
+  z-index: :97!important;
+}
    
