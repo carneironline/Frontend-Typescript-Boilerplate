@@ -250,7 +250,6 @@ Piano.metricas = {
 	}
 };
 
-var selH = document.querySelector('body');
 
 Piano.banner = {
 	mostrarFooter: function(versao) {
@@ -508,7 +507,7 @@ Piano.util = {
 		}
 		var script = document.createElement("script");
 		script.setAttribute("async", true);
-		script.setAttribute("src", "//www.npttech.com/advertising.js");
+		script.setAttribute("src", "https://www.npttech.com/advertising.js");
 		script.setAttribute("onerror", "setNptTechAdblockerCookie(true);");
 		document.getElementsByTagName("body")[0].appendChild(script);
 	},
@@ -550,7 +549,7 @@ Piano.util = {
 		return window.location.href;
 	},
 	adicionarCss: function(cssPath){
-		selH.innerHTML += cssPath;
+		document.querySelector('body').innerHTML += cssPath;
 	}
 };
 
