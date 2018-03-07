@@ -549,7 +549,9 @@ Piano.util = {
 		return window.location.href;
 	},
 	adicionarCss: function(cssPath){
-		document.querySelector('body').innerHTML += cssPath;
+		var e = document.createElement('div');
+		e.innerHTML = cssPath;
+		document.body.insertBefore(e, document.body.lastChild);
 	}
 };
 
