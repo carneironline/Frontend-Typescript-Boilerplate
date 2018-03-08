@@ -85,6 +85,10 @@ if (typeof background3 == 'undefined' || background3 == null || background3 == '
 	background3 = "#73d9ff";
 }
 
+if (typeof background4 == 'undefined' || background4 == null || background4 == '' ) {
+	background4 = "#bbb";
+}
+
 
 // GA
 
@@ -136,6 +140,7 @@ document.querySelector('head').innerHTML += "<style>" +
 "#login-barreira .conteudo-barreira #login-promocao {background: "+background1+";}" +
 "#login-barreira .conteudo-barreira #login-promocao .conteudo-produto a {background: "+background2+";}" +
 "#login-barreira .conteudo-barreira #login-promocao .conteudo-produto a:hover {background: "+background3+";}" +
+"#login-barreira .conteudo-barreira #login-promocao .conteudo-produto p {color: "+background4+";}" +
 "}" +
 "</style>";
 
