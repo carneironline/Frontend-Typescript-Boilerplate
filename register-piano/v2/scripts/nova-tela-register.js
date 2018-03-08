@@ -70,6 +70,22 @@ if (typeof textoFacaLoginRegister != 'undefined' && textoFacaLoginRegister != nu
 	document.querySelector("#login-barreira-iframe h2 span").innerHTML = textoFacaLoginRegister;
 }
 
+
+// backgrounds
+
+if (typeof background1 == 'undefined' || background1 == null || background1 == '' ) {
+	background1 = "#545c6d";
+}
+
+if (typeof background2 == 'undefined' || background2 == null || background2 == '' ) {
+	background2 = "#00aeef";
+}
+
+if (typeof background3 == 'undefined' || background3 == null || background3 == '' ) {
+	background3 = "#73d9ff";
+}
+
+
 // GA
 
 window['dataLayer'] = window['dataLayer'] || [];
@@ -114,6 +130,18 @@ if(/iPhone/.test(navigator.userAgent) && !window.MSStream){
 	})
 }
 
+
+document.querySelector('head').innerHTML += "<style>" +
+"@media only screen and (min-width: 769px){" +
+"#login-barreira .conteudo-barreira #login-promocao {background: "+background1+";}" +
+"#login-barreira .conteudo-barreira #login-promocao .conteudo-produto a {background: "+background2+";}" +
+"#login-barreira .conteudo-barreira #login-promocao .conteudo-produto a:hover {background: "+background3+";}" +
+"}" +
+"</style>";
+
+
 var appendDeScriptTimeout = document.createElement('script');
 appendDeScriptTimeout.innerHTML = "setTimeout(function(){document.querySelector('#login-barreira').setAttribute('style','display: block; opacity: 1;');}, 1500);";
 document.head.appendChild(appendDeScriptTimeout);	
+
+
