@@ -435,10 +435,10 @@ describe('Tiny JS', function () {
         describe('função detectaAdBlock', function () {
 
             it('deve chamar a função appendChild', function () {
-                spyOn(document.getElementsByTagName("body")[0], 'appendChild');
+                spyOn(document.getElementsByTagName("head")[0], 'appendChild');
 
                 Piano.util.detectaAdBlock();
-                expect(document.getElementsByTagName("body")[0].appendChild).toHaveBeenCalled();
+                expect(document.getElementsByTagName("head")[0].appendChild).toHaveBeenCalled();
             });
 
         });
@@ -1380,8 +1380,8 @@ describe('Tiny JS', function () {
                 expect(XMLHttpRequest.prototype.send).toHaveBeenCalled();
             });
 
-            it('deve chamar o método document.body.appendChild quando a requisição responde com 200', function () {
-                spyOn(document.body, 'appendChild');
+            it('deve chamar o método document.head.appendChild quando a requisição responde com 200', function () {
+                spyOn(document.head, 'appendChild');
 
                 Piano.xmlHttpRequest.geraScriptNaPagina();
 
@@ -1389,18 +1389,18 @@ describe('Tiny JS', function () {
                 request = jasmine.Ajax.requests.mostRecent();
                 request.respondWith({ status: 200 });
 
-                expect(document.body.appendChild).toHaveBeenCalled();
+                expect(document.head.appendChild).toHaveBeenCalled();
             });
 
-            it('não deve chamar o método document.body.appendChild quando a requisição responde com 300', function () {
-                spyOn(document.body, 'appendChild');
+            it('não deve chamar o método document.head.appendChild quando a requisição responde com 300', function () {
+                spyOn(document.head, 'appendChild');
 
                 Piano.xmlHttpRequest.geraScriptNaPagina();
 
                 request = jasmine.Ajax.requests.mostRecent();
                 request.respondWith({ status: 300 });
 
-                expect(document.body.appendChild).not.toHaveBeenCalled();
+                expect(document.head.appendChild).not.toHaveBeenCalled();
             });
 
         });

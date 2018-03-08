@@ -105,6 +105,48 @@ var EventoGaPiano = {
 EventoGaPiano.disparaEvento(!0,"Piano","Footer de venda exibido","Capas",!1);
 
 
+el.querySelector(".footer-venda-oglobo-capas .chamada-fixa").addEventListener("click",function(a){
+	el.querySelector(".footer-venda-oglobo-capas").classList.add("open");
+	EventoGaPiano.disparaEvento(!0,"Banner Footer","Clique","Expandir",!1);
+});
+
+el.querySelector(".footer-venda-oglobo-capas .fechar").addEventListener("click",function(a){
+	el.querySelector(".footer-venda-oglobo-capas").classList.remove("open");
+	EventoGaPiano.disparaEvento(!0,"Banner Footer","Clique","Fechar",!1);
+});
+
+el.querySelector(".footer-venda-oglobo-capas .white-drop").addEventListener("click",function(a){
+	el.querySelector(".footer-venda-oglobo-capas").classList.remove("open");
+	EventoGaPiano.disparaEvento(!0,"Banner Footer","Clique","Fechar",!1);
+});
+
+
+el.querySelector(".footer-venda-oglobo-capas .produto-um .preco-produto a").addEventListener("click",function(a){
+	a.preventDefault(),
+	window.open(el.querySelector(".footer-venda-oglobo-capas .produto-um .preco-produto a").href),
+	EventoGaPiano.disparaEvento(!0,"Banner Footer","Clique","Assine (link para pagamento) - Premium",!1);
+});
+
+el.querySelector(".footer-venda-oglobo-capas .produto-dois .preco-produto a").addEventListener("click",function(a){
+	a.preventDefault(),
+	window.open(el.querySelector(".footer-venda-oglobo-capas .produto-dois .preco-produto a").href),
+	EventoGaPiano.disparaEvento(!0,"Banner Footer","Clique","Assine (link para pagamento) - Digital",!1)
+});
+
+el.querySelector(".footer-venda-oglobo-capas .produto-um .titulo-produto a").addEventListener("click",function(a){
+	a.preventDefault(),
+	window.open(el.querySelector(".footer-venda-oglobo-capas .produto-um .titulo-produto a").href),
+	EventoGaPiano.disparaEvento(!0, "Banner Footer","Clique","Saiba mais - Premium",!1)
+});
+
+el.querySelector(".footer-venda-oglobo-capas .produto-dois .titulo-produto a").addEventListener("click",function(a){
+	a.preventDefault(),
+	window.open(el.querySelector(".footer-venda-oglobo-capas .produto-dois .titulo-produto a").href),
+	EventoGaPiano.disparaEvento(!0,"Banner Footer","Clique","Saiba mais - Digital",!1)
+});
+
+
+
 if (typeof preco0 != 'undefined' && preco0 != null && preco0 != '' ) {
 	el.querySelector(".chamada-fixa h2 strong").innerHTML = preco0;
 }
@@ -253,7 +295,7 @@ if (typeof corDestaque == 'undefined' || corDestaque == null || corDestaque == '
 	corDestaque = "#139deb";
 }
 
-el.querySelector('body').innerHTML += "<style>" +
+el.querySelector('head').innerHTML += "<style>" +
 ".footer-venda-oglobo-capas .produtos-oglobo .container-conteudos {background-color: "+background1+";}" +
 ".footer-venda-oglobo-capas .produtos-oglobo .chamada-fixa {background-color: "+background1+";}" +
 ".footer-venda-oglobo-capas.open .produtos-oglobo .chamada-fixa {background-color: "+background2+";}" +
@@ -267,44 +309,4 @@ el.querySelector('body').innerHTML += "<style>" +
 
 var appendDeScriptTimeout = document.createElement('script');
 appendDeScriptTimeout.innerHTML = "setTimeout(function(){document.querySelector('.footer-venda-oglobo-capas').setAttribute('style','display: block; opacity: 1;');}, 1500);";
-document.body.appendChild(appendDeScriptTimeout);
-
-el.querySelector(".footer-venda-oglobo-capas .chamada-fixa").addEventListener("click",function(a){
-	el.querySelector(".footer-venda-oglobo-capas").classList.add("open");
-	EventoGaPiano.disparaEvento(!0,"Banner Footer","Clique","Expandir",!1);
-});
-
-el.querySelector(".footer-venda-oglobo-capas .fechar").addEventListener("click",function(a){
-	el.querySelector(".footer-venda-oglobo-capas").classList.remove("open");
-	EventoGaPiano.disparaEvento(!0,"Banner Footer","Clique","Fechar",!1);
-});
-
-el.querySelector(".footer-venda-oglobo-capas .white-drop").addEventListener("click",function(a){
-	el.querySelector(".footer-venda-oglobo-capas").classList.remove("open");
-	EventoGaPiano.disparaEvento(!0,"Banner Footer","Clique","Fechar",!1);
-});
-
-
-el.querySelector(".footer-venda-oglobo-capas .produto-um .preco-produto a").addEventListener("click",function(a){
-	a.preventDefault(),
-	window.open(el.querySelector(".footer-venda-oglobo-capas .produto-um .preco-produto a").href),
-	EventoGaPiano.disparaEvento(!0,"Banner Footer","Clique","Assine (link para pagamento) - Premium",!1);
-});
-
-el.querySelector(".footer-venda-oglobo-capas .produto-dois .preco-produto a").addEventListener("click",function(a){
-	a.preventDefault(),
-	window.open(el.querySelector(".footer-venda-oglobo-capas .produto-dois .preco-produto a").href),
-	EventoGaPiano.disparaEvento(!0,"Banner Footer","Clique","Assine (link para pagamento) - Digital",!1)
-});
-
-el.querySelector(".footer-venda-oglobo-capas .produto-um .titulo-produto a").addEventListener("click",function(a){
-	a.preventDefault(),
-	window.open(el.querySelector(".footer-venda-oglobo-capas .produto-um .titulo-produto a").href),
-	EventoGaPiano.disparaEvento(!0, "Banner Footer","Clique","Saiba mais - Premium",!1)
-});
-
-el.querySelector(".footer-venda-oglobo-capas .produto-dois .titulo-produto a").addEventListener("click",function(a){
-	a.preventDefault(),
-	window.open(el.querySelector(".footer-venda-oglobo-capas .produto-dois .titulo-produto a").href),
-	EventoGaPiano.disparaEvento(!0,"Banner Footer","Clique","Saiba mais - Digital",!1)
-});
+document.head.appendChild(appendDeScriptTimeout);	

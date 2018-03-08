@@ -250,6 +250,7 @@ Piano.metricas = {
 	}
 };
 
+var selH = document.querySelector('head');
 
 Piano.banner = {
 	mostrarFooter: function(versao) {
@@ -306,7 +307,7 @@ Piano.xmlHttpRequest = {
 				var resposta = xhr.responseText;
 				var appendDeScript = document.createElement('script');
 				appendDeScript.innerHTML = resposta;
-				document.body.appendChild(appendDeScript);            
+				document.head.appendChild(appendDeScript);            
 			}
 		}
 		
@@ -507,9 +508,9 @@ Piano.util = {
 		}
 		var script = document.createElement("script");
 		script.setAttribute("async", true);
-		script.setAttribute("src", "https://www.npttech.com/advertising.js");
+		script.setAttribute("src", "//www.npttech.com/advertising.js");
 		script.setAttribute("onerror", "setNptTechAdblockerCookie(true);");
-		document.getElementsByTagName("body")[0].appendChild(script);
+		document.getElementsByTagName("head")[0].appendChild(script);
 	},
 	detectaBurlesco: function() {
 		window.onload = function(){ 
@@ -549,9 +550,7 @@ Piano.util = {
 		return window.location.href;
 	},
 	adicionarCss: function(cssPath){
-		var e = document.createElement('div');
-		e.innerHTML = cssPath;
-		document.body.insertBefore(e, document.body.lastChild);
+		selH.innerHTML += cssPath;
 	}
 };
 
