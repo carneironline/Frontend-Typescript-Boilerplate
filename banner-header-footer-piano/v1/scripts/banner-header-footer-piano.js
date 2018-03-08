@@ -21,7 +21,7 @@ var tagSite = document.getElementById("banner-assinatura-header");
 if (tagSite) {
 	var aTag = document.createElement('a');
 	aTag.setAttribute('href',linkAssinaturaHeaderFooter);
-	aTag.setAttribute('style',"background-image: url("+imagemAssinaturaHeaderFooter+")");
+	aTag.setAttribute('style',"background-image: url("+imagemAssinaturaHeaderFooter+"); height: 44px;");
 	aTag.innerHTML = "Assinatura";
 	tagSite.appendChild(aTag);
 }
