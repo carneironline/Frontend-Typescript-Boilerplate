@@ -3,7 +3,7 @@ conteudoBannerFooter.id = 'divBannerFooter';
 document.body.appendChild(conteudoBannerFooter);
 
 
-conteudoExperiencia = "" +
+conteudoExperienciaBannerFooter = "" +
 "<div class='footer-venda-oglobo-capas' style='opacity: 0; display: none;'>" +
 "   <div class='grid-capa-total'>" +
 "       <div class='grid-capa-util'>" +
@@ -90,7 +90,7 @@ conteudoExperiencia = "" +
 "</div>"
 
 
-document.getElementById("divBannerFooter").insertAdjacentHTML('beforeend', conteudoExperiencia);
+document.getElementById("divBannerFooter").insertAdjacentHTML('beforeend', conteudoExperienciaBannerFooter);
 
 window['dataLayer'] = window['dataLayer'] || [];
 var EventoGaPiano = {
@@ -300,7 +300,7 @@ if (typeof corDestaque == 'undefined' || corDestaque == null || corDestaque == '
 	corDestaque = "#139deb";
 }
 
-adicionaNovoEstilo = "<style>" +
+adicionaEstiloBannerFooter = "<style>" +
 ".footer-venda-oglobo-capas .produtos-oglobo .container-conteudos {background-color: "+background1+";}" +
 ".footer-venda-oglobo-capas .produtos-oglobo .chamada-fixa {background-color: "+background1+";}" +
 ".footer-venda-oglobo-capas.open .produtos-oglobo .chamada-fixa {background-color: "+background2+";}" +
@@ -311,6 +311,6 @@ adicionaNovoEstilo = "<style>" +
 ".footer-venda-oglobo-capas .compartilha-cor {color: "+corPadrao+";}" +
 "</style>";
 
-document.getElementById("divBannerFooter").insertAdjacentHTML('beforeend', adicionaNovoEstilo);
+document.getElementById("divBannerFooter").insertAdjacentHTML('beforeend', adicionaEstiloBannerFooter);
 
 setTimeout(function(){document.querySelector('.footer-venda-oglobo-capas').setAttribute('style','display: block; opacity: 1;');}, 1500);

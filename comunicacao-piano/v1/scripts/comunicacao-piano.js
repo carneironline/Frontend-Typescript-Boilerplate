@@ -1,5 +1,6 @@
-var e = document.createElement('div');
-e.innerHTML = "" +
+comunicacaoFechada = document.createElement('div');
+comunicacaoFechada.id = 'comunicacaoFechada';
+comunicacaoFechada.innerHTML = "" +
 "<div class='comunicacao-piano'>" +
 "   <div class='box-texto-comunicacao'>" +
 "       <h2>Informa&#231;&#227;o</h2>" +
@@ -7,7 +8,7 @@ e.innerHTML = "" +
 "   </div>" +
 "   <div class='back-drop'></div>" +
 "</div>";
-document.body.insertBefore(e, document.body.lastChild);
+document.body.insertBefore(comunicacaoFechada, document.body.lastChild);
 
 if (window.tituloComunicacao) {
 	document.querySelector(".comunicacao-piano h2").innerHTML = tituloComunicacao;

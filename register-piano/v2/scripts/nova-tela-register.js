@@ -1,8 +1,12 @@
 var uri = encodeURIComponent(document.location.href);
 
 //Monta a parte do HTML
-var e = document.createElement('div');
-e.innerHTML = "" +
+var conteudoBarreiraRegisterExclusiva = document.createElement('div');
+conteudoBarreiraRegisterExclusiva.id = 'barreiraRegisterExclusiva';
+document.body.appendChild(conteudoBarreiraRegisterExclusiva);
+
+
+conteudoExperienciaRegisterExclusivo = "" +
 "<div id='login-barreira' class='register-exclusivo-barreira' style='opacity: 0; display: none;'>" +
 "	<div class='conteudo-barreira'>" +
 "		<div id='login-promocao'>" +
@@ -24,7 +28,8 @@ e.innerHTML = "" +
 "		</div>" +
 "	</div>" +
 "</div>"
-document.body.insertBefore(e, document.body.lastChild);
+
+document.getElementById("barreiraRegisterExclusiva").insertAdjacentHTML('beforeend', conteudoExperienciaRegisterExclusivo);
 
 //Controla e edita o HTML
 // Verifica se Variaves do piano existem.
@@ -135,7 +140,7 @@ if(/iPhone/.test(navigator.userAgent) && !window.MSStream){
 }
 
 
-document.querySelector('head').innerHTML += "<style>" +
+adicionaEstiloRegisterExclusiva = "<style>" +
 "@media only screen and (min-width: 769px){" +
 "#login-barreira .conteudo-barreira #login-promocao {background: "+background1+";}" +
 "#login-barreira .conteudo-barreira #login-promocao .conteudo-produto a {background: "+background2+";}" +
@@ -145,8 +150,6 @@ document.querySelector('head').innerHTML += "<style>" +
 "</style>";
 
 
-var appendDeScriptTimeout = document.createElement('script');
-appendDeScriptTimeout.innerHTML = "setTimeout(function(){document.querySelector('#login-barreira').setAttribute('style','display: block; opacity: 1;');}, 1500);";
-document.head.appendChild(appendDeScriptTimeout);	
+document.getElementById("barreiraRegisterExclusiva").insertAdjacentHTML('beforeend', adicionaEstiloRegisterExclusiva);
 
-
+setTimeout(function(){document.querySelector('#login-barreira').setAttribute('style','display: block; opacity: 1;');}, 1500);

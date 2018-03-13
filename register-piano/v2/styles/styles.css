@@ -241,7 +241,9 @@ body {
         #login-barreira .conteudo-barreira #login-barreira-iframe h2 {
           padding: 19px 0;
           border-radius: 0 4px 0 0;
-          font-size: 19px; }
+          font-size: 19px;
+          position: relative;
+          z-index: 2; }
           #login-barreira .conteudo-barreira #login-barreira-iframe h2 strong {
             font-weight: 400; }
           #login-barreira .conteudo-barreira #login-barreira-iframe h2 span {
