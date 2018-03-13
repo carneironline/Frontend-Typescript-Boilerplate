@@ -24,4 +24,8 @@ Repositório criado para salvar estáticos usados para a Piano e suas [experiên
 
 ## Testes unitários
 - [Wiki](https://github.com/Infoglobo/paywall/wiki/Testes-Unit%C3%A1rios)
-- [Spec Jasmine.js](https://ifoglobo.github.io/paywall/SpecRunner.html)
+- [Spec Jasmine.js](https://ifoglobo.github.io/paywall/testes-unitarios/SpecRunner.html)
+
+## Servidor STG
+- Path: /mnt/multimedia/static/paywall/
+- Servidor: infoccistg5
