@@ -4,14 +4,22 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>Jornal Digital | O Globo</title>
-		<link rel="stylesheet" type="text/css" href="styles/styles.css">
-		<script>var ambienteUtilizadoPiano = 'qlt';</script>
+		
 	</head>
 	<body>
-
-		<script type="text/javascript" src="../../js/tiny.js"></script>
-		<!--<script src='scripts/novo-banner-footer.js'></script>-->
+		
+		Texto padrão do site
+		
+		
 		<script type="text/javascript">
+
+			var Piano = {};
+			Piano.util = {
+				montaUrlStg: function() {
+					return '-qlt';
+				}
+			};
+
 			preco0 = "R$ 1,90";
 			preco0Texto1 = "Assine por apenas";
 			preco0Texto2 = "no 1°mês";
@@ -50,10 +58,12 @@
 			corTextoBotao = "#075F22";
 			corPadrao = "#FFFFFF";
 			corDestaque = "#00FF00";
-
-			subsegmentacaoPiano = "Footer exibido";
-
-			Piano.banner.mostrarFooter('v3');
 		</script>
+
+		<div id="containerPiano">
+			<link rel="stylesheet" type="text/css" href="styles/styles.css">
+			<script src='scripts/novo-banner-footer.js'></script>
+		</div>
+		
 	</body>
 </html>
