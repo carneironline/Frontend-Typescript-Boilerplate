@@ -1,8 +1,12 @@
 var uri = encodeURIComponent(document.location.href);
 
 //Monta a parte do HTML
-var e = document.createElement('div');
-e.innerHTML = "" +
+var conteudoBarreiraRegister = document.createElement('div');
+conteudoBarreiraRegister.id = 'barreiraRegister';
+document.body.appendChild(conteudoBarreiraRegister);
+
+
+conteudoExperienciaRegister = "" +
 "<div id='login-barreira' class='register-barreira' style='opacity: 0; display: none;'>" +
 "	<div class='conteudo-barreira'>" +
 "		<div id='login-promocao'>" +
@@ -28,7 +32,8 @@ e.innerHTML = "" +
 "		</div>" +
 "	</div>" +
 "</div>"
-document.body.insertBefore(e, document.body.lastChild);
+
+document.getElementById("barreiraRegister").insertAdjacentHTML('beforeend', conteudoExperienciaRegister);
 
 
 //Controla e edita o HTML
@@ -73,20 +78,25 @@ if (typeof textoFacaLoginRegister != 'undefined' && textoFacaLoginRegister != nu
 
 // backgrounds
 
+corDefault1 = "#1d4c9c";
+corDefault2 = "#00aeef";
+corDefault3 = "#73d9ff";
+corDefault4 = "#55d1ff";
+
 if (typeof background1 == 'undefined' || background1 == null || background1 == '' ) {
-	background1 = "#1d4c9c";
+	background1 = corDefault1;
 }
 
 if (typeof background2 == 'undefined' || background2 == null || background2 == '' ) {
-	background2 = "#00aeef";
+	background2 = corDefault2;
 }
 
 if (typeof background3 == 'undefined' || background3 == null || background3 == '' ) {
-	background3 = "#73d9ff";
+	background3 = corDefault3;
 }
 
 if (typeof background4 == 'undefined' || background4 == null || background4 == '' ) {
-	background4 = "#55d1ff";
+	background4 = corDefault4;
 }
 
 // GA
@@ -136,16 +146,17 @@ if(/iPhone/.test(navigator.userAgent) && !window.MSStream){
 	});
 }
 
-document.querySelector('head').innerHTML += "<style>" +
-"@media only screen and (min-width: 769px){" +
-"#login-barreira .conteudo-barreira #login-promocao {background: "+background1+";}" +
-"#login-barreira .conteudo-barreira #login-promocao .conteudo-produto a {background: "+background2+";}" +
-"#login-barreira .conteudo-barreira #login-promocao .conteudo-produto a:hover {background: "+background3+";}" +
-"#login-barreira .conteudo-barreira #login-promocao .conteudo-produto p .preco-menor {color: "+background4+";}" +
-"}" +
-"</style>";
 
+if (!(background1 == corDefault1 && background2 == corDefault2 && background3 == corDefault3 && background4 == corDefault4)) {
+	adicionaEstiloRegister = "<style>" +
+	"@media only screen and (min-width: 769px){" +
+	"#login-barreira .conteudo-barreira #login-promocao {background: "+background1+";}" +
+	"#login-barreira .conteudo-barreira #login-promocao .conteudo-produto a {background: "+background2+";}" +
+	"#login-barreira .conteudo-barreira #login-promocao .conteudo-produto a:hover {background: "+background3+";}" +
+	"#login-barreira .conteudo-barreira #login-promocao .conteudo-produto p .preco-menor {color: "+background4+";}" +
+	"}" +
+	"</style>";
+	document.getElementById("barreiraRegister").insertAdjacentHTML('beforeend', adicionaEstiloRegister);
+}
 
-var appendDeScriptTimeout = document.createElement('script');
-appendDeScriptTimeout.innerHTML = "setTimeout(function(){document.querySelector('#login-barreira').setAttribute('style','display: block; opacity: 1;');}, 1500);";
-document.head.appendChild(appendDeScriptTimeout);	
+setTimeout(function(){document.querySelector('#login-barreira').setAttribute('style','display: block; opacity: 1;');}, 1500);

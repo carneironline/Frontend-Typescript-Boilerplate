@@ -3,7 +3,7 @@ conteudoBannerFooter.id = 'divBannerFooter';
 document.body.appendChild(conteudoBannerFooter);
 
 
-conteudoExperiencia = "" +
+conteudoExperienciaBannerFooter = "" +
 "<div class='footer-venda-oglobo-capas' style='opacity: 0; display: none;'>" +
 "   <div class='grid-capa-total'>" +
 "       <div class='grid-capa-util'>" +
@@ -90,7 +90,7 @@ conteudoExperiencia = "" +
 "</div>"
 
 
-document.getElementById("divBannerFooter").insertAdjacentHTML('beforeend', conteudoExperiencia);
+document.getElementById("divBannerFooter").insertAdjacentHTML('beforeend', conteudoExperienciaBannerFooter);
 
 window['dataLayer'] = window['dataLayer'] || [];
 var EventoGaPiano = {
@@ -268,49 +268,61 @@ if (typeof listaProdutos2 != 'undefined' && listaProdutos2 != null && listaProdu
 	document.querySelector(".produto-dois .informacao-produto").innerHTML = listaProdutos2;
 }
 
+// background e cores
+corDefaultFt1 = "#1d4c9c";
+corDefaultFt2 = "#fff";
+corDefaultFt3 = "#00aeef";
+corDefaultFt4 = "#73d9ff";
+corDefaultFt5 = "#bdbec1";
+corDefaultFt6 = "#fff";
+corDefaultFt7 = "#fff";
+corDefaultFt8 = "#139deb";
+
 if (typeof background1 == 'undefined' || background1 == null || background1 == '' ) {
-	background1 = "#1d4c9c";
+	background1 = corDefaultFt1;
 }
 
 if (typeof background2 == 'undefined' || background2 == null || background2 == '' ) {
-	background2 = "#fff";
+	background2 = corDefaultFt2;
 }
 
 if (typeof backgroundBotao == 'undefined' || backgroundBotao == null || backgroundBotao == '' ) {
-	backgroundBotao = "#00aeef";
+	backgroundBotao = corDefaultFt3;
 }
 
 if (typeof backgroundBotaoHover == 'undefined' || backgroundBotaoHover == null || backgroundBotaoHover == '' ) {
-	backgroundBotaoHover = "#73d9ff";
+	backgroundBotaoHover = corDefaultFt4;
 }
 
 if (typeof corTelefone == 'undefined' || corTelefone == null || corTelefone == '' ) {
-	corTelefone = "#bdbec1";
+	corTelefone = corDefaultFt5;
 }
 
 if (typeof corTextoBotao == 'undefined' || corTextoBotao == null || corTextoBotao == '' ) {
-	corTextoBotao = "#fff";
+	corTextoBotao = corDefaultFt6;
 }
 
 if (typeof corPadrao == 'undefined' || corPadrao == null || corPadrao == '' ) {
-	corPadrao = "#fff";
+	corPadrao = corDefaultFt7;
 }
 
 if (typeof corDestaque == 'undefined' || corDestaque == null || corDestaque == '' ) {
-	corDestaque = "#139deb";
+	corDestaque = corDefaultFt8;
 }
 
-adicionaNovoEstilo = "<style>" +
-".footer-venda-oglobo-capas .produtos-oglobo .container-conteudos {background-color: "+background1+";}" +
-".footer-venda-oglobo-capas .produtos-oglobo .chamada-fixa {background-color: "+background1+";}" +
-".footer-venda-oglobo-capas.open .produtos-oglobo .chamada-fixa {background-color: "+background2+";}" +
-".footer-venda-oglobo-capas .produtos-oglobo .chamada-fixa .chamada-telefone {color: "+corTelefone+";}" +
-".footer-venda-oglobo-capas .btn-default{background-color: "+backgroundBotao+"; color: "+corTextoBotao+";}" +
-".footer-venda-oglobo-capas .btn-default:hover{background-color: "+backgroundBotaoHover+";}" +
-".footer-venda-oglobo-capas .azul-medio {color: "+corDestaque+";}" +
-".footer-venda-oglobo-capas .compartilha-cor {color: "+corPadrao+";}" +
-"</style>";
 
-document.getElementById("divBannerFooter").insertAdjacentHTML('beforeend', adicionaNovoEstilo);
+if (!(background1 == corDefaultFt1 && background2 == corDefaultFt2 && backgroundBotao == corDefaultFt3 && backgroundBotaoHover == corDefaultFt4 && corTelefone == corDefaultFt5 && corTextoBotao == corDefaultFt6 && corPadrao == corDefaultFt7 && corDestaque == corDefaultFt8)) {
+	adicionaEstiloBannerFooter = "<style>" +
+	".footer-venda-oglobo-capas .produtos-oglobo .container-conteudos {background-color: "+background1+";}" +
+	".footer-venda-oglobo-capas .produtos-oglobo .chamada-fixa {background-color: "+background1+";}" +
+	".footer-venda-oglobo-capas.open .produtos-oglobo .chamada-fixa {background-color: "+background2+";}" +
+	".footer-venda-oglobo-capas .produtos-oglobo .chamada-fixa .chamada-telefone {color: "+corTelefone+";}" +
+	".footer-venda-oglobo-capas .btn-default{background-color: "+backgroundBotao+"; color: "+corTextoBotao+";}" +
+	".footer-venda-oglobo-capas .btn-default:hover{background-color: "+backgroundBotaoHover+";}" +
+	".footer-venda-oglobo-capas .azul-medio {color: "+corDestaque+";}" +
+	".footer-venda-oglobo-capas .compartilha-cor {color: "+corPadrao+";}" +
+	"</style>";
+	document.getElementById("divBannerFooter").insertAdjacentHTML('beforeend', adicionaEstiloBannerFooter);
+}
 
 setTimeout(function(){document.querySelector('.footer-venda-oglobo-capas').setAttribute('style','display: block; opacity: 1;');}, 1500);

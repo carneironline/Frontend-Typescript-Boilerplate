@@ -1,6 +1,6 @@
-var el = document;
-var e = el.createElement('div');
-e.innerHTML = "" +
+comunicacaoAberta = document.createElement('div');
+comunicacaoAberta.id = 'comunicacaoAberta';
+comunicacaoAberta.innerHTML = "" +
 "<div class='comunicacao-piano'>" +
 "   <div class='box-texto-comunicacao'>" +
 "       <span class='fechar-modal'>&#x2716;</span>" +
@@ -9,21 +9,21 @@ e.innerHTML = "" +
 "   </div>" +
 "   <div class='back-drop'></div>" +
 "</div>";
-el.body.insertBefore(e, el.body.lastChild);
-el.body.style.overflow = "hidden";
+document.body.insertBefore(comunicacaoAberta, document.body.lastChild);
+document.body.style.overflow = "hidden";
 if (window.tituloComunicacao) {
-    el.querySelector(".comunicacao-piano h2").innerHTML = tituloComunicacao;
+    document.querySelector(".comunicacao-piano h2").innerHTML = tituloComunicacao;
 }
 
 if (window.textoComunicacao) {
-    el.querySelector(".comunicacao-piano p").innerHTML = textoComunicacao;
+    document.querySelector(".comunicacao-piano p").innerHTML = textoComunicacao;
 }
 
-el.querySelector('.comunicacao-piano .fechar-modal').addEventListener('click', function() {
-    el.querySelector('.comunicacao-piano').parentNode.removeChild(el.querySelector('.comunicacao-piano'));
-    el.body.style.overflow = "";
+document.querySelector('.comunicacao-piano .fechar-modal').addEventListener('click', function() {
+    document.querySelector('.comunicacao-piano').parentNode.removeChild(document.querySelector('.comunicacao-piano'));
+    document.body.style.overflow = "";
 });
 
-el.querySelector('.comunicacao-piano .back-drop').addEventListener('click', function() {
-    el.querySelector('.comunicacao-piano').parentNode.removeChild(el.querySelector('.comunicacao-piano'));
+document.querySelector('.comunicacao-piano .back-drop').addEventListener('click', function() {
+    document.querySelector('.comunicacao-piano').parentNode.removeChild(document.querySelector('.comunicacao-piano'));
 });
