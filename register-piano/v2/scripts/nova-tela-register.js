@@ -144,13 +144,7 @@ if(/iPhone/.test(navigator.userAgent) && !window.MSStream){
 }
 
 
-
-
-
-if (background1 == corDefault1 && background2 == corDefault2 && background3 == corDefault3 && background4 == corDefault4) {
-	setTimeout(function(){document.querySelector('#login-barreira').setAttribute('style','display: block; opacity: 1;');}, 1500);
-}
-else {
+if (!(background1 == corDefault1 && background2 == corDefault2 && background3 == corDefault3 && background4 == corDefault4)) {
 	adicionaEstiloRegisterExclusiva = "<style>" +
 	"@media only screen and (min-width: 769px){" +
 	"#login-barreira .conteudo-barreira #login-promocao {background: "+background1+";}" +
@@ -162,3 +156,5 @@ else {
 	document.getElementById("barreiraRegisterExclusiva").insertAdjacentHTML('beforeend', adicionaEstiloRegisterExclusiva);
 	setTimeout(function(){document.querySelector('#login-barreira').setAttribute('style','display: block; opacity: 1;');}, 1500);
 }
+
+setTimeout(function(){document.querySelector('#login-barreira').setAttribute('style','display: block; opacity: 1;');}, 1500);
