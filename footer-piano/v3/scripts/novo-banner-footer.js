@@ -268,6 +268,8 @@ if (typeof listaProdutos2 != 'undefined' && listaProdutos2 != null && listaProdu
 	document.querySelector(".produto-dois .informacao-produto").innerHTML = listaProdutos2;
 }
 
+// background e cores
+
 if (typeof background1 == 'undefined' || background1 == null || background1 == '' ) {
 	background1 = "#1d4c9c";
 }

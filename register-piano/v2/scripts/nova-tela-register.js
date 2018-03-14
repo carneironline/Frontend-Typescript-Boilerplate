@@ -77,21 +77,25 @@ if (typeof textoFacaLoginRegister != 'undefined' && textoFacaLoginRegister != nu
 
 
 // backgrounds
+corDefault1 = "#545c6d";
+corDefault2 = "#00aeef";
+corDefault3 = "#73d9ff";
+corDefault4 = "#bbb";
 
 if (typeof background1 == 'undefined' || background1 == null || background1 == '' ) {
-	background1 = "#545c6d";
+	background1 = corDefault1;
 }
 
 if (typeof background2 == 'undefined' || background2 == null || background2 == '' ) {
-	background2 = "#00aeef";
+	background2 = corDefault2;
 }
 
 if (typeof background3 == 'undefined' || background3 == null || background3 == '' ) {
-	background3 = "#73d9ff";
+	background3 = corDefault3;
 }
 
 if (typeof background4 == 'undefined' || background4 == null || background4 == '' ) {
-	background4 = "#bbb";
+	background4 = corDefault4;
 }
 
 
@@ -140,16 +144,21 @@ if(/iPhone/.test(navigator.userAgent) && !window.MSStream){
 }
 
 
-adicionaEstiloRegisterExclusiva = "<style>" +
-"@media only screen and (min-width: 769px){" +
-"#login-barreira .conteudo-barreira #login-promocao {background: "+background1+";}" +
-"#login-barreira .conteudo-barreira #login-promocao .conteudo-produto a {background: "+background2+";}" +
-"#login-barreira .conteudo-barreira #login-promocao .conteudo-produto a:hover {background: "+background3+";}" +
-"#login-barreira .conteudo-barreira #login-promocao .conteudo-produto p {color: "+background4+";}" +
-"}" +
-"</style>";
 
 
-document.getElementById("barreiraRegisterExclusiva").insertAdjacentHTML('beforeend', adicionaEstiloRegisterExclusiva);
 
-setTimeout(function(){document.querySelector('#login-barreira').setAttribute('style','display: block; opacity: 1;');}, 1500);
+if (background1 == corDefault1 && background2 == corDefault2 && background3 == corDefault3 && background4 == corDefault4) {
+	setTimeout(function(){document.querySelector('#login-barreira').setAttribute('style','display: block; opacity: 1;');}, 1500);
+}
+else {
+	adicionaEstiloRegisterExclusiva = "<style>" +
+	"@media only screen and (min-width: 769px){" +
+	"#login-barreira .conteudo-barreira #login-promocao {background: "+background1+";}" +
+	"#login-barreira .conteudo-barreira #login-promocao .conteudo-produto a {background: "+background2+";}" +
+	"#login-barreira .conteudo-barreira #login-promocao .conteudo-produto a:hover {background: "+background3+";}" +
+	"#login-barreira .conteudo-barreira #login-promocao .conteudo-produto p {color: "+background4+";}" +
+	"}" +
+	"</style>";
+	document.getElementById("barreiraRegisterExclusiva").insertAdjacentHTML('beforeend', adicionaEstiloRegisterExclusiva);
+	setTimeout(function(){document.querySelector('#login-barreira').setAttribute('style','display: block; opacity: 1;');}, 1500);
+}
