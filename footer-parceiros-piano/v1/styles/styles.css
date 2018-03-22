@@ -1,0 +1,10 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,900);
+@import url("../../../fix/fix.css");
+#footer-parceiros-piano {
+    width: 960px;
+    height: 60px;
+    box-sizing: border-box;
+    padding: 10px 50px;
+    background: linear-gradient(to right, #f2664c 0%,#ed1945 100%);
+    clear: both;
+}
