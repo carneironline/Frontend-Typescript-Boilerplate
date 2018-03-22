@@ -7,8 +7,14 @@ document.body.appendChild(conteudoBarreiraRegister);
 
 
 conteudoExperienciaRegister = "" +
-"<div id='footer-parceiros-piano' style='opacity: 0; display: none;'>" +
-"<a href='#' id='click-ga-piano'>oi</a>" +
+"<div class='grid-falso'>"+
+"	<div id='footer-parceiros-piano' style='opacity: 0; display: none;'>" +
+"			<div class='conteudo-parceiros-piano'>"+
+"			<span id='logo-parceiros'>logo</span>" +
+"			<p id='texto-parceiros'><strong>GRÁTIS para você</strong> assinante do Globo</p>" +
+"			<a href='#' id='click-ga-piano-parceiros'><span>ATIVAR</span></a>" +
+"		</div>"+
+"	</div>"+
 "</div>"
 
 document.getElementById("footerParceiros").insertAdjacentHTML('beforeend', conteudoExperienciaRegister);
@@ -45,9 +51,9 @@ var EventoGaPiano = {disparaEvento : function (naoInterativo, categoria, acao, r
 	if (redirecionaComAtraso) {if ((elemento.target == "_blank") || (elemento.rel == "external" || (elemento.rel == "nofollow external"))){window.open(elemento.href);} 
 	else {setTimeout(function() {window.location = elemento.href}, 300);}}}}
 
-document.getElementById('click-ga-piano').addEventListener('click', function(a) {
+document.getElementById('click-ga-piano-parceiros').addEventListener('click', function(a) {
 	a.preventDefault(),
-    window.open(document.getElementById('click-ga-piano').href),
+    window.open(document.getElementById('click-ga-piano-parceiros').href),
     EventoGaPiano.disparaEvento(!0,"Globo Mais Footer","Clique - Ver Diferenciais","",!1);
 });
 
