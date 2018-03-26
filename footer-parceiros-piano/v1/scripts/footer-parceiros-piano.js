@@ -35,12 +35,24 @@ corDefault3 = "#570a3b";
 corDefault4 = "#fff";
 corDefault5 = "#fff";
 
-if (typeof background1 == 'undefined' || background1 == null || background1 == '' ) {
-	background1 = corDefault1;
+if (typeof backgroundPar1 == 'undefined' || backgroundPar1 == null || backgroundPar1 == '' ) {
+	backgroundPar1 = corDefault1;
 }
 
-if (typeof background2 == 'undefined' || background2 == null || background2 == '' ) {
-	background2 = corDefault2;
+if (typeof backgroundPar2 == 'undefined' || backgroundPar2 == null || backgroundPar2 == '' ) {
+	backgroundPar2 = corDefault2;
+}
+
+if (typeof backgroundPar3 == 'undefined' || backgroundPar3 == null || backgroundPar3 == '' ) {
+	backgroundPar3 = corDefault3;
+}
+
+if (typeof backgroundPar4 == 'undefined' || backgroundPar4 == null || backgroundPar4 == '' ) {
+	backgroundPar4 = corDefault4;
+}
+
+if (typeof backgroundPar5 == 'undefined' || backgroundPar5 == null || backgroundPar5 == '' ) {
+	backgroundPar5 = corDefault5;
 }
 
 if (typeof parceiroImagemLogo != 'undefined' && parceiroImagemLogo != null && parceiroImagemLogo != '' ) {
@@ -82,13 +94,13 @@ document.getElementById('click-ga-piano-parceiros').addEventListener('click', fu
 
 
 
-if (!(background1 == corDefault1 && background2 == corDefault2)) {
+if (!(backgroundPar1 == corDefault1 && backgroundPar2 == corDefault2 && backgroundPar3 == corDefault3 && backgroundPar4 == corDefault4 && backgroundPar5 == corDefault5)) {
 	adicionaEstiloRegister = "<style>" +
-	"#footer-parceiros-piano {background: "+background1+";}" +
-	"#footer-parceiros-piano #click-ga-piano-parceiros {background: "+background2+";}" +
-	"#footer-parceiros-piano #texto-parceiros #texto-parceiros-3 {color: "+background3+";}" +
-	"#footer-parceiros-piano #texto-parceiros strong {color: "+background4+";}" +
-	"#footer-parceiros-piano #click-ga-piano-parceiros {color: "+background5+";}" +
+	"#footer-parceiros-piano {background: "+backgroundPar1+";}" +
+	"#footer-parceiros-piano #click-ga-piano-parceiros {background: "+backgroundPar2+";}" +
+	"#footer-parceiros-piano #texto-parceiros #texto-parceiros-3 {color: "+backgroundPar3+";}" +
+	"#footer-parceiros-piano #texto-parceiros strong {color: "+backgroundPar4+";}" +
+	"#footer-parceiros-piano #click-ga-piano-parceiros {color: "+backgroundPar5+";}" +
 	"</style>";
 	document.getElementById("footerParceiros").insertAdjacentHTML('beforeend', adicionaEstiloRegister);
 }
