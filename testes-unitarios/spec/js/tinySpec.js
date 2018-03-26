@@ -1333,6 +1333,28 @@ describe('Tiny JS', function () {
 
     });
 
+    describe('Piano.parceiro', function () {
+
+        describe('função mostraFooterParceiro', function () {
+
+            it('deve chamar a função util.adicionarCss', function () {
+                spyOn(Piano.util, 'adicionarCss');
+
+                Piano.parceiro.mostraFooterParceiro();
+                expect(Piano.util.adicionarCss).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
+                spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
+
+                Piano.parceiro.mostraFooterParceiro();
+                expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
+            });
+
+        });
+
+    });
+
     describe('Piano.inadimplente', function () {
 
         describe('função getLinkAssinatura', function () {

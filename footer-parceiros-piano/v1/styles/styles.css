@@ -32,10 +32,12 @@
     left: 50px;
     width: 168px;
     height: 40px;
-    background: url(../images/logoglobomais.png) no-repeat 50% 50% / 168px;
     display: block;
     overflow: hidden;
-    text-indent: -99999px;
+}
+
+#footer-parceiros-piano #logo-parceiros img {
+    width: 100%;
 }
 
 #footer-parceiros-piano #texto-parceiros { 

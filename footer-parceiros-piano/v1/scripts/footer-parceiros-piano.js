@@ -10,9 +10,9 @@ conteudoExperienciaRegister = "" +
 "<div class='grid-falso'>"+
 "	<div id='footer-parceiros-piano' style='opacity: 0; display: none;'>" +
 "			<div class='conteudo-parceiros-piano'>"+
-"			<span id='logo-parceiros'>logo</span>" +
-"			<p id='texto-parceiros'><strong>GRÁTIS para você</strong> assinante do Globo</p>" +
-"			<a href='#' id='click-ga-piano-parceiros'><span>ATIVAR</span></a>" +
+"			<span id='logo-parceiros'><img id='img-logo-parceiros' src='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-parceiros-piano/v1/images/logoglobomais.png'></span>" +
+"			<p id='texto-parceiros'><strong id='texto-parceiros-2' >GRÁTIS para você</strong> <span id='texto-parceiros-3'>assinante do Globo</span></p>" +
+"			<a href='#' id='click-ga-piano-parceiros'><span id='texto-clicl-parceiros'>ATIVAR</span></a>" +
 "		</div>"+
 "	</div>"+
 "</div>"
@@ -30,16 +30,39 @@ if (typeof precoRegister != 'undefined' && precoRegister != null && precoRegiste
 // backgrounds
 
 corDefault1 = "linear-gradient(to right, #f2664c 0%,#ed1945 100%)";
-corDefault2 = "#00aeef";
+corDefault2 = "#570a3b";
+corDefault3 = "#570a3b";
+corDefault4 = "#fff";
+corDefault5 = "#fff";
 
 if (typeof background1 == 'undefined' || background1 == null || background1 == '' ) {
 	background1 = corDefault1;
 }
 
 if (typeof background2 == 'undefined' || background2 == null || background2 == '' ) {
-	background2 = corDefault1;
+	background2 = corDefault2;
 }
 
+if (typeof parceiroImagemLogo != 'undefined' && parceiroImagemLogo != null && parceiroImagemLogo != '' ) {
+	document.getElementById("img-logo-parceiros").src = parceiroImagemLogo;
+}
+
+
+if (typeof parceiroTxt1 != 'undefined' && parceiroTxt1 != null && parceiroTxt1 != '' ) {
+	document.getElementById("texto-parceiros-2").innerHTML = parceiroTxt1;
+}
+
+if (typeof parceiroTxt2 != 'undefined' && parceiroTxt2 != null && parceiroTxt2 != '' ) {
+	document.getElementById("texto-parceiros-3").innerHTML = parceiroTxt2;
+}
+
+if (typeof parceiroTxtLink != 'undefined' && parceiroTxtLink != null && parceiroTxtLink != '' ) {
+	document.getElementById("texto-clicl-parceiros").innerHTML = parceiroTxtLink;
+}
+
+if (typeof parceiroLink != 'undefined' && parceiroLink != null && parceiroLink != '' ) {
+	document.getElementById("click-ga-piano-parceiros").href = parceiroLink;
+}
 
 // GA
 
@@ -62,6 +85,10 @@ document.getElementById('click-ga-piano-parceiros').addEventListener('click', fu
 if (!(background1 == corDefault1 && background2 == corDefault2)) {
 	adicionaEstiloRegister = "<style>" +
 	"#footer-parceiros-piano {background: "+background1+";}" +
+	"#footer-parceiros-piano #click-ga-piano-parceiros {background: "+background2+";}" +
+	"#footer-parceiros-piano #texto-parceiros #texto-parceiros-3 {color: "+background3+";}" +
+	"#footer-parceiros-piano #texto-parceiros strong {color: "+background4+";}" +
+	"#footer-parceiros-piano #click-ga-piano-parceiros {color: "+background5+";}" +
 	"</style>";
 	document.getElementById("footerParceiros").insertAdjacentHTML('beforeend', adicionaEstiloRegister);
 }

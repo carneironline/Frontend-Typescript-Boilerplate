@@ -287,6 +287,13 @@ Piano.comunicado = {
 	}
 };
 
+Piano.parceiro = {
+	mostraFooterParceiro: function(versao) {
+		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-parceiros-piano/"+versao+"/styles/styles.css'>");
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-parceiros-piano/"+versao+"/scripts/footer-parceiros-piano.js");
+	}
+};
+
 Piano.inadimplente = {
 	getLinkAssinatura: function(link) {
 		for (var i = 0; i < link.length; i++) {
