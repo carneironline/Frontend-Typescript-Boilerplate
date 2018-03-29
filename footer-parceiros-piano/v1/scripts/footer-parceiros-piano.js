@@ -35,24 +35,24 @@ corDefault3 = "#570a3b";
 corDefault4 = "#fff";
 corDefault5 = "#fff";
 
-if (typeof backgroundPar1 == 'undefined' || backgroundPar1 == null || backgroundPar1 == '' ) {
-	backgroundPar1 = corDefault1;
+if (typeof corFooterParc == 'undefined' || corFooterParc == null || corFooterParc == '' ) {
+	corFooterParc = corDefault1;
 }
 
-if (typeof backgroundPar2 == 'undefined' || backgroundPar2 == null || backgroundPar2 == '' ) {
-	backgroundPar2 = corDefault2;
+if (typeof corBotaoParc == 'undefined' || corBotaoParc == null || corBotaoParc == '' ) {
+	corBotaoParc = corDefault2;
 }
 
-if (typeof backgroundPar3 == 'undefined' || backgroundPar3 == null || backgroundPar3 == '' ) {
-	backgroundPar3 = corDefault3;
+if (typeof corFraseFinalParc == 'undefined' || corFraseFinalParc == null || corFraseFinalParc == '' ) {
+	corFraseFinalParc = corDefault3;
 }
 
-if (typeof backgroundPar4 == 'undefined' || backgroundPar4 == null || backgroundPar4 == '' ) {
-	backgroundPar4 = corDefault4;
+if (typeof corFraseInicialParc == 'undefined' || corFraseInicialParc == null || corFraseInicialParc == '' ) {
+	corFraseInicialParc = corDefault4;
 }
 
-if (typeof backgroundPar5 == 'undefined' || backgroundPar5 == null || backgroundPar5 == '' ) {
-	backgroundPar5 = corDefault5;
+if (typeof corTextoBotaoParc == 'undefined' || corTextoBotaoParc == null || corTextoBotaoParc == '' ) {
+	corTextoBotaoParc = corDefault5;
 }
 
 if (typeof parceiroImagemLogo != 'undefined' && parceiroImagemLogo != null && parceiroImagemLogo != '' ) {
@@ -60,20 +60,20 @@ if (typeof parceiroImagemLogo != 'undefined' && parceiroImagemLogo != null && pa
 }
 
 
-if (typeof parceiroTxt1 != 'undefined' && parceiroTxt1 != null && parceiroTxt1 != '' ) {
-	document.getElementById("texto-parceiros-2").innerHTML = parceiroTxt1;
+if (typeof fraseInicialParc != 'undefined' && fraseInicialParc != null && fraseInicialParc != '' ) {
+	document.getElementById("texto-parceiros-2").innerHTML = fraseInicialParc;
 }
 
-if (typeof parceiroTxt2 != 'undefined' && parceiroTxt2 != null && parceiroTxt2 != '' ) {
-	document.getElementById("texto-parceiros-3").innerHTML = parceiroTxt2;
+if (typeof fraseFinalParc != 'undefined' && fraseFinalParc != null && fraseFinalParc != '' ) {
+	document.getElementById("texto-parceiros-3").innerHTML = fraseFinalParc;
 }
 
-if (typeof parceiroTxtLink != 'undefined' && parceiroTxtLink != null && parceiroTxtLink != '' ) {
-	document.getElementById("texto-clicl-parceiros").innerHTML = parceiroTxtLink;
+if (typeof txtBotaoParc != 'undefined' && txtBotaoParc != null && txtBotaoParc != '' ) {
+	document.getElementById("texto-clicl-parceiros").innerHTML = txtBotaoParc;
 }
 
-if (typeof parceiroLink != 'undefined' && parceiroLink != null && parceiroLink != '' ) {
-	document.getElementById("click-ga-piano-parceiros").href = parceiroLink;
+if (typeof linkParc != 'undefined' && linkParc != null && linkParc != '' ) {
+	document.getElementById("click-ga-piano-parceiros").href = linkParc;
 }
 
 // GA
@@ -94,13 +94,13 @@ document.getElementById('click-ga-piano-parceiros').addEventListener('click', fu
 
 
 
-if (!(backgroundPar1 == corDefault1 && backgroundPar2 == corDefault2 && backgroundPar3 == corDefault3 && backgroundPar4 == corDefault4 && backgroundPar5 == corDefault5)) {
+if (!(corFooterParc == corDefault1 && corBotaoParc == corDefault2 && corFraseFinalParc == corDefault3 && corFraseInicialParc == corDefault4 && corTextoBotaoParc == corDefault5)) {
 	adicionaEstiloRegister = "<style>" +
-	"#footer-parceiros-piano {background: "+backgroundPar1+";}" +
-	"#footer-parceiros-piano #click-ga-piano-parceiros {background: "+backgroundPar2+";}" +
-	"#footer-parceiros-piano #texto-parceiros #texto-parceiros-3 {color: "+backgroundPar3+";}" +
-	"#footer-parceiros-piano #texto-parceiros strong {color: "+backgroundPar4+";}" +
-	"#footer-parceiros-piano #click-ga-piano-parceiros {color: "+backgroundPar5+";}" +
+	"#footer-parceiros-piano {background: "+corFooterParc+";}" +
+	"#footer-parceiros-piano #click-ga-piano-parceiros {background: "+corBotaoParc+";}" +
+	"#footer-parceiros-piano #texto-parceiros #texto-parceiros-3 {color: "+corFraseFinalParc+";}" +
+	"#footer-parceiros-piano #texto-parceiros strong {color: "+corFraseInicialParc+";}" +
+	"#footer-parceiros-piano #click-ga-piano-parceiros {color: "+corTextoBotaoParc+";}" +
 	"</style>";
 	document.getElementById("footerParceiros").insertAdjacentHTML('beforeend', adicionaEstiloRegister);
 }
