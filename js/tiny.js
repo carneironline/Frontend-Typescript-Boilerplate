@@ -299,7 +299,7 @@ Piano.inadimplente = {
 		for (var i = 0; i < link.length; i++) {
 			if (link[i].rel == 'assinatura') return link[i].href;
 		}
-		return " ";
+		return '';
 	}
 };
 
@@ -320,27 +320,27 @@ Piano.xmlHttpRequest = {
 		
 	},
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
-
+		
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", hrefAssinaturaInadimplente, false);
 		xhr.setRequestHeader("Accept", "application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.send();
-		
-			if(xhr.readyState == 4){
-				if(xhr.status == 200){
-					var resposta = xhr.responseText;
-					var respJson = JSON.parse(resposta);
-					var situacaoPagamento = respJson.situacaoPagamento.toLowerCase();
-					tp.push(["setCustomVariable", "situacaoPagamento", situacaoPagamento]);
+	
+		if(xhr.readyState == 4){
+			if(xhr.status == 200){
+				var resposta = xhr.responseText;
+				var respJson = JSON.parse(resposta);
+				var situacaoPagamento = respJson.situacaoPagamento.toLowerCase();
+				tp.push(["setCustomVariable", "situacaoPagamento", situacaoPagamento]);
 
-				}else{
-					if (xhr.status != 0 && Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(xhr.status) > -1) {
-						Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente da API - " + xhr.status);
-					}
-					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
+			}else{
+				if (xhr.status != 0 && Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(xhr.status) > -1) {
+					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente da API - " + xhr.status);
 				}
+				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
 			}
+		}
 				
 	},
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
