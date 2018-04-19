@@ -294,3 +294,6 @@ body {
 .footer-venda-oglobo-capas {
 	display: none !important;
 }
+
+#sas-interstitial, #sas-interstitial-bg, #sas_7378610, .videos #photoGallery .sharing, .msg-paywall-new, [id^='adm-'], [id*=' adm-'], #pub-floating, .site-footer {
+  display: none !important; }

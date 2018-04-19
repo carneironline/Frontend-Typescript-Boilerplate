@@ -9,9 +9,6 @@ aside#sidebar, .link-top, #relacionadas-topo {
   position: relative !important;
   z-index: 99 !important; }
 
-#sas-interstitial, #sas-interstitial-bg, #sas_7378610, .videos #photoGallery .sharing, .msg-paywall-new, [id^='adm-'], [id*=' adm-'], #pub-floating, .site-footer {
-  display: none !important; }
-
 .materia .site-header, .materia .site-header--is-hidden, .materia site-header--is-fixed, .materia .site-header, .materia site-header {
   top: 0px !important;
   -webkit-transform: translateY(0px) !important;
