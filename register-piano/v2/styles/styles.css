@@ -305,3 +305,6 @@ body {
 @media only screen and (max-width: 350px) {
   .iphone #login-barreira .conteudo-barreira #login-barreira-iframe h2, .iphone #login-barreira .conteudo-barreira #login-promocao {display: none;}
 }
+
+#sas-interstitial, #sas-interstitial-bg, #sas_7378610, .videos #photoGallery .sharing, .msg-paywall-new, [id^='adm-'], [id*=' adm-'], #pub-floating, .site-footer {
+  display: none !important; }
