@@ -1333,6 +1333,28 @@ describe('Tiny JS', function () {
 
     });
 
+    describe('Piano.adblock', function () {
+
+        describe('função mostrarAdBlock', function () {
+
+            it('deve chamar a função util.adicionarCss', function () {
+                spyOn(Piano.util, 'adicionarCss');
+
+                Piano.adblock.mostrarAdBlock();
+                expect(Piano.util.adicionarCss).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
+                spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
+
+                Piano.adblock.mostrarAdBlock();
+                expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
+            });
+
+        });
+
+    });
+
     describe('Piano.parceiro', function () {
 
         describe('função mostraFooterParceiro', function () {

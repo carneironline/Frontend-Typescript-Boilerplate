@@ -287,6 +287,13 @@ Piano.comunicado = {
 	}
 };
 
+Piano.adblock = {
+	mostrarAdBlock: function() {
+		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/adblock-piano/styles/styles.css'>");
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/adblock-piano/scripts/adblock-piano.js");
+	}
+};
+
 Piano.parceiro = {
 	mostraFooterParceiro: function(versao) {
 		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-parceiros-piano/"+versao+"/styles/styles.css'>");
