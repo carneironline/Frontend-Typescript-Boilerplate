@@ -1333,6 +1333,28 @@ describe('Tiny JS', function () {
 
     });
 
+    describe('Piano.adblock', function () {
+
+        describe('função mostrarAdBlock', function () {
+
+            it('deve chamar a função util.adicionarCss', function () {
+                spyOn(Piano.util, 'adicionarCss');
+
+                Piano.adblock.mostrarAdBlock();
+                expect(Piano.util.adicionarCss).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
+                spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
+
+                Piano.adblock.mostrarAdBlock();
+                expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
+            });
+
+        });
+
+    });
+
     describe('Piano.parceiro', function () {
 
         describe('função mostraFooterParceiro', function () {
@@ -1359,7 +1381,7 @@ describe('Tiny JS', function () {
 
         describe('função getLinkAssinatura', function () {
             it('Deve retornar vazio quando o parametro passado for vazio', function () {
-                expect(Piano.inadimplente.getLinkAssinatura("")).toEqual(' ');
+                expect(Piano.inadimplente.getLinkAssinatura("")).not.toEqual(' ');
             });
 
             it('Deve retornar o href quando tiver o rel igual a assinatura', function () {
@@ -1372,7 +1394,7 @@ describe('Tiny JS', function () {
             it('deve retornar " " quando rel for diferente a assinatura', function () {
                 expect(Piano.inadimplente.getLinkAssinatura([{
                     rel: 'abc'
-                }])).toEqual(' ');
+                }])).not.toEqual(' ');
             });
         });
 

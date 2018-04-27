@@ -26,6 +26,9 @@ Repositório criado para salvar estáticos usados para a Piano e suas [experiên
 - [Wiki](https://github.com/Infoglobo/paywall/wiki/Testes-Unit%C3%A1rios)
 - [Spec Jasmine.js](https://static-stg.infoglobo.com.br/paywall/testes-unitarios/SpecRunner.html)
 
+## Adblock
+- [Modal](https://static-stg.infoglobo.com.br/paywall/adblock-piano/modal-adblock.html)
+
 ## Servidor STG
 - Path: /mnt/multimedia/static/paywall/
 - Servidor: infoccistg5
