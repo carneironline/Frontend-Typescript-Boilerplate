@@ -288,9 +288,9 @@ Piano.comunicado = {
 };
 
 Piano.adblock = {
-	mostrarAdBlock: function() {
+	mostrarAdBlock: function(versao) {
 		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/adblock-piano/styles/styles.css'>");
-		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/adblock-piano/scripts/adblock-piano.js");
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/adblock-piano/"+versao+"/scripts/adblock-piano.js");
 	}
 };
 
