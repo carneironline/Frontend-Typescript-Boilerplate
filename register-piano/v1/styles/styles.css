@@ -291,9 +291,5 @@ body {
   .iphone #login-barreira .conteudo-barreira #login-barreira-iframe h2, .iphone #login-barreira .conteudo-barreira #login-promocao {display: none;}
 }
 
-.footer-venda-oglobo-capas {
-	display: none !important;
-}
-
-#sas-interstitial, #sas-interstitial-bg, #sas_7378610, .videos #photoGallery .sharing, .msg-paywall-new, [id^='adm-'], [id*=' adm-'], #pub-floating, .site-footer {
+#detecta-adblock, .footer-venda-oglobo-capas, #sas-interstitial, #sas-interstitial-bg, #sas_7378610, .videos #photoGallery .sharing, .msg-paywall-new, [id^='adm-'], [id*=' adm-'], #pub-floating, .site-footer {
   display: none !important; }
