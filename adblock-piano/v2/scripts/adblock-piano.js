@@ -17,7 +17,7 @@ conteudoAdblock = "" +
 "                </button>" +
 "        </div>" +
 "        <div id='requisitos-adblock'>" +
-"            <h2>Adicione O Globo <br>nas suas permissões</h2>" +
+"            <h2>Adicione nosso site nas suas permissões</h2>" +
 "            <div class='conteudo-scroll'><h3>Adblock Plus</h3>" +
 "            <ol>" +
 "                <li>Clique no ícone do Adblock Plus, localizado à direita da barra de endereço do seu navegador</li>" +

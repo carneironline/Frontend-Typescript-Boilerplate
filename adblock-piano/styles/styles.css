@@ -9,7 +9,7 @@
     font-family: 'Roboto', sans-serif;
     text-align: center;
     position: fixed;
-    z-index: 9999999;
+    z-index: 1000002;
     background: white;
     transform: translateX(-50%);
     top: 10px;
@@ -23,7 +23,7 @@
     height: 100%;
     top: 0px;
     left: 0px;
-    z-index: 999999;
+    z-index: 1000001;
 }
 
 #detecta-adblock .modal-adblock h2{
@@ -113,7 +113,7 @@
 }
 
 #detecta-adblock .modal-adblock #requisitos-adblock {
-    display: block;
+    display: none;
 }
 
 

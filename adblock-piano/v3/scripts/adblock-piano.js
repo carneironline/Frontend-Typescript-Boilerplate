@@ -19,11 +19,3 @@ conteudoAdblock = "" +
 
 
 document.getElementById("detecta-adblock").insertAdjacentHTML('beforeend', conteudoAdblock);
-
-
-if (document.getElementById('ir-requisitos-adblock')) 
-    document.querySelector('body').setAttribute('style','overflow: hidden;');
-    document.getElementById('ir-requisitos-adblock').addEventListener('click', function() {
-        document.getElementById('mensagem-adblock').style.display = 'none';
-        document.getElementById('requisitos-adblock').style.display = 'block';
-    });
