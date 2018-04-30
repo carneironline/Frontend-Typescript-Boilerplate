@@ -17,8 +17,8 @@ conteudoAdblock = "" +
 "                </button>" +
 "        </div>" +
 "        <div id='requisitos-adblock'>" +
-"            <h2>Adicione nosso site <br>nas suas permissões</h2>" +
-"            <h3>Adblock Plus</h3>" +
+"            <h2>Adicione nosso site nas suas permissões</h2>" +
+"            <div class='conteudo-scroll'><h3>Adblock Plus</h3>" +
 "            <ol>" +
 "                <li>Clique no ícone do Adblock Plus, localizado à direita da barra de endereço do seu navegador</li>" +
 "                <li>Um menu drop-down aparecerá na tela</li>" +
@@ -40,7 +40,7 @@ conteudoAdblock = "" +
 "                <li>Clique em “Don’t run on pages on this domain” para desativar o bloqueio da publicidade</li>" +
 "                <li>Uma nova janela abrirá e você precisará clicar no botão “Exclude”</li>" +
 "                <li>Após o clique, a página será recarregada</li>" +
-"            </ol>" +
+"            </ol></div>" +
 "        </div>" +
 "    </div>" +
 "</div>"+
