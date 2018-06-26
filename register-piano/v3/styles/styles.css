@@ -1,0 +1,86 @@
+#piano-barreira-revistas {
+  opacity: 0;
+  transition: opacity 500ms ease-in-out;
+}
+
+#piano-barreira-revistas .piano-barreira-content {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background: #fff;
+    z-index: 99;
+}
+
+#piano-barreira-revistas .piano-chamada-revistas {
+    background: url(../images/barreira-m-00.jpg) no-repeat 50% 50% ;
+    height: 76px;
+    position: relative;
+}
+
+
+#piano-barreira-revistas .piano-scroll-cadun {
+    overflow: hidden;
+}
+
+#piano-barreira-revistas #iframeCadun {
+    position: relative;
+    top: -86px;
+    border: 0px;
+    height: 550px;
+    min-width: 320px;
+    margin: 0 auto;
+    display: block;
+}
+
+@media only screen and (min-device-width: 768px){
+    #piano-barreira-revistas .piano-barreira-content {
+        width: 748px;
+        height: 540px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 0px;
+
+    }
+    #piano-barreira-revistas .piano-chamada-revistas, #piano-barreira-revistas .piano-login {
+        height: 540px;
+        display: inline-block;
+        vertical-align: top;
+    }
+    #piano-barreira-revistas .piano-chamada-revistas {
+        width: 388px;
+        background: url(../images/barreira-t-00.jpg) no-repeat 50% 50% ;
+    }
+    
+    #piano-barreira-revistas .piano-login {
+        width: 360px;
+    }
+    #piano-barreira-revistas .piano-chamada-login {
+        background: url(../images/barreira-mensagem.jpg) no-repeat 50% 50% ;
+        height: 76px;
+    }
+    #piano-barreira-revistas .piano-barreira-backdrop {
+        background: rgba(27, 36, 42, 0.93);
+        position: fixed;
+        z-index: 97;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+    }
+    #piano-barreira-revistas #iframeCadun {
+        min-width: 360px;
+    }
+}
+
+@media only screen and (min-device-width: 1024px){    
+    #piano-barreira-revistas .piano-barreira-content {
+        width: 900px;
+    }
+    #piano-barreira-revistas .piano-chamada-revistas {
+        width: 540px;
+        background: url(../images/barreira-d-00.jpg) no-repeat 50% 50% ;
+    }
+}
