@@ -21,17 +21,21 @@ conteudoRevistaExperienciaPiano = "" +
 
 document.getElementById("barreiraRevistasPiano").insertAdjacentHTML('beforeend', conteudoRevistaExperienciaPiano);
 
-/*
-if (typeof precoRegister != 'undefined' && precoRegister != null && precoRegister != '' ) {
-	document.querySelector(".preco-menor").innerHTML = precoRegister;
+
+if (typeof imagemRevistaM != 'undefined' && imagemRevistaM != null && imagemRevistaM != '' && imagemRevistaT != 'undefined' && imagemRevistaT != null && imagemRevistaT != '' && imagemRevistaD != 'undefined' && imagemRevistaD != null && imagemRevistaD != '' ) {
+	var tamanhoTela = window.screen.width;
+	if (tamanhoTela < 767 ) {
+		document.querySelector(".piano-chamada-revistas").style.backgroundImage = "url("+imagemRevistaM+")";
+	}
+	else if (tamanhoTela < 1024 ) {
+		document.querySelector(".piano-chamada-revistas").style.backgroundImage = "url("+imagemRevistaT+")";
+	}
+	else {
+		document.querySelector(".piano-chamada-revistas").style.backgroundImage = "url("+imagemRevistaD+")";
+	}
 }
 
-corDefault1 = "#545c6d";
 
-if (typeof background1 == 'undefined' || background1 == null || background1 == '' ) {
-	background1 = corDefault1;
-}
-*/
 
 
 if (window.ambienteUtilizadoPiano == 'prd') {
