@@ -9,14 +9,14 @@ document.body.appendChild(conteudoRevistasBarreiraPiano);
 
 conteudoRevistaExperienciaPiano = "" +
 "<div id='piano-barreira-revistas'>" +
+"    <div class='piano-barreira-backdrop'> </div>" + 
 "    <div class='piano-barreira-content'>" +
 "        <div class='piano-chamada-revistas'></div>" +
 "        <div class='piano-login'>" +
 "            <div class='piano-chamada-login'></div>" +
 "            <div class='piano-login-frame'><div class='piano-scroll-cadun'><iframe id='iframeCadun' src='https://login.globo.com/login/"+Piano.variaveis.getServicoId()+"' ></iframe></div></div>" +
 "        </div>" +
-"    </div>" +
-"    <div class='piano-barreira-backdrop'> </div>" +        
+"    </div>" +       
 "</div>"
 
 document.getElementById("barreiraRevistasPiano").insertAdjacentHTML('beforeend', conteudoRevistaExperienciaPiano);

@@ -10,7 +10,7 @@
     top: 0px;
     left: 0px;
     background: #fff;
-    z-index: 100000001;
+    z-index: 100000000002;
 }
 
 #piano-barreira-revistas .piano-chamada-revistas {
@@ -64,7 +64,7 @@
     #piano-barreira-revistas .piano-barreira-backdrop {
         background: rgba(27, 36, 42, 0.93);
         position: fixed;
-        z-index: 100000000;
+        z-index: 100000000001;
         top: 0px;
         left: 0px;
         width: 100%;
