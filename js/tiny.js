@@ -65,8 +65,16 @@ Piano.variaveis = {
 	},
 	getServicoId: function() {
 		var id = window.servicoIdPiano ? window.servicoIdPiano : '4975';
+		if (Piano.variaveis.isRevista()) id = '201802';
 		if (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital') id = '3981'; 
 		return id;
+	},
+	isRevista: function(){
+		var revistas = ["quem-acontece","crescer","marie-claire","casa-e-jardim","vogue","casa-vogue","gq","glamour","monet","auto-esporte","pegn","epoca","epoca-negocios","galileu","globo-rural"];
+		if(revistas.indexOf(Piano.variaveis.getNomeProduto()) > -1)
+			return true;
+		else
+			return false;
 	}
 };
 
