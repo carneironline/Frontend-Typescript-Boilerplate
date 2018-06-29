@@ -847,7 +847,7 @@ describe('Tiny JS', function () {
             it('deve retornar 201802 quando Piano.variaveis.isRevista() for "true"', function (){
                 spyOn(Piano.variaveis, 'isRevista').and.returnValue(true);
 
-                expect(Piano.variaveis.getServicoId()).toEqual('6434');
+                expect(Piano.variaveis.getServicoId()).toEqual('201802');
             });
 
         });
