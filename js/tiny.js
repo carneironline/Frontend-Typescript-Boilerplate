@@ -302,6 +302,18 @@ Piano.adblock = {
 	}
 };
 
+Piano.viewMode = {
+    bloqueiaViewMode: function() {
+        Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/viewmode/viewmode.js");
+    }
+};
+
+Piano.escape = {
+	liberarEsc: function() {
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/gandalf/saruman.js");
+	}
+};
+
 Piano.parceiro = {
 	mostraFooterParceiro: function(versao) {
 		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-parceiros-piano/"+versao+"/styles/styles.css'>");

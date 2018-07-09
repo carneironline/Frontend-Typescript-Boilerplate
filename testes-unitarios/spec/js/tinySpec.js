@@ -538,6 +538,7 @@ describe('Tiny JS', function () {
             });
 
         });
+
     });
 
     describe('Piano.construtor', function () {
@@ -1460,6 +1461,37 @@ describe('Tiny JS', function () {
                 spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
 
                 Piano.adblock.mostrarAdBlock();
+                expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
+            });
+
+        });
+
+    });
+
+    describe('Piano.viewMode', function () {
+
+        describe('função bloqueiaViewMode', function () {
+
+
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
+                spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
+
+                Piano.viewMode.bloqueiaViewMode();
+                expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
+            });
+
+        });
+
+    });
+
+    describe('Piano.escape', function () {
+
+        describe('função bloqueiaViewMode', function () {
+
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
+                spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
+
+                Piano.escape.liberarEsc();
                 expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
             });
 
