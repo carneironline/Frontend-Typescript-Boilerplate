@@ -1468,7 +1468,7 @@ describe('Tiny JS', function () {
 
     });
 
-    describe('Piano.viewMode', function () {
+    describe('Piano.bloqueios', function () {
 
         describe('função bloqueiaViewMode', function () {
 
@@ -1476,7 +1476,18 @@ describe('Tiny JS', function () {
             it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
                 spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
 
-                Piano.viewMode.bloqueiaViewMode();
+                Piano.bloqueios.bloqueiaViewMode();
+                expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
+            });
+
+        });
+
+        describe('função bloqueiaViewMode', function () {
+
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
+                spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
+
+                Piano.bloqueios.liberarEsc();
                 expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
             });
 
@@ -1486,16 +1497,7 @@ describe('Tiny JS', function () {
 
     describe('Piano.escape', function () {
 
-        describe('função bloqueiaViewMode', function () {
-
-            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
-                spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
-
-                Piano.escape.liberarEsc();
-                expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
-            });
-
-        });
+        
 
     });
 

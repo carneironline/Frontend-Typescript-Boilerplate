@@ -302,16 +302,13 @@ Piano.adblock = {
 	}
 };
 
-Piano.viewMode = {
-    bloqueiaViewMode: function() {
-        Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/viewmode/viewmode.js");
-    }
-};
-
-Piano.escape = {
+Piano.bloqueios = {
 	liberarEsc: function() {
-		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/gandalf/saruman.js");
-	}
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/bloqueio/liberaTeclado.js");
+	},
+	bloqueiaViewMode: function() {
+        Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/bloqueio/bloqueiaViewmode.js");
+    }
 };
 
 Piano.parceiro = {
