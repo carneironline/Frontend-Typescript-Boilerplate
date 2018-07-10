@@ -1,0 +1,67 @@
+#footer-promocoes-piano {
+
+}
+
+#footer-promocoes-piano .footer-gide-piano {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    height: 60px;
+}
+
+#footer-promocoes-piano .wrapper-oglobo-grid-piano {
+   width: 1280px;
+   margin: 0 auto;
+   position: relative;
+}
+
+#footer-promocoes-piano .footer-sizeoglobo-piano {
+    width: 960px;
+}
+
+
+
+#footer-promocoes-piano .footer-f-piano, #footer-promocoes-piano .footer-a-piano {
+    background: no-repeat 50% 50%;
+    box-shadow: 0 2px 10px 0 rgba(0,0,0,.5);
+    position: relative;
+}
+#footer-promocoes-piano .footer-f-piano a, #footer-promocoes-piano .footer-a-piano a {
+    height: 100%;
+    display: block;
+}
+
+#footer-promocoes-piano .footer-f-piano {
+    height: 60px;
+    background-image: url(../images/ft-og-00-f.jpg);
+}
+
+#footer-promocoes-piano .footer-a-piano {
+    margin-top: 80px;
+    height: 458px;
+    background-image: url(../images/ft-og-00-a.jpg);
+}
+
+#footer-promocoes-piano .footer-a-piano span {
+    width: 32px;
+    height: 32px;
+    border-radius: 100px;
+    background-color: #071c37;
+    -webkit-box-shadow: 0 0 10px 1px rgba(0,0,0,.5);
+    box-shadow: 0 0 10px 1px rgba(0,0,0,.5);
+    border: solid 1px #fff;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    line-height: 1;
+    letter-spacing: -.5px;
+    position: absolute;
+    z-index: 1002;
+    right: -16px;
+    top: -16px;
+    padding-top: 2px;
+    cursor: pointer;
+    font-family: sans-serif;
+    box-sizing: border-box;
+    padding-top: 7px;
+}
