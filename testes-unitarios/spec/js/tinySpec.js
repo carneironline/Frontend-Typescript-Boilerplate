@@ -642,6 +642,7 @@ describe('Tiny JS', function () {
                 expect(Piano.util.isRevista()).toEqual(false);
             });
         });
+
     });
 
     describe('Piano.construtor', function () {
@@ -1464,6 +1465,39 @@ describe('Tiny JS', function () {
             });
 
         });
+
+    });
+
+    describe('Piano.bloqueios', function () {
+
+        describe('função bloqueiaViewMode', function () {
+
+
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
+                spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
+
+                Piano.bloqueios.bloqueiaViewMode();
+                expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
+            });
+
+        });
+
+        describe('função bloqueiaViewMode', function () {
+
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
+                spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
+
+                Piano.bloqueios.liberarEsc();
+                expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
+            });
+
+        });
+
+    });
+
+    describe('Piano.escape', function () {
+
+        
 
     });
 

@@ -295,6 +295,15 @@ Piano.adblock = {
 	}
 };
 
+Piano.bloqueios = {
+	liberarEsc: function() {
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/bloqueio/liberaTeclado.js");
+	},
+	bloqueiaViewMode: function() {
+        Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/bloqueio/bloqueiaViewmode.js");
+    }
+};
+
 Piano.parceiro = {
 	mostraFooterParceiro: function(versao) {
 		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/footer-parceiros-piano/"+versao+"/styles/styles.css'>");
