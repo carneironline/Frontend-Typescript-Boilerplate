@@ -14,58 +14,20 @@ Produto.pegaConfiguracao = function(nome) {
 			var jornaldigital = new JornalDigital();
 			Produto.codigo = jornaldigital.codigo;
 			break;
+		case 'quem-acontece':
 		case 'marie-clarie':
-			var revista = new PianoRevista();
-			Produto.codigo = revista.codigo;
-			break;
 		case 'casa-e-jardim':
-			var revista = new PianoRevista();
-			Produto.codigo = revista.codigo;
-			break;
 		case 'crescer':
-			var revista = new PianoRevista();
-			Produto.codigo = revista.codigo;
-			break;
 		case 'auto-esporte':
-			var revista = new PianoRevista();
-			Produto.codigo = revista.codigo;
-			break;
 		case 'epoca':
-			var revista = new PianoRevista();
-			Produto.codigo = revista.codigo;
-			break;
 		case 'epoca-negocios':
-			var revista = new PianoRevista();
-			Produto.codigo = revista.codigo;
-			break;
 		case 'galileu':
-			var revista = new PianoRevista();
-			Produto.codigo = revista.codigo;
-			break;
 		case 'globo-rural':
-			var revista = new PianoRevista();
-			Produto.codigo = revista.codigo;
-			break;
 		case 'pegn':
-			var revista = new PianoRevista();
-			Produto.codigo = revista.codigo;
-			break;
 		case 'vogue':
-			var revista = new PianoRevista();
-			Produto.codigo = revista.codigo;
-			break;
 		case 'casa-vogue':
-			var revista = new PianoRevista();
-			Produto.codigo = revista.codigo;
-			break;
 		case 'glamour':
-			var revista = new PianoRevista();
-			Produto.codigo = revista.codigo;
-			break;
 		case 'gq':
-			var revista = new PianoRevista();
-			Produto.codigo = revista.codigo;
-			break;
 		case 'monet':
 			var revista = new PianoRevista();
 			Produto.codigo = revista.codigo;
