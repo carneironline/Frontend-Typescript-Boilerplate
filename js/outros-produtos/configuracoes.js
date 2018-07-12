@@ -15,7 +15,7 @@ Produto.pegaConfiguracao = function(nome) {
 			Produto.codigo = jornaldigital.codigo;
 			break;
 		case 'quem-acontece':
-		case 'marie-clarie':
+		case 'marie-claire':
 		case 'casa-e-jardim':
 		case 'crescer':
 		case 'auto-esporte':
