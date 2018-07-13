@@ -1,4 +1,4 @@
-.fotogaleria .conteudo, #footer-promocoes-piano, article aside#sidebar, .materia .conteudo, .link-top, #relacionadas-topo, #photoGallery .gallery .details, #photoGallery .gallery, #article #menu, .borders, body#article .borders, #fotogaleria .gallery, .galeria div.tab-result, .box-medial .navMedial a, .fullScreen  {z-index: 1 !important; position: relative !important;}
+.fotogaleria .conteudo, #footer-promocoes-piano, article aside#sidebar, .materia .conteudo, .link-top, #relacionadas-topo, #photoGallery .gallery .details, #photoGallery .gallery, #article #menu, #fotogaleria .gallery, .galeria div.tab-result, .box-medial .navMedial a, .fullScreen  {z-index: 1 !important; position: relative !important;}
 body {overflow: hidden !important;}
 
 .materia .site-header, .materia .site-header--is-hidden, .materia site-header--is-fixed, .materia .site-header, .materia site-header {
@@ -10,8 +10,8 @@ body {overflow: hidden !important;}
 }
 
 #article #sticker-sticky-wrapper {
-    top: -100px;
-    position: relative;
+    top: 44px !important;
+    position: absolute !important;
 }
 
 @media only screen and (max-width: 760px) {
