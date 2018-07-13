@@ -21,8 +21,3 @@ body {overflow: hidden !important;}
   body#article .header-container {
     height: 58px !important; }
 }
-
-.borders, body#article .borders {
-    position: relative;
-    z-index: 99 !important;
-}
