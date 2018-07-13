@@ -12,7 +12,7 @@ conteudoExperienciaFooterPiano = "" +
 "			<div class='footer-sizeoglobo-piano'>" +
 "				<div id='backgroundPianoFooterFechado' onclick='pianoToggleFooter()' class='footer-f-piano'></div>" +
 "				<div id='backgroundPianoFooterAberto' class='footer-a-piano'>" +
-"					<span onclick='pianoToggleFooter();pianoFechaFooter();'>&#10060;</span>" +
+"					<span onclick='pianoToggleFooter();pianoFechaFooter();'>&#10005;</span>" +
 "					<a onclick='clickBannerPianoGA1' class='linkPromocao1' target='_blank' href='https://assinatura.oglobo.globo.com/VitrineDigital.aspx'></a>" +
 "					<a onclick='clickBannerPianoGA2' class='linkPromocao2' target='_blank' href='https://assinatura.oglobo.globo.com/VitrineDigital.aspx'></a>" +
 "				</div>" +
