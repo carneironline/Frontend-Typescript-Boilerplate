@@ -25,8 +25,8 @@ document.getElementById("footerOgloboPianoId").insertAdjacentHTML('beforeend', c
 
 
 if (typeof imagemFooterPianoAberto != 'undefined' && imagemFooterPianoAberto != null && imagemFooterPianoAberto != '' && imagemFooterPianoFechado != 'undefined' && imagemFooterPianoFechado != null && imagemFooterPianoFechado != '' ) {
-	document.querySelector("#backgroundPianoFooterFechado").style.backgroundImage = "url("+imagemFooterPianoAberto+")";
-	document.querySelector("#backgroundPianoFooterAberto").style.backgroundImage = "url("+imagemFooterPianoFechado+")";
+	document.querySelector("#backgroundPianoFooterFechado").style.backgroundImage = "url("+imagemFooterPianoFechado+")";
+	document.querySelector("#backgroundPianoFooterAberto").style.backgroundImage = "url("+imagemFooterPianoAberto+")";
 }
 
 if (typeof linkPianoPromocao1 != 'undefined' && linkPianoPromocao1 != null && linkPianoPromocao1 != '' && linkPianoPromocao2 != 'undefined' && linkPianoPromocao2 != null && linkPianoPromocao2 != '') {
