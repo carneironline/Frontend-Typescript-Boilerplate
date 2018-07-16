@@ -8,7 +8,7 @@ document.body.appendChild(conteudoRevistasBarreiraPiano);
 
 
 conteudoRevistaExperienciaPiano = "" +
-"<div id='piano-barreira-revistas'>" +
+"<div id='piano-barreira-revistas' style='opacity: 0; display: none;' >" +
 "    <div class='piano-barreira-backdrop'> </div>" + 
 "    <div class='piano-barreira-content'>" +
 "        <div class='piano-chamada-revistas'><a id='link-register' href='https://assinatura.oglobo.globo.com/VitrineDigital.aspx'>assinatura</a></div>" +
@@ -59,7 +59,4 @@ document.onreadystatechange = function(){
 		}
 	}
 }
-
-
-
-setTimeout(function(){document.querySelector('#piano-barreira-revistas').setAttribute('style','opacity: 1;');}, 1500);
+setTimeout(function(){document.querySelector('#piano-barreira-revistas').setAttribute('style','display: block; opacity: 1;');}, 1500);
