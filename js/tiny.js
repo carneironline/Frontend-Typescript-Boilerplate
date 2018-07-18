@@ -553,8 +553,8 @@ Piano.util = {
 		var trocar = false;
 		var utp = Piano.cookies.get(Piano.variaveis.constante.cookie.UTP);
 		if (utp) var cookieUtp = JSON.parse(decodeURI(atob(utp)));
-		if ((typeof cookieUtp != "undefined" && typeof cookieUtp.produto != "undefined" && cookieUtp.produto != Piano.variaveis.getNomeProduto() || typeof cookieUtp == "undefined") && ((Piano.util.isDominioOGlobo() && (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital')) || !Piano.util.isDominioOGlobo() || Piano.util.isRevista())) {
-			trocar = true;
+		if ((typeof cookieUtp != "undefined" && typeof cookieUtp.produto != "undefined" && cookieUtp.produto != Piano.variaveis.getNomeProduto() || typeof cookieUtp == "undefined") && ((Piano.util.isDominioOGlobo() && (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital'))|| !Piano.util.isDominioOGlobo())) {
+				trocar = true;
 		}
 		return trocar;
 	},
