@@ -1,10 +1,11 @@
 window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
 
+
 Piano.produto = {
 	validaConfiguracoes : function() {
 		if (Piano.util.trocarConfiguracoes()) {
-			Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/js/outros-produtos/configuracoes.js");
+			Piano.xmlHttpRequest.importaArquivoJS("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/js/outros-produtos/configuracoes.js");
 			return true;
 		}
 		return false;
@@ -330,10 +331,21 @@ Piano.xmlHttpRequest = {
 				var resposta = xhr.responseText;
 				var appendDeScript = document.createElement('script');
 				appendDeScript.innerHTML = resposta;
-				document.body.appendChild(appendDeScript);            
+				Piano.xmlHttpRequest.appendBody(appendDeScript);
 			}
-		}
+		}	
 		
+	},
+	importaArquivoJS: function(urlScript) {
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", urlScript);
+		xhr.send();
+		xhr.onreadystatechange = function() {
+			if(this.readyState == 4 && this.status == 200){
+				var resposta = xhr.responseText;
+				eval(resposta);
+			}
+		}	
 		
 	},
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
