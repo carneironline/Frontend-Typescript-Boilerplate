@@ -331,10 +331,9 @@ Piano.xmlHttpRequest = {
 				var resposta = xhr.responseText;
 				var appendDeScript = document.createElement('script');
 				appendDeScript.innerHTML = resposta;
-				Piano.xmlHttpRequest.appendBody(appendDeScript);
+				document.body.appendChild(appendDeScript);
 			}
 		}	
-		
 	},
 	importaArquivoJS: function(urlScript) {
 		var xhr = new XMLHttpRequest();
@@ -346,7 +345,6 @@ Piano.xmlHttpRequest = {
 				eval(resposta);
 			}
 		}	
-		
 	},
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
 		
