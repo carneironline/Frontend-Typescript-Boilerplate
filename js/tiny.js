@@ -343,6 +343,8 @@ Piano.xmlHttpRequest = {
 			if(this.readyState == 4 && this.status == 200){
 				var resposta = xhr.responseText;
 				eval(resposta);
+			}else{
+				console.log("Não foi possivel importar arquivo de configuracao");
 			}
 		}	
 	},
