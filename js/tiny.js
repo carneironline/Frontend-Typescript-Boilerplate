@@ -5,7 +5,7 @@ var Piano = {};
 Piano.produto = {
 	validaConfiguracoes : function() {
 		if (Piano.util.trocarConfiguracoes()) {
-			Piano.xmlHttpRequest.importaArquivoJS("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/js/outros-produtos/configuracoes.js");
+			Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/js/outros-produtos/configuracoes.js");
 			return true;
 		}
 		return false;
@@ -66,7 +66,6 @@ Piano.variaveis = {
 	},
 	getServicoId: function() {
 		var id = window.servicoIdPiano ? window.servicoIdPiano : '4975';
-		if (Piano.util.isRevista()) id = '6710';
 		if (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital') id = '3981'; 
 		return id;
 	}	
@@ -335,17 +334,6 @@ Piano.xmlHttpRequest = {
 			}
 		}	
 	},
-	importaArquivoJS: function(urlScript) {
-		var xhr = new XMLHttpRequest();
-		xhr.open("GET", urlScript);
-		xhr.send();
-		xhr.onreadystatechange = function() {
-			if(this.readyState == 4 && this.status == 200){
-				var resposta = xhr.responseText;
-				eval(resposta);
-			}
-		}	
-	},
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
 		
 		var xhr = new XMLHttpRequest();
@@ -368,7 +356,6 @@ Piano.xmlHttpRequest = {
 				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
 			}
 		}
-				
 	},
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
 		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.codigoProduto});
