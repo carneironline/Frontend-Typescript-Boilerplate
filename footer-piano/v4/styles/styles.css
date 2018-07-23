@@ -100,3 +100,8 @@
     visibility: visible;
     opacity: 1;
 }
+
+
+.links-institucionais, .site-footer_texts {
+    padding-bottom: 60px;
+}
