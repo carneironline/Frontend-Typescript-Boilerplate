@@ -519,19 +519,6 @@ Piano.util = {
 		}
 		return false;
 	},
-	detectaAdBlock: function() {
-		document.cookie = "__adblocker=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-		var setNptTechAdblockerCookie = function(adblocker) {
-			var d = new Date();
-			d.setTime(d.getTime() + 60 * 60 * 24 * 2 * 1000);
-			document.cookie = "__adblocker=" + (adblocker ? "true" : "false") + "; expires=" + d.toUTCString() + "; path=/";
-		}
-		var script = document.createElement("script");
-		script.setAttribute("async", true);
-		script.setAttribute("src", "https://www.npttech.com/advertising.js");
-		script.setAttribute("onerror", "setNptTechAdblockerCookie(true);");
-		document.getElementsByTagName("body")[0].appendChild(script);
-	},
 	detectaBurlesco: function() {
 		window.onload = function(){ 
 			if(typeof addControlContent == "undefined"){
@@ -615,7 +602,6 @@ Piano.configuracao = {
 
 Piano.construtor = {
 	initTp: function() {
-		Piano.util.detectaAdBlock();
 		Piano.util.detectaBurlesco();
 		Piano.util.isTipoConteudoUndefined();
 		tp = window["tp"] || [];

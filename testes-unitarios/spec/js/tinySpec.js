@@ -432,16 +432,6 @@ describe('Tiny JS', function () {
 
         });
 
-        describe('função detectaAdBlock', function () {
-
-            it('deve chamar a função appendChild', function () {
-                spyOn(document.getElementsByTagName("body")[0], 'appendChild');
-
-                Piano.util.detectaAdBlock();
-                expect(document.getElementsByTagName("body")[0].appendChild).toHaveBeenCalled();
-            });
-
-        });
 
         describe('função detectaBurlesco', function () {
 
@@ -649,14 +639,7 @@ describe('Tiny JS', function () {
 
         describe('função initTp', function () {
 
-            beforeEach(function () {
-                spyOn(Piano.util, 'detectaAdBlock');
-            });
 
-            it('deve chamar o método Piano.util.detectaAdBlock', function () {
-                Piano.construtor.initTp();
-                expect(Piano.util.detectaAdBlock).toHaveBeenCalled();
-            });
 
             it('deve chamar o método Piano.util.detectaBurlesco', function () {
                 spyOn(Piano.util, 'detectaBurlesco');
@@ -948,12 +931,13 @@ describe('Tiny JS', function () {
 
                 expect(Piano.variaveis.getServicoId()).toEqual('3981');
             });
-
+            /*
             it('deve retornar 6710 quando Piano.util.isRevista() for "true"', function (){
                 spyOn(Piano.util, 'isRevista').and.returnValue(true);
 
                 expect(Piano.variaveis.getServicoId()).toEqual('6710');
             });
+            */
 
         });
 
