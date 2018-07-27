@@ -66,6 +66,7 @@ Piano.variaveis = {
 	},
 	getServicoId: function() {
 		var id = window.servicoIdPiano ? window.servicoIdPiano : '4975';
+		if (Piano.util.isRevista()) id = '6710';
 		if (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital') id = '3981'; 
 		return id;
 	}	
