@@ -35,6 +35,10 @@ if (typeof imagemRevistaM != 'undefined' && imagemRevistaM != null && imagemRevi
 	}
 }
 
+if (typeof imagemExclusivoTD != 'undefined' && imagemExclusivoTD != null && imagemExclusivoTD != '') {
+	document.querySelector(".piano-chamada-login").style.backgroundImage = "url("+imagemExclusivoTD+")";
+}
+
 if (typeof linkRegister != 'undefined' && linkRegister != null && linkRegister != '') {
 	document.getElementById("link-register").href = linkRegister;
 }
