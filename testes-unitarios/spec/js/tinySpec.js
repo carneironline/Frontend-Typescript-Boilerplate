@@ -801,12 +801,173 @@ describe('Tiny JS', function () {
 
         describe('função validaConfiguracoes', function () {
 
-            it('deve chamar o método xmlHttpRequest.geraScriptNaPagina quando trocarConfiguracoes possuir algum valor', function () {
-                spyOn(Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
+            it('deve retornar OG04 quando nomeProduto igual a acervo', function (){
+                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('acervo');
 
                 Piano.produto.validaConfiguracoes();
-                expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
+                expect(Piano.variaveis.codigoProduto).toEqual('OG04');
+
+            });
+
+            it('deve retornar OG01 quando nomeProduto igual a jornaldigital', function (){
+                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('jornaldigital');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.variaveis.codigoProduto).toEqual('OG01');
+
+            });
+
+            it('deve retornar revistas quando nomeProduto igual a quem-acontece', function (){
+                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('quem-acontece');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
+
+            });
+
+            it('deve retornar revistas quando nomeProduto igual a marie-claire', function (){
+                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('marie-claire');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
+
+            });
+
+            it('deve retornar revistas quando nomeProduto igual a casa-e-jardim', function (){
+                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('casa-e-jardim');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
+
+            });
+
+            it('deve retornar revistas quando nomeProduto igual a crescer', function (){
+                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('crescer');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
+
+            });
+
+            it('deve retornar revistas quando nomeProduto igual a auto-esporte', function (){
+                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('auto-esporte');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
+
+            });
+
+            it('deve retornar revistas quando nomeProduto igual a epoca', function (){
+                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('epoca');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
+
+            });
+
+            it('deve retornar revistas quando nomeProduto igual a epoca-negocios', function (){
+                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('epoca-negocios');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
+
+            });
+
+            it('deve retornar revistas quando nomeProduto igual a galileu', function (){
+                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('galileu');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
+
+            });
+
+            it('deve retornar revistas quando nomeProduto igual a globo-rural', function (){
+                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('globo-rural');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
+
+            });
+
+            it('deve retornar revistas quando nomeProduto igual a pegn', function (){
+                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('pegn');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
+
+            });
+
+            it('deve retornar revistas quando nomeProduto igual a vogue', function (){
+                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('vogue');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
+
+            });
+            
+            it('deve retornar revistas quando nomeProduto igual a casa-vogue', function (){
+                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('casa-vogue');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
+
+            });
+
+            it('deve retornar revistas quando nomeProduto igual a glamour', function (){
+                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('glamour');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
+
+            });
+
+            it('deve retornar revistas quando nomeProduto igual a gq', function (){
+                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('gq');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
+
+            });
+
+            it('deve retornar revistas quando nomeProduto igual a monet', function (){
+                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('monet');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
+
+            });
+
+            it('não deve fazer requisição ao barramento quando nomeProduto não for igual a acervo, jornaldigital ou revistas', function(){
+                spyOn(Piano.util, 'trocarConfiguracoes').and.returnValue('a');
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('abc');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.variaveis.fazerRequisicaoBarramento).toEqual(false);
+            });
+
+            it ('deve chamar a função Piano.construtor.initTp, quando trocarConfiguracoes for verdadeiro', function (){
+                spyOn(Piano.util, 'trocarConfiguracoes').and.returnValue(true);
+                spyOn(Piano.construtor, 'initTp');
+
+                Piano.produto.validaConfiguracoes();
+                expect(Piano.construtor.initTp).toHaveBeenCalled();
             });
 
             it('deve retornar "true" quando trocarConfiguracoes possuir algum valor', function () {

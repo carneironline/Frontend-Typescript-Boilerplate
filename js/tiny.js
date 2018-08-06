@@ -5,7 +5,34 @@ var Piano = {};
 Piano.produto = {
 	validaConfiguracoes : function() {
 		if (Piano.util.trocarConfiguracoes()) {
-			Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/js/outros-produtos/configuracoes.js");
+				switch (Piano.variaveis.getNomeProduto()){
+					case 'acervo':
+						Piano.variaveis.codigoProduto = 'OG04';
+						break;
+					case 'jornaldigital':
+						Piano.variaveis.codigoProduto = 'OG01';
+						break;
+					case 'quem-acontece':	
+					case 'marie-claire':	
+					case 'casa-e-jardim':	
+					case 'crescer':	
+					case 'auto-esporte':	
+					case 'epoca':	
+					case 'epoca-negocios':	
+					case 'galileu':	
+					case 'globo-rural':	
+					case 'pegn':	
+					case 'vogue':	
+					case 'casa-vogue':	
+					case 'glamour':	
+					case 'gq':	
+					case 'monet':	
+						Piano.variaveis.codigoProduto = 'revistas';	
+						break;
+					default:
+						Piano.variaveis.fazerRequisicaoBarramento = false;
+				}
+			Piano.construtor.initTp();
 			return true;
 		}
 		return false;

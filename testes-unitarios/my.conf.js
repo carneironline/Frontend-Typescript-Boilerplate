@@ -4,8 +4,8 @@ module.exports = function(config) {
     autoWatch: true,
     frameworks: ['jasmine'],
     files: [
-	    'js/tiny.js',
-	    'spec/js/*.js',
+	  'js/tiny.js',
+	  'spec/js/*.js',
       'lib/mock-ajax.js',
       'js/outros-produtos/configuracoes.js'
     ],
