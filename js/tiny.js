@@ -92,9 +92,18 @@ Piano.variaveis = {
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
-		var id = window.servicoIdPiano ? window.servicoIdPiano : '4975';
-		if (Piano.util.isRevista()) id = '6710';
-		if (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital') id = '3981'; 
+		var id = '0000';
+
+		if(Piano.variaveis.getNomeProduto() === 'oglobo' || Piano.variaveis.getNomeProduto() === 'blogs' || Piano.variaveis.getNomeProduto() === 'kogut'){
+			return id = '4975';
+		}
+		if (Piano.util.isRevista()) { 
+			return id = '6710';
+		} 
+		if (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital'){
+			return id = '3981';	
+		}  
+
 		return id;
 	}	
 };
