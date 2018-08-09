@@ -100,7 +100,7 @@ Piano.variaveis = {
 		if (Piano.util.isRevista()) { 
 			return id = '6710';
 		} 
-		if (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital'){
+		if (Piano.variaveis.getNomeProduto() === 'acervo' || Piano.variaveis.getNomeProduto() === 'jornaldigital'){
 			return id = '3981';	
 		}  
 
