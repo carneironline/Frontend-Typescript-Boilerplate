@@ -1069,14 +1069,26 @@ describe('Tiny JS', function () {
 
         describe('função getServicoId', function () {
 
-            it('deve retornar window.servicoIdPiano quando window.servicoIdPiano estiver preenchido', function () {
+            /*it('deve retornar window.servicoIdPiano quando window.servicoIdPiano estiver preenchido', function () {
                 window.servicoIdPiano = 'abc';
 
                 expect(Piano.variaveis.getServicoId()).toEqual('abc');
+            });*/
+
+            it('deve retornar 4975 quando Piano.variaveis.getNomeProduto() é oglobo', function () {
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('oglobo');
+
+                expect(Piano.variaveis.getServicoId()).toEqual('4975');
             });
 
-            it('deve retornar 4975 quando window.servicoIdPiano não estiver preenchido', function () {
-                window.servicoIdPiano = '';
+            it('deve retornar 4975 quando Piano.variaveis.getNomeProduto() é blogs', function () {
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('blogs');
+
+                expect(Piano.variaveis.getServicoId()).toEqual('4975');
+            });
+
+            it('deve retornar 4975 quando Piano.variaveis.getNomeProduto() é kogut', function () {
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('kogut');
 
                 expect(Piano.variaveis.getServicoId()).toEqual('4975');
             });
@@ -1092,13 +1104,19 @@ describe('Tiny JS', function () {
 
                 expect(Piano.variaveis.getServicoId()).toEqual('3981');
             });
-            /*
+            
             it('deve retornar 6710 quando Piano.util.isRevista() for "true"', function (){
                 spyOn(Piano.util, 'isRevista').and.returnValue(true);
 
                 expect(Piano.variaveis.getServicoId()).toEqual('6710');
             });
-            */
+
+            it('deve retornar 0000 quando o Piano.variaveis.getNomeProduto() for abc', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('abc');
+
+                expect(Piano.variaveis.getServicoId()).toEqual('0000');
+            });
+            
 
         });
 

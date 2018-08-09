@@ -92,6 +92,11 @@ Piano.variaveis = {
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
+
+		/*var id = window.servicoIdPiano ? window.servicoIdPiano : '4975';
+		if (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital') id = '3981'; 
+		return id;*/
+
 		var id = '0000';
 
 		if(Piano.variaveis.getNomeProduto() === 'oglobo' || Piano.variaveis.getNomeProduto() === 'blogs' || Piano.variaveis.getNomeProduto() === 'kogut'){
@@ -403,48 +408,43 @@ Piano.xmlHttpRequest = {
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.send(data);
 		
-		
-			if(xhr.readyState == 4){
-
-				if (xhr.status == 200){
-					var resposta = xhr.responseText;
-					var respJson = JSON.parse(resposta);
-
-					tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
-					var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
-					if (typeof respJson.motivo != "undefined") {
-						respostaDeMotivo = respJson.motivo.toLowerCase();
-					}
-					if (typeof respJson.temTermoDeUso != "undefined") {
-						respostaDeTermoDeUso = respJson.temTermoDeUso;
-					}
-					if (typeof respJson.link != "undefined") {
-						hrefAssinaturaInadimplente = Piano.inadimplente.getLinkAssinatura(respJson.link);
-					}
-					var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado, hrefAssinaturaInadimplente);
-					tp.push(["setCustomVariable", "logado", isAutorizado]);
-					tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
-					tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
-					var _jsonLeitor = {
-							"autorizado" : respJson.autorizado,
-							"motivo": respostaDeMotivo,
-							"logado": isAutorizado,
-							"temTermoDeUso": respostaDeTermoDeUso,
-							"glbid": glbid,
-							"produto": Piano.variaveis.getNomeProduto(),
-							"codProduto": Piano.variaveis.codigoProduto
-					};
-					_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
-					Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
-
-				}else{
-					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
-					tp.push(["setCustomVariable", "autorizado", true]);
-					tp.push(["setCustomVariable", "logado", true]);
-					tp.push(["setCustomVariable", "motivo", 'erro']);
-				}	
-			}
-			
+		if(xhr.readyState === 4){
+			if (xhr.status === 200){
+				var resposta = xhr.responseText;
+				var respJson = JSON.parse(resposta);
+				tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
+				var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
+				if (typeof respJson.motivo != "undefined") {
+					respostaDeMotivo = respJson.motivo.toLowerCase();
+				}
+				if (typeof respJson.temTermoDeUso != "undefined") {
+					respostaDeTermoDeUso = respJson.temTermoDeUso;
+				}
+				if (typeof respJson.link != "undefined") {
+					hrefAssinaturaInadimplente = Piano.inadimplente.getLinkAssinatura(respJson.link);
+				}
+				var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado, hrefAssinaturaInadimplente);
+				tp.push(["setCustomVariable", "logado", isAutorizado]);
+				tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
+				tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
+				var _jsonLeitor = {
+						"autorizado" : respJson.autorizado,
+						"motivo": respostaDeMotivo,
+						"logado": isAutorizado,
+						"temTermoDeUso": respostaDeTermoDeUso,
+						"glbid": glbid,
+						"produto": Piano.variaveis.getNomeProduto(),
+						"codProduto": Piano.variaveis.codigoProduto
+				};
+				_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
+				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
+			}else{
+				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
+				tp.push(["setCustomVariable", "autorizado", true]);
+				tp.push(["setCustomVariable", "logado", true]);
+				tp.push(["setCustomVariable", "motivo", 'erro']);
+			}	
+		}
 	}
 };
 
