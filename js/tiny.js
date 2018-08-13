@@ -2,48 +2,21 @@ window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
 
 
-Piano.produto = {
+/*Piano.produto = {
 	validaConfiguracoes : function() {
 		if (Piano.util.trocarConfiguracoes()) {
-				switch (Piano.variaveis.getNomeProduto()){
-					case 'acervo':
-						Piano.variaveis.codigoProduto = 'OG04';
-						break;
-					case 'jornaldigital':
-						Piano.variaveis.codigoProduto = 'OG01';
-						break;
-					case 'quem-acontece':	
-					case 'marie-claire':	
-					case 'casa-e-jardim':	
-					case 'crescer':	
-					case 'auto-esporte':	
-					case 'epoca':	
-					case 'epoca-negocios':	
-					case 'galileu':	
-					case 'globo-rural':	
-					case 'pegn':	
-					case 'vogue':	
-					case 'casa-vogue':	
-					case 'glamour':	
-					case 'gq':	
-					case 'monet':	
-						Piano.variaveis.codigoProduto = 'revistas';	
-						break;
-					default:
-						Piano.variaveis.fazerRequisicaoBarramento = false;
-				}
+				
 			Piano.construtor.initTp();
 			return true;
 		}
 		return false;
 	}
-};
+};*/
 
 Piano.variaveis = {
 	ambientesAceitos: "int,qlt,prd",
 	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,503,504",
 	statusHttpObterAssinaturaInadimplente: "400,404,500,502,503,504",
-	codigoProduto: 'OG03',
 	fazerRequisicaoBarramento: true,
 	constante: {
 		cookie: {
@@ -110,6 +83,42 @@ Piano.variaveis = {
 		}  
 
 		return id;
+	},
+	getCodigoProduto: function(nomeProduto){
+		var codigoProduto = '';
+		switch (nomeProduto){
+			case 'oglobo':
+			case 'blogs':
+			case 'kogut':
+				codigoProduto = 'OG03';
+				break;
+			case 'acervo':
+				codigoProduto = 'OG04';
+				break;
+			case 'jornaldigital':
+				codigoProduto = 'OG01';
+				break;
+			case 'quem-acontece':	
+			case 'marie-claire':	
+			case 'casa-e-jardim':	
+			case 'crescer':	
+			case 'auto-esporte':	
+			case 'epoca':	
+			case 'epoca-negocios':	
+			case 'galileu':	
+			case 'globo-rural':	
+			case 'pegn':	
+			case 'vogue':	
+			case 'casa-vogue':	
+			case 'glamour':	
+			case 'gq':	
+			case 'monet':	
+				codigoProduto = 'revistas';	
+				break;
+			default:
+				Piano.variaveis.fazerRequisicaoBarramento = false;
+		}
+		return codigoProduto;
 	}	
 };
 
@@ -374,7 +383,7 @@ Piano.xmlHttpRequest = {
 				appendDeScript.innerHTML = resposta;
 				document.body.appendChild(appendDeScript);
 			}
-		}	
+		};	
 	},
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
 		
@@ -400,7 +409,7 @@ Piano.xmlHttpRequest = {
 		}
 	},
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
-		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.codigoProduto});
+		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.getCodigoProduto(Piano.variaveis.getNomeProduto())});
 
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor, false);
@@ -434,7 +443,7 @@ Piano.xmlHttpRequest = {
 						"temTermoDeUso": respostaDeTermoDeUso,
 						"glbid": glbid,
 						"produto": Piano.variaveis.getNomeProduto(),
-						"codProduto": Piano.variaveis.codigoProduto
+						"codProduto": Piano.variaveis.getCodigoProduto()
 				};
 				_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
@@ -561,7 +570,7 @@ Piano.util = {
 			if(typeof addControlContent == "undefined"){
 				dataLayer.push({'event': 'EventoGAPiano', 'eventoGACategoria': 'ExtensaoBurlesco', 'eventoGAAcao': 'Sim', 'eventoGARotulo': '', 'eventoGAInteracao': 'true'});
 			};
-		}
+		};
 	},
 	isDominioOGlobo: function() {
 		var regex = new RegExp("://(.*?)/"), url = Piano.util.getWindowLocationHref();
@@ -669,12 +678,12 @@ Piano.construtor = {
 	}
 };
 
-(function () {
+/*(function () {
 	if (Piano.produto.validaConfiguracoes()) {
 		return;
 	}
-	Piano.construtor.initTp();
-})();
+*/	Piano.construtor.initTp();
+//})();
 
 (function (src) {
 	var a = document.createElement("script");
