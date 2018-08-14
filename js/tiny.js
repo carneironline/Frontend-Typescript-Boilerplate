@@ -1,50 +1,10 @@
 window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
 
-
-Piano.produto = {
-	validaConfiguracoes : function() {
-		if (Piano.util.trocarConfiguracoes()) {
-				switch (Piano.variaveis.getNomeProduto()){
-					case 'acervo':
-						Piano.variaveis.codigoProduto = 'OG04';
-						break;
-					case 'jornaldigital':
-						Piano.variaveis.codigoProduto = 'OG01';
-						break;
-					case 'quem-acontece':	
-					case 'marie-claire':	
-					case 'casa-e-jardim':	
-					case 'crescer':	
-					case 'auto-esporte':	
-					case 'epoca':	
-					case 'epoca-negocios':	
-					case 'galileu':	
-					case 'globo-rural':	
-					case 'pegn':	
-					case 'vogue':	
-					case 'casa-vogue':	
-					case 'glamour':	
-					case 'gq':	
-					case 'monet':	
-						Piano.variaveis.codigoProduto = 'revistas';	
-						break;
-					default:
-						Piano.variaveis.fazerRequisicaoBarramento = false;
-				}
-			Piano.construtor.initTp();
-			return true;
-		}
-		return false;
-	}
-};
-
 Piano.variaveis = {
 	ambientesAceitos: "int,qlt,prd",
 	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,503,504",
 	statusHttpObterAssinaturaInadimplente: "400,404,500,502,503,504",
-	codigoProduto: 'OG03',
-	fazerRequisicaoBarramento: true,
 	constante: {
 		cookie: {
 			GCOM: 'GLBID',
@@ -105,6 +65,41 @@ Piano.variaveis = {
 		}  
 
 		return id;
+	},
+	getCodigoProduto: function(){
+		var nomeProduto = Piano.variaveis.getNomeProduto();
+		switch (nomeProduto){
+			case 'oglobo':
+			case 'blogs':
+			case 'kogut':
+				return 'OG03';
+			case 'acervo':
+				return 'OG04';
+			case 'jornaldigital':
+				return 'OG01';
+			case 'quem-acontece':	
+			case 'marie-claire':	
+			case 'casa-e-jardim':	
+			case 'crescer':	
+			case 'auto-esporte':	
+			case 'epoca':	
+			case 'epoca-negocios':	
+			case 'galileu':	
+			case 'globo-rural':	
+			case 'pegn':	
+			case 'vogue':	
+			case 'casa-vogue':	
+			case 'glamour':	
+			case 'gq':	
+			case 'monet':	
+				return 'revistas';	
+			default:
+				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter código do produto - " + nomeProduto);
+				tp.push(["setCustomVariable", "autorizado", true]);
+				tp.push(["setCustomVariable", "logado", true]);
+				tp.push(["setCustomVariable", "motivo", 'erro']);
+				return 'error';
+		}
 	}	
 };
 
@@ -369,7 +364,7 @@ Piano.xmlHttpRequest = {
 				appendDeScript.innerHTML = resposta;
 				document.body.appendChild(appendDeScript);
 			}
-		}	
+		};	
 	},
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
 		
@@ -395,7 +390,13 @@ Piano.xmlHttpRequest = {
 		}
 	},
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
-		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.codigoProduto});
+		
+		var codigoProduto = Piano.variaveis.getCodigoProduto();
+		if(codigoProduto == 'error') {
+			return;
+		}
+
+		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": codigoProduto});
 
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor, false);
@@ -403,48 +404,43 @@ Piano.xmlHttpRequest = {
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.send(data);
 		
-		
-			if(xhr.readyState == 4){
-
-				if (xhr.status == 200){
-					var resposta = xhr.responseText;
-					var respJson = JSON.parse(resposta);
-
-					tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
-					var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
-					if (typeof respJson.motivo != "undefined") {
-						respostaDeMotivo = respJson.motivo.toLowerCase();
-					}
-					if (typeof respJson.temTermoDeUso != "undefined") {
-						respostaDeTermoDeUso = respJson.temTermoDeUso;
-					}
-					if (typeof respJson.link != "undefined") {
-						hrefAssinaturaInadimplente = Piano.inadimplente.getLinkAssinatura(respJson.link);
-					}
-					var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado, hrefAssinaturaInadimplente);
-					tp.push(["setCustomVariable", "logado", isAutorizado]);
-					tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
-					tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
-					var _jsonLeitor = {
-							"autorizado" : respJson.autorizado,
-							"motivo": respostaDeMotivo,
-							"logado": isAutorizado,
-							"temTermoDeUso": respostaDeTermoDeUso,
-							"glbid": glbid,
-							"produto": Piano.variaveis.getNomeProduto(),
-							"codProduto": Piano.variaveis.codigoProduto
-					};
-					_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
-					Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
-
-				}else{
-					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
-					tp.push(["setCustomVariable", "autorizado", true]);
-					tp.push(["setCustomVariable", "logado", true]);
-					tp.push(["setCustomVariable", "motivo", 'erro']);
-				}	
-			}
-			
+		if(xhr.readyState === 4){
+			if (xhr.status === 200){
+				var resposta = xhr.responseText;
+				var respJson = JSON.parse(resposta);
+				tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
+				var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
+				if (typeof respJson.motivo != "undefined") {
+					respostaDeMotivo = respJson.motivo.toLowerCase();
+				}
+				if (typeof respJson.temTermoDeUso != "undefined") {
+					respostaDeTermoDeUso = respJson.temTermoDeUso;
+				}
+				if (typeof respJson.link != "undefined") {
+					hrefAssinaturaInadimplente = Piano.inadimplente.getLinkAssinatura(respJson.link);
+				}
+				var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado, hrefAssinaturaInadimplente);
+				tp.push(["setCustomVariable", "logado", isAutorizado]);
+				tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
+				tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
+				var _jsonLeitor = {
+						"autorizado" : respJson.autorizado,
+						"motivo": respostaDeMotivo,
+						"logado": isAutorizado,
+						"temTermoDeUso": respostaDeTermoDeUso,
+						"glbid": glbid,
+						"produto": Piano.variaveis.getNomeProduto(),
+						"codProduto": codigoProduto
+				};
+				_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
+				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
+			}else{
+				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
+				tp.push(["setCustomVariable", "autorizado", true]);
+				tp.push(["setCustomVariable", "logado", true]);
+				tp.push(["setCustomVariable", "motivo", 'erro']);
+			}	
+		}
 	}
 };
 
@@ -469,7 +465,7 @@ Piano.autenticacao = {
 				}
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 			}
-			if (Piano.variaveis.fazerRequisicaoBarramento) Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid);
+			Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid);
 		}
 	},
 	isAutorizado: function(termoDeUso, motivo, autorizado, hrefAssinaturaInadimplente) {
@@ -561,7 +557,7 @@ Piano.util = {
 			if(typeof addControlContent == "undefined"){
 				dataLayer.push({'event': 'EventoGAPiano', 'eventoGACategoria': 'ExtensaoBurlesco', 'eventoGAAcao': 'Sim', 'eventoGARotulo': '', 'eventoGAInteracao': 'true'});
 			};
-		}
+		};
 	},
 	isDominioOGlobo: function() {
 		var regex = new RegExp("://(.*?)/"), url = Piano.util.getWindowLocationHref();
@@ -569,15 +565,6 @@ Piano.util = {
 			return url.match(regex)[1];
 		}
 		return '';
-	},
-	trocarConfiguracoes: function() {
-		var trocar = false;
-		var utp = Piano.cookies.get(Piano.variaveis.constante.cookie.UTP);
-		if (utp) var cookieUtp = JSON.parse(decodeURI(atob(utp)));
-		if ((typeof cookieUtp != "undefined" && typeof cookieUtp.produto != "undefined" && cookieUtp.produto != Piano.variaveis.getNomeProduto() || typeof cookieUtp == "undefined") && ((Piano.util.isDominioOGlobo() && (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital') || Piano.util.isRevista())|| !Piano.util.isDominioOGlobo())) {
-				trocar = true;
-		}
-		return trocar;
 	},
 	callbackMeter: function(meterData) {
 		regrasTiny = meterData;
@@ -670,9 +657,6 @@ Piano.construtor = {
 };
 
 (function () {
-	if (Piano.produto.validaConfiguracoes()) {
-		return;
-	}
 	Piano.construtor.initTp();
 })();
 
