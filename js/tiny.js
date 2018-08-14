@@ -1,23 +1,10 @@
 window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
 
-
-/*Piano.produto = {
-	validaConfiguracoes : function() {
-		if (Piano.util.trocarConfiguracoes()) {
-				
-			Piano.construtor.initTp();
-			return true;
-		}
-		return false;
-	}
-};*/
-
 Piano.variaveis = {
 	ambientesAceitos: "int,qlt,prd",
 	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,503,504",
 	statusHttpObterAssinaturaInadimplente: "400,404,500,502,503,504",
-	fazerRequisicaoBarramento: true,
 	constante: {
 		cookie: {
 			GCOM: 'GLBID',
@@ -65,11 +52,6 @@ Piano.variaveis = {
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
-
-		/*var id = window.servicoIdPiano ? window.servicoIdPiano : '4975';
-		if (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital') id = '3981'; 
-		return id;*/
-
 		var id = '0000';
 
 		if(Piano.variaveis.getNomeProduto() === 'oglobo' || Piano.variaveis.getNomeProduto() === 'blogs' || Piano.variaveis.getNomeProduto() === 'kogut'){
@@ -84,20 +66,17 @@ Piano.variaveis = {
 
 		return id;
 	},
-	getCodigoProduto: function(nomeProduto){
-		var codigoProduto = '';
+	getCodigoProduto: function(){
+		var nomeProduto = Piano.variaveis.getNomeProduto();
 		switch (nomeProduto){
 			case 'oglobo':
 			case 'blogs':
 			case 'kogut':
-				codigoProduto = 'OG03';
-				break;
+				return 'OG03';
 			case 'acervo':
-				codigoProduto = 'OG04';
-				break;
+				return 'OG04';
 			case 'jornaldigital':
-				codigoProduto = 'OG01';
-				break;
+				return 'OG01';
 			case 'quem-acontece':	
 			case 'marie-claire':	
 			case 'casa-e-jardim':	
@@ -113,12 +92,14 @@ Piano.variaveis = {
 			case 'glamour':	
 			case 'gq':	
 			case 'monet':	
-				codigoProduto = 'revistas';	
-				break;
+				return 'revistas';	
 			default:
-				Piano.variaveis.fazerRequisicaoBarramento = false;
+				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter código do produto - " + nomeProduto);
+				tp.push(["setCustomVariable", "autorizado", true]);
+				tp.push(["setCustomVariable", "logado", true]);
+				tp.push(["setCustomVariable", "motivo", 'erro']);
+				return 'error';
 		}
-		return codigoProduto;
 	}	
 };
 
@@ -409,7 +390,13 @@ Piano.xmlHttpRequest = {
 		}
 	},
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
-		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": Piano.variaveis.getCodigoProduto(Piano.variaveis.getNomeProduto())});
+		
+		var codigoProduto = Piano.variaveis.getCodigoProduto();
+		if(codigoProduto == 'error') {
+			return;
+		}
+
+		var data = JSON.stringify({"token-autenticacao": glbid, "ipUsuario": Piano.variaveis.constante.util.IP, "codigoProduto": codigoProduto});
 
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor, false);
@@ -443,7 +430,7 @@ Piano.xmlHttpRequest = {
 						"temTermoDeUso": respostaDeTermoDeUso,
 						"glbid": glbid,
 						"produto": Piano.variaveis.getNomeProduto(),
-						"codProduto": Piano.variaveis.getCodigoProduto()
+						"codProduto": codigoProduto
 				};
 				_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
@@ -478,7 +465,7 @@ Piano.autenticacao = {
 				}
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 			}
-			if (Piano.variaveis.fazerRequisicaoBarramento) Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid);
+			Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid);
 		}
 	},
 	isAutorizado: function(termoDeUso, motivo, autorizado, hrefAssinaturaInadimplente) {
@@ -579,15 +566,6 @@ Piano.util = {
 		}
 		return '';
 	},
-	trocarConfiguracoes: function() {
-		var trocar = false;
-		var utp = Piano.cookies.get(Piano.variaveis.constante.cookie.UTP);
-		if (utp) var cookieUtp = JSON.parse(decodeURI(atob(utp)));
-		if ((typeof cookieUtp != "undefined" && typeof cookieUtp.produto != "undefined" && cookieUtp.produto != Piano.variaveis.getNomeProduto() || typeof cookieUtp == "undefined") && ((Piano.util.isDominioOGlobo() && (Piano.variaveis.getNomeProduto() == 'acervo' || Piano.variaveis.getNomeProduto() == 'jornaldigital') || Piano.util.isRevista())|| !Piano.util.isDominioOGlobo())) {
-				trocar = true;
-		}
-		return trocar;
-	},
 	callbackMeter: function(meterData) {
 		regrasTiny = meterData;
 		Piano.metricas.executaAposPageview();
@@ -678,12 +656,9 @@ Piano.construtor = {
 	}
 };
 
-/*(function () {
-	if (Piano.produto.validaConfiguracoes()) {
-		return;
-	}
-*/	Piano.construtor.initTp();
-//})();
+(function () {
+	Piano.construtor.initTp();
+})();
 
 (function (src) {
 	var a = document.createElement("script");
