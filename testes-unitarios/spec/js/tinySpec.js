@@ -149,7 +149,8 @@ describe('Tiny JS', function () {
                 expect(window["tp"].push.calls.count()).toEqual(4);
             });
 
-            it('deve chamar o método tp.push quarto vezes se glbid é válido e produto é válido', function () {
+            it('deve chamar o método tp.push quarto vezes se glbid é válido e produto do cookie é igual ao' +
+             'produto da página', function () {
                 spyOn(window["tp"], 'push');
                 spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
@@ -181,18 +182,7 @@ describe('Tiny JS', function () {
                 expect(window["tp"].push).not.toHaveBeenCalled();
             });
 
-            it('deve chamar o método cookies.set quando glbid é inválido', function () {
-                spyOn(Piano.cookies, 'set');
-                spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
-                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
-                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidInvalido').setProduto('produtoValido').build());
-                spyOn(Piano.xmlHttpRequest, 'fazRequisicaoBarramentoApiAutorizacaoAcesso').and.returnValue('');
-
-                Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
-                expect(Piano.cookies.set).toHaveBeenCalled();
-            });
-
-            it('deve chamar o método cookies.set quando produto é inválido', function () {
+            it('deve chamar o método cookies.set quando produto do cookie é diferente o produto do página', function () {
                 spyOn(Piano.cookies, 'set');
                 spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
@@ -203,70 +193,40 @@ describe('Tiny JS', function () {
                 expect(Piano.cookies.set).toHaveBeenCalled();
             });
 
-            it('deve fazer requisição para o barramento quando não possui o cookie utp mas fazerRequisicaoBarramento '
-                + 'possui valor', function () {
+            it('deve fazer requisição para o barramento quando não possui o cookie utp' , function () {
                     spyOn(Piano.xmlHttpRequest, 'fazRequisicaoBarramentoApiAutorizacaoAcesso');
-                    Piano.variaveis.fazerRequisicaoBarramento = 'asd';
 
                     Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', '');
                     expect(Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso).toHaveBeenCalled();
                 });
 
-            it('não deve fazer requisição para o barramento quando não possui o cookie utp e fazerRequisicaoBarramento '
-                + 'não possui valor', function () {
-                    spyOn(Piano.xmlHttpRequest, 'fazRequisicaoBarramentoApiAutorizacaoAcesso');
-                    Piano.variaveis.fazerRequisicaoBarramento = '';
-
-                    Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', '');
-                    expect(Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso).not.toHaveBeenCalled();
-                });
-
-            it('deve fazer requisição para o barramento quando possui utp, mas possui glbid inválido e '
-                + 'fazerRequisicaoBarramento possui valor', function () {
+            it('deve fazer requisição para o barramento quando possui utp, mas possui glbid diferente do cookie utp'
+                , function () {
                     spyOn(Piano.xmlHttpRequest, 'fazRequisicaoBarramentoApiAutorizacaoAcesso');
                     spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
-                    Piano.variaveis.fazerRequisicaoBarramento = 'asd';
+                    
                     spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoValido').build());
 
-                    Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidInalido', 'utp');
+                    Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidInvalido', 'utp');
                     expect(Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso).toHaveBeenCalled();
                 });
 
-            it('deve fazer requisição para o barramento quando possui utp, mas possui produto inválido e '
-                + 'fazerRequisicaoBarramento possui valor', function () {
+            it('deve fazer requisição para o barramento quando possui utp, mas possui produto diferente ao do cookie utp', function () {
                     spyOn(Piano.xmlHttpRequest, 'fazRequisicaoBarramentoApiAutorizacaoAcesso');
                     spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
                     spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
-                    Piano.variaveis.fazerRequisicaoBarramento = 'asd';
                     spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoInvalido').build());
 
                     Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
                     expect(Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso).toHaveBeenCalled();
                 });
 
-            it('não deve fazer requisição para o barramento quando possui utp, mas possui glbid inválido e '
-                + 'fazerRequisicaoBarramento não possui valor', function () {
-                    spyOn(Piano.xmlHttpRequest, 'fazRequisicaoBarramentoApiAutorizacaoAcesso');
-                    spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
-                    Piano.variaveis.fazerRequisicaoBarramento = '';
-                    spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoValido').build());
+            it('deve fazer requisição ao barramento quando não possui cookie utp', function(){
+                spyOn(Piano.xmlHttpRequest, 'fazRequisicaoBarramentoApiAutorizacaoAcesso');
+                Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido','');
 
-                    Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidInalido', 'utp');
-                    expect(Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso).not.toHaveBeenCalled();
-                });
-
-            it('não deve fazer requisição para o barramento quando possui utp, mas possui produto inválido e '
-                + 'fazerRequisicaoBarramento não possui valor', function () {
-                    spyOn(Piano.xmlHttpRequest, 'fazRequisicaoBarramentoApiAutorizacaoAcesso');
-                    spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
-                    spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
-                    Piano.variaveis.fazerRequisicaoBarramento = '';
-                    spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoInvalido').build());
-
-                    Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
-                    expect(Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso).not.toHaveBeenCalled();
-                });
-
+                expect(Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso).toHaveBeenCalled();
+            });
         });
     });
 
@@ -462,48 +422,6 @@ describe('Tiny JS', function () {
 
                 expect(Piano.util.isDominioOGlobo()).toEqual('');
             });
-
-        });
-
-        describe('função trocarConfiguracoes', function () {
-
-            it('deve retornar true quando cookieUtp e cookieUtp.produto são diferentes de undefined e '
-                + 'cookieUtp.produto é diferente de getNomeProduto', function () {
-                    spyOn(Piano.cookies, 'get').and.returnValue('a');
-                    spyOn(window, 'atob').and.returnValue('b');
-                    spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setProduto('produto1').build());
-                    spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('produto2');
-
-                    expect(Piano.util.trocarConfiguracoes()).toEqual(true);
-                });
-
-            it('deve retornar false quando cookieUtp é undefined e isDominioOGlobo é true', function () {
-                spyOn(Piano.util, 'isDominioOGlobo').and.returnValue(true);
-
-                expect(Piano.util.trocarConfiguracoes()).toEqual(false);
-            });
-
-            it('deve retornar true quando cookieUtp é undefined e isDominioOGlobo é true', function () {
-                spyOn(Piano.util, 'isDominioOGlobo').and.returnValue(false);
-
-                expect(Piano.util.trocarConfiguracoes()).toEqual(true);
-            });
-
-            it('deve retornar true quando cookieUtp é undefined, isDominioOGlobo é true e '
-                + 'getNomeProduto é "jornaldigital"', function () {
-                    spyOn(Piano.util, 'isDominioOGlobo').and.returnValue(false);
-                    spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('jornaldigital');
-
-                    expect(Piano.util.trocarConfiguracoes()).toEqual(true);
-                });
-
-            it('deve retornar true quando cookieUtp é undefined, isDominioOGlobo é true e '
-                + 'getNomeProduto é "acervo"', function () {
-                    spyOn(Piano.util, 'isDominioOGlobo').and.returnValue(false);
-                    spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('acervo');
-
-                    expect(Piano.util.trocarConfiguracoes()).toEqual(true);
-                });
 
         });
 
@@ -797,194 +715,6 @@ describe('Tiny JS', function () {
     });
 
 
-    describe('Piano.produto', function () {
-
-        describe('função validaConfiguracoes', function () {
-
-            it('deve retornar OG04 quando nomeProduto igual a acervo', function (){
-                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('acervo');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.codigoProduto).toEqual('OG04');
-
-            });
-
-            it('deve retornar OG01 quando nomeProduto igual a jornaldigital', function (){
-                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('jornaldigital');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.codigoProduto).toEqual('OG01');
-
-            });
-
-            it('deve retornar revistas quando nomeProduto igual a quem-acontece', function (){
-                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('quem-acontece');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
-
-            });
-
-            it('deve retornar revistas quando nomeProduto igual a marie-claire', function (){
-                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('marie-claire');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
-
-            });
-
-            it('deve retornar revistas quando nomeProduto igual a casa-e-jardim', function (){
-                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('casa-e-jardim');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
-
-            });
-
-            it('deve retornar revistas quando nomeProduto igual a crescer', function (){
-                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('crescer');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
-
-            });
-
-            it('deve retornar revistas quando nomeProduto igual a auto-esporte', function (){
-                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('auto-esporte');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
-
-            });
-
-            it('deve retornar revistas quando nomeProduto igual a epoca', function (){
-                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('epoca');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
-
-            });
-
-            it('deve retornar revistas quando nomeProduto igual a epoca-negocios', function (){
-                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('epoca-negocios');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
-
-            });
-
-            it('deve retornar revistas quando nomeProduto igual a galileu', function (){
-                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('galileu');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
-
-            });
-
-            it('deve retornar revistas quando nomeProduto igual a globo-rural', function (){
-                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('globo-rural');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
-
-            });
-
-            it('deve retornar revistas quando nomeProduto igual a pegn', function (){
-                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('pegn');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
-
-            });
-
-            it('deve retornar revistas quando nomeProduto igual a vogue', function (){
-                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('vogue');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
-
-            });
-            
-            it('deve retornar revistas quando nomeProduto igual a casa-vogue', function (){
-                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('casa-vogue');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
-
-            });
-
-            it('deve retornar revistas quando nomeProduto igual a glamour', function (){
-                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('glamour');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
-
-            });
-
-            it('deve retornar revistas quando nomeProduto igual a gq', function (){
-                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('gq');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
-
-            });
-
-            it('deve retornar revistas quando nomeProduto igual a monet', function (){
-                spyOn (Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn (Piano.variaveis, 'getNomeProduto').and.returnValue('monet');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.codigoProduto).toEqual('revistas');
-
-            });
-
-            it('não deve fazer requisição ao barramento quando nomeProduto não for igual a acervo, jornaldigital ou revistas', function(){
-                spyOn(Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('abc');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.variaveis.fazerRequisicaoBarramento).toEqual(false);
-            });
-
-            it ('deve chamar a função Piano.construtor.initTp, quando trocarConfiguracoes for verdadeiro', function (){
-                spyOn(Piano.util, 'trocarConfiguracoes').and.returnValue(true);
-                spyOn(Piano.construtor, 'initTp');
-
-                Piano.produto.validaConfiguracoes();
-                expect(Piano.construtor.initTp).toHaveBeenCalled();
-            });
-
-            it('deve retornar "true" quando trocarConfiguracoes possuir algum valor', function () {
-                spyOn(Piano.util, 'trocarConfiguracoes').and.returnValue('a');
-
-                expect(Piano.produto.validaConfiguracoes()).toEqual(true);
-            });
-
-            it('deve retornar "false" quando trocarConfiguracoes não possuir valor', function () {
-                spyOn(Piano.util, 'trocarConfiguracoes').and.returnValue('');
-
-                expect(Piano.produto.validaConfiguracoes()).toEqual(false);
-            });
-
-        });
-    });
-
     describe('Piano.variaveis', function () {
 
         describe('função isConteudoExclusivo', function () {
@@ -1069,12 +799,6 @@ describe('Tiny JS', function () {
 
         describe('função getServicoId', function () {
 
-            /*it('deve retornar window.servicoIdPiano quando window.servicoIdPiano estiver preenchido', function () {
-                window.servicoIdPiano = 'abc';
-
-                expect(Piano.variaveis.getServicoId()).toEqual('abc');
-            });*/
-
             it('deve retornar 4975 quando Piano.variaveis.getNomeProduto() é oglobo', function () {
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('oglobo');
 
@@ -1118,6 +842,146 @@ describe('Tiny JS', function () {
             });
             
 
+        });
+
+        describe('função getCodigoProduto', function(){
+            it('deve retornar OG03 quando nomeProduto igual a oglobo',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('oglobo');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('OG03');
+            });
+
+            it('deve retornar OG03 quando nomeProduto igual a blogs',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('blogs');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('OG03');
+            });
+
+            it('deve retornar OG03 quando nomeProduto igual a kogut',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('kogut');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('OG03');
+            });
+
+            it('deve retornar OG04 quando nomeProduto igual a acervo',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('acervo');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('OG04');
+            });
+
+            it('deve retornar OG01 quando nomeProduto igual a jornaldigital',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('jornaldigital');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('OG01');
+            });
+
+            it('deve retornar revistas quando nomeProduto igual a quem-acontece',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('quem-acontece');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('revistas');
+            });
+            
+            it('deve retornar revistas quando nomeProduto igual a marie-claire',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('marie-claire');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('revistas');
+            });
+            
+            it('deve retornar revistas quando nomeProduto igual a casa-e-jardim',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('casa-e-jardim');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('revistas');
+            });
+            
+            it('deve retornar revistas quando nomeProduto igual a crescer',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('crescer');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('revistas');
+            });
+            
+            it('deve retornar revistas quando nomeProduto igual a auto-esporte',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('auto-esporte');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('revistas');
+            });
+            
+            it('deve retornar revistas quando nomeProduto igual a epoca',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('epoca');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('revistas');
+            });
+
+            it('deve retornar revistas quando nomeProduto igual a epoca-negocios',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('epoca-negocios');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('revistas');
+            });
+            
+            it('deve retornar revistas quando nomeProduto igual a globo-rural',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('globo-rural');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('revistas');
+            });
+            
+            it('deve retornar revistas quando nomeProduto igual a pegn',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('pegn');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('revistas');
+            });
+            
+            it('deve retornar revistas quando nomeProduto igual a vogue',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('vogue');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('revistas');
+            });
+            
+            it('deve retornar revistas quando nomeProduto igual a casa-vogue',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('casa-vogue');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('revistas');
+            });
+
+            it('deve retornar revistas quando nomeProduto igual a glamour',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('glamour');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('revistas');
+            });
+            
+            it('deve retornar revistas quando nomeProduto igual a gq',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('gq');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('revistas');
+            });
+            
+            it('deve retornar revistas quando nomeProduto igual a monet',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('monet');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('revistas');
+            });
+            
+            it('deve logar erro quando nomeProduto igual a abc',function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('abc');
+                spyOn(Piano.metricas, 'enviaEventosGA');
+
+                Piano.variaveis.getCodigoProduto();
+
+                expect(Piano.metricas.enviaEventosGA).toHaveBeenCalled();
+            });
+
+            it('deve executar o tp.push 3 vezes quando nomeProduto igual a abc', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('abc');
+                spyOn(window["tp"], 'push');
+
+                Piano.variaveis.getCodigoProduto();
+
+                expect(window["tp"].push.calls.count()).toEqual(3);
+            });
+
+            it('deve retornar error quando nomeProduto igual a abc', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('abc');
+
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('error');
+            });
         });
 
         
@@ -1863,12 +1727,22 @@ describe('Tiny JS', function () {
 
         describe('fazRequisicaoBarramentoApiAutorizacaoAcesso', function () {
 
+            var url;
+
+            beforeEach(function () {
+                
+                spyOn(Piano.variaveis, 'getCodigoProduto').and.returnValue('abc');
+                spyOn(Piano.variaveis, 'getServicoId').and.returnValue('0000');
+
+                url = 'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/'+Piano.variaveis.getServicoId()+'/autorizacao-acesso';
+            });
+
             it('deve chamar o método Piano.metricas.enviaEventosGA com os parâmetros "Erro" e '
                 + '"Ao obter autorizacao da API - 400 - abc" quando envia "abc" como parâmetro e a requisição retorna 400', function () {
                     spyOn(Piano.metricas, 'enviaEventosGA');
 
                     jasmine.Ajax.stubRequest(
-                        'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                        url
                     ).andReturn({
                         status: 400
                     });
@@ -1882,7 +1756,7 @@ describe('Tiny JS', function () {
                 spyOn(window["tp"], 'push');
 
                 jasmine.Ajax.stubRequest(
-                    'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                    url
                 ).andReturn({
                     status: 400
                 });
@@ -1895,7 +1769,7 @@ describe('Tiny JS', function () {
                 spyOn(window["tp"], 'push');
 
                 jasmine.Ajax.stubRequest(
-                    'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                   url
                 ).andReturn({
                     status: 400
                 });
@@ -1908,7 +1782,7 @@ describe('Tiny JS', function () {
                 spyOn(window["tp"], 'push');
 
                 jasmine.Ajax.stubRequest(
-                    'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                   url
                 ).andReturn({
                     status: 400
                 });
@@ -1921,7 +1795,7 @@ describe('Tiny JS', function () {
                 spyOn(window["tp"], 'push');
 
                 jasmine.Ajax.stubRequest(
-                    'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                    url
                 ).andReturn({
                     status: 200,
                     responseText: '{"autorizado":"autorizado"}'
@@ -1936,7 +1810,7 @@ describe('Tiny JS', function () {
                 spyOn(Piano.autenticacao, 'isAutorizado').and.returnValue('abc');
 
                 jasmine.Ajax.stubRequest(
-                    'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                   url
                 ).andReturn({
                     status: 200,
                     responseText: '{"temTermoDeUso":"teste"}'
@@ -1952,7 +1826,7 @@ describe('Tiny JS', function () {
                     spyOn(Piano.autenticacao, 'isAutorizado');
 
                     jasmine.Ajax.stubRequest(
-                        'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                        url
                     ).andReturn({
                         status: 200,
                         responseText: '{"temTermoDeUso":"teste"}'
@@ -1968,7 +1842,7 @@ describe('Tiny JS', function () {
                     spyOn(Piano.autenticacao, 'isAutorizado');
 
                     jasmine.Ajax.stubRequest(
-                        'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                        url
                     ).andReturn({
                         status: 200,
                         responseText: '{}'
@@ -1984,7 +1858,7 @@ describe('Tiny JS', function () {
                     spyOn(window["tp"], 'push');
 
                     jasmine.Ajax.stubRequest(
-                        'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                        url
                     ).andReturn({
                         status: 200,
                         responseText: '{"motivo":"abc"}'
@@ -1999,7 +1873,7 @@ describe('Tiny JS', function () {
                     spyOn(window["tp"], 'push');
 
                     jasmine.Ajax.stubRequest(
-                        'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                        url
                     ).andReturn({
                         status: 200,
                         responseText: '{}'
@@ -2013,7 +1887,7 @@ describe('Tiny JS', function () {
                 spyOn(Piano.inadimplente, 'getLinkAssinatura');
 
                 jasmine.Ajax.stubRequest(
-                    'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/4975/autorizacao-acesso'
+                   url
                 ).andReturn({
                     status: 200,
                     responseText: '{"link":"abc"}'
