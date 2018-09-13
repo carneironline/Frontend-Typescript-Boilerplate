@@ -171,6 +171,17 @@ describe('Tiny JS', function () {
                 expect(window["tp"].push).not.toHaveBeenCalled();
             });
 
+            if('deve chamar cookies.set quando glbid for inválido', function(){
+                spyOn(Piano.cookies, 'set');	
+                spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);	
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');	
+                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidInvalido').setProduto('produtoValido').build());	
+                spyOn(Piano.xmlHttpRequest, 'fazRequisicaoBarramentoApiAutorizacaoAcesso').and.returnValue('');	
+                 Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');	
+                expect(Piano.cookies.set).toHaveBeenCalled();
+
+            });
+
             it('não deve chamar o método tp.push quando glbid é válido, mas produto é inválido', function () {
                 spyOn(window["tp"], 'push');
                 spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
