@@ -2,7 +2,7 @@
 <head>
     <title>Login - Editora</title>
     <meta charset=utf-8 />
-    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
@@ -10,6 +10,9 @@
         <p>Foooo</p>
         <p>Foooo</p>
         <p>Foooo</p>
+        <style>
+        .class {}
+        </style>
         <div id="paywall--paywall-inline">
             <div class="paywall--content">
                 <div class="paywall--login-button"> 
@@ -38,9 +41,10 @@
         callLoginRegister = function(e) {
             e = window.event;
             e.preventDefault();
-            document.querySelector(".paywall--login-iframe").classList.toggle("hidden");
-            document.querySelector(".paywall--offer-link").classList.toggle("hidden");
-            document.querySelector(".paywall--login-button").classList.toggle("hidden");
+            s = document.querySelectorAll(".paywall--login-iframe, .paywall--offer-link, .paywall--login-button");
+            for (var i = 0; i < s.length; i++) {
+                s[i].classList.toggle("hidden");
+            }
         }
     </script>
 </head>
