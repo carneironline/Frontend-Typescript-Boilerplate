@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+    <title>Login - Editora</title>
+    <meta charset=utf-8 />
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <div class="protected-content">
+        <div id="paywall--paywall-inline">
+            <div class="paywall--content">
+                <div class="paywall--login-button"> 
+                    <h2><strong>Muito bom ter você por aqui!</strong> Adoramos bons leitores.</h2>
+                    <h3>Cadastre-se e tenha acesso ilimitado a todas as notícias.</h3>
+                    <a href="https://login.globo.com/cadastro/4975" target="_blank"><strong>cadastre-se</strong> para continuar.</a>
+                    <p>Já possui conta <a href="#" onclick="callLoginRegister();">Globo.com</a>?</p>
+                </div>
+                <div class="paywall--offer-link">
+                    <a  href="#">oferta</a>
+                </div>
+                <div class="paywall--login-iframe hidden">
+                    <a href="#" class="back-to-offer" onclick="callLoginRegister();">Voltar</a>
+                    <iframe id="login-popin-iframe" src="https://login.globo.com/login/4975"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" >
+        callLoginRegister = function(e) {
+            e = window.event;
+            e.preventDefault();
+            document.querySelector(".paywall--login-iframe").classList.toggle("hidden");
+        }
+    </script>
+</head>
+<body>
+
+<!--script type="text/javascript" src="scripts/nova-tela-register.js"></script-->
+</body>
+</html>
