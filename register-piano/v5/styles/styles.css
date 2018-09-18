@@ -77,8 +77,8 @@
 }
 .paywall--login-iframe .back-to-offer {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 10px;
+    left: 10px;
     z-index: 1000;
     background: url(https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/interno/new-paywall/btn-back.svg) no-repeat 5px 50% / 13px;
     color: transparent;
@@ -94,6 +94,7 @@
 }
 .paywall--login-holder {
     overflow: hidden;
+    margin-top: 25px;
 }
 
 .paywall--login-iframe iframe {

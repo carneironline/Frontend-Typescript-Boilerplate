@@ -56,6 +56,18 @@ if(protectedContentEl) {
 	if (typeof linkRegister != 'undefined' && linkRegister != null && linkRegister != '') {
 		document.querySelector(".paywall--offer-image").href = linkRegister;
 	}
+
+	if (typeof mainTitleRegister != 'undefined' && mainTitleRegister != null && mainTitleRegister != '') {
+		document.querySelector(".paywall--login-button h2").innerHTML = mainTitleRegister;
+	}
+
+	if (typeof subTitleRegister != 'undefined' && subTitleRegister != null && subTitleRegister != '') {
+		document.querySelector(".paywall--login-button h3").innerHTML = subTitleRegister;
+	}
+
+	if (typeof textoRegister != 'undefined' && textoRegister != null && textoRegister != '') {
+		document.querySelector("#linkRegister").innerHTML = textoRegister;
+	}
 	
 	document.onreadystatechange = function(){
 		if(document.readyState === "complete"){
