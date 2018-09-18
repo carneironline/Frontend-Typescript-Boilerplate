@@ -95,9 +95,7 @@ Piano.variaveis = {
 				return 'revistas';	
 			default:
 				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter código do produto - " + nomeProduto);
-				tp.push(["setCustomVariable", "autorizado", true]);
-				tp.push(["setCustomVariable", "logado", true]);
-				tp.push(["setCustomVariable", "motivo", 'erro']);
+				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
 				return 'error';
 		}
 	}	
@@ -408,7 +406,6 @@ Piano.xmlHttpRequest = {
 			if (xhr.status === 200){
 				var resposta = xhr.responseText;
 				var respJson = JSON.parse(resposta);
-				tp.push(["setCustomVariable", "autorizado", respJson.autorizado]);
 				var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
 				if (typeof respJson.motivo != "undefined") {
 					respostaDeMotivo = respJson.motivo.toLowerCase();
@@ -420,9 +417,7 @@ Piano.xmlHttpRequest = {
 					hrefAssinaturaInadimplente = Piano.inadimplente.getLinkAssinatura(respJson.link);
 				}
 				var isAutorizado = Piano.autenticacao.isAutorizado(respostaDeTermoDeUso, respostaDeMotivo, respJson.autorizado, hrefAssinaturaInadimplente);
-				tp.push(["setCustomVariable", "logado", isAutorizado]);
-				tp.push(["setCustomVariable", "temTermo", respostaDeTermoDeUso]);
-				tp.push(["setCustomVariable", "motivo", respostaDeMotivo]);
+				Piano.autenticacao.defineUsuarioPiano(respJson.autorizado, respostaDeMotivo, isAutorizado, respostaDeTermoDeUso);
 				var _jsonLeitor = {
 						"autorizado" : respJson.autorizado,
 						"motivo": respostaDeMotivo,
@@ -436,9 +431,7 @@ Piano.xmlHttpRequest = {
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
 			}else{
 				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
-				tp.push(["setCustomVariable", "autorizado", true]);
-				tp.push(["setCustomVariable", "logado", true]);
-				tp.push(["setCustomVariable", "motivo", 'erro']);
+				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
 			}	
 		}
 	}
@@ -454,13 +447,14 @@ Piano.autenticacao = {
 	},
 	verificaUsuarioLogadoNoBarramento: function(glbid, utp) {
 		if (Piano.autenticacao.isLogadoCadun(glbid, utp)) {
+			if(Piano.autenticacao.isAutorizadoGoogle(glbid)){
+				Piano.autenticacao.defineUsuarioPiano(true, "autorizado", true, true);
+				return;
+			}
 			if (utp) {
 				var _leitor = JSON.parse(decodeURI(atob(utp)));
 				if (glbid == _leitor.glbid && (typeof _leitor.produto == "undefined" || _leitor.produto == Piano.variaveis.getNomeProduto())) {
-					tp.push(["setCustomVariable", "autorizado", _leitor.autorizado]);
-					tp.push(["setCustomVariable", "motivo", _leitor.motivo]);
-					tp.push(["setCustomVariable", "logado", _leitor.logado]);
-					tp.push(["setCustomVariable", "temTermo", _leitor.temTermoDeUso]);
+					Piano.autenticacao.defineUsuarioPiano(_leitor.autorizado, _leitor.motivo, _leitor.logado, _leitor.temTermoDeUso);
 					return;
 				}
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
@@ -474,6 +468,26 @@ Piano.autenticacao = {
 			return true;
 		};
 		if (Piano.cookies.get(Piano.variaveis.constante.cookie.RTIEX)) Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, "", -1);
+		return false;
+	},
+	defineUsuarioPiano:function(autorizado, motivo, logado, temTermoDeUso){
+		tp.push(["setCustomVariable", "autorizado", autorizado]);
+		tp.push(["setCustomVariable", "motivo", motivo]);
+		tp.push(["setCustomVariable", "logado", logado]);
+		if(temTermoDeUso != " ")
+			tp.push(["setCustomVariable", "temTermo", temTermoDeUso]);
+	},
+	isAutorizadoGoogle: function(glbid){
+		var _ugg = Piano.cookies.get("_ugg");
+		if(_ugg){
+			var _swg = JSON.parse(decodeURI(atob(_ugg)));
+			if(_swg.glbid == glbid && !Piano.util.isRevista()){
+				return true;
+			}else{
+				Piano.cookies.set("_ugg", "", -1);
+				return false;
+			}
+		}
 		return false;
 	}
 };
