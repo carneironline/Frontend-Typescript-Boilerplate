@@ -1,39 +1,50 @@
 var uri = encodeURIComponent(document.location.href);
 
-//Monta a parte do HTML
-var conteudoRevistasBarreiraPiano = document.createElement('div');
-conteudoRevistasBarreiraPiano.id = 'barreiraRevistasPiano';
-document.body.appendChild(conteudoRevistasBarreiraPiano);
-
-
-
-conteudoRevistaExperienciaPiano = "" +
-"<div id='piano-barreira-revistas' style='opacity: 0; display: none;' >" +
-"    <div class='piano-barreira-backdrop'> </div>" +     
-"</div>"
-
-document.getElementById("barreiraRevistasPiano").insertAdjacentHTML('beforeend', conteudoRevistaExperienciaPiano);
-
-
-if (typeof imagemRevistaM != 'undefined' && imagemRevistaM != null && imagemRevistaM != '' && imagemRevistaT != 'undefined' && imagemRevistaT != null && imagemRevistaT != '' && imagemRevistaD != 'undefined' && imagemRevistaD != null && imagemRevistaD != '' ) {
-	var tamanhoTela = window.screen.width;
-	if (tamanhoTela < 767 ) {
-		document.querySelector(".piano-chamada-revistas").style.backgroundImage = "url("+imagemRevistaM+")";
-	}
-	else if (tamanhoTela < 1024 ) {
-		document.querySelector(".piano-chamada-revistas").style.backgroundImage = "url("+imagemRevistaT+")";
-	}
-	else {
-		document.querySelector(".piano-chamada-revistas").style.backgroundImage = "url("+imagemRevistaD+")";
+callLoginRegister = function(e) {
+	e = window.event;
+	e.preventDefault();
+	s = document.querySelectorAll(".paywall--login-iframe, .paywall--offer-link, .paywall--login-button");
+	for (var i = 0; i < s.length; i++) {
+		s[i].classList.toggle("hidden");
 	}
 }
 
-if (typeof imagemExclusivoTD != 'undefined' && imagemExclusivoTD != null && imagemExclusivoTD != '') {
-	document.querySelector(".piano-chamada-login").style.backgroundImage = "url("+imagemExclusivoTD+")";
+protectedContent = "" +
+"<div id='paywall--paywall-inline'>" +
+"    <div class='paywall--content'>" +
+"        <div class='paywall--login-button'> " +
+"            <h2><strong>Muito bom ter você por aqui!</strong> Adoramos bons leitores.</h2>" +
+"            <h3>Você atingiu o número máximo de leituras gratuitas este mês.</h3>" +
+"            <a href='https://login.globo.com/cadastro/"+Piano.variaveis.getServicoId()+"' target='_blank'><strong>Cadastre-se</strong> para continuar.</a>" +
+"            <p>Já possui conta <a href='#' onclick='callLoginRegister();'>Globo.com</a>?</p>" +
+"        </div>" +
+"        <div class='paywall--offer-link'>" +
+"            <a class='paywall--offer-image'  href='#'>oferta</a>" +
+"        </div>" +
+"        <div class='paywall--login-iframe hidden'>" +
+"            <a href='#' class='back-to-offer' onclick='callLoginRegister();'>Voltar</a>" +
+"            <div class='paywall--login-holder'>" +
+"            <iframe id='iframeCadun' src='https://login.globo.com/login/"+Piano.variaveis.getServicoId()+"'></iframe>" +
+"            </div>" +
+"        </div>" +
+"    </div>" +
+"</div>"
+
+document.querySelector(".protected-content").setAttribute('data-content', 'removed');
+document.querySelector(".protected-content").innerHTML = protectedContent;
+
+
+if (typeof imgDesk != 'undefined' && imgDesk != null && imgDesk != '' && imgMob != 'undefined' && imgMob != null && imgMob != '') {
+	if (window.screen.width >= 767 ) {
+		document.querySelector(".paywall--offer-image").setAttribute('style',"background-image: url("+imgMob+");");
+	}
+	else {
+		document.querySelector(".paywall--offer-image").setAttribute('style',"background-image: url("+imgDesk+");");
+	}
 }
 
 if (typeof linkRegister != 'undefined' && linkRegister != null && linkRegister != '') {
-	document.getElementById("link-register").href = linkRegister;
+	document.querySelector(".paywall--offer-image").href = linkRegister;
 }
 
 
@@ -56,4 +67,6 @@ document.onreadystatechange = function(){
 		}
 	}
 }
-setTimeout(function(){document.querySelector('#piano-barreira-revistas').setAttribute('style','display: block; opacity: 1;');}, 1500);
+
+
+setTimeout(function(){document.querySelector('.paywall--content').setAttribute('style','opacity: 1;');}, 1500);

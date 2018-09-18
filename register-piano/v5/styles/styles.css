@@ -11,6 +11,8 @@
     border: 1px solid #E4E4E4;
     background: white;
     line-height: 1;
+    transition: opacity 300ms ease-in-out;
+    opacity: 0;
 }
 .paywall--login-button h2 {
     color:#325E94 !important;
@@ -124,7 +126,7 @@
     }
     .paywall--offer-link a {
         height: 250px  !important;
-        background-image: url(https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/interno/new-paywall/offer-02.png)  !important;
+        background-image: url(https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/interno/new-paywall/offer-02.png);
     }
     .paywall--login-button p {
         font-size: 14px !important;
