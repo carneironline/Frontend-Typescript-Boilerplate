@@ -12,7 +12,6 @@
     background: white;
     line-height: 1;
     transition: opacity 300ms ease-in-out;
-    opacity: 0;
 }
 .paywall--login-button h2 {
     color:#325E94 !important;
