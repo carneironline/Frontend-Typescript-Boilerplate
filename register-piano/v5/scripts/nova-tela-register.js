@@ -13,7 +13,7 @@ if(protectedContentEl) {
 
 	var protectedContent = "" +
 	"<div id='paywall--paywall-inline'>" +
-	"    <div class='paywall--content'>" +
+	"    <div class='paywall--content' style='opacity: 0;'>" +
 	"        <div class='paywall--login-button'> " +
 	"            <h2><strong>Muito bom ter você por aqui!</strong> Adoramos bons leitores.</h2>" +
 	"            <h3>Você atingiu o número máximo de leituras gratuitas este mês.</h3>" +
@@ -74,15 +74,19 @@ if(protectedContentEl) {
 			if (!document.querySelector('#barra-globocom')) {
 				(function() {
 					var s = document.createElement("script");
-					s.type = "text/javascript"; s.async = true; s.defer = true; s.charset = "utf-8";
-					s.src = "https://s.glbimg.com/gl/ba/js/barra-globocom.min.js";
-					var ss = document.getElementsByTagName("script")[0]; ss.parentNode.insertBefore(s, ss);
+					s.type = "text/javascript"; 
+					s.async = true; 
+					s.defer = true; 
+					s.charset = "utf-8";
+					s.src = "https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/barra-gcom/barra-globocom.js";
+					var ss = document.getElementsByTagName("script")[0];
+					ss.parentNode.insertBefore(s, ss);
 				})();	
 			}
 		}
 	}
 
-	setTimeout(function(){document.querySelector('.paywall--content').setAttribute('style','opacity: 1;');}, 1500);
+	setTimeout(function(){document.querySelector('.paywall--content').setAttribute('style','opacity: 1;');}, 1000);
 } else {
 	console.log("Página não tem a Tag para inserir barreira.")
 }
