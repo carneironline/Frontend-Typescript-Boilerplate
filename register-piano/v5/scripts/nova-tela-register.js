@@ -17,16 +17,16 @@ if(protectedContentEl) {
 	"        <div class='paywall--login-button'> " +
 	"            <h2><strong>Muito bom ter você por aqui!</strong> Adoramos bons leitores.</h2>" +
 	"            <h3>Você atingiu o número máximo de leituras gratuitas este mês.</h3>" +
-	"            <a id='linkRegister' href='#' target='_blank'><strong>Cadastre-se</strong> para continuar.</a>" +
-	"            <p>Já possui conta <a href='#' onclick='callLoginRegister();'>Globo.com</a>?</p>" +
+	"            <a id='btnRegister' href='#' target='_blank'><strong>Cadastre-se</strong> para continuar.</a>" +
+	"            <p id='textLogin'>Já possui conta <a href='#' onclick='callLoginRegister();'>Globo.com</a>?</p>" +
 	"        </div>" +
 	"        <div class='paywall--offer-link'>" +
-	"            <a class='paywall--offer-image'  href='#'>oferta</a>" +
+	"            <a id='offerLink' class='paywall--offer-image' target='_blank' href='#'>oferta</a>" +
 	"        </div>" +
 	"        <div class='paywall--login-iframe hidden'>" +
 	"            <a href='#' class='back-to-offer' onclick='callLoginRegister();'>Voltar</a>" +
 	"            <div class='paywall--login-holder'>" +
-	"            <iframe id='iframeCadun' src='#'></iframe>" +
+	"            	<iframe id='iframeCadun' src='#'></iframe>" +
 	"            </div>" +
 	"        </div>" +
 	"    </div>" +
@@ -38,26 +38,26 @@ if(protectedContentEl) {
 
 	if (window.ambienteUtilizadoPiano == 'prd') {
 		document.querySelector("#iframeCadun").src = 'https://login.globo.com/login/'+Piano.variaveis.getServicoId()+'?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D'+Piano.variaveis.getServicoId()+'%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri;
-		document.querySelector("#linkRegister").href = 'https://login.globo.com/cadastro/'+Piano.variaveis.getServicoId()+'?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D'+Piano.variaveis.getServicoId()+'%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri;
+		document.querySelector("#btnRegister").href = 'https://login.globo.com/cadastro/'+Piano.variaveis.getServicoId()+'?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D'+Piano.variaveis.getServicoId()+'%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri;
 	} else {
 		document.querySelector("#iframeCadun").src = 'https://login.qa.globoi.com/login/'+Piano.variaveis.getServicoId()+'?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D'+Piano.variaveis.getServicoId()+'%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri;
-		document.querySelector("#linkRegister").href = 'https://login.qa.globoi.com/cadastro/'+Piano.variaveis.getServicoId()+'?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D'+Piano.variaveis.getServicoId()+'%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri;
+		document.querySelector("#btnRegister").href = 'https://login.qa.globoi.com/cadastro/'+Piano.variaveis.getServicoId()+'?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D'+Piano.variaveis.getServicoId()+'%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri;
 	}
 
 	if (typeof imgDesk != 'undefined' && imgDesk != null && imgDesk != '' && imgMob != 'undefined' && imgMob != null && imgMob != '' && imgTab != 'undefined' && imgTab != null && imgTab != '') {
 		if (window.screen.width < 600 ) {
-			document.querySelector(".paywall--offer-image").setAttribute('style',"background-image: url("+imgMob+");");
+			document.querySelector("#offerLink").setAttribute('style',"background-image: url("+imgMob+");");
 		}
 		else if (window.screen.width < 1024 ) {
-			document.querySelector(".paywall--offer-image").setAttribute('style',"background-image: url("+imgTab+");");
+			document.querySelector("#offerLink").setAttribute('style',"background-image: url("+imgTab+");");
 		}
 		else {
-			document.querySelector(".paywall--offer-image").setAttribute('style',"background-image: url("+imgDesk+");");
+			document.querySelector("#offerLink").setAttribute('style',"background-image: url("+imgDesk+");");
 		}
 	}
 	
-	if (typeof linkRegister != 'undefined' && linkRegister != null && linkRegister != '') {
-		document.querySelector(".paywall--offer-image").href = linkRegister;
+	if (typeof offerLink != 'undefined' && offerLink != null && offerLink != '') {
+		document.querySelector("#offerLink").href = offerLink;
 	}
 
 	if (typeof mainTitleRegister != 'undefined' && mainTitleRegister != null && mainTitleRegister != '') {
@@ -68,8 +68,12 @@ if(protectedContentEl) {
 		document.querySelector(".paywall--login-button h3").innerHTML = subTitleRegister;
 	}
 
-	if (typeof textoRegister != 'undefined' && textoRegister != null && textoRegister != '') {
-		document.querySelector("#linkRegister").innerHTML = textoRegister;
+	if (typeof btnRegisterText != 'undefined' && btnRegisterText != null && btnRegisterText != '') {
+		document.querySelector("#btnRegister").innerHTML = btnRegisterText;
+	}
+
+	if (typeof textLogin != 'undefined' && textLogin != null && textLogin != '') {
+		document.querySelector("#textLogin").innerHTML = textLogin;
 	}
 	
 	document.onreadystatechange = function(){
