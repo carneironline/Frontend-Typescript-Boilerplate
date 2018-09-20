@@ -44,9 +44,12 @@ if(protectedContentEl) {
 		document.querySelector("#linkRegister").href = 'https://login.qa.globoi.com/cadastro/'+Piano.variaveis.getServicoId()+'?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D'+Piano.variaveis.getServicoId()+'%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523'+uri;
 	}
 
-	if (typeof imgDesk != 'undefined' && imgDesk != null && imgDesk != '' && imgMob != 'undefined' && imgMob != null && imgMob != '') {
-		if (window.screen.width >= 767 ) {
+	if (typeof imgDesk != 'undefined' && imgDesk != null && imgDesk != '' && imgMob != 'undefined' && imgMob != null && imgMob != '' && imgTab != 'undefined' && imgTab != null && imgTab != '') {
+		if (window.screen.width < 600 ) {
 			document.querySelector(".paywall--offer-image").setAttribute('style',"background-image: url("+imgMob+");");
+		}
+		else if (window.screen.width < 1024 ) {
+			document.querySelector(".paywall--offer-image").setAttribute('style',"background-image: url("+imgTab+");");
 		}
 		else {
 			document.querySelector(".paywall--offer-image").setAttribute('style',"background-image: url("+imgDesk+");");
