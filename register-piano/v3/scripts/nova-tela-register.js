@@ -36,7 +36,7 @@ if (typeof imagemRevistaM != 'undefined' && imagemRevistaM != null && imagemRevi
 }
 
 var url = window.ambienteUtilizadoPiano == 'prd' ? 'https://login.globo.com/login/' : 'https://login.qa.globoi.com/login/';
-document.querySelector("#iframeCadun").src = url + Piano.variaveis.getServicoId()+'?urlPosCadastroLogada=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23'+uri;
+document.querySelector("#iframeCadun").src = url + Piano.variaveis.getServicoId()+'?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23'+uri;
 
 document.onreadystatechange = function(){
 	if(document.readyState === "complete"){
