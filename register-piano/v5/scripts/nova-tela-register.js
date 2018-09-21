@@ -12,7 +12,6 @@ if(protectedContentEl) {
 	}
 
 	var protectedContent = "" +
-	"<link rel='stylesheet' type='text/css' href='https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/helper/styles.css' />" +
 	"<div id='paywall--paywall-inline'>" +
 	"    <div class='paywall--content' style='opacity: 0;'>" +
 	"        <div class='paywall--login-button '> " +
