@@ -245,36 +245,30 @@ describe('Tiny JS', function () {
             it('deve retornar false quando não houver cookie glbid', function(){
                 spyOn(Piano.cookies, 'get').and.returnValue("JTdCJTIyZ2xiaWQlMjI6JTIyYWJjJTIyLCUyMmRhdGElMjI6JTIyMTgsMTclMjIlN0Q=");
 
-                Piano.autenticacao.isAutorizadoGoogle("");
 
-                expect(Piano.autenticacao.isAutorizadoGoogle()).toEqual(false);
+                expect(Piano.autenticacao.isAutorizadoGoogle("")).toEqual(false);
             });
             
             it('deve retornar false quando não houver cookie ugg', function(){
                 spyOn(Piano.cookies, 'get').and.returnValue("");
 
-                Piano.autenticacao.isAutorizadoGoogle("abc");
 
-                expect(Piano.autenticacao.isAutorizadoGoogle()).toEqual(false);
+                expect(Piano.autenticacao.isAutorizadoGoogle("abc")).toEqual(false);
             });
 
             it('deve retornar false quando glbid for diferente do glbid do glbid do cookie ugg', function(){
                 
                 spyOn(Piano.cookies, 'get').and.returnValue("JTdCJTIyZ2xiaWQlMjI6JTIyYWJjJTIyLCUyMmRhdGElMjI6JTIyMTgsMTclMjIlN0Q=");
 
-
-                Piano.autenticacao.isAutorizadoGoogle("das");
-
                 
-                expect(Piano.autenticacao.isAutorizadoGoogle()).toEqual(false);
+                expect(Piano.autenticacao.isAutorizadoGoogle("das")).toEqual(false);
             });
 
             it('deve retornar false quando for revista', function(){
                 spyOn(Piano.cookies, 'get').and.returnValue("JTdCJTIyZ2xiaWQlMjI6JTIyYWJjJTIyLCUyMmRhdGElMjI6JTIyMTgsMTclMjIlN0Q=");
                 spyOn(Piano.util, 'isRevista').and.returnValue(true);
-                Piano.autenticacao.isAutorizadoGoogle("abc");
 
-                expect(Piano.autenticacao.isAutorizadoGoogle()).toEqual(false);
+                expect(Piano.autenticacao.isAutorizadoGoogle("abc")).toEqual(false);
             });
 
             it('deve retornar true quando o glbid for igual ao glbid do cookie ugg e não for revista', function(){
