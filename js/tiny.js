@@ -305,6 +305,15 @@ Piano.register = {
 	}
 };
 
+Piano.helper = {
+	mostrarBarreira: function() {
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/helper/register.js");
+		Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
+		Piano.metricas.enviaEventosGA("Exibicao Register", Piano.metricas.montaRotuloGA());
+		Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
+	}
+};
+
 Piano.paywall = {
 	redirecionarBarreira: function(url) {
 		Piano.metricas.enviaEventosGA("Barreira", Piano.metricas.montaRotuloGA());
