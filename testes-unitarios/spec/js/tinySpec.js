@@ -239,6 +239,46 @@ describe('Tiny JS', function () {
                 expect(Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso).toHaveBeenCalled();
             });
         });
+
+        describe('função isAutorizadoGoogle', function(){
+
+            it('deve retornar false quando não houver cookie glbid', function(){
+                spyOn(Piano.cookies, 'get').and.returnValue("JTdCJTIyZ2xiaWQlMjI6JTIyYWJjJTIyLCUyMmRhdGElMjI6JTIyMTgsMTclMjIlN0Q=");
+
+
+                expect(Piano.autenticacao.isAutorizadoGoogle("")).toEqual(false);
+            });
+            
+            it('deve retornar false quando não houver cookie ugg', function(){
+                spyOn(Piano.cookies, 'get').and.returnValue("");
+
+
+                expect(Piano.autenticacao.isAutorizadoGoogle("abc")).toEqual(false);
+            });
+
+            it('deve retornar false quando glbid for diferente do glbid do glbid do cookie ugg', function(){
+                
+                spyOn(Piano.cookies, 'get').and.returnValue("JTdCJTIyZ2xiaWQlMjI6JTIyYWJjJTIyLCUyMmRhdGElMjI6JTIyMTgsMTclMjIlN0Q=");
+
+                
+                expect(Piano.autenticacao.isAutorizadoGoogle("das")).toEqual(false);
+            });
+
+            it('deve retornar false quando for revista', function(){
+                spyOn(Piano.cookies, 'get').and.returnValue("JTdCJTIyZ2xiaWQlMjI6JTIyYWJjJTIyLCUyMmRhdGElMjI6JTIyMTgsMTclMjIlN0Q=");
+                spyOn(Piano.util, 'isRevista').and.returnValue(true);
+
+                expect(Piano.autenticacao.isAutorizadoGoogle("abc")).toEqual(false);
+            });
+
+            it('deve retornar true quando o glbid for igual ao glbid do cookie ugg e não for revista', function(){
+                spyOn(Piano.cookies, 'get').and.returnValue("JTdCJTIyZ2xiaWQlMjI6JTIyYWJjJTIyLCUyMmRhdGElMjI6JTIyMTgsMTclMjIlN0Q=");
+                spyOn(Piano.util, 'isRevista').and.returnValue(false);
+
+                expect(Piano.autenticacao.isAutorizadoGoogle("abc")).toEqual(true);
+            });
+
+        });
     });
 
     describe('Piano.util', function () {
@@ -1761,10 +1801,25 @@ describe('Tiny JS', function () {
                     Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso('abc');
 
                     expect(Piano.metricas.enviaEventosGA).toHaveBeenCalledWith('Erro', 'Ao obter autorizacao da API - 400 - abc');
+            });
+
+            
+            it('deve chamar o método Piano.autenticacao.defineUsuarioPiano quando a resposta do barramento for 200', function(){
+                spyOn(Piano.autenticacao, "defineUsuarioPiano");
+
+                jasmine.Ajax.stubRequest(
+                    url
+                ).andReturn({
+                    status: 200,
+                    responseText: '{"autorizado":true, "motivo":"autorizado", "temTermoDeUso":true}'
                 });
 
-            it('deve chamar o método tp.push com os parâmetros "autorizado" e "true" quando a requisição retorna 400"', function () {
-                spyOn(window["tp"], 'push');
+                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso('abc');
+                expect(Piano.autenticacao.defineUsuarioPiano).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método Piano.autenticado.defineUsuarioPiano quando a resposta do barramento for 400', function(){
+                spyOn(Piano.autenticacao, "defineUsuarioPiano");
 
                 jasmine.Ajax.stubRequest(
                     url
@@ -1772,141 +1827,10 @@ describe('Tiny JS', function () {
                     status: 400
                 });
 
-                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
-                expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'autorizado', true]);
+                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso('abc');
+                expect(Piano.autenticacao.defineUsuarioPiano).toHaveBeenCalled();
             });
-
-            it('deve chamar o método tp.push com os parâmetros "logado" e "true" quando a requisição retorna 400"', function () {
-                spyOn(window["tp"], 'push');
-
-                jasmine.Ajax.stubRequest(
-                   url
-                ).andReturn({
-                    status: 400
-                });
-
-                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
-                expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'logado', true]);
-            });
-
-            it('deve chamar o método tp.push com os parâmetros "motivo" e "erro" quando a requisição retorna 400"', function () {
-                spyOn(window["tp"], 'push');
-
-                jasmine.Ajax.stubRequest(
-                   url
-                ).andReturn({
-                    status: 400
-                });
-
-                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
-                expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'motivo', 'erro']);
-            });
-
-            it('deve chamar o método tp.push com o parâmetro "autorizado" quando a requisição retorna 200', function () {
-                spyOn(window["tp"], 'push');
-
-                jasmine.Ajax.stubRequest(
-                    url
-                ).andReturn({
-                    status: 200,
-                    responseText: '{"autorizado":"autorizado"}'
-                });
-
-                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
-                expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'autorizado', 'autorizado']);
-            });
-
-            it('deve chamar o método tp.push com os parâmetros "logado" e algum valor quando a requisição retorna 200', function () {
-                spyOn(window["tp"], 'push');
-                spyOn(Piano.autenticacao, 'isAutorizado').and.returnValue('abc');
-
-                jasmine.Ajax.stubRequest(
-                   url
-                ).andReturn({
-                    status: 200,
-                    responseText: '{"temTermoDeUso":"teste"}'
-                });
-
-                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
-                expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'logado', 'abc']);
-            });
-
-            it('deve chamar o método tp.push com os parâmetros "temTermo" e algum valor quando a resposta da requisição '
-                + 'contém o campo temTermoDeUso e retorna 200', function () {
-                    spyOn(window["tp"], 'push');
-                    spyOn(Piano.autenticacao, 'isAutorizado');
-
-                    jasmine.Ajax.stubRequest(
-                        url
-                    ).andReturn({
-                        status: 200,
-                        responseText: '{"temTermoDeUso":"teste"}'
-                    });
-
-                    Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
-                    expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'temTermo', 'teste']);
-                });
-
-            it('deve chamar o método tp.push com os parâmetros "temTermo" e "false" quando a resposta da requisição '
-                + 'não contém o campo temTermoDeUso e retorna 200', function () {
-                    spyOn(window["tp"], 'push');
-                    spyOn(Piano.autenticacao, 'isAutorizado');
-
-                    jasmine.Ajax.stubRequest(
-                        url
-                    ).andReturn({
-                        status: 200,
-                        responseText: '{}'
-                    });
-
-                    Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
-                    expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'temTermo', false]);
-                });
-
-
-            it('deve chamar o método tp.push com os parâmetros "motivo" e algum valor quando a resposta da requisição '
-                + 'contém o campo motivo e retorna 200', function () {
-                    spyOn(window["tp"], 'push');
-
-                    jasmine.Ajax.stubRequest(
-                        url
-                    ).andReturn({
-                        status: 200,
-                        responseText: '{"motivo":"abc"}'
-                    });
-
-                    Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
-                    expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'motivo', 'abc']);
-                });
-
-            it('deve chamar o método tp.push com os parâmetros "motivo" e "" quando a resposta da requisição '
-                + 'não contém o campo motivo e retorna 200', function () {
-                    spyOn(window["tp"], 'push');
-
-                    jasmine.Ajax.stubRequest(
-                        url
-                    ).andReturn({
-                        status: 200,
-                        responseText: '{}'
-                    });
-
-                    Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
-                    expect(window["tp"].push).toHaveBeenCalledWith(['setCustomVariable', 'motivo', '']);
-                });
-
-            it('deve chamar o método Piano.inadimplente.getLinkAssinatura quando respJson.link é diferente de undefined', function () {
-                spyOn(Piano.inadimplente, 'getLinkAssinatura');
-
-                jasmine.Ajax.stubRequest(
-                   url
-                ).andReturn({
-                    status: 200,
-                    responseText: '{"link":"abc"}'
-                });
-
-                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
-                expect(Piano.inadimplente.getLinkAssinatura).toHaveBeenCalled();
-            });
+            
 
         });
 
