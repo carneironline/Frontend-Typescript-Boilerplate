@@ -446,6 +446,37 @@ Piano.xmlHttpRequest = {
 	}
 };
 
+Piano.google = {
+    isAuthorized: function (glbid) {
+        var _uggCookie = Piano.cookies.get("_ugg");
+        if (_uggCookie) {
+
+            var _uggValue = JSON.parse(decodeURI(atob(_uggCookie)));
+
+            if (glbid) {
+
+                if (_uggValue.glbid == glbid) {
+                    return true;
+                } else {
+                    Piano.cookies.set("_ugg", "", -1);
+                    return false;
+                }
+            } else {
+
+                if(_uggValue.hasImmediateAccess){
+
+                    _uggValue.hasImmediateAccess = false;
+                    _uggValue = btoa(encodeURI(JSON.stringify(_uggValue)));
+                    Piano.cookies.set("_ugg", _uggValue, 1);
+
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+};
+
 Piano.autenticacao = {
 	isLogadoCadun: function(glbid, utp) {
 		if (!glbid) {
@@ -455,11 +486,11 @@ Piano.autenticacao = {
 		return glbid != '';
 	},
 	verificaUsuarioLogadoNoBarramento: function(glbid, utp) {
+        if(Piano.google.isAuthorized(glbid) && !Piano.util.isRevista()){
+            Piano.autenticacao.defineUsuarioPiano(true, "autorizado", true, true);
+            return;
+        }
 		if (Piano.autenticacao.isLogadoCadun(glbid, utp)) {
-			if(Piano.autenticacao.isAutorizadoGoogle(glbid) && !Piano.util.isRevista()){
-				Piano.autenticacao.defineUsuarioPiano(true, "autorizado", true, true);
-				return;
-			}
 			if (utp) {
 				var _leitor = JSON.parse(decodeURI(atob(utp)));
 				if (glbid == _leitor.glbid && (typeof _leitor.produto == "undefined" || _leitor.produto == Piano.variaveis.getNomeProduto())) {
@@ -485,19 +516,6 @@ Piano.autenticacao = {
 		tp.push(["setCustomVariable", "logado", logado]);
 		if(temTermoDeUso != " ")
 			tp.push(["setCustomVariable", "temTermo", temTermoDeUso]);
-	},
-	isAutorizadoGoogle: function(glbid){
-		var _ugg = Piano.cookies.get("_ugg");
-		if(_ugg){
-			var _swg = JSON.parse(decodeURI(atob(_ugg)));
-			if(_swg.glbid == glbid){
-				return true;
-			}else{
-				Piano.cookies.set("_ugg", "", -1);
-				return false;
-			}
-		}
-		return false;
 	}
 };
 
