@@ -171,7 +171,7 @@ describe('Tiny JS', function () {
                 expect(window["tp"].push).not.toHaveBeenCalled();
             });
 
-            if('deve chamar cookies.set quando glbid for inválido', function(){
+            it('deve chamar cookies.set quando glbid for inválido', function(){
                 spyOn(Piano.cookies, 'set');	
                 spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);	
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');	
@@ -238,6 +238,39 @@ describe('Tiny JS', function () {
 
                 expect(Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso).toHaveBeenCalled();
             });
+
+            it('não deve fazer requisição ao barramento quando usuário é autorizado pelo google e não está em uma revista', function(){
+                spyOn(Piano.autenticacao, "isLogadoCadun").and.returnValue(true);
+                spyOn(Piano.autenticacao, "isAutorizadoGoogle").and.returnValue(true);
+                spyOn(Piano.util,"isRevista").and.returnValue(false);
+
+                spyOn(Piano.xmlHttpRequest, "fazRequisicaoBarramentoApiAutorizacaoAcesso");
+                Piano.autenticacao.verificaUsuarioLogadoNoBarramento("","");
+
+                expect(Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso).not.toHaveBeenCalled();
+            });
+
+            it('deve chamar o método defineUsuario quando usuário é autorizado pelo google e não está em uma revista', function(){
+                spyOn(Piano.autenticacao, "isLogadoCadun").and.returnValue(true);
+                spyOn(Piano.autenticacao, "isAutorizadoGoogle").and.returnValue(true);
+                spyOn(Piano.util,"isRevista").and.returnValue(false);
+
+                spyOn(Piano.autenticacao, "defineUsuarioPiano");
+                Piano.autenticacao.verificaUsuarioLogadoNoBarramento("","");
+
+                expect(Piano.autenticacao.defineUsuarioPiano).toHaveBeenCalledWith(true, "autorizado", true, true);
+            });
+
+            it('não deve chamar o método defineUsuario quando usuário é autorizado pelo google e está em uma revista', function(){
+                spyOn(Piano.autenticacao, "isLogadoCadun").and.returnValue(true);
+                spyOn(Piano.autenticacao, "isAutorizadoGoogle").and.returnValue(true);
+                spyOn(Piano.util,"isRevista").and.returnValue(true);
+
+                spyOn(Piano.autenticacao, "defineUsuarioPiano");
+                Piano.autenticacao.verificaUsuarioLogadoNoBarramento("","");
+
+                expect(Piano.autenticacao.defineUsuarioPiano).not.toHaveBeenCalledWith(true, "autorizado", true, true);
+            });
         });
 
         describe('função isAutorizadoGoogle', function(){
@@ -263,21 +296,6 @@ describe('Tiny JS', function () {
                 
                 expect(Piano.autenticacao.isAutorizadoGoogle("das")).toEqual(false);
             });
-
-            it('deve retornar false quando for revista', function(){
-                spyOn(Piano.cookies, 'get').and.returnValue("JTdCJTIyZ2xiaWQlMjI6JTIyYWJjJTIyLCUyMmRhdGElMjI6JTIyMTgsMTclMjIlN0Q=");
-                spyOn(Piano.util, 'isRevista').and.returnValue(true);
-
-                expect(Piano.autenticacao.isAutorizadoGoogle("abc")).toEqual(false);
-            });
-
-            it('deve retornar true quando o glbid for igual ao glbid do cookie ugg e não for revista', function(){
-                spyOn(Piano.cookies, 'get').and.returnValue("JTdCJTIyZ2xiaWQlMjI6JTIyYWJjJTIyLCUyMmRhdGElMjI6JTIyMTgsMTclMjIlN0Q=");
-                spyOn(Piano.util, 'isRevista').and.returnValue(false);
-
-                expect(Piano.autenticacao.isAutorizadoGoogle("abc")).toEqual(true);
-            });
-
         });
     });
 

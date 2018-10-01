@@ -447,7 +447,7 @@ Piano.autenticacao = {
 	},
 	verificaUsuarioLogadoNoBarramento: function(glbid, utp) {
 		if (Piano.autenticacao.isLogadoCadun(glbid, utp)) {
-			if(Piano.autenticacao.isAutorizadoGoogle(glbid)){
+			if(Piano.autenticacao.isAutorizadoGoogle(glbid) && !Piano.util.isRevista()){
 				Piano.autenticacao.defineUsuarioPiano(true, "autorizado", true, true);
 				return;
 			}
@@ -481,7 +481,7 @@ Piano.autenticacao = {
 		var _ugg = Piano.cookies.get("_ugg");
 		if(_ugg){
 			var _swg = JSON.parse(decodeURI(atob(_ugg)));
-			if(_swg.glbid == glbid && !Piano.util.isRevista()){
+			if(_swg.glbid == glbid){
 				return true;
 			}else{
 				Piano.cookies.set("_ugg", "", -1);
