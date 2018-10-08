@@ -474,7 +474,18 @@ Piano.google = {
             }
         }
         return false;
-    }
+    },
+
+    isUsuarioSomenteGoogle: function() {
+		var oGloboBusiness = new OGloboBusiness();
+		var swgEntitlements; 
+		swg.getEntitlements().then(function(response){
+			{swgEntitlements = response}
+		});
+
+		oGloboBusiness.verifyEntitlements(swgEntitlements);
+	}
+
 };
 
 Piano.autenticacao = {
@@ -684,6 +695,10 @@ Piano.construtor = {
 
 		if (Piano.variaveis.isConteudoExclusivo()) {
 			tp.push(["setCustomVariable", "conteudoExclusivo", true]);
+		}
+
+		if(Piano.google.isUsuarioSomenteGoogle()){
+			tp.psuh(["setCustomVariable", "usuarioGoogle", true]);
 		}
 
 		Piano.autenticacao.verificaUsuarioLogadoNoBarramento(Piano.cookies.get(Piano.variaveis.constante.cookie.GCOM), Piano.cookies.get(Piano.variaveis.constante.cookie.UTP));
