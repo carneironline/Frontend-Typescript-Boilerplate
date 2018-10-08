@@ -52,7 +52,7 @@ if(protectedContentEl) {
 		}
 	}
 	
-	if (typeof removeOffer != 'undefined' && removeOffer != null && removeOffer != '') {
+	if (typeof removeOffer != 'undefined' && removeOffer != null && removeOffer != '' && removeOffer === true) {
 		document.querySelector(".paywall--offer-link").setAttribute('style',"display:none;");
 	}
 
