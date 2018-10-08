@@ -52,6 +52,10 @@ if(protectedContentEl) {
 		}
 	}
 	
+	if (typeof removeOffer != 'undefined' && removeOffer != null && removeOffer != '') {
+		document.querySelector(".paywall--offer-link").setAttribute('style',"display:none;");
+	}
+
 	if (typeof offerLink != 'undefined' && offerLink != null && offerLink != '') {
 		document.querySelector("#offerLink").href = offerLink;
 	}
@@ -66,6 +70,10 @@ if(protectedContentEl) {
 
 	if (typeof btnRegisterText != 'undefined' && btnRegisterText != null && btnRegisterText != '') {
 		document.querySelector("#btnRegister").innerHTML = btnRegisterText;
+	}
+
+	if (typeof btnRegisterLink != 'undefined' && btnRegisterLink != null && btnRegisterLink != '') {
+		document.querySelector("#btnRegister").href =  btnRegisterLink;
 	}
 
 	if (typeof textLogin != 'undefined' && textLogin != null && textLogin != '') {
