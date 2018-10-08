@@ -478,11 +478,6 @@ Piano.google = {
 
     isUsuarioSomenteGoogle: function() {
 		var oGloboBusiness = new OGloboBusiness();
-		var swgEntitlements; 
-		swg.getEntitlements().then(function(response){
-			{swgEntitlements = response}
-		});
-
 		oGloboBusiness.verifyEntitlements(swgEntitlements);
 	}
 
