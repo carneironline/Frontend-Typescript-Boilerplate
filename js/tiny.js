@@ -1,6 +1,6 @@
 window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
-
+clearForAds = false;
 Piano.variaveis = {
 	ambientesAceitos: "int,qlt,prd",
 	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,503,504",
@@ -692,7 +692,7 @@ Piano.construtor = {
 			tp.push(["setCustomVariable", "conteudoExclusivo", true]);
 		}
 		
-		if (swg) {
+		if (typeof swg !== 'undefined') {
 			if(Piano.google.isSpecificGoogleUser(swgEntitlements))
 			tp.push(["setCustomVariable", "usuarioGoogle", true]);	
 		}
@@ -709,7 +709,7 @@ Piano.construtor = {
 };
 
 (function () {
-	if (swg) {
+	if (typeof swg !== 'undefined') {
 		swg.setOnEntitlementsResponse(function(entitlementsPromise){
 			entitlementsPromise.then(function(entitlements){
 				swgEntitlements = entitlements;
