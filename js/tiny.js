@@ -10,7 +10,8 @@ Piano.variaveis = {
 			GCOM: 'GLBID',
 			UTP: '_utp',
 			RTIEX: '_rtiex',
-			AMBIENTE: 'ambientePiano'
+			AMBIENTE: 'ambientePiano',
+			SAVE_SUBSCRIPTION: 'saveSubscriptionCookie'
 		},
 		metricas: {
 			EVENTO_SEM_ACAO: 'sem acao',
@@ -435,9 +436,12 @@ Piano.xmlHttpRequest = {
 						"glbid": glbid,
 						"produto": Piano.variaveis.getNomeProduto(),
 						"codProduto": codigoProduto
-				};
+					};
 				_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
+				if(Piano.google.showSaveSubscription(respJson.motivo)){
+					//TO DO chamar aldebaran
+				}
 			}else{
 				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
 				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
@@ -479,6 +483,12 @@ Piano.google = {
     isSpecificGoogleUser: function() {
 		var oGloboBusiness = new OGloboBusiness();
 		return oGloboBusiness.isGoogleSubscriber(swgEntitlements);
+	},
+
+	showSaveSubscription: function(motivo){
+		if(motivo ==="AUTORIZADO" && !Piano.cookies.get(Piano.variaveis.constante.SAVE_SUBSCRIPTION))
+			return true;
+		return false;
 	}
 
 };
@@ -492,10 +502,10 @@ Piano.autenticacao = {
 		return glbid != '';
 	},
 	verificaUsuarioLogadoNoBarramento: function(glbid, utp) {
-        if(Piano.google.isAuthorized(glbid) && !Piano.util.isRevista()){
+        /* if(Piano.google.isAuthorized(glbid) && !Piano.util.isRevista()){
             Piano.autenticacao.defineUsuarioPiano(true, "autorizado", true, true);
             return;
-        }
+        } */
 		if (Piano.autenticacao.isLogadoCadun(glbid, utp)) {
 			if (utp) {
 				var _leitor = JSON.parse(decodeURI(atob(utp)));
@@ -694,7 +704,7 @@ Piano.construtor = {
 		
 		if (typeof swg !== 'undefined') {
 			if(Piano.google.isSpecificGoogleUser(swgEntitlements))
-			tp.push(["setCustomVariable", "usuarioGoogle", true]);	
+			//tp.push(["setCustomVariable", "usuarioGoogle", true]);	
 		}
  
 		Piano.autenticacao.verificaUsuarioLogadoNoBarramento(Piano.cookies.get(Piano.variaveis.constante.cookie.GCOM), Piano.cookies.get(Piano.variaveis.constante.cookie.UTP));
