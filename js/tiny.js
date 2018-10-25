@@ -441,7 +441,7 @@ Piano.xmlHttpRequest = {
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
 
 				if(Piano.google.showSaveSubscription(respJson.motivo)){
-					var swgService = new swgService;
+					var swgService = new SwgService();
 					swgService.saveGloboSubscription(glbid);
 				}
 			}else{
@@ -707,7 +707,7 @@ Piano.construtor = {
 		
 		if (typeof swg !== 'undefined') {
 			if(Piano.google.isSpecificGoogleUser(swgEntitlements))
-			//tp.push(["setCustomVariable", "usuarioGoogle", true]);	
+			tp.push(["setCustomVariable", "usuarioGoogle", true]);	
 		}
  
 		Piano.autenticacao.verificaUsuarioLogadoNoBarramento(Piano.cookies.get(Piano.variaveis.constante.cookie.GCOM), Piano.cookies.get(Piano.variaveis.constante.cookie.UTP));
