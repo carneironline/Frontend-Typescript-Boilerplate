@@ -439,8 +439,10 @@ Piano.xmlHttpRequest = {
 					};
 				_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
+
 				if(Piano.google.showSaveSubscription(respJson.motivo)){
-					//TO DO chamar aldebaran
+					var swgService = new swgService;
+					swgService.saveGloboSubscription(glbid);
 				}
 			}else{
 				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
@@ -486,8 +488,9 @@ Piano.google = {
 	},
 
 	showSaveSubscription: function(motivo){
-		if(motivo ==="AUTORIZADO" && !Piano.cookies.get(Piano.variaveis.constante.SAVE_SUBSCRIPTION))
+		if(motivo ==="AUTORIZADO" && !Piano.cookies.get(Piano.variaveis.constante.SAVE_SUBSCRIPTION)){
 			return true;
+		}
 		return false;
 	}
 
