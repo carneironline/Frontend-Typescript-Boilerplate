@@ -12,7 +12,7 @@ Piano.variaveis = {
 			RTIEX: '_rtiex',
 			AMBIENTE: 'ambientePiano',
 			SAVE_SUBSCRIPTION: 'saveSubscriptionCookie',
-			CREATED_GLOBOID: 'createGloboId',
+			CREATED_GLOBOID: 'createdGloboId',
 			GLOBOID_MESSAGE: 'globoIdMessage'
 		},
 		metricas: {
