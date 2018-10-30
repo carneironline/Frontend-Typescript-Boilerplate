@@ -10,7 +10,10 @@ Piano.variaveis = {
 			GCOM: 'GLBID',
 			UTP: '_utp',
 			RTIEX: '_rtiex',
-			AMBIENTE: 'ambientePiano'
+			AMBIENTE: 'ambientePiano',
+			SAVE_SUBSCRIPTION: 'saveSubscriptionCookie',
+			CREATED_GLOBOID: 'createdGloboId',
+			GLOBOID_MESSAGE: 'globoIdMessage'
 		},
 		metricas: {
 			EVENTO_SEM_ACAO: 'sem acao',
@@ -435,9 +438,17 @@ Piano.xmlHttpRequest = {
 						"glbid": glbid,
 						"produto": Piano.variaveis.getNomeProduto(),
 						"codProduto": codigoProduto
-				};
+					};
 				_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
+				
+				if (typeof swg !== 'undefined') {
+					if(Piano.google.showSaveSubscription(respJson.motivo)){
+						var swgService = new SwgService();
+						swgService.saveGloboSubscription(glbid);
+					}
+				}
+				
 			}else{
 				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
 				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
@@ -447,38 +458,30 @@ Piano.xmlHttpRequest = {
 };
 
 Piano.google = {
-    isAuthorized: function (glbid) {
-        var _uggCookie = Piano.cookies.get("_ugg");
-        if (_uggCookie) {
+    isAuthorized: function () {
 
-            var _uggValue = JSON.parse(decodeURI(atob(_uggCookie)));
+		if(swgEntitlements.getEntitlementForSource("oglobo.globo.com"))
+			return true;
 
-            if (glbid) {
-
-                if (_uggValue.glbid == glbid) {
-                    return true;
-                } else {
-                    Piano.cookies.set("_ugg", "", -1);
-                    return false;
-                }
-            } else {
-
-                if(_uggValue.hasImmediateAccess){
-
-                    _uggValue.hasImmediateAccess = false;
-                    _uggValue = btoa(encodeURI(JSON.stringify(_uggValue)));
-                    Piano.cookies.set("_ugg", _uggValue, 1);
-
-                    return true;
-                }
-            }
-        }
-        return false;
+		if(Piano.cookies.get(Piano.variaveis.constante.CREATED_GLOBOID))
+			return true;
+		
+		return false;
     },
 
     isSpecificGoogleUser: function() {
+		if (Piano.google.isAuthorized())
+			return;
+
 		var oGloboBusiness = new OGloboBusiness();
-		return oGloboBusiness.isGoogleSubscriber(swgEntitlements);
+		oGloboBusiness.isGoogleSubscriber(swgEntitlements);
+	},
+
+	showSaveSubscription: function(motivo){
+		if(!swgEntitlements.enablesThis() && motivo ==="AUTORIZADO" && !Piano.cookies.get(Piano.variaveis.constante.SAVE_SUBSCRIPTION)){
+			return true;
+		}
+		return false;
 	}
 
 };
@@ -492,10 +495,6 @@ Piano.autenticacao = {
 		return glbid != '';
 	},
 	verificaUsuarioLogadoNoBarramento: function(glbid, utp) {
-        if(Piano.google.isAuthorized(glbid) && !Piano.util.isRevista()){
-            Piano.autenticacao.defineUsuarioPiano(true, "autorizado", true, true);
-            return;
-        }
 		if (Piano.autenticacao.isLogadoCadun(glbid, utp)) {
 			if (utp) {
 				var _leitor = JSON.parse(decodeURI(atob(utp)));
@@ -692,13 +691,13 @@ Piano.construtor = {
 			tp.push(["setCustomVariable", "conteudoExclusivo", true]);
 		}
 		
-		if (typeof swg !== 'undefined') {
-			if(Piano.google.isSpecificGoogleUser(swgEntitlements))
-			tp.push(["setCustomVariable", "usuarioGoogle", true]);	
+		if (typeof swg !== 'undefined' && swgEntitlements.enablesThis()) {
+			Piano.google.isSpecificGoogleUser(swgEntitlements)
+			Piano.autenticacao.defineUsuarioPiano(true,"AUTORIZADO", true, "");
+		}else{
+			Piano.autenticacao.verificaUsuarioLogadoNoBarramento(Piano.cookies.get(Piano.variaveis.constante.cookie.GCOM), Piano.cookies.get(Piano.variaveis.constante.cookie.UTP));
 		}
- 
-		Piano.autenticacao.verificaUsuarioLogadoNoBarramento(Piano.cookies.get(Piano.variaveis.constante.cookie.GCOM), Piano.cookies.get(Piano.variaveis.constante.cookie.UTP));
-
+		
 		Piano.krux.obtemSegmentacao();
 
 		tp.push(["setCustomVariable", "bannerContadorLigado", true]);
