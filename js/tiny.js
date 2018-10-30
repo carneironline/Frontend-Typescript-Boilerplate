@@ -471,10 +471,10 @@ Piano.google = {
 
     isSpecificGoogleUser: function() {
 		if (Piano.google.isAuthorized())
-			return false;
+			return;
 
 		var oGloboBusiness = new OGloboBusiness();
-		return oGloboBusiness.isGoogleSubscriber(swgEntitlements);
+		oGloboBusiness.isGoogleSubscriber(swgEntitlements);
 	},
 
 	showSaveSubscription: function(motivo){
@@ -691,15 +691,13 @@ Piano.construtor = {
 			tp.push(["setCustomVariable", "conteudoExclusivo", true]);
 		}
 		
-		if (typeof swg !== 'undefined') {
-			if (swgEntitlements.enablesThis()){
-				if(Piano.google.isSpecificGoogleUser(swgEntitlements))
-					tp.push(["setCustomVariable", "usuarioRegisterGoogle", true]);	
-			}
+		if (typeof swg !== 'undefined' && swgEntitlements.enablesThis()) {
+			Piano.google.isSpecificGoogleUser(swgEntitlements)
+			Piano.autenticacao.defineUsuarioPiano(true,"AUTORIZADO", true, "");
+		}else{
+			Piano.autenticacao.verificaUsuarioLogadoNoBarramento(Piano.cookies.get(Piano.variaveis.constante.cookie.GCOM), Piano.cookies.get(Piano.variaveis.constante.cookie.UTP));
 		}
 		
-		Piano.autenticacao.verificaUsuarioLogadoNoBarramento(Piano.cookies.get(Piano.variaveis.constante.cookie.GCOM), Piano.cookies.get(Piano.variaveis.constante.cookie.UTP));
-
 		Piano.krux.obtemSegmentacao();
 
 		tp.push(["setCustomVariable", "bannerContadorLigado", true]);
