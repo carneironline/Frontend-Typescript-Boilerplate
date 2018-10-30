@@ -692,7 +692,7 @@ Piano.construtor = {
 		}
 		
 		if (typeof swg !== 'undefined' && swgEntitlements.enablesThis()) {
-			Piano.google.isSpecificGoogleUser(swgEntitlements)
+			Piano.google.isSpecificGoogleUser(swgEntitlements);
 			Piano.autenticacao.defineUsuarioPiano(true,"AUTORIZADO", true, "");
 		}else{
 			Piano.autenticacao.verificaUsuarioLogadoNoBarramento(Piano.cookies.get(Piano.variaveis.constante.cookie.GCOM), Piano.cookies.get(Piano.variaveis.constante.cookie.UTP));
