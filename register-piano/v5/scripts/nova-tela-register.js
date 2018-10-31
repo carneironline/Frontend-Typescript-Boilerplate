@@ -2,13 +2,13 @@ var protectedContentEl = document.querySelector(".protected-content");
 if(protectedContentEl) {
 	var uri = encodeURIComponent(document.location.href);
 
-	callLoginRegister = function(e) {
-		e = window.event;
+	function callLoginRegister(e) {
 		e.preventDefault();
 		s = document.querySelectorAll(".paywall--login-iframe, .paywall--offer-link, .paywall--login-button");
 		for (var i = 0; i < s.length; i++) {
 			s[i].classList.toggle("hidden");
 		}
+		return false;
 	}
 
 	var protectedContent = "" +
@@ -18,13 +18,13 @@ if(protectedContentEl) {
 	"            <h2><strong>Muito bom ter você por aqui!</strong> Adoramos bons leitores.</h2>" +
 	"            <h3>Você atingiu o número máximo de leituras gratuitas este mês.</h3>" +
 	"            <a id='btnRegister' href='#' target='_blank'><strong>Cadastre-se</strong> para continuar.</a>" +
-	"            <p class='textLogin' >Já possui conta <a href='#' onclick='callLoginRegister();'>Globo.com</a>?</p>" +
+	"            <p class='textLogin' >Já possui conta <a href='#' onclick='callLoginRegister(event);'>Globo.com</a>?</p>" +
 	"        </div>" +
 	"        <div class='paywall--offer-link '>" +
 	"            <a id='offerLink' class='paywall--offer-image' target='_blank' href='#'>oferta</a>" +
 	"        </div>" +
 	"        <div class='paywall--login-iframe hidden'>" +
-	"            <a href='#' class='back-to-offer' onclick='callLoginRegister();'>Voltar</a>" +
+	"            <a href='#' class='back-to-offer' onclick='callLoginRegister(event);'>Voltar</a>" +
 	"            <div class='paywall--login-holder'>" +
 	"            	<iframe id='iframeCadun' src='#'></iframe>" +
 	"            </div>" +
