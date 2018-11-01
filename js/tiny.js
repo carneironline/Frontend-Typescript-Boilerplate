@@ -460,12 +460,9 @@ Piano.xmlHttpRequest = {
 Piano.google = {
     isAuthorized: function () {
 
-		if(swgEntitlements.getEntitlementForSource("oglobo.globo.com"))
+		if(swgEntitlements.getEntitlementForSource("oglobo.globo.com") || Piano.cookies.get(Piano.variaveis.constante.CREATED_GLOBOID))
 			return true;
 
-		if(Piano.cookies.get(Piano.variaveis.constante.CREATED_GLOBOID))
-			return true;
-		
 		return false;
     },
 
@@ -709,15 +706,22 @@ Piano.construtor = {
 
 (function () {
 	if (typeof swg !== 'undefined') {
-		swg.setOnEntitlementsResponse(function(entitlementsPromise){
-			entitlementsPromise.then(function(entitlements){
-				swgEntitlements = entitlements;
-				Piano.construtor.initTp();
-			})
-		});	
+		(self.SWG = self.SWG || []).push((subscriptions) => {
+			swg = subscriptions;
+			
+            subscriptions.setOnEntitlementsResponse(entitlementsPromise => {
+                entitlementsPromise.then(entitlements => {
+                    swgEntitlements = entitlements;
+                    if (Piano !== 'undefined')
+                        Piano.construtor.initTp();
+                });
+            });
+        });
+
 	} else {
 		Piano.construtor.initTp();	
-	}	
+	}
+
 })();
 
 (function (src) {
