@@ -238,28 +238,6 @@ describe('Tiny JS', function () {
 
                 expect(Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso).toHaveBeenCalled();
             });
-
-            it('deve liberar o acesso se o usuário for autorizado pelo Google', function(){
-
-                spyOn(Piano.google, 'isAuthorized').and.returnValue(true);
-                spyOn(Piano.util, 'isRevista').and.returnValue(false);
-                spyOn(Piano.autenticacao, 'defineUsuarioPiano');
-
-                Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
-
-                expect(Piano.autenticacao.defineUsuarioPiano).toHaveBeenCalledWith(true, "autorizado", true, true);
-            });
-
-            it('não deve fazer requisição para o barramento se o usuário for autorizado pelo Google', function(){
-
-                spyOn(Piano.google, 'isAuthorized').and.returnValue(true);
-                spyOn(Piano.util, 'isRevista').and.returnValue(false);
-                spyOn(Piano.xmlHttpRequest, 'fazRequisicaoBarramentoApiAutorizacaoAcesso');
-
-                Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
-
-                expect(Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso).not.toHaveBeenCalled();
-            });
         });
     });
 
@@ -590,8 +568,6 @@ describe('Tiny JS', function () {
 
         describe('função initTp', function () {
 
-
-
             it('deve chamar o método Piano.util.detectaBurlesco', function () {
                 spyOn(Piano.util, 'detectaBurlesco');
 
@@ -741,6 +717,16 @@ describe('Tiny JS', function () {
 
                 Piano.construtor.initTp();
                 expect(window["tp"].push).toHaveBeenCalledWith(['addHandler', 'meterExpired', 'abc']);
+            });
+
+            it('deve chamar o método Piano.google.isSpecificGoogleUser quando swg está definido e o usuário tem entitlements', function(){
+                let swgEntitlements = {'a': "as"};
+                spyOn(swgEntitlements, "enablesThis").and.returnValue(true);
+                let swg = 'asd';
+                
+
+                Piano.construtor.initTp();
+                expect(Piano.google.isSpecificGoogleUser).toHaveBeenCalled();
             });
 
         });
@@ -1820,68 +1806,7 @@ describe('Tiny JS', function () {
 
         describe('isAuthorized', function () {
 
-            it('deve retornar true se o cookie glbid for igual ao glbid do cookie ugg', function () {
-
-                let glbid = 'glbidTest';
-                let _uggValue = {
-                    'glbid': glbid
-                };
-
-                spyOn(Piano.cookies, 'get').and.returnValue('return');
-                spyOn(JSON, 'parse').and.returnValue(_uggValue);
-
-                expect(Piano.google.isAuthorized(glbid)).toBe(true);
-            });
-
-            it('deve retornar false se o cookie glbid for difente do glbid do cookie ugg', function () {
-
-                let _uggValue = {
-                    'glbid': 'glbid1'
-                };
-
-                spyOn(Piano.cookies, 'get').and.returnValue('return');
-                spyOn(JSON, 'parse').and.returnValue(_uggValue);
-                spyOn(Piano.cookies, 'set');
-
-                expect(Piano.google.isAuthorized('glbid2')).toBe(false);
-                expect(Piano.cookies.set).toHaveBeenCalledWith("_ugg", "", -1);
-            });
-
-            it('deve retornar true e reescrever o cookie _ugg quando o usuário está deslogado e o acesso imediato está ' +
-                'ativo', function () {
-
-                let _uggValue = {
-                    'hasImmediateAccess': true
-                };
-
-                spyOn(Piano.cookies, 'get').and.returnValue('return');
-                spyOn(JSON, 'parse').and.returnValue(_uggValue);
-                spyOn(Piano.cookies, 'set');
-
-                expect(Piano.google.isAuthorized()).toBe(true);
-                _uggValue = btoa(encodeURI(JSON.stringify(_uggValue)));
-                expect(Piano.cookies.set).toHaveBeenCalledWith("_ugg", _uggValue, 1);
-            });
-
-            it('deve retornar false se o usuário estiver deslogado e o acesso imediato está inativo', function () {
-
-                let _uggValue = {
-                    'hasImmediateAccess': false
-                };
-
-                spyOn(Piano.cookies, 'get').and.returnValue('return');
-                spyOn(JSON, 'parse').and.returnValue(_uggValue);
-
-                expect(Piano.google.isAuthorized()).toBe(false);
-            });
-
-            it('deve retornar false quando o cookie ugg não existe', function () {
-
-                spyOn(Piano.cookies, 'get').and.returnValue();
-
-                expect(Piano.google.isAuthorized()).toBe(false);
-            });
-
+           
         });
 
     });
