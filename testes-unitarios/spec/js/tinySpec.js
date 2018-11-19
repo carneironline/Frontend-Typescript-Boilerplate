@@ -719,18 +719,38 @@ describe('Tiny JS', function () {
                 expect(window["tp"].push).toHaveBeenCalledWith(['addHandler', 'meterExpired', 'abc']);
             });
 
+            it('deve chamar o método Piano.autenticacao.verificaUsuarioLogadoNoBarramento quando swg não está definido', function(){
+                swgEntitlements = {enablesThis:function(){}}
+
+                spyOn(swgEntitlements, 'enablesThis').and.returnValue(true);
+                spyOn(Piano.autenticacao, "verificaUsuarioLogadoNoBarramento");
+                Piano.construtor.initTp();
+                expect(Piano.autenticacao.verificaUsuarioLogadoNoBarramento).toHaveBeenCalled();
+            });
+
             it('deve chamar o método Piano.google.isSpecificGoogleUser quando swg está definido e o usuário tem entitlements', function(){
-                let swgEntitlements = {'a': "as"};
-                spyOn(swgEntitlements, "enablesThis").and.returnValue(true);
-                let swg = 'asd';
-                
+                swg = {'asd':'ads'};
+                swgEntitlements = {enablesThis:function(){}}
+
+                spyOn(swgEntitlements, 'enablesThis').and.returnValue(true);
+                spyOn(Piano.google,"isSpecificGoogleUser");
 
                 Piano.construtor.initTp();
                 expect(Piano.google.isSpecificGoogleUser).toHaveBeenCalled();
             });
 
-        });
+            it('deve chamar o método Piano.autenticacao.defineUsuarioPiano quando swg está definido e o usuário tem entitlements', function(){
+                swg = {'asd':'ads'};
+                swgEntitlements = {enablesThis:function(){}}
 
+                spyOn(swgEntitlements, 'enablesThis').and.returnValue(true);
+                spyOn(Piano.google,"isSpecificGoogleUser");
+                spyOn(Piano.autenticacao, "defineUsuarioPiano");
+
+                Piano.construtor.initTp();
+                expect(Piano.autenticacao.defineUsuarioPiano).toHaveBeenCalledWith(true, "AUTORIZADO", true, "");
+            });
+        });
     });
 
 
@@ -1805,8 +1825,21 @@ describe('Tiny JS', function () {
     describe('Piano.google', function () {
 
         describe('isAuthorized', function () {
+            
+            it("deve retornar true quando o usuário tiver entitlements OGlobo", function(){
+                swgEntitlements = {getEntitlementForSource: function(){}};
 
-           
+                spyOn(swgEntitlements, "getEntitlementForSource").and.returnValue(true);
+
+                spyOn(Piano.metricas, "setaVariaveis");
+
+                expect(Piano.google.isAuthorized()).toBe(true);
+            });
+
+            xit("deve retornar true quando o usuário possuir o cookie CREATED_GLOBOID", function(){
+
+            });
+
         });
 
     });

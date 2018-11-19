@@ -458,9 +458,6 @@ Piano.xmlHttpRequest = {
 				
 				if(respJson.autorizado == true){
 					Piano.metricas.setaVariaveis(respJson.usuarioId, "Globo ID", "O Globo");
-					// PaywallAnalytics.idLoginAssinante = respJson.usuarioId;
-					// PaywallAnalytics.tipoLoginAssinante = "Globo ID";
-					// PaywallAnalytics.assinaturaLogada = "O Globo";
 				}
 
 				
@@ -474,20 +471,13 @@ Piano.xmlHttpRequest = {
 
 Piano.google = {
     isAuthorized: function () {
-
 		if(swgEntitlements.getEntitlementForSource("oglobo.globo.com")){
 			Piano.metricas.setaVariaveis(swgEntitlements.getEntitlementForSource("oglobo.globo.com").subscriptionToken, "Conta Google", "O Globo");
-			// PaywallAnalytics.idLoginAssinante = swgEntitlements.getEntitlementForSource("oglobo.globo.com").subscriptionToken;
-			// PaywallAnalytics.tipoLoginAssinante = "Conta Google";
-			// PaywallAnalytics.assinaturaLogada = "O Globo";
 			return true;
 		}
 		
 		if(Piano.cookies.get(Piano.variaveis.constante.CREATED_GLOBOID)){
 			Piano.metricas.setaVariaveis(swgEntitlements.getEntitlementForSource("google").subscriptionToken.orderId, "Conta Google", "Google");
-			// PaywallAnalytics.idLoginAssinante = swgEntitlements.getEntitlementForSource("google").subscriptionToken.orderId;
-			// PaywallAnalytics.tipoLoginAssinante = "Conta Google";
-			// PaywallAnalytics.assinaturaLogada = "Google";
 			return true;
 		}
 
@@ -528,9 +518,6 @@ Piano.autenticacao = {
 					Piano.autenticacao.defineUsuarioPiano(_leitor.autorizado, _leitor.motivo, _leitor.logado, _leitor.temTermoDeUso);
 					if(_leitor.autorizado){
 						Piano.metricas.setaVariaveis(_leitor.uuid, "Globo ID", "O Globo");
-						// PaywallAnalytics.idLoginAssinante = _leitor.uuid;
-						// PaywallAnalytics.tipoLoginAssinante = "Globo ID";
-						// PaywallAnalytics.assinaturaLogada = "O Globo";
 					}
 					return;
 				}
