@@ -1,6 +1,5 @@
 window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
-clearForAds = false;
 Piano.variaveis = {
 	ambientesAceitos: "int,qlt,prd",
 	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,503,504",
