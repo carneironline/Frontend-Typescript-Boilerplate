@@ -1,5 +1,6 @@
 window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
+var PaywallAnalytics = {};
 Piano.variaveis = {
 	ambientesAceitos: "int,qlt,prd",
 	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,503,504",
@@ -280,6 +281,11 @@ Piano.metricas = {
 			if (typeof expirou == 'undefined') Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
 			executouPageview = true;
 		}
+	},
+	setaVariaveis: function(idLogin, tipoLogin, assinaturaLogada){
+		PaywallAnalytics.idLoginAssinante = idLogin;
+        PaywallAnalytics.tipoLoginAssinante = tipoLogin;
+        PaywallAnalytics.assinaturaLogada = assinaturaLogada;
 	}
 };
 
@@ -436,7 +442,8 @@ Piano.xmlHttpRequest = {
 						"temTermoDeUso": respostaDeTermoDeUso,
 						"glbid": glbid,
 						"produto": Piano.variaveis.getNomeProduto(),
-						"codProduto": codigoProduto
+						"codProduto": codigoProduto,
+						"uuid": respJson.usuarioId
 					};
 				_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
@@ -448,6 +455,11 @@ Piano.xmlHttpRequest = {
 					}
 				}
 				
+				if(respJson.autorizado == true){
+					Piano.metricas.setaVariaveis(respJson.usuarioId, "Globo ID", "O Globo");
+				}
+
+				
 			}else{
 				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
 				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
@@ -458,9 +470,16 @@ Piano.xmlHttpRequest = {
 
 Piano.google = {
     isAuthorized: function () {
-
-		if(swgEntitlements.getEntitlementForSource("oglobo.globo.com") || Piano.cookies.get(Piano.variaveis.constante.CREATED_GLOBOID))
+		if(swgEntitlements.getEntitlementForSource("oglobo.globo.com")){
+			Piano.metricas.setaVariaveis(swgEntitlements.getEntitlementForSource("oglobo.globo.com").subscriptionToken, "Conta Google", "O Globo");
 			return true;
+		}
+		
+		if(Piano.cookies.get(Piano.variaveis.constante.CREATED_GLOBOID)){
+			Piano.metricas.setaVariaveis(swgEntitlements.getEntitlementForSource("google").subscriptionToken.orderId, "Conta Google", "Google");
+			return true;
+		}
+
 
 		return false;
     },
@@ -496,6 +515,9 @@ Piano.autenticacao = {
 				var _leitor = JSON.parse(decodeURI(atob(utp)));
 				if (glbid == _leitor.glbid && (typeof _leitor.produto == "undefined" || _leitor.produto == Piano.variaveis.getNomeProduto())) {
 					Piano.autenticacao.defineUsuarioPiano(_leitor.autorizado, _leitor.motivo, _leitor.logado, _leitor.temTermoDeUso);
+					if(_leitor.autorizado){
+						Piano.metricas.setaVariaveis(_leitor.uuid, "Globo ID", "O Globo");
+					}
 					return;
 				}
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);

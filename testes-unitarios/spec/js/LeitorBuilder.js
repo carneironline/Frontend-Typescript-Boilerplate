@@ -15,8 +15,23 @@ function LeitorBuilder() {
             return this;
         },
 
+        setMotivo: function (valor){
+            motivo = valor;
+            return this;
+        },
+
+        setAutorizado: function(valor){
+            autorizado = valor;
+            return this;
+        },
+
+        setUUID: function(valor){
+            uuid = valor;
+            return this;
+        },
+
         build: function () {
-            return { glbid, produto };
+            return { glbid, produto, motivo, autorizado, uuid };
         }
 
 

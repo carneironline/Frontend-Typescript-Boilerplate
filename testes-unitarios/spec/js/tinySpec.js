@@ -143,7 +143,7 @@ describe('Tiny JS', function () {
             it('deve chamar o método tp.push quarto vezes se glbid é válido e produto tem valor "undefined"', function () {
                 spyOn(window["tp"], 'push');
                 spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
-                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto(undefined).build());
+                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto(undefined).setMotivo("AUTORIZADO").setAutorizado(true).setUUID("1234").build());
 
                 Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
                 expect(window["tp"].push.calls.count()).toEqual(4);
@@ -154,7 +154,7 @@ describe('Tiny JS', function () {
                 spyOn(window["tp"], 'push');
                 spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
-                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoValido').build());
+                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoValido').setMotivo("AUTORIZADO").setAutorizado(true).setUUID("1234").build());
 
                 Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
                 expect(window["tp"].push.calls.count()).toEqual(4);
@@ -164,7 +164,7 @@ describe('Tiny JS', function () {
                 spyOn(window["tp"], 'push');
                 spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
-                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidInvalido').setProduto('produtoValido').build());
+                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidInvalido').setProduto('produtoValido').setMotivo("AUTORIZADO").setAutorizado(true).setUUID("1234").build());
                 spyOn(Piano.xmlHttpRequest, 'fazRequisicaoBarramentoApiAutorizacaoAcesso').and.returnValue('');
 
                 Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
@@ -175,7 +175,7 @@ describe('Tiny JS', function () {
                 spyOn(Piano.cookies, 'set');	
                 spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);	
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');	
-                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidInvalido').setProduto('produtoValido').build());	
+                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidInvalido').setProduto('produtoValido').setMotivo("AUTORIZADO").setAutorizado(true).setUUID("1234").build());	
                 spyOn(Piano.xmlHttpRequest, 'fazRequisicaoBarramentoApiAutorizacaoAcesso').and.returnValue('');	
                  Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');	
                 expect(Piano.cookies.set).toHaveBeenCalled();
@@ -186,7 +186,7 @@ describe('Tiny JS', function () {
                 spyOn(window["tp"], 'push');
                 spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
-                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoInvalido').build());
+                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoInvalido').setMotivo("AUTORIZADO").setAutorizado(true).setUUID("1234").build());
                 spyOn(Piano.xmlHttpRequest, 'fazRequisicaoBarramentoApiAutorizacaoAcesso').and.returnValue('');
 
                 Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
@@ -197,7 +197,7 @@ describe('Tiny JS', function () {
                 spyOn(Piano.cookies, 'set');
                 spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
-                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoInvalido').build());
+                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoInvalido').setMotivo("AUTORIZADO").setAutorizado(true).setUUID("1234").build());
                 spyOn(Piano.xmlHttpRequest, 'fazRequisicaoBarramentoApiAutorizacaoAcesso').and.returnValue('');
 
                 Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
@@ -216,7 +216,7 @@ describe('Tiny JS', function () {
                     spyOn(Piano.xmlHttpRequest, 'fazRequisicaoBarramentoApiAutorizacaoAcesso');
                     spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
                     
-                    spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoValido').build());
+                    spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoValido').setMotivo("AUTORIZADO").setAutorizado(true).setUUID("1234").build());
 
                     Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidInvalido', 'utp');
                     expect(Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso).toHaveBeenCalled();
@@ -226,7 +226,7 @@ describe('Tiny JS', function () {
                     spyOn(Piano.xmlHttpRequest, 'fazRequisicaoBarramentoApiAutorizacaoAcesso');
                     spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
                     spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
-                    spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoInvalido').build());
+                    spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoInvalido').setMotivo("AUTORIZADO").setAutorizado(true).setUUID("1234").build());
 
                     Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
                     expect(Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso).toHaveBeenCalled();
@@ -238,6 +238,17 @@ describe('Tiny JS', function () {
 
                 expect(Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso).toHaveBeenCalled();
             });
+
+           it('deve chamar o método Piano.metricas.setaVariaveis quando o usuário é autorizado', function(){
+                spyOn(Piano.autenticacao, 'isLogadoCadun').and.returnValue(true);
+                spyOn(JSON, 'parse').and.returnValue(new LeitorBuilder().setGlbid('glbidValido').setProduto('produtoValido').setMotivo("AUTORIZADO").setAutorizado(true).setUUID("1234").build());
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('produtoValido');
+                spyOn(Piano.metricas, 'setaVariaveis');
+
+                Piano.autenticacao.verificaUsuarioLogadoNoBarramento('glbidValido', 'utp');
+                expect(Piano.metricas.setaVariaveis).toHaveBeenCalledWith("1234", "Globo ID", "O Globo");
+           });
+
         });
     });
 
@@ -719,18 +730,38 @@ describe('Tiny JS', function () {
                 expect(window["tp"].push).toHaveBeenCalledWith(['addHandler', 'meterExpired', 'abc']);
             });
 
+            it('deve chamar o método Piano.autenticacao.verificaUsuarioLogadoNoBarramento quando swg não está definido', function(){
+                swgEntitlements = {enablesThis:function(){}}
+
+                spyOn(swgEntitlements, 'enablesThis').and.returnValue(true);
+                spyOn(Piano.autenticacao, "verificaUsuarioLogadoNoBarramento");
+                Piano.construtor.initTp();
+                expect(Piano.autenticacao.verificaUsuarioLogadoNoBarramento).toHaveBeenCalled();
+            });
+
             it('deve chamar o método Piano.google.isSpecificGoogleUser quando swg está definido e o usuário tem entitlements', function(){
-                let swgEntitlements = {'a': "as"};
-                spyOn(swgEntitlements, "enablesThis").and.returnValue(true);
-                let swg = 'asd';
-                
+                swg = {'asd':'ads'};
+                swgEntitlements = {enablesThis:function(){}};
+
+                spyOn(swgEntitlements, 'enablesThis').and.returnValue(true);
+                spyOn(Piano.google,"isSpecificGoogleUser");
 
                 Piano.construtor.initTp();
                 expect(Piano.google.isSpecificGoogleUser).toHaveBeenCalled();
             });
 
-        });
+            it('deve chamar o método Piano.autenticacao.defineUsuarioPiano quando swg está definido e o usuário tem entitlements', function(){
+                swg = {'asd':'ads'};
+                swgEntitlements = {enablesThis:function(){}};
 
+                spyOn(swgEntitlements, 'enablesThis').and.returnValue(true);
+                spyOn(Piano.google,"isSpecificGoogleUser");
+                spyOn(Piano.autenticacao, "defineUsuarioPiano");
+
+                Piano.construtor.initTp();
+                expect(Piano.autenticacao.defineUsuarioPiano).toHaveBeenCalledWith(true, "AUTORIZADO", true, "");
+            });
+        });
     });
 
 
@@ -1798,6 +1829,28 @@ describe('Tiny JS', function () {
                 Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso('abc');
                 expect(Piano.autenticacao.defineUsuarioPiano).toHaveBeenCalled();
             });
+
+
+            xit('deve chamar a função saveGloboSubscription quando a função showSaveSubscription retornar true', function(){
+
+            });
+
+            it('deve chamar a função Piano.metricas.setaVariaveis quando o usuario for autorizado', function(){
+                jasmine.Ajax.stubRequest(
+                    url
+                ).andReturn({
+                    status: 200,
+                    responseText: '{"autorizado":true, "motivo":"autorizado", "temTermoDeUso":true, "usuarioId": "1234-abcd"}'
+                });
+
+                spyOn(Piano.metricas, "setaVariaveis");
+
+                Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso();
+
+                expect(Piano.metricas.setaVariaveis).toHaveBeenCalledWith("1234-abcd", "Globo ID", "O Globo");
+
+
+            });
         });
 
     });
@@ -1805,10 +1858,140 @@ describe('Tiny JS', function () {
     describe('Piano.google', function () {
 
         describe('isAuthorized', function () {
+            
+            it("deve retornar true quando o usuário tiver entitlements OGlobo", function(){
+                swgEntitlements = {getEntitlementForSource: function(){
+                    return true;
+                }};
 
-           
+                expect(Piano.google.isAuthorized()).toBe(true);
+            });
+
+
+            it("deve retornar true quando o usuário possuir o cookie CREATED_GLOBOID", function(){
+                var swgToken = {
+                    subscriptionToken : {
+                        orderId : 'swgToken'
+                    }
+                }
+                spyOn(swgEntitlements, 'getEntitlementForSource').and.callFake(function(arg){
+                    if(arg == "oglobo.globo.com"){
+                        return false;
+                    }else if(arg == "google"){
+                        return swgToken;
+                    }
+                });
+                spyOn(Piano.cookies, "get").and.returnValue(true);
+                expect(Piano.google.isAuthorized()).toBe(true);
+            });
+
+            it("deve retornar false quando o usuário não possui entitlements OGlobo ou cookie CREATED_GLOBOID", function(){
+                swgEntitlements = {getEntitlementForSource: function(){
+                    return false;
+                }};
+                spyOn(Piano.cookies, "get").and.returnValue(false);
+                expect(Piano.google.isAuthorized()).toBe(false);
+            });
+
+            it("deve chamar o método Piano.metricas.setaVariaveis quando o usuário possuir entitlements OGlobo", function(){
+                var swgToken = {
+                    subscriptionToken: "token"
+                };
+
+                spyOn(swgEntitlements, 'getEntitlementForSource').and.callFake(function(arg){
+                    if(arg == "oglobo.globo.com"){
+                        return swgToken;
+                    }else if(arg == "google"){
+                        return false;
+                    }
+                });
+                spyOn(Piano.metricas, "setaVariaveis");
+                Piano.google.isAuthorized();
+                expect(Piano.metricas.setaVariaveis).toHaveBeenCalledWith("token", "Conta Google", "O Globo");
+            });
+
+            it("deve chamar o método Piano.metricas.setaVariaveis quando o usuário possuir o cookie CREATED_GLOBOID", function(){
+                var swgToken = {
+                    subscriptionToken : {
+                        orderId : 'swgToken'
+                    }
+                };
+
+                spyOn(swgEntitlements, 'getEntitlementForSource').and.callFake(function(arg){
+                    if(arg == "oglobo.globo.com"){
+                        return false;
+                    }else if(arg == "google"){
+                        return swgToken;
+                    }
+                });
+                spyOn(Piano.cookies, "get").and.returnValue(true);
+                spyOn(Piano.metricas, "setaVariaveis");
+
+                Piano.google.isAuthorized();
+                expect(Piano.metricas.setaVariaveis).toHaveBeenCalledWith("swgToken", "Conta Google", "Google");
+            });
         });
 
+        describe('isSpecificGoogleUser', function(){
+            it('não deve chamar a função isGoogleSubscriber caso o usuário seja autorizado pelo Google', function(){
+                oGloboBusiness = {isGoogleSubscriber: function() {
+                }};
+                
+                spyOn(Piano.google, "isAuthorized").and.returnValue(true);
+
+                Piano.google.isSpecificGoogleUser();
+
+                spyOn(oGloboBusiness, "isGoogleSubscriber");
+
+                expect(oGloboBusiness.isGoogleSubscriber).not.toHaveBeenCalled();
+                
+            });
+
+            xit('deve chamar a função isGoogleSubscriber caso o usuário não seja autorizado pelo Google', function(){
+               
+            });
+        });
+
+        describe("showSaveSubscription", function(){
+            it("deve retornar true quando o usuário não tem entitlements E for autorizado E não tem o cookie SAVE_SUBSCRIPTION", function(){
+                swgEntitlements = {enablesThis : function(){
+                    return false;
+                }};
+                spyOn(Piano.cookies, "get").and.returnValue(false);
+                
+                expect(Piano.google.showSaveSubscription("AUTORIZADO")).toBe(true);
+            });
+
+            it("deve retornar false quando o usuário tem entitlements", function(){
+                swgEntitlements = {enablesThis: function(){
+                    return true;
+                }}
+
+                spyOn(Piano.cookies, "get").and.returnValue(false);
+                
+                expect(Piano.google.showSaveSubscription("AUTORIZADO")).toBe(false);
+            });
+
+            it("deve retornar false quando o usuário não for autorizado", function(){
+                swgEntitlements = {enablesThis: function(){
+                    return false;
+                }}
+
+                spyOn(Piano.cookies, "get").and.returnValue(false);
+                
+                expect(Piano.google.showSaveSubscription("INEXISTENTE")).toBe(false);
+            });
+
+            it("deve retornar false quando o usuário tiver o cookie SAVE_SUBSCRIPTION", function(){
+                swgEntitlements = {enablesThis: function(){
+                    return false;
+                }}
+
+                spyOn(Piano.cookies, "get").and.returnValue(true);
+                
+                expect(Piano.google.showSaveSubscription("AUTORIZADO")).toBe(false);
+            });
+        });
     });
 
 });
