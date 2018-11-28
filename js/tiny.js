@@ -494,7 +494,7 @@ Piano.google = {
 	},
 
 	showSaveSubscription: function(response){
-		if(!swgEntitlements.enablesThis() && response.motivo ==="AUTORIZADO" && !Piano.cookies.get(Piano.variaveis.constante.SAVE_SUBSCRIPTION) && typeof respJson.link != "undefined"){
+		if(!swgEntitlements.enablesThis() && response.motivo ==="AUTORIZADO" && !Piano.cookies.get(Piano.variaveis.constante.SAVE_SUBSCRIPTION)){
 			return true;
 		}
 		return false;
