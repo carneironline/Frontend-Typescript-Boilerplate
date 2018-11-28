@@ -476,8 +476,7 @@ Piano.google = {
 		}
 		
 		if(Piano.cookies.get(Piano.variaveis.constante.CREATED_GLOBOID)){
-			var subscriptionToken = JSON.parse(swgEntitlements.getEntitlementForSource("google").subscriptionToken);
-			Piano.metricas.setaVariaveis(subscriptionToken.orderId, "Conta Google", "Google");
+			Piano.metricas.setaVariaveis(Piano.cookies.get(Piano.variaveis.constante.CREATED_GLOBOID), "Conta Google", "Google");
 			return true;
 		}
 
