@@ -449,7 +449,7 @@ Piano.xmlHttpRequest = {
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
 				
 				if (typeof swg !== 'undefined') {
-					if(Piano.google.showSaveSubscription(respJson.motivo)){
+					if(Piano.google.showSaveSubscription(respJson)){
 						var swgService = new SwgService();
 						swgService.saveGloboSubscription(glbid);
 					}
@@ -476,7 +476,8 @@ Piano.google = {
 		}
 		
 		if(Piano.cookies.get(Piano.variaveis.constante.CREATED_GLOBOID)){
-			Piano.metricas.setaVariaveis(swgEntitlements.getEntitlementForSource("google").subscriptionToken.orderId, "Conta Google", "Google");
+			var subscriptionToken = JSON.parse(swgEntitlements.getEntitlementForSource("google").subscriptionToken);
+			Piano.metricas.setaVariaveis(subscriptionToken.orderId, "Conta Google", "Google");
 			return true;
 		}
 
@@ -492,8 +493,8 @@ Piano.google = {
 		oGloboBusiness.isGoogleSubscriber(swgEntitlements);
 	},
 
-	showSaveSubscription: function(motivo){
-		if(!swgEntitlements.enablesThis() && motivo ==="AUTORIZADO" && !Piano.cookies.get(Piano.variaveis.constante.SAVE_SUBSCRIPTION)){
+	showSaveSubscription: function(response){
+		if(!swgEntitlements.enablesThis() && response.motivo ==="AUTORIZADO" && !Piano.cookies.get(Piano.variaveis.constante.SAVE_SUBSCRIPTION) && typeof respJson.link != "undefined"){
 			return true;
 		}
 		return false;
