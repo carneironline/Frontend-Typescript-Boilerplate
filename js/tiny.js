@@ -475,8 +475,8 @@ Piano.google = {
 			return true;
 		}
 		
-		if(Piano.cookies.get(Piano.variaveis.constante.CREATED_GLOBOID)){
-			Piano.metricas.setaVariaveis(Piano.cookies.get(Piano.variaveis.constante.CREATED_GLOBOID), "Conta Google", "Google");
+		if(Piano.cookies.get(Piano.variaveis.constante.cookie.CREATED_GLOBOID)){
+			Piano.metricas.setaVariaveis(Piano.cookies.get(Piano.variaveis.constante.cookie.CREATED_GLOBOID), "Conta Google", "Google");
 			return true;
 		}
 
