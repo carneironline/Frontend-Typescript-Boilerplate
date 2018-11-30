@@ -1,14 +1,29 @@
 var protectedContentEl = document.querySelector(".protected-content");
+
+
 if(protectedContentEl) {
+
 	var uri = encodeURIComponent(document.location.href);
 
-	function callLoginRegister(e) {
-		e.preventDefault();
+	// ga
+	
+	window['dataLayer'] = window['dataLayer'] || [];
+
+	function gaEvent(category, action, label) {
+		try {
+			dataLayer.push({'event': 'EventoGA', 'eventoGACategoria': category, 'eventoGAAcao': action,  'eventoGARotulo': label, 'eventoGAValor': 0,  'eventoGAInteracao': false });
+		} catch(err){
+			console.log('GA não foi definido');
+		}
+	} 
+
+	// toogle
+
+	function toogleElements() {
 		s = document.querySelectorAll(".paywall--login-iframe, .paywall--offer-link, .paywall--login-button");
 		for (var i = 0; i < s.length; i++) {
 			s[i].classList.toggle("hidden");
 		}
-		return false;
 	}
 
 	var protectedContent = "" +
@@ -18,20 +33,19 @@ if(protectedContentEl) {
 	"            <h2><strong>Muito bom ter você por aqui!</strong> Adoramos bons leitores.</h2>" +
 	"            <h3>Você atingiu o número máximo de leituras gratuitas este mês.</h3>" +
 	"            <a id='btnRegister' href='#' target='_blank'><strong>Cadastre-se</strong> para continuar.</a>" +
-	"            <p class='textLogin' >Já possui conta <a href='#' onclick='callLoginRegister(event);'>Globo.com</a>?</p>" +
+	"            <p class='textLogin' >Já possui conta <a href='#' >Globo.com</a>?</p>" +
 	"        </div>" +
 	"        <div class='paywall--offer-link '>" +
 	"            <a id='offerLink' class='paywall--offer-image' target='_blank' href='#'>oferta</a>" +
 	"        </div>" +
 	"        <div class='paywall--login-iframe hidden'>" +
-	"            <a href='#' class='back-to-offer' onclick='callLoginRegister(event);'>Voltar</a>" +
+	"            <button class='back-to-offer'>Voltar</button>" +
 	"            <div class='paywall--login-holder'>" +
 	"            	<iframe id='iframeCadun' src='#'></iframe>" +
 	"            </div>" +
 	"        </div>" +
 	"    </div>" +
 	"</div>"
-
 
 	protectedContentEl.setAttribute('data-content', 'removed');
 	protectedContentEl.innerHTML = protectedContent;
@@ -79,6 +93,15 @@ if(protectedContentEl) {
 	if (typeof textLogin != 'undefined' && textLogin != null && textLogin != '') {
 		document.querySelector(".textLogin").innerHTML = textLogin;
 	}
+
+	if (typeof backToOffers != 'undefined' && backToOffers != null && backToOffers != '') {
+		document.querySelector(".back-to-offer").innerHTML = backToOffers;
+	}
+
+	if (typeof invertedRegister != 'undefined' && invertedRegister != null && invertedRegister != '' && invertedRegister === true) {
+		toogleElements();
+	}
+	
 	
 	document.onreadystatechange = function(){
 		if(document.readyState === "complete"){
@@ -97,7 +120,36 @@ if(protectedContentEl) {
 		}
 	}
 
+	
+
+	// clicks
+
+	document.querySelector('#btnRegister').addEventListener('click', function(a) {
+		a.preventDefault();
+		var urlFinal = this.href;
+		gaEvent('Register', 'Link 1 - Cadastre-se aqui', ' ');
+		setTimeout(function(){ window.open(urlFinal); }, 200);
+	});
+
+	document.querySelector('.textLogin a').addEventListener('click', function(a) {
+		a.preventDefault();
+		toogleElements();
+		gaEvent('Register', 'Link 2 - Faça login', ' ');
+	});
+
+	document.querySelector('.back-to-offer').addEventListener('click', function(a) {
+		toogleElements();
+	});
+
+	document.querySelector('#offerLink').addEventListener('click', function(a) {
+		a.preventDefault();
+		var urlFinal = this.href;
+		gaEvent('Register', 'Link 3 - Banner de oferta', ' ');
+		setTimeout(function(){ window.open(urlFinal); }, 200);
+	});
+
 	setTimeout(function(){document.querySelector('.paywall--content').setAttribute('style','opacity: 1;');}, 1000);
+
 } else {
 	console.log("Página não tem a Tag para inserir barreira.")
 }
