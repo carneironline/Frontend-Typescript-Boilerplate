@@ -1928,7 +1928,7 @@ describe('Tiny JS', function () {
                 spyOn(Piano.metricas, "setaVariaveis");
 
                 Piano.google.isAuthorized();
-                expect(Piano.metricas.setaVariaveis).toHaveBeenCalledWith("swgToken", "Conta Google", "Google");
+                expect(Piano.metricas.setaVariaveis).toHaveBeenCalledWith(true, "Conta Google", "Google");
             });
         });
 
@@ -1957,39 +1957,47 @@ describe('Tiny JS', function () {
                 swgEntitlements = {enablesThis : function(){
                     return false;
                 }};
+                response = {motivo : 'AUTORIZADO'};
+
                 spyOn(Piano.cookies, "get").and.returnValue(false);
                 
-                expect(Piano.google.showSaveSubscription("AUTORIZADO")).toBe(true);
+                expect(Piano.google.showSaveSubscription(response)).toBe(true);
             });
 
             it("deve retornar false quando o usuário tem entitlements", function(){
                 swgEntitlements = {enablesThis: function(){
                     return true;
-                }}
+                }};
+
+                response = {motivo : 'AUTORIZADO'};
 
                 spyOn(Piano.cookies, "get").and.returnValue(false);
                 
-                expect(Piano.google.showSaveSubscription("AUTORIZADO")).toBe(false);
+                expect(Piano.google.showSaveSubscription(response)).toBe(false);
             });
 
             it("deve retornar false quando o usuário não for autorizado", function(){
                 swgEntitlements = {enablesThis: function(){
                     return false;
-                }}
+                }};
+
+                response = {motivo : 'INEXISTENTE'};
 
                 spyOn(Piano.cookies, "get").and.returnValue(false);
                 
-                expect(Piano.google.showSaveSubscription("INEXISTENTE")).toBe(false);
+                expect(Piano.google.showSaveSubscription(response)).toBe(false);
             });
 
             it("deve retornar false quando o usuário tiver o cookie SAVE_SUBSCRIPTION", function(){
                 swgEntitlements = {enablesThis: function(){
                     return false;
-                }}
+                }};
+
+                response = {motivo : 'AUTORIZADO'};
 
                 spyOn(Piano.cookies, "get").and.returnValue(true);
                 
-                expect(Piano.google.showSaveSubscription("AUTORIZADO")).toBe(false);
+                expect(Piano.google.showSaveSubscription(response)).toBe(false);
             });
         });
     });
