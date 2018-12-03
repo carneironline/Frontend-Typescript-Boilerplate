@@ -78,7 +78,8 @@
 .paywall--login-button p a {
     color: #325E94 !important;
     text-decoration: none !important;
-    font-weight: 700 !important;        
+    font-weight: 700 !important;
+    outline: none;       
 }
 .paywall--offer-link a {
     height: 196px;
@@ -98,6 +99,9 @@
     font-weight: 700;
     padding-left: 20px;
     padding: 5px 0px 5px 40px;
+    cursor: pointer;
+    outline: none;
+    border: none;
     font-family: 'Open Sans', sans-serif !important;
 }
 .paywall--login-iframe {
