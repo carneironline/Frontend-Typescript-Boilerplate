@@ -60,8 +60,8 @@ Piano.variaveis = {
 		if(Piano.variaveis.getNomeProduto() === 'oglobo' || Piano.variaveis.getNomeProduto() === 'blogs' || Piano.variaveis.getNomeProduto() === 'kogut'){
 			return id = '4975';
 		}
-		if (Piano.util.isRevista()) { 
-			return id = '6710';
+		if(Piano.util.marcasRevistas()){			
+			return id = '6697';
 		} 
 		if (Piano.variaveis.getNomeProduto() === 'acervo' || Piano.variaveis.getNomeProduto() === 'jornaldigital'){
 			return id = '3981';	
@@ -80,22 +80,36 @@ Piano.variaveis = {
 				return 'OG04';
 			case 'jornaldigital':
 				return 'OG01';
-			case 'quem-acontece':	
-			case 'marie-claire':	
-			case 'casa-e-jardim':	
-			case 'crescer':	
-			case 'auto-esporte':	
-			case 'epoca':	
-			case 'epoca-negocios':	
+			case 'quem-acontece':
+				return 'quem-acontece';	
+			case 'marie-claire':
+				return 'marie-claire';	
+			case 'casa-e-jardim':
+				return 'casa-jardim';	
+			case 'crescer':
+				return 'crescer';	
+			case 'auto-esporte':
+				return 'auto-esporte';		
+			case 'epoca':
+				return 'epoca';	
+			case 'epoca-negocios':
+				return 'epoca-negocios';
 			case 'galileu':	
-			case 'globo-rural':	
-			case 'pegn':	
-			case 'vogue':	
-			case 'casa-vogue':	
-			case 'glamour':	
-			case 'gq':	
-			case 'monet':	
-				return 'revistas';	
+				return 'galileu';
+			case 'globo-rural':
+				return 'globo-rural';	
+			case 'pegn':
+				return 'pequenas-empresas';	
+			case 'vogue':
+				return 'vogue';	
+			case 'casa-vogue':
+				return 'casa-vogue';	
+			case 'glamour':
+				return 'glamour';	
+			case 'gq':
+				return 'gq';	
+			case 'monet':
+				return 'monet';					
 			default:
 				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter código do produto - " + nomeProduto);
 				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
@@ -649,7 +663,7 @@ Piano.util = {
 		e.innerHTML = cssPath;
 		document.body.insertBefore(e, document.body.lastChild);
 	},
-	isRevista: function(){
+	marcasRevistas: function(){
 		var revistas = ["quem-acontece","crescer","marie-claire","casa-e-jardim","vogue","casa-vogue","gq","glamour","monet","auto-esporte","pegn","epoca","epoca-negocios","galileu","globo-rural"];
 		if(revistas.indexOf(Piano.variaveis.getNomeProduto()) > -1)
 			return true;
