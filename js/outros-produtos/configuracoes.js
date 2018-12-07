@@ -14,22 +14,28 @@ Produto.pegaConfiguracao = function(nome) {
 			var jornaldigital = new JornalDigital();
 			Produto.codigo = jornaldigital.codigo;
 			break;
-		case 'quem-acontece':	
-		case 'marie-claire':	
-		case 'casa-e-jardim':	
+		case 'casa-e-jardim':
+			var revistaDigital = new PianoRevista('casa-jardim');
+			Produto.codigo = revistaDigital.codigo;
+			break;
+		case 'pegn':
+			var revistaDigital = new PianoRevista('pequenas-empresas');
+			Produto.codigo = revistaDigital.codigo;
+			break;	
+		case 'quem-acontece':				
+		case 'marie-claire':		
 		case 'crescer':	
 		case 'auto-esporte':	
 		case 'epoca':	
 		case 'epoca-negocios':	
 		case 'galileu':	
-		case 'globo-rural':	
-		case 'pegn':	
+		case 'globo-rural':			
 		case 'vogue':	
 		case 'casa-vogue':	
 		case 'glamour':	
 		case 'gq':	
 		case 'monet':	
-			var revista = new PianoRevista();	
+			var revista = new PianoRevista(nome);	
 			Produto.codigo = revista.codigo;	
 			break;
 		default:
@@ -45,8 +51,8 @@ var JornalDigital = function() {
 	this.codigo = 'OG01';
 };
 
-var PianoRevista = function(){
-	this.codigo = 'revistas';
+var PianoRevista = function(parametro){
+	this.codigo = parametro;
 };
 
 
