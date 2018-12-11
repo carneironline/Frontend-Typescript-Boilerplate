@@ -60,8 +60,11 @@ Piano.variaveis = {
 		if(Piano.variaveis.getNomeProduto() === 'oglobo' || Piano.variaveis.getNomeProduto() === 'blogs' || Piano.variaveis.getNomeProduto() === 'kogut'){
 			return id = '4975';
 		}
-		if (Piano.util.isRevista()) { 
+		if(Piano.variaveis.getNomeProduto() === 'auto-esporte') {
 			return id = '6710';
+		}
+		if (Piano.util.isRevista()) { 
+			return id = '6697';
 		} 
 		if (Piano.variaveis.getNomeProduto() === 'acervo' || Piano.variaveis.getNomeProduto() === 'jornaldigital'){
 			return id = '3981';	
@@ -80,22 +83,10 @@ Piano.variaveis = {
 				return 'OG04';
 			case 'jornaldigital':
 				return 'OG01';
-			case 'quem-acontece':	
-			case 'marie-claire':	
-			case 'casa-e-jardim':	
-			case 'crescer':	
-			case 'auto-esporte':	
-			case 'epoca':	
-			case 'epoca-negocios':	
-			case 'galileu':	
-			case 'globo-rural':	
-			case 'pegn':	
-			case 'vogue':	
-			case 'casa-vogue':	
-			case 'glamour':	
-			case 'gq':	
-			case 'monet':	
-				return 'revistas';	
+			case 'auto-esporte':
+				return 'revistas';			
+			case 'epoca':
+				return nomeProduto;				
 			default:
 				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter código do produto - " + nomeProduto);
 				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
@@ -650,7 +641,7 @@ Piano.util = {
 		document.body.insertBefore(e, document.body.lastChild);
 	},
 	isRevista: function(){
-		var revistas = ["quem-acontece","crescer","marie-claire","casa-e-jardim","vogue","casa-vogue","gq","glamour","monet","auto-esporte","pegn","epoca","epoca-negocios","galileu","globo-rural"];
+		var revistas = ["epoca"];
 		if(revistas.indexOf(Piano.variaveis.getNomeProduto()) > -1)
 			return true;
 		else
