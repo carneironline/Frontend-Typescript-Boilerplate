@@ -43,7 +43,6 @@ var PianoRevista = function(){
 	this.codigo = 'revistas';
 };
 
-
 (function () {
 	Produto(Piano.variaveis.getNomeProduto());
 	Piano.variaveis.codigoProduto = Produto.codigo;

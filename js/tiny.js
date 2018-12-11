@@ -86,7 +86,7 @@ Piano.variaveis = {
 			case 'auto-esporte':
 				return 'revistas';			
 			case 'epoca':
-				return nomeProduto;				
+				return nomeProduto;
 			default:
 				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter código do produto - " + nomeProduto);
 				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
