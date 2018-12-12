@@ -13,31 +13,15 @@ Produto.pegaConfiguracao = function(nome) {
 		case 'jornaldigital':
 			var jornaldigital = new JornalDigital();
 			Produto.codigo = jornaldigital.codigo;
-			break;
-		case 'casa-e-jardim':
-			var revistaDigital = new PianoRevista('casa-jardim');
-			Produto.codigo = revistaDigital.codigo;
-			break;
-		case 'pegn':
-			var revistaDigital = new PianoRevista('pequenas-empresas');
-			Produto.codigo = revistaDigital.codigo;
-			break;	
-		case 'quem-acontece':				
-		case 'marie-claire':		
-		case 'crescer':	
-		case 'auto-esporte':	
-		case 'epoca':	
-		case 'epoca-negocios':	
-		case 'galileu':	
-		case 'globo-rural':			
-		case 'vogue':	
-		case 'casa-vogue':	
-		case 'glamour':	
-		case 'gq':	
-		case 'monet':	
-			var revista = new PianoRevista(nome);	
+			break;		
+		case 'auto-esporte':
+			var revista = new PianoRevista();	
 			Produto.codigo = revista.codigo;	
-			break;
+			break;	
+		case 'epoca':
+			var revistaValida = new RevistasValidas(nome);	
+			Produto.codigo = revistaValida.codigo;	
+			break;			
 		default:
 			Piano.variaveis.fazerRequisicaoBarramento = false;
 	}
@@ -51,10 +35,13 @@ var JornalDigital = function() {
 	this.codigo = 'OG01';
 };
 
-var PianoRevista = function(parametro){
+var RevistasValidas = function(parametro) {
 	this.codigo = parametro;
-};
+}
 
+var PianoRevista = function(){
+	this.codigo = 'revistas';
+};
 
 (function () {
 	Produto(Piano.variaveis.getNomeProduto());

@@ -60,7 +60,10 @@ Piano.variaveis = {
 		if(Piano.variaveis.getNomeProduto() === 'oglobo' || Piano.variaveis.getNomeProduto() === 'blogs' || Piano.variaveis.getNomeProduto() === 'kogut'){
 			return id = '4975';
 		}
-		if(Piano.util.marcasRevistas()){			
+		if(Piano.variaveis.getNomeProduto() === 'auto-esporte') {
+			return id = '6710';
+		}
+		if (Piano.util.isRevista()) { 
 			return id = '6697';
 		} 
 		if (Piano.variaveis.getNomeProduto() === 'acervo' || Piano.variaveis.getNomeProduto() === 'jornaldigital'){
@@ -80,36 +83,10 @@ Piano.variaveis = {
 				return 'OG04';
 			case 'jornaldigital':
 				return 'OG01';
-			case 'quem-acontece':
-				return 'quem-acontece';	
-			case 'marie-claire':
-				return 'marie-claire';	
-			case 'casa-e-jardim':
-				return 'casa-jardim';	
-			case 'crescer':
-				return 'crescer';	
 			case 'auto-esporte':
-				return 'auto-esporte';		
+				return 'revistas';			
 			case 'epoca':
-				return 'epoca';	
-			case 'epoca-negocios':
-				return 'epoca-negocios';
-			case 'galileu':	
-				return 'galileu';
-			case 'globo-rural':
-				return 'globo-rural';	
-			case 'pegn':
-				return 'pequenas-empresas';	
-			case 'vogue':
-				return 'vogue';	
-			case 'casa-vogue':
-				return 'casa-vogue';	
-			case 'glamour':
-				return 'glamour';	
-			case 'gq':
-				return 'gq';	
-			case 'monet':
-				return 'monet';					
+				return nomeProduto;
 			default:
 				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter código do produto - " + nomeProduto);
 				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
@@ -663,8 +640,8 @@ Piano.util = {
 		e.innerHTML = cssPath;
 		document.body.insertBefore(e, document.body.lastChild);
 	},
-	marcasRevistas: function(){
-		var revistas = ["quem-acontece","crescer","marie-claire","casa-e-jardim","vogue","casa-vogue","gq","glamour","monet","auto-esporte","pegn","epoca","epoca-negocios","galileu","globo-rural"];
+	isRevista: function(){
+		var revistas = ["epoca"];
 		if(revistas.indexOf(Piano.variaveis.getNomeProduto()) > -1)
 			return true;
 		else
