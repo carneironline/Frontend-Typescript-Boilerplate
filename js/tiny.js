@@ -480,7 +480,7 @@ Piano.google = {
 			return;
 
 		var oGloboBusiness = new OGloboBusiness();
-		oGloboBusiness.isGoogleSubscriber(swgEntitlements);
+		oGloboBusiness.verifyIfUserHasAccessOrDeferred(swgEntitlements);
 	},
 
 	showSaveSubscription: function(response){
