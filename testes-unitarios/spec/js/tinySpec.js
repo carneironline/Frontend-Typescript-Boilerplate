@@ -1926,16 +1926,16 @@ describe('Tiny JS', function () {
 
         describe('isSpecificGoogleUser', function(){
             it('não deve chamar a função isGoogleSubscriber caso o usuário seja autorizado pelo Google', function(){
-                oGloboBusiness = {isGoogleSubscriber: function() {
+                oGloboBusiness = {verifyIfUserHasAccessOrDeferred: function() {
                 }};
                 
                 spyOn(Piano.google, "isAuthorized").and.returnValue(true);
 
                 Piano.google.isSpecificGoogleUser();
 
-                spyOn(oGloboBusiness, "isGoogleSubscriber");
+                spyOn(oGloboBusiness, "verifyIfUserHasAccessOrDeferred");
 
-                expect(oGloboBusiness.isGoogleSubscriber).not.toHaveBeenCalled();
+                expect(oGloboBusiness.verifyIfUserHasAccessOrDeferred).not.toHaveBeenCalled();
                 
             });
 
