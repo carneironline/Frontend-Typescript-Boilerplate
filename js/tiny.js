@@ -60,6 +60,9 @@ Piano.variaveis = {
 		if(Piano.variaveis.getNomeProduto() === 'oglobo' || Piano.variaveis.getNomeProduto() === 'blogs' || Piano.variaveis.getNomeProduto() === 'kogut'){
 			return id = '4975';
 		}
+		if(Piano.variaveis.getNomeProduto() === 'auto-esporte') {
+			return id = '6710';
+		}
 		if (Piano.util.isRevista()) { 
 			return id = '6697';
 		} 
@@ -80,7 +83,8 @@ Piano.variaveis = {
 				return 'OG04';
 			case 'jornaldigital':
 				return 'OG01';
-			case 'auto-esporte':			
+			case 'auto-esporte':
+				return 'revistas';			
 			case 'epoca':
 				return nomeProduto;
 			default:
@@ -637,7 +641,7 @@ Piano.util = {
 		document.body.insertBefore(e, document.body.lastChild);
 	},
 	isRevista: function(){
-		var revistas = ["epoca","auto-esporte"];
+		var revistas = ["epoca"];
 		if(revistas.indexOf(Piano.variaveis.getNomeProduto()) > -1)
 			return true;
 		else

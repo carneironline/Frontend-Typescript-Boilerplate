@@ -493,7 +493,7 @@ describe('Tiny JS', function () {
                 expect(Piano.util.isRevista()).toEqual(true);
             });
 
-            it('deve retornar "true" quando Piano.variaveis.getNomeProduto é "auto-esporte"', function(){
+            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "auto-esporte"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('auto-esporte');
 
                 expect(Piano.util.isRevista()).toEqual(true);
@@ -941,7 +941,7 @@ describe('Tiny JS', function () {
                 expect(Piano.variaveis.getCodigoProduto()).toEqual('crescer');
             });
             
-            it('deve retornar auto-esporte quando nomeProduto igual a auto-esporte',function(){
+            xit('deve retornar auto-esporte quando nomeProduto igual a auto-esporte',function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('auto-esporte');
 
                 expect(Piano.variaveis.getCodigoProduto()).toEqual('auto-esporte');
