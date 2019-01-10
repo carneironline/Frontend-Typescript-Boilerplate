@@ -877,6 +877,7 @@ describe('Tiny JS', function () {
 
                 expect(Piano.variaveis.getServicoId()).toEqual('6697');
             });
+            
 
             it('deve retornar 0000 quando o Piano.variaveis.getNomeProduto() for abc', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('abc');
