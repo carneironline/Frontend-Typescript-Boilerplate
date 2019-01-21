@@ -315,6 +315,18 @@ Piano.paywall = {
 	}
 };
 
+Piano.registerPaywall = {
+	mostrarBarreira: function(versao) {
+		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-paywall-piano/"+versao+"/styles/styles.css'>");
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-paywall-piano/"+versao+"/scripts/register-paywall-piano.js");
+		Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
+		// Alguma forma de separar métrica
+		// Piano.metricas.enviaEventosGA("Exibicao Register", Piano.metricas.montaRotuloGA());
+		// Piano.metricas.enviaEventosGA("Barreira", Piano.metricas.montaRotuloGA());
+		Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
+	}
+};
+
 Piano.comunicado = {
 	mostrarInformacao: function(versao) {
 		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/comunicacao-piano/"+versao+"/styles/styles.css'>");
