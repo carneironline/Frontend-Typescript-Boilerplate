@@ -1,3 +1,10 @@
+var barraGloboCom = document.querySelector('#barra-globocom');
+var paywallSiteContainer = document.querySelector('.paywall__site-container');
+paywallSiteContainer.insertAdjacentElement('afterBegin', barraGloboCom);
+
+
+
+/*
 var uri = encodeURIComponent(document.location.href);
 
 //Monta a parte do HTML
@@ -41,3 +48,5 @@ document.querySelector('.conteudo-produto a').addEventListener('click', function
 
 
 setTimeout(function(){document.querySelector('#idBarreira').setAttribute('style','display: block; opacity: 1;');}, 1500);
+
+*/
