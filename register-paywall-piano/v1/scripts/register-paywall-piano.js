@@ -1,8 +1,16 @@
 var barraGloboCom = document.querySelector('#barra-globocom');
+var headerBlog = document.querySelector('.site-header');
 var paywallSiteContainer = document.querySelector('.paywall__site-container');
+paywallSiteContainer.insertAdjacentElement('afterBegin', headerBlog);
 paywallSiteContainer.insertAdjacentElement('afterBegin', barraGloboCom);
 
 
+
+
+function onCliker(a, b, c, d, event) {
+	console.log(a + b + c + d);
+	event.preventDefault(event); 
+}
 
 /*
 var uri = encodeURIComponent(document.location.href);

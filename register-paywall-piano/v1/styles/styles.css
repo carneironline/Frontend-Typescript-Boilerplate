@@ -15,8 +15,8 @@
     margin-top: 252px;
     position: relative;
     background: #FFFFFF;
-    box-shadow: 0 0 7px 0 rgba(0,0,0,0.50);
-    min-height: 462px;
+    box-shadow: 0 0 70px 0 rgba(0,0,0,0.50);
+    height: 100%;
 }
 
 .barreira-register-paywall--content {
@@ -75,8 +75,8 @@
 }
 
 
-@media (min-width: 660px) {
-
+@media (min-width: 820px) {
+    
     .barreira-register-paywall .mobi {
         display: none;
     }
@@ -88,9 +88,17 @@
         width: 804px;
     }
 
+    .barreira-register-paywall--titulo {
+        padding: 21px;
+    }
+
+    .barreira-register-paywall--login {
+        padding: 26px;
+        font-size: 14px;
+    }
+
     .barreira-register-paywall--titulo br {
         display: block;
     }
-
 }
 
