@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
 
+html {
+    height: 100%;
+}
+
+
 .paywall__site-container {
     overflow: hidden;
     width: 100%;
@@ -16,11 +21,11 @@
     position: relative;
     background: #FFFFFF;
     box-shadow: 0 0 70px 0 rgba(0,0,0,0.50);
-    height: 100%;
 }
 
 .barreira-register-paywall--content {
     width: 300px;
+    min-height: 600px;
     margin: 0 auto;
     font-family: 'Raleway', sans-serif;
     text-align: center;
@@ -65,6 +70,9 @@
     font-weight: 700;
 }
 
+.barreira-register-paywall--login a:hover {
+    text-decoration: underline;
+}
 
 .barreira-register-paywall .mobi {
     display: block;
@@ -102,3 +110,14 @@
     }
 }
 
+/* fixes */
+
+#relacionadas-topo, .footer-site, .relacionado  {
+    display: none !important;
+}
+
+.site-header--is-fixed {
+    position: initial !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
