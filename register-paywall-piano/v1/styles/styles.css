@@ -113,7 +113,7 @@ html {
 
 /* fixes */
 
-#relacionadas-topo, .footer-site, .relacionado  {
+#relacionadas-topo, .footer-site, .relacionado, #footerOgloboPianoId  {
     display: none !important;
 }
 
