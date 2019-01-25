@@ -7,8 +7,19 @@ let alturaTela = window.innerHeight;
 let metadeTela = alturaTela/2;
 let uri = encodeURIComponent(document.location.href);
 let url = window.ambienteUtilizadoPiano == 'prd' ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/';
+let protectedContentEl = document.querySelector(".protected-content");
+
+// scroll top para manter o header
+document.documentElement.scrollTop = 0;
 
 if(paywallSiteContainer) {
+	
+	// remover conteudo da materia
+	if (protectedContentEl) {
+		protectedContentEl.setAttribute('data-content', 'removed');
+    	protectedContentEl.innerHTML = "Conteúdo exclusivo para assinantes.";
+	}
+
 	if(headerBlog) {
 		paywallSiteContainer.insertAdjacentElement('afterBegin', headerBlog);
 	}
@@ -21,32 +32,29 @@ if(paywallSiteContainer) {
 		paywallSiteContainer.insertAdjacentElement('afterend', publicidadeFullBannerMobi);
 	}
 
-	
-	document.documentElement.scrollTop = 0;
-
 	let conteudoExperienciaRegisterPaywall = `
-		<div class="barreira-register-paywall">
+		<div class="barreira-register-paywall" style="opacity: 0;">
 			<div class="barreira-register-paywall--content">
 				<div class="barreira-register-paywall--titulo">
 					Esse conteúdo é exclusivo para assinantes.<br /> Quer continuar sua leitura?
 				</div>
 				<div class="barreira-register-paywall--oftprincipal">
-					<a target="_blank" onclick="disparaEvento(!0,'Register / Paywall','Clique - Ver ofertas','', this.href, event);" href="http://google.com.br" >
-						<img class="mobi" src="images/assine1-mobi.jpg" />
-						<img class="desk" src="images/assine1-desk.jpg" />
+					<a class="img1l" target="_blank" onclick="disparaEvento('Register / Paywall','Clique - Ver ofertas 1','', this.href, event);" href="#" >
+						<img class="mobi img1m" src="#" />
+						<img class="desk img1d" src="#" />
 					</a>		
 				</div>
 				<div class="barreira-register-paywall--login">
-					Já possui cadastro? <a target="_blank" onclick="disparaEvento(!0,'Register / Paywall','Clique - Ver ofertas','', this.href, event);" class="link" href="${url}login/${Piano.variaveis.getServicoId()}?tam=widget&amp;url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D${Piano.variaveis.getServicoId()}%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523${uri}" >Faça login</a> ou <a target="_blank" onclick="disparaEvento(!0,'Register / Paywall','Clique - Ver ofertas','', this.href, event);" class="link" href="${url}cadastro/${Piano.variaveis.getServicoId()}?tam=widget&amp;url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D${Piano.variaveis.getServicoId()}%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523${uri}">Cadastre-se</a>.
+					Já possui cadastro? <a target="_blank" onclick="disparaEvento('Register / Paywall','Clique - Login','', this.href, event);" class="link" href="${url}login/${Piano.variaveis.getServicoId()}?tam=widget&amp;url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D${Piano.variaveis.getServicoId()}%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523${uri}" >Faça login</a> ou <a target="_blank" onclick="disparaEvento('Register / Paywall','Clique - Login','', this.href, event);" class="link" href="${url}cadastro/${Piano.variaveis.getServicoId()}?tam=widget&amp;url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D${Piano.variaveis.getServicoId()}%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523${uri}">Cadastre-se</a>.
 				</div>
 				<div class="barreira-register-paywall--oftsecundaria">
-					<a target="_blank" onclick="disparaEvento(!0,'Register / Paywall','Clique - Ver ofertas','', this.href, event);" href="http://yahoo.com.br" >
-						<img class="mobi" src="images/assine2-mobi1.jpg" />
-						<img class="desk" src="images/assine2-desk1.jpg" />					
+					<a class="img2l" target="_blank" onclick="disparaEvento('Register / Paywall','Clique - Ver ofertas 2','', this.href, event);" href="#" >
+						<img class="mobi img2m" src="#" />
+						<img class="desk img2d" src="#" />					
 					</a>
-					<a target="_blank" onclick="disparaEvento(!0,'Register / Paywall','Clique - Ver ofertas','', this.href, event);" href="http://msn.com" >
-						<img class="mobi" src="images/assine2-mobi2.jpg" />
-						<img class="desk" src="images/assine2-desk2.jpg" />					
+					<a class="img3l" target="_blank" onclick="disparaEvento('Register / Paywall','Clique - Ver ofertas 3','', this.href, event);" href="#" >
+						<img class="mobi img3m" src="#" />
+						<img class="desk img3d" src="#" />					
 					</a>
 				</div>
 			</div>
@@ -54,80 +62,85 @@ if(paywallSiteContainer) {
 	`
 	paywallSiteContainer.insertAdjacentHTML('afterend', conteudoExperienciaRegisterPaywall);
 
-	if(larguraTela > 820 && alturaTela > 350) {
-		document.querySelector('.barreira-register-paywall').style.marginTop = metadeTela+'px';
+	let barreiraContainer = document.querySelector('.barreira-register-paywall');
+
+	//com a barreira criada, manipulando dom por mudanças externas
+	let barreiraOftprincipal = document.querySelector('.barreira-register-paywall--oftprincipal');
+	let barreiraOftsecundaria = document.querySelector('.barreira-register-paywall--oftsecundaria');
+	let barreiraTitulo = document.querySelector('.barreira-register-paywall--titulo');
+	let barreiraTextoLogin = document.querySelector('.barreira-register-paywall--login');
+
+	// blocos editaveis
+	let img1m = document.querySelector('.img1m');
+	let img1d = document.querySelector('.img1d');
+	let img1l = document.querySelector('.img1l');
+	let img2m = document.querySelector('.img2m');
+	let img2d = document.querySelector('.img2d');
+	let img2l = document.querySelector('.img2l');
+	let img3m = document.querySelector('.img3m');
+	let img3d = document.querySelector('.img3d');
+	let img3l = document.querySelector('.img3l');
+
+
+	if (typeof barreiraOftprincipalContent != 'undefined' && barreiraOftprincipalContent != null && barreiraOftprincipalContent != '' ) {
+		barreiraOftprincipal.innerHTML = barreiraOftprincipalContent;
 	}
+
+	if (typeof barreiraOftsecundariaContent != 'undefined' && barreiraOftsecundariaContent != null && barreiraOftsecundariaContent != '' ) {
+		barreiraOftsecundaria.innerHTML = barreiraOftsecundariaContent;
+	}
+
+	if (typeof barreiraTituloContent != 'undefined' && barreiraTituloContent != null && barreiraTituloContent != '' ) {
+		barreiraTitulo.innerHTML = barreiraTituloContent;
+	}
+
+	if (typeof barreiraTextoLoginContent != 'undefined' && barreiraTextoLoginContent != null && barreiraTextoLoginContent != '' ) {
+		barreiraTextoLogin.innerHTML = barreiraTextoLoginContent;
+	}
+
+	if (typeof barreiraTextoLoginContentHide != 'undefined' && barreiraTextoLoginContentHide != null && barreiraTextoLoginContentHide != '' ) {
+		barreiraTextoLogin.innerHTML = " ";
+	}
+
+	if (typeof img1mL != 'undefined' && img1mL != null && img1mL != '' &&  img1dL != 'undefined' && img1dL != null && img1dL != '' && img1lL != 'undefined' && img1lL != null && img1lL != '') {
+		img1m.src = img1mL;
+		img1d.src = img1dL;
+		img1l.href = img1lL;
+	}
+
+	if (typeof img2mL != 'undefined' && img2mL != null && img2mL != '' &&  img2dL != 'undefined' && img2dL != null && img2dL != '' && img2lL != 'undefined' && img2lL != null && img2lL != '') {
+		img2m.src = img2mL;
+		img2d.src = img2dL;
+		img2l.href = img2lL;
+	}
+
+	if (typeof img3mL != 'undefined' && img3mL != null && img3mL != '' &&  img3dL != 'undefined' && img3dL != null && img3dL != '' && img3lL != 'undefined' && img3lL != null && img3lL != '') {
+		img3m.src = img3mL;
+		img3d.src = img3dL;
+		img3l.href = img3lL;
+	}
+
+
+	if(larguraTela > 820 && alturaTela > 350) {
+		barreiraContainer.style.marginTop = metadeTela+'px';
+	}
+
+	setTimeout(function() {
+		barreiraContainer.style.opacity = 1;
+	}, 1000);
 
 	// GA
 
 	window['dataLayer'] = window['dataLayer'] || [];
 
-
-	function disparaEvento(naoInterativo, categoria, acao, rotulo, elemento, event) {
+	function disparaEvento(categoria, acao, rotulo, elemento, event) {
 		event.preventDefault(event); 
-		if (naoInterativo === false) {
-			dataLayer.push({'event': 'EventoGA', 'eventoGACategoria': categoria, 'eventoGAAcao': acao, 'eventoGARotulo': rotulo, 'eventoGAInteracao': 'true'});
-		} 
-		else {
-			dataLayer.push({'event': 'EventoGA', 'eventoGACategoria': categoria, 'eventoGAAcao': acao, 'eventoGARotulo': rotulo});
-		}
+		dataLayer.push({ 'event': 'EventoGA', 'eventoGACategoria': categoria, 'eventoGAAcao': acao, 'eventoGARotulo': rotulo, 'eventoGAValor': 0, 'eventoGAInteracao': false });
 		setTimeout(function() {
-			window.open(elemento, '_blank')
+			window.open(elemento, '_blank');
 		}, 300);
 	}
 
 } else {
 	console.log("Tag de paywall nao existe");
 }
-
-
-
-
-
-
-
-
-
-
-function onCliker(a, b, c, d, event) {
-	console.log(a + b + c + d);
-	EventoGaPiano.disparaEvento(!0,"Register / Paywall","Clique - Ver ofertas","",!1);
-	event.preventDefault(event); 
-}
-
-/*
-var uri = encodeURIComponent(document.location.href);
-
-//Monta a parte do HTML
-var conteudoBarreiraRegisterPaywall = document.createElement('div');
-conteudoBarreiraRegisterPaywall.id = 'barreiraRegisterPaywall';
-document.body.appendChild(conteudoBarreiraRegisterPaywall);
-
-
-conteudoExperienciaRegisterPaywall = "" +
-"<div id='idBarreira' class='register-barreira' style='opacity: 0; display: none;'>" +
-"				<img src='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/v1/images/produto.png'>" +
-"					<iframe id='iframeCadun' src='https://login.globo.com/login/"+Piano.variaveis.getServicoId()+"?tam=widget&amp;url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D"+Piano.variaveis.getServicoId()+"%26urlIntervencao%3Dhttps%253A%252F%252Fs.glbimg.com%252Fgl%252Fba%252Fbarra-globocom.callback.html%2523"+uri+"'></iframe>" +
-"</div>"
-
-
-//Controla e edita o HTML
-// Ver se Variaves do piano existem
-
-if (typeof precoRegister != 'undefined' && precoRegister != null && precoRegister != '' ) {
-	document.querySelector(".preco-menor").innerHTML = precoRegister;
-}
-
-
-
-
-document.querySelector('.conteudo-produto a').addEventListener('click', function(a) {
-	a.preventDefault(),
-    window.open(document.querySelector(".conteudo-produto a").href),
-    EventoGaPiano.disparaEvento(!0,"Register / Paywall","Clique - Ver ofertas","",!1);
-});
-
-
-setTimeout(function(){document.querySelector('#idBarreira').setAttribute('style','display: block; opacity: 1;');}, 1500);
-
-*/

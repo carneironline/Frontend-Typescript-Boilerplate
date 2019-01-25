@@ -21,6 +21,7 @@ html {
     position: relative;
     background: #FFFFFF;
     box-shadow: 0 0 70px 0 rgba(0,0,0,0.50);
+    transition: opacity 500ms ease-in-out;
 }
 
 .barreira-register-paywall--content {
