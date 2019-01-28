@@ -1494,6 +1494,43 @@ describe('Tiny JS', function () {
 
     });
 
+
+    describe('Piano.registerPaywall', function () {
+
+        describe('função chama barreira register / paywall', function () {
+
+            it('deve chamar o método metricas.enviaEventosGA', function () {
+                spyOn(Piano.metricas, 'enviaEventosGA');
+
+                Piano.registerPaywall.mostrarBarreira();
+                expect(Piano.metricas.enviaEventosGA).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método cookies.set', function () {
+                spyOn(Piano.cookies, 'set');
+
+                Piano.registerPaywall.mostrarBarreira();
+                expect(Piano.cookies.set).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método util.adicionarCss', function () {
+                spyOn(Piano.util, 'adicionarCss');
+
+                Piano.registerPaywall.mostrarBarreira();
+                expect(Piano.util.adicionarCss).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
+                spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
+
+                Piano.registerPaywall.mostrarBarreira();
+                expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
+            });
+
+        });
+
+    });
+
     describe('Piano.comunicado', function () {
 
         describe('função mostrarInformacao', function () {
