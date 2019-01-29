@@ -118,7 +118,11 @@ html {
 }
 
 .site-header--is-fixed {
-    position: initial !important;
     transform: none !important;
     opacity: 1 !important;
+}
+
+
+.block--advertising--is-fixed, .site-header--is-fixed {
+    position: initial !important;
 }
