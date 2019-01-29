@@ -1,9 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
-
 html {
     height: 100%;
 }
-
 
 .paywall__site-container {
     overflow: hidden;
@@ -20,7 +18,7 @@ html {
     margin-top: 252px;
     position: relative;
     background: #FFFFFF;
-    box-shadow: 0 0 70px 0 rgba(0,0,0,0.50);
+    box-shadow: 0 0 70px 0 rgba(0, 0, 0, 0.50);
     transition: opacity 500ms ease-in-out;
 }
 
@@ -35,23 +33,26 @@ html {
 .barreira-register-paywall--titulo {
     font-size: 20px;
     font-weight: 700;
-    color: #325E94;    
-    padding:  15px 10px;
+    color: #325E94;
+    padding: 15px 10px;
 }
 
 .barreira-register-paywall--titulo br {
     display: none;
 }
 
-.barreira-register-paywall--oftprincipal, .barreira-register-paywall--oftsecundaria {
+.barreira-register-paywall--oftprincipal,
+.barreira-register-paywall--oftsecundaria {
     font-size: 0px;
 }
 
-.barreira-register-paywall--oftprincipal img, .barreira-register-paywall--oftsecundaria img {
-    max-width: initial; 
+.barreira-register-paywall--oftprincipal img,
+.barreira-register-paywall--oftsecundaria img {
+    max-width: initial;
 }
 
-.barreira-register-paywall--oftprincipal a, .barreira-register-paywall--oftsecundaria a {
+.barreira-register-paywall--oftprincipal a,
+.barreira-register-paywall--oftsecundaria a {
     display: inline-block;
 }
 
@@ -83,46 +84,49 @@ html {
     display: none;
 }
 
-
 @media (min-width: 820px) {
-    
     .barreira-register-paywall .mobi {
         display: none;
     }
-
     .barreira-register-paywall .desk {
         display: block;
     }
     .barreira-register-paywall--content {
         width: 804px;
     }
-
     .barreira-register-paywall--titulo {
         padding: 21px;
     }
-
     .barreira-register-paywall--login {
         padding: 26px;
         font-size: 14px;
     }
-
     .barreira-register-paywall--titulo br {
         display: block;
     }
 }
 
+
 /* fixes */
 
-#relacionadas-topo, .footer-site, .relacionado, #footerOgloboPianoId  {
+#relacionadas-topo,
+.footer-site,
+.relacionado,
+#footerOgloboPianoId {
     display: none !important;
 }
 
-.site-header--is-fixed {
+.site-header--is-fixed, .site-header {
     transform: none !important;
     opacity: 1 !important;
+    box-shadow: none !important;
 }
 
 
-.block--advertising--is-fixed, .site-header--is-fixed {
+.block--advertising--is-fixed, .site-header--is-fixed, .site-header {
     position: initial !important;
+}
+
+.site-header--is-fixed+* {
+    margin-top: 0px !important;
 }
