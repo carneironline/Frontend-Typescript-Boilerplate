@@ -116,11 +116,15 @@ html {
     display: none !important;
 }
 
-.site-header {
-    position: initial !important;
+.site-header--is-fixed, .site-header {
     transform: none !important;
     opacity: 1 !important;
     box-shadow: none !important;
+}
+
+
+.block--advertising--is-fixed, .site-header--is-fixed, .site-header {
+    position: initial !important;
 }
 
 .site-header--is-fixed+* {
