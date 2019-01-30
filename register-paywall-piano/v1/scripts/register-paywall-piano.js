@@ -39,20 +39,39 @@ if (paywallSiteContainer) {
 					Esse conteúdo é exclusivo para assinantes.<br /> Quer continuar sua leitura?
 				</div>
 				<div class="barreira-register-paywall--oftprincipal">
-					<a class="img1l" target="_blank" onclick="disparaEvento('Register / Paywall','Clique - Ver ofertas 1','', this.href, event);" href="#" >
+                    <a class="img1l" target="_blank" 
+                    onclick="disparaEvento('Register / Paywall','Clique - Ver ofertas 1','', this.href, event, false, true);" 
+                    href="#" >
 						<img class="mobi img1m" src="#" />
 						<img class="desk img1d" src="#" />
 					</a>		
 				</div>
 				<div class="barreira-register-paywall--login">
-					Já possui cadastro? <a onclick="disparaEvento('Register / Paywall','Clique - Login','', this.href, event, true);" class="link" href="${url}login/${Piano.variaveis.getServicoId()}?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23${uri}" >Faça login</a> ou <a onclick="disparaEvento('Register / Paywall','Clique - Login','', this.href, event, true);" class="link" href="${url}cadastro/${Piano.variaveis.getServicoId()}?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23${uri}">Cadastre-se</a>.
+                    Já possui cadastro? 
+                    <a 
+                    onclick="disparaEvento('Register / Paywall','Clique - Login','', this.href, event, true, false);" 
+                    class="link" 
+                    href="${url}login/${Piano.variaveis.getServicoId()}?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23${uri}" >
+                        Faça login
+                    </a>
+                    ou
+                    <a 
+                    onclick="disparaEvento('Register / Paywall','Clique - Login','', this.href, event, true, false);" 
+                    class="link"
+                     href="${url}cadastro/${Piano.variaveis.getServicoId()}?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23${uri}">
+                        Cadastre-se
+                    </a>.
 				</div>
 				<div class="barreira-register-paywall--oftsecundaria">
-					<a class="img2l" target="_blank" onclick="disparaEvento('Register / Paywall','Clique - Ver ofertas 2','', this.href, event);" href="#" >
+                    <a class="img2l" target="_blank" 
+                    onclick="disparaEvento('Register / Paywall','Clique - Ver ofertas 2','', this.href, event, false, true);" 
+                    href="#" >
 						<img class="mobi img2m" src="#" />
 						<img class="desk img2d" src="#" />					
 					</a>
-					<a class="img3l" target="_blank" onclick="disparaEvento('Register / Paywall','Clique - Ver ofertas 3','', this.href, event);" href="#" >
+                    <a class="img3l" target="_blank" 
+                    onclick="disparaEvento('Register / Paywall','Clique - Ver ofertas 3','', this.href, event, false, true);" 
+                    href="#" >
 						<img class="mobi img3m" src="#" />
 						<img class="desk img3d" src="#" />					
 					</a>
@@ -133,8 +152,12 @@ if (paywallSiteContainer) {
 
     window['dataLayer'] = window['dataLayer'] || [];
 
-    function disparaEvento(categoria, acao, rotulo, elemento, event, notBlank) {
+    function disparaEvento(categoria, acao, rotulo, elemento, event, notBlank, resetUtp) {
         event.preventDefault(event);
+        console.log(resetUtp);
+        if(resetUtp) {
+            Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
+        }
         dataLayer.push({ 'event': 'EventoGA', 'eventoGACategoria': categoria, 'eventoGAAcao': acao, 'eventoGARotulo': rotulo, 'eventoGAValor': 0, 'eventoGAInteracao': false });
         setTimeout(function() {
             notBlank == true ? window.location.href = elemento : window.open(elemento);
