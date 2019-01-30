@@ -323,7 +323,7 @@ Piano.registerPaywall = {
 		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-paywall-piano/"+versao+"/styles/styles.css'>");
 		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-paywall-piano/"+versao+"/scripts/register-paywall-piano.js");
 		
-		if(tipoDeBarreira = 'register' || 'exclusivo' ) {
+		if(tipoDeBarreira == 'register' || 'exclusivo' ) {
 			Piano.metricas.enviaEventosGA("Exibicao Register", Piano.metricas.montaRotuloGA());
 			Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
 		} else {			
