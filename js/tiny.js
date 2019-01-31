@@ -729,32 +729,33 @@ Piano.construtor = {
 	}
 };
 
-(function () {
-	if (typeof swg !== 'undefined') {
-		(self.SWG = self.SWG || []).push((subscriptions) => {
-			swg = subscriptions;
-			
-            subscriptions.setOnEntitlementsResponse(entitlementsPromise => {
-                entitlementsPromise.then(entitlements => {
-                    swgEntitlements = entitlements;
-                    if (Piano !== 'undefined')
-                        Piano.construtor.initTp();
-                });
-            });
-        });
-
-	} else {
-		Piano.construtor.initTp();	
-	}
-
-})();
-
-(function (src) {
+function loadPianoExperiences(){
 	var a = document.createElement("script");
 	a.type = "text/javascript";
 	a.async = true;
-	a.src = src;
+	a.src = Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlSandboxPiano;
 	var b = document.getElementsByTagName("script")[0];
 	b.parentNode.insertBefore(a, b);
-})(Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlSandboxPiano);
+}
 
+(function () {
+	if (typeof swg !== 'undefined') {
+			(self.SWG = self.SWG || []).push((subscriptions) => {
+				swg = subscriptions;
+				subscriptions.setOnEntitlementsResponse(entitlementsPromise => {
+					entitlementsPromise.then(entitlements => {
+						swgEntitlements = entitlements;
+						if (Piano !== 'undefined'){
+							Piano.construtor.initTp();
+							loadPianoExperiences();
+						}else{
+							console.warn("Piano nao foi carregada corretamente!")
+						}
+					});
+				});
+			});
+	}else{
+		Piano.construtor.initTp();
+		loadPianoExperiences();
+	}
+})();
