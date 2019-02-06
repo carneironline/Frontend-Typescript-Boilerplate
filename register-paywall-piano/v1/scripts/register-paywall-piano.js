@@ -170,7 +170,6 @@ if (paywallSiteContainer) {
 
     function disparaEvento(categoria, acao, rotulo, elemento, event, notBlank, resetUtp) {
         event.preventDefault(event);
-        console.log(resetUtp);
         if(resetUtp) {
             Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
         }
@@ -182,7 +181,7 @@ if (paywallSiteContainer) {
 
     function intervencaoSwg (event) {
         event.preventDefault(event);
-        console.log('entrei na função');
+        swg.subscribe('br.com.infoglobo.oglobo.site.google');
     }
     
     if(img1lL == 'ofertaSwg') {
