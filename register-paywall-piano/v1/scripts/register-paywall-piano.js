@@ -170,7 +170,6 @@ if (paywallSiteContainer) {
 
     function disparaEvento(categoria, acao, rotulo, elemento, event, notBlank, resetUtp) {
         event.preventDefault(event);
-        console.log(resetUtp);
         if(resetUtp) {
             Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
         }
@@ -178,6 +177,23 @@ if (paywallSiteContainer) {
         setTimeout(function() {
             notBlank == true ? window.location.href = elemento : window.open(elemento);
         }, 300);
+    }
+
+    function intervencaoSwg (event) {
+        event.preventDefault(event);
+        swg.subscribe('br.com.infoglobo.oglobo.site.google');
+    }
+    
+    if(img1lL == 'ofertaSwg') {
+        img1l.setAttribute("onclick", "intervencaoSwg(event)");
+    }
+
+    if(img2lL == 'ofertaSwg') {
+        img2l.setAttribute("onclick", "intervencaoSwg(event)");
+    }
+
+    if(img3lL == 'ofertaSwg') {
+        img3l.setAttribute("onclick", "intervencaoSwg(event)");
     }
 
 } else {
