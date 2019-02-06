@@ -180,6 +180,23 @@ if (paywallSiteContainer) {
         }, 300);
     }
 
+    function swg (event) {
+        event.preventDefault(event);
+        console.log('entrei na função');
+    }
+    
+    if(img1lL == 'ofertaSwg') {
+        img1l.setAttribute("onclick", "swg(event)");
+    }
+
+    if(img2lL == 'ofertaSwg') {
+        img2l.setAttribute("onclick", "swg(event)");
+    }
+
+    if(img3lL == 'ofertaSwg') {
+        img3l.setAttribute("onclick", "swg(event)");
+    }
+
 } else {
     console.log("Tag de paywall nao existe");
 }
