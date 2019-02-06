@@ -179,8 +179,11 @@ if (paywallSiteContainer) {
         }, 300);
     }
 
+    
+
     function intervencaoSwg (event) {
         event.preventDefault(event);
+        validacaoUrlRetorno = true;
         swg.subscribe('br.com.infoglobo.oglobo.site.google');
     }
     
