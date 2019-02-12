@@ -70,13 +70,15 @@ if (paywallSiteContainer) {
                     href="${url}login/${Piano.variaveis.getServicoId()}?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23${uri}" >
                         Faça login
                     </a>
+                    <span class="barreira-register-paywall--cadastre">
                     ou
                     <a 
                     onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 3 - Cadastro', this.href, event, true, false);" 
                     class="link"
                      href="${url}cadastro/${Piano.variaveis.getServicoId()}?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23${uri}">
                         Cadastre-se
-                    </a>.
+                    </a>
+                    </span>.
 				</div>
 				<div class="barreira-register-paywall--oftsecundaria">
                     <a class="img2l" target="_blank" 
@@ -104,6 +106,7 @@ if (paywallSiteContainer) {
     let barreiraOftsecundaria = document.querySelector('.barreira-register-paywall--oftsecundaria');
     let barreiraTitulo = document.querySelector('.barreira-register-paywall--titulo');
     let barreiraTextoLogin = document.querySelector('.barreira-register-paywall--login');
+    let barreiraBtnCadastre = document.querySelector('.barreira-register-paywall--cadastre');
 
     // blocos editaveis
     let img1m = document.querySelector('.img1m');
@@ -135,6 +138,10 @@ if (paywallSiteContainer) {
 
     if (typeof barreiraTextoLoginContentHide != 'undefined' && barreiraTextoLoginContentHide != null && barreiraTextoLoginContentHide != '') {
         barreiraTextoLogin.innerHTML = " ";
+    }
+
+    if(barreiraBtnCadastreHide && barreiraBtnCadastreHide === true) {
+        barreiraBtnCadastre.innerHTML = '';
     }
 
     if (typeof img1mL != 'undefined' && img1mL != null && img1mL != '' && img1dL != 'undefined' && img1dL != null && img1dL != '' && img1lL != 'undefined' && img1lL != null && img1lL != '') {
