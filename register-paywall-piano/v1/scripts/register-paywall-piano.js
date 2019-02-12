@@ -140,7 +140,7 @@ if (paywallSiteContainer) {
         barreiraTextoLogin.innerHTML = " ";
     }
 
-    if(barreiraBtnCadastreHide && barreiraBtnCadastreHide === true) {
+    if(typeof barreiraBtnCadastreHide != 'undefined' && barreiraBtnCadastreHide === true) {
         barreiraBtnCadastre.innerHTML = '';
     }
 
