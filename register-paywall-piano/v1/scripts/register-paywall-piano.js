@@ -12,6 +12,25 @@ let protectedContentEl = document.querySelector(".protected-content");
 // scroll top para manter o header
 document.documentElement.scrollTop = 0;
 
+function hidePaywall () {
+    const btnEntrar = document.getElementById('barra-auth-area');
+
+    btnEntrar.addEventListener('click', function() {
+        const btnLogin = document.querySelector('#login-popin');
+
+        if(btnLogin) {
+            let isModalOpened = (btnLogin.style.display === 'block') ? true : false;
+            let paywall = document.querySelector('.barreira-register-paywall');
+            
+            if(isModalOpened) {
+                paywall.style.display = 'none';
+            } else {
+                paywall.style.display = 'block';
+            }
+        }
+    });
+}
+
 if (paywallSiteContainer) {
 
     // remover conteudo da materia
@@ -169,6 +188,7 @@ if (paywallSiteContainer) {
 
     setTimeout(function() {
         barreiraContainer.style.opacity = 1;
+        hidePaywall();
     }, 1000);
 
     // GA
