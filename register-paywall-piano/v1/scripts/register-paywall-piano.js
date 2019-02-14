@@ -25,7 +25,7 @@ function hidePaywall () {
             if(isModalOpened) {
                 paywall.style.display = 'none';
             } else {
-                paywall.style.display = 'true';
+                paywall.style.display = 'block';
             }
         }
     });
