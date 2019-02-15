@@ -315,20 +315,32 @@ Piano.paywall = {
 	}
 };
 
-Piano.registerPaywall = {
-	mostrarBarreira: function(versao, tipo) {
-		// Alguma forma de separar métrica
-		tipoDeBarreira = tipo;
+Piano.triggerAdvertising = function() {
+	let event = new CustomEvent('clearForAds')
+	document.dispatchEvent(event);
+};
 
-		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-paywall-piano/"+versao+"/styles/styles.css'>");
-		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-paywall-piano/"+versao+"/scripts/register-paywall-piano.js");
-		
-		if(tipoDeBarreira == 'register' || 'exclusivo' ) {
-			Piano.metricas.enviaEventosGA("Exibicao Register", Piano.metricas.montaRotuloGA());
-			Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
-		} else {			
-			Piano.metricas.enviaEventosGA("Barreira", Piano.metricas.montaRotuloGA());
+Piano.registerPaywall = {
+	mostrarBarreira: function(versao = null, tipo = null) {
+		let tipoDeBarreira = tipo;
+
+		if(!versao || !tipoDeBarreira) {
+			Piano.triggerAdvertising(); 
+		} else {
+			Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-paywall-piano/"+versao+"/styles/styles.css'>");
+			Piano.xmlHttpRequest.geraScriptNaPagina(
+				"https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-paywall-piano/"+versao+"/scripts/register-paywall-piano.js", 
+				data => { if(data.status !== 200) Piano.triggerAdvertising(); }
+			);
+			
+			if(tipoDeBarreira === 'register' || 'exclusivo' ) {
+				Piano.metricas.enviaEventosGA("Exibicao Register", Piano.metricas.montaRotuloGA());
+				Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
+			} else {			
+				Piano.metricas.enviaEventosGA("Barreira", Piano.metricas.montaRotuloGA());
+			}
 		}
+		
 	}
 };
 
@@ -372,16 +384,22 @@ Piano.inadimplente = {
 };
 
 Piano.xmlHttpRequest = {
-	geraScriptNaPagina: function(urlScript) {
+	geraScriptNaPagina: function(urlScript, callback) {
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", urlScript);
 		xhr.send();
 		xhr.onreadystatechange = function() {
-			if(this.readyState == 4 && this.status == 200){
-				var resposta = xhr.responseText;
-				var appendDeScript = document.createElement('script');
-				appendDeScript.innerHTML = resposta;
-				document.body.appendChild(appendDeScript);
+			if(this.readyState === 4) {
+				if(this.status === 200){
+					var resposta = xhr.responseText;
+					var appendDeScript = document.createElement('script');
+					appendDeScript.innerHTML = resposta;
+					document.body.appendChild(appendDeScript);
+
+					callback(xhr);
+				} else {
+					callback(xhr); 
+				}
 			}
 		};	
 	},
