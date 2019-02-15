@@ -389,17 +389,15 @@ Piano.xmlHttpRequest = {
 		xhr.open("GET", urlScript);
 		xhr.send();
 		xhr.onreadystatechange = function() {
-			if(this.readyState === 4) {
-				if(this.status === 200){
+			if(this.readyState === 4 && this.status === 200) {
 					var resposta = xhr.responseText;
 					var appendDeScript = document.createElement('script');
 					appendDeScript.innerHTML = resposta;
 					document.body.appendChild(appendDeScript);
-
 					callback(xhr);
-				} else {
-					callback(xhr); 
-				}
+				
+			} else {
+				callback(xhr); 
 			}
 		};	
 	},
