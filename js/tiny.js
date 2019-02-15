@@ -394,11 +394,10 @@ Piano.xmlHttpRequest = {
 					var appendDeScript = document.createElement('script');
 					appendDeScript.innerHTML = resposta;
 					document.body.appendChild(appendDeScript);
-					callback(xhr);
 				
-			} else {
-				callback(xhr); 
-			}
+			} 
+			
+			callback(xhr); 
 		};	
 	},
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
