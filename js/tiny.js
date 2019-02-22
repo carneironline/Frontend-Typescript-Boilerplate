@@ -417,7 +417,8 @@ Piano.xmlHttpRequest = {
 				
 			} 
 			
-			callback(xhr); 
+			if(callback)
+				callback(xhr); 
 		};	
 	},
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
