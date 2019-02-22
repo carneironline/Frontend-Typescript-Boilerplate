@@ -1,6 +1,7 @@
 window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
 var PaywallAnalytics = {};
+Piano.activePaywall = true;
 Piano.variaveis = {
 	ambientesAceitos: "int,qlt,prd",
 	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,503,504",
@@ -320,11 +321,30 @@ Piano.triggerAdvertising = function() {
 	document.dispatchEvent(event);
 };
 
+Piano.checkPaywall = function() {
+	let count = 0;
+	
+	const checkGate = setInterval(() => {
+		let hasGate = document.querySelector('.barreira-register-paywall');
+
+		if(hasGate)
+			clearInterval(checkGate);
+	
+		if(!hasGate && count > 3) {
+			Piano.activePaywall = false;
+			Piano.triggerAdvertising();
+			clearInterval(checkGate);
+		}
+
+		count++;
+	}, 3000);
+};
+
 Piano.registerPaywall = {
 	mostrarBarreira: function(versao = null, tipo = null) {
 		let tipoDeBarreira = tipo;
 
-		if(!versao || !tipoDeBarreira) {
+		if(!Piano.activePaywall || (!versao || !tipoDeBarreira) ) {
 			Piano.triggerAdvertising(); 
 		} else {
 			Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-paywall-piano/"+versao+"/styles/styles.css'>");
@@ -769,8 +789,10 @@ function loadPianoExperiences(){
 					});
 				});
 			});
-	}else{
+	} else {
 		Piano.construtor.initTp();
 		loadPianoExperiences();
 	}
+
+	Piano.checkPaywall();
 })();
