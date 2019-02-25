@@ -342,7 +342,7 @@ Piano.checkPaywall = function() {
 
 Piano.registerPaywall = {
 	mostrarBarreira: function(versao = null, tipo = null) {
-		let tipoDeBarreira = tipo;
+		tipoDeBarreira = tipo;
 
 		if(!Piano.activePaywall || (!versao || !tipoDeBarreira) ) {
 			Piano.triggerAdvertising(); 

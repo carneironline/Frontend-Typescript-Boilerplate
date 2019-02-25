@@ -59,13 +59,17 @@ if (paywallSiteContainer) {
     
     if(tipoDeBarreira == 'register') {
         nomeBarreira = 'Register comum';
+        eventoLinkUm = 'Cadastre-se';
     }
     else if(tipoDeBarreira == 'exclusivo') {
         nomeBarreira = 'Register exclusivo';
+        eventoLinkUm = 'Assine agora';
     }
     else {
         nomeBarreira = 'paywall inline';
+        eventoLinkUm = 'Assine agora';
     }
+
 
     let conteudoExperienciaRegisterPaywall = `
 		<div class="barreira-register-paywall" style="opacity: 0;">
@@ -75,7 +79,7 @@ if (paywallSiteContainer) {
 				</div>
 				<div class="barreira-register-paywall--oftprincipal">
                     <a class="img1l" target="_blank" 
-                    onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 1 - Assine agora', this.href, event, false, true);" 
+                    onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 1 - ${eventoLinkUm}', this.href, event, false, true);" 
                     href="#" >
 						<img class="mobi img1m" src="#" />
 						<img class="desk img1d" src="#" />
