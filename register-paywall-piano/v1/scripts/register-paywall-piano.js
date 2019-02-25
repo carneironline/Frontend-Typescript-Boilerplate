@@ -8,6 +8,7 @@ let metadeTela = alturaTela / 2;
 let uri = encodeURIComponent(document.location.href);
 let url = window.ambienteUtilizadoPiano == 'prd' ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/';
 let protectedContentEl = document.querySelector(".protected-content");
+let eventoLinkUm = null;
 
 // scroll top para manter o header
 document.documentElement.scrollTop = 0;
@@ -53,19 +54,23 @@ if (paywallSiteContainer) {
 
     // identificando tipo de barreira para disparo de métricas
 
-    if (typeof tipoDeBarreira == 'undefined' || tipoDeBarreira == null || tipoDeBarreira == '') {
-        tipoDeBarreira = 'paywall';
+    if (typeof Piano.typePaywall == 'undefined' || Piano.typePaywall == null || Piano.typePaywall == '') {
+        nomeBarreira = 'paywall';
     } 
     
-    if(tipoDeBarreira == 'register') {
+    if(Piano.typePaywall == 'register') {
         nomeBarreira = 'Register comum';
+        eventoLinkUm = 'Cadastre-se';
     }
-    else if(tipoDeBarreira == 'exclusivo') {
+    else if(Piano.typePaywall == 'exclusivo') {
         nomeBarreira = 'Register exclusivo';
+        eventoLinkUm = 'Assine agora';
     }
     else {
         nomeBarreira = 'paywall inline';
+        eventoLinkUm = 'Assine agora';
     }
+
 
     let conteudoExperienciaRegisterPaywall = `
 		<div class="barreira-register-paywall" style="opacity: 0;">
@@ -75,7 +80,7 @@ if (paywallSiteContainer) {
 				</div>
 				<div class="barreira-register-paywall--oftprincipal">
                     <a class="img1l" target="_blank" 
-                    onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 1 - Assine agora', this.href, event, false, true);" 
+                    onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 1 - ${eventoLinkUm}', this.href, event, false, true);" 
                     href="#" >
 						<img class="mobi img1m" src="#" />
 						<img class="desk img1d" src="#" />
