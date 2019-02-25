@@ -8,6 +8,7 @@ let metadeTela = alturaTela / 2;
 let uri = encodeURIComponent(document.location.href);
 let url = window.ambienteUtilizadoPiano == 'prd' ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/';
 let protectedContentEl = document.querySelector(".protected-content");
+let eventoLinkUm = null;
 
 // scroll top para manter o header
 document.documentElement.scrollTop = 0;
@@ -53,15 +54,15 @@ if (paywallSiteContainer) {
 
     // identificando tipo de barreira para disparo de métricas
 
-    if (typeof tipoDeBarreira == 'undefined' || tipoDeBarreira == null || tipoDeBarreira == '') {
-        tipoDeBarreira = 'paywall';
+    if (typeof Piano.typePaywall == 'undefined' || Piano.typePaywall == null || Piano.typePaywall == '') {
+        nomeBarreira = 'paywall';
     } 
     
-    if(tipoDeBarreira == 'register') {
+    if(Piano.typePaywall == 'register') {
         nomeBarreira = 'Register comum';
         eventoLinkUm = 'Cadastre-se';
     }
-    else if(tipoDeBarreira == 'exclusivo') {
+    else if(Piano.typePaywall == 'exclusivo') {
         nomeBarreira = 'Register exclusivo';
         eventoLinkUm = 'Assine agora';
     }

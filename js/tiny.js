@@ -2,6 +2,7 @@ window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
 var PaywallAnalytics = {};
 Piano.activePaywall = true;
+Piano.typePaywall = null;
 Piano.variaveis = {
 	ambientesAceitos: "int,qlt,prd",
 	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,503,504",
@@ -342,9 +343,9 @@ Piano.checkPaywall = function() {
 
 Piano.registerPaywall = {
 	mostrarBarreira: function(versao = null, tipo = null) {
-		tipoDeBarreira = tipo;
+		Piano.typePaywall = tipo;
 
-		if(!Piano.activePaywall || (!versao || !tipoDeBarreira) ) {
+		if(!Piano.activePaywall || (!versao || !Piano.typePaywall) ) {
 			Piano.triggerAdvertising(); 
 		} else {
 			Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-paywall-piano/"+versao+"/styles/styles.css'>");
@@ -353,7 +354,7 @@ Piano.registerPaywall = {
 				data => { if(data.status !== 200) Piano.triggerAdvertising(); }
 			);
 			
-			if(tipoDeBarreira === 'register' || 'exclusivo' ) {
+			if(Piano.typePaywall === 'register' || 'exclusivo' ) {
 				Piano.metricas.enviaEventosGA("Exibicao Register", Piano.metricas.montaRotuloGA());
 				Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
 			} else {			
