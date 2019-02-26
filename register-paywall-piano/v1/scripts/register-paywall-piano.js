@@ -37,7 +37,7 @@ if (paywallSiteContainer) {
     // remover conteudo da materia
     if (protectedContentEl) {
         protectedContentEl.setAttribute('data-content', 'removed');
-        protectedContentEl.innerHTML = "Conteúdo exclusivo para assinantes.";
+        protectedContentEl.innerHTML = " ";
     }
 
     if (headerBlog) {
