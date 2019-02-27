@@ -330,8 +330,8 @@ Piano.checkPaywall = function() {
 
 		if(hasGate)
 			clearInterval(checkGate);
-	    console.log('checkPaywall', count)
-		if(!hasGate && count > 3) { console.log('checkPaywallATIVO', count)
+	    
+		if(!hasGate && count > 3) { 
 			Piano.activePaywall = false;
 			Piano.triggerAdvertising();
 			clearInterval(checkGate);
