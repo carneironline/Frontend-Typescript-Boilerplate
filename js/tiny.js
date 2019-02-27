@@ -330,15 +330,15 @@ Piano.checkPaywall = function() {
 
 		if(hasGate)
 			clearInterval(checkGate);
-	
-		if(!hasGate && count > 3) {
+	    
+		if(!hasGate && count > 3) { 
 			Piano.activePaywall = false;
 			Piano.triggerAdvertising();
 			clearInterval(checkGate);
 		}
 
 		count++;
-	}, 3000);
+	}, 1000);
 };
 
 Piano.registerPaywall = {
