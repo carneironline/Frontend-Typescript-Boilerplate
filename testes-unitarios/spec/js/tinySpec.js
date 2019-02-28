@@ -1499,31 +1499,31 @@ describe('Tiny JS', function () {
 
         describe('função chama barreira register / paywall', function () {
 
-            xit('deve chamar o método metricas.enviaEventosGA', function () {
+            it('deve chamar o método metricas.enviaEventosGA', function () {
                 spyOn(Piano.metricas, 'enviaEventosGA');
 
-                Piano.registerPaywall.mostrarBarreira();
+                Piano.registerPaywall.mostrarBarreira('1','register');
                 expect(Piano.metricas.enviaEventosGA).toHaveBeenCalled();
             });
 
-            xit('deve chamar o método cookies.set', function () {
+            it('deve chamar o método cookies.set', function () {
                 spyOn(Piano.cookies, 'set');
 
-                Piano.registerPaywall.mostrarBarreira();
+                Piano.registerPaywall.mostrarBarreira('1','register');
                 expect(Piano.cookies.set).toHaveBeenCalled();
             });
 
-            xit('deve chamar o método util.adicionarCss', function () {
+            it('deve chamar o método util.adicionarCss', function () {
                 spyOn(Piano.util, 'adicionarCss');
 
-                Piano.registerPaywall.mostrarBarreira();
+                Piano.registerPaywall.mostrarBarreira('1','register');
                 expect(Piano.util.adicionarCss).toHaveBeenCalled();
             });
 
-            xit('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
                 spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
 
-                Piano.registerPaywall.mostrarBarreira();
+                Piano.registerPaywall.mostrarBarreira('1','register');
                 expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
             });
 
