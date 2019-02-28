@@ -332,7 +332,7 @@ Piano.checkPaywall = function() {
 	
 	const checkGate = setInterval(() => {
 		let hasGate = document.querySelector('.barreira-register-paywall');
-		let hasPub = document.querySelector('#pub-retangulo-1 iframe, #pub-retangulo-2 iframe');
+		let hasPub = document.querySelector('#pub-retangulo-1 iframe, #pub-retangulo-2 iframe, #pub-fullbanner-1 iframe');
 
 		if(count > 2) {
 			Piano.triggerAdvertising();
