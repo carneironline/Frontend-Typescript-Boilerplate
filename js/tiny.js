@@ -82,11 +82,6 @@ Piano.variaveis = {
 				return 'OG04';
 			case 'jornaldigital':
 				return 'OG01';
-			case 'gq':
-			case 'quem-acontece':
-			case 'casa-vogue':
-			case 'vogue':
-			case 'glamour':
 			case 'auto-esporte':
 			case 'epoca':
 				return nomeProduto;
@@ -696,7 +691,7 @@ Piano.util = {
 		document.body.insertBefore(e, document.body.lastChild);
 	},
 	isRevista: function(){
-		var revistas = ["epoca","auto-esporte","glamour","vogue","casa-vogue","quem-acontece","gq"];
+		var revistas = ["epoca","auto-esporte"];
 		if(revistas.indexOf(Piano.variaveis.getNomeProduto()) > -1)
 			return true;
 		else
