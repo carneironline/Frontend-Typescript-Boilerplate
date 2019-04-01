@@ -373,9 +373,13 @@ Piano.comunicado = {
 };
 
 Piano.adblock = {
-	mostrarAdBlock: function(versao) {
-		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/adblock-piano/styles/styles.css'>");
-		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/adblock-piano/"+versao+"/scripts/adblock-piano.js");
+	mostrarAdBlock: function(params = null) {
+		
+		if(params)
+			window.glbAdblock = params;
+
+		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/adblock-piano/v4/styles/styles.css'>");
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/adblock-piano/v4/scripts/adblock-piano.js");
 	}
 };
 
