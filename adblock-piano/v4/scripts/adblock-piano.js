@@ -24,7 +24,7 @@
 
     function template() {
         switch(templateSettings.template) {
-            case 'default': return templateDefault(); break;
+            default: return templateDefault();
         }
     }
 

@@ -1,26 +1,4 @@
-@font-face {
-    font-family: 'Raleway-Bold';
-    src: url('../fonts/Raleway-Bold.svg#Raleway-Bold') format('svg'),
-         url('../fonts/Raleway-Bold.ttf') format('truetype'),
-         url('../fonts/Raleway-Bold.woff') format('woff'),
-         url('../fonts/raleway.bold.eot'),
-         url('../fonts/raleway.bold.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/raleway.bold.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'Raleway-Regular';
-    src: url('../fonts/Raleway.svg#Raleway') format('svg'),
-         url('../fonts/Raleway.ttf') format('truetype'),
-         url('../fonts/Raleway.woff') format('woff'),
-         url('../fonts/raleway.regular.eot'),
-         url('../fonts/raleway.regular.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/raleway.regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  }    
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
 
 .adblock-cpt, .adblock-cpt * {
     box-sizing: border-box;
@@ -32,7 +10,7 @@
     border-radius: 8px;
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
     box-sizing: border-box;
-    font-family: 'Raleway-Regular';
+    font-family: 'Raleway';
     position: fixed;
     z-index: 1000002;
     background: white;
@@ -116,7 +94,7 @@
 }
 
 .adblock-cpt__title {
-    font-family: 'Raleway-Bold';
+    font-weight: 700;
     font-size: 30px;
     color: #FFFFFF;
     letter-spacing: 0.22px;
@@ -156,7 +134,7 @@
 
 .adblock-cpt__footer-info :nth-child(1) {
     font-size: 17px;
-    font-family: 'Raleway-Bold';
+    font-weight: 700;
 }
 
 .adblock-cpt__footer-info :nth-child(2) {
@@ -164,7 +142,7 @@
 }
 
 .adblock-cpt__footer-btn {
-    font-family: Raleway-Bold;
+    font-weight: 700;
     font-size: 18px;
     letter-spacing: 0.06px;
     min-width: 110px;
@@ -180,7 +158,7 @@
     display: inline-block;
     background: #41BFE2;
     border-radius: 3px;
-    font-family: Raleway-Bold;
+    font-weight: 700;
     font-size: 19px;
     color: #FFFFFF !important;
     text-align: center;
@@ -246,7 +224,7 @@
 
     background: #41BFE2;
     border-radius: 3px;
-    font-family: Raleway-Bold;
+    font-weight: 700;
     font-size: 19px;
     color: #FFFFFF;
     text-align: center;
