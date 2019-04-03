@@ -24,5 +24,6 @@ if (tagSite) {
 	aTag.setAttribute('style',"background-image: url("+imagemAssinaturaHeaderFooter+"); height: 44px;");
 	aTag.setAttribute('target', '_blank');
 	aTag.innerHTML = "Assinatura";
+	aTag.setAttribute('id', 'btn-assine-header');
 	tagSite.appendChild(aTag);
 }
