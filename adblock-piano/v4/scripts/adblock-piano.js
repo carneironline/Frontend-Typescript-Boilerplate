@@ -3,6 +3,7 @@
 
     let templateSettings = {
         template: 'default',
+        assetsPath: '',
         description: 'Gosta do nosso conteúdo? Você pode contribuir com nosso jornalismo fazendo uma assinatura e aproveitar o jornal O Globo utilizando seu bloqueador.',
         urlSignup: 'http://oglobo.com.br',
         urlSignin: 'http://google.com.br'
@@ -53,7 +54,7 @@
                 <div class='adblock-cpt'>
                     <div class="adblock-cpt__header">
                             <div class="adblock-cpt__col1">
-                                <img src="images/placas.svg" />
+                                <img src="${templateSettings.assetsPath}images/placas.svg" />
                             </div>
                             <div class="adblock-cpt__col2">
                                 <div class="adblock-cpt__title">

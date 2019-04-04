@@ -373,10 +373,11 @@ Piano.comunicado = {
 };
 
 Piano.adblock = {
-	mostrarAdBlock: function(params = null) {
+	mostrarAdBlock: function(params = {}) {
+
+		params.assetsPath = `https://static${Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/adblock-piano/v4/`;
 		
-		if(params)
-			window.glbAdblock = params;
+		window.glbAdblock = params;
 
 		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/adblock-piano/v4/styles/styles.css'>");
 		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/adblock-piano/v4/scripts/adblock-piano.js");
