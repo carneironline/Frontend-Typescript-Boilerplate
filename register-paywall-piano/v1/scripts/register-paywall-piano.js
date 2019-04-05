@@ -33,6 +33,7 @@ function hidePaywall () {
 }
 
 if (paywallSiteContainer) {
+    let tipoBarreiraPixel = '';
 
     // remover conteudo da materia
     if (protectedContentEl) {
@@ -53,8 +54,6 @@ if (paywallSiteContainer) {
     }
 
     // identificando tipo de barreira para disparo de métricas
-
-    const tipoBarreiraPixel = '';
     if (typeof Piano.typePaywall == 'undefined' || Piano.typePaywall == null || Piano.typePaywall == '') {
         nomeBarreira = 'paywall';
         tipoBarreiraPixel = 'ViewPaywallExclusivo';
