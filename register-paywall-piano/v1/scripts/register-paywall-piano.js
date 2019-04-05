@@ -56,27 +56,35 @@ if (paywallSiteContainer) {
 
     if (typeof Piano.typePaywall == 'undefined' || Piano.typePaywall == null || Piano.typePaywall == '') {
         nomeBarreira = 'paywall';
-	fbq('init', '410270039520634');
-        fbq('trackSingle', '410270039520634', 'ViewPaywallExclusivo');
+        if(typeof fbq !== 'undefined'){
+            fbq('init', '410270039520634');
+            fbq('trackSingle', '410270039520634', 'ViewPaywallExclusivo');
+        }
     } 
     
     if(Piano.typePaywall == 'register') {
         nomeBarreira = 'Register comum';
         eventoLinkUm = 'Cadastre-se';
-	fbq('init', '410270039520634');
-        fbq('trackSingle', '410270039520634', 'ViewRegisterWall');
+        if(typeof fbq !== 'undefined'){
+            fbq('init', '410270039520634');
+            fbq('trackSingle', '410270039520634', 'ViewPaywallExclusivo');
+        }
     }
     else if(Piano.typePaywall == 'exclusivo') {
         nomeBarreira = 'Register exclusivo';
         eventoLinkUm = 'Assine agora';
-	fbq('init', '410270039520634');
-        fbq('trackSingle', '410270039520634', 'ViewLoginExclusivo');
+        if(typeof fbq !== 'undefined'){
+            fbq('init', '410270039520634');
+            fbq('trackSingle', '410270039520634', 'ViewPaywallExclusivo');
+        }
     }
     else {
         nomeBarreira = 'paywall inline';
         eventoLinkUm = 'Assine agora';
-	fbq('init', '410270039520634');    
-        fbq('trackSingle', '410270039520634', 'ViewPaywallExclusivo');
+        if(typeof fbq !== 'undefined'){
+            fbq('init', '410270039520634');
+            fbq('trackSingle', '410270039520634', 'ViewPaywallExclusivo');
+        }
     }
 
 
