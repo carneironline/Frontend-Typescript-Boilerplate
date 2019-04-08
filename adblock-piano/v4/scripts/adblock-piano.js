@@ -50,7 +50,6 @@
 
     function templateDefault() {
         return `
-            <div id='detecta-adblock'>
                 <div class='adblock-cpt'>
                     <div class="adblock-cpt__header">
                             <div class="adblock-cpt__col1">
@@ -111,7 +110,6 @@
                     </div>
                 </div>
                 <div class='backdrop-adblock'> </div>
-            </div>
             `;
     }
 
