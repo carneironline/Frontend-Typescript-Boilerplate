@@ -1,5 +1,20 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
 
+#detecta-adblock {
+    width: 100%;
+    position: fixed;
+    height: calc(100vh - 86px);
+    z-index: 999;
+    top: 86px;
+}
+
+@media only screen and (max-width: 767px) {
+    #detecta-adblock {
+        top: 56px;
+        height: calc(100vh - 56px);
+    }
+}
+
 .adblock-cpt, .adblock-cpt * {
     box-sizing: border-box;
 }
@@ -12,10 +27,10 @@
     box-sizing: border-box;
     font-family: 'Raleway';
     position: fixed;
-    z-index: 1000002;
+    z-index: 1;
     background: white;
     transform: translate(-50%, -50%);
-    top: 50%;
+    top: calc(50% + 56px);
     left: 50%;
     overflow: hidden;
     background: #000;
@@ -24,6 +39,11 @@
     .adblock-cpt {
         width: 100%;
         min-width: unset;  
+        height: calc(90vh - 56px);
+        display: flex;
+        flex-direction: column;
+        flex-flow: wrap;
+        top: calc(50% + 28px);
     } 
 }
 
@@ -44,7 +64,6 @@
 }
 @media only screen and (max-width: 767px) {
     .adblock-cpt__header {
-        flex-direction: column;
         height: auto;
         text-align: center;
     } 
@@ -116,6 +135,7 @@
     .adblock-cpt__footer {
         flex-direction: column;
         text-align: center;
+        justify-content: center;
     } 
 }
 
@@ -234,11 +254,10 @@
 }
 
 #detecta-adblock .backdrop-adblock {
-    background: rgba(0, 0, 0, 0.50);
-    position: fixed;
+    background: rgba(0, 0, 0, 0.8);
+    position: absolute;
     width: 100%;
     height: 100%;
     top: 0px;
     left: 0px;
-    z-index: 1000001;
 }
