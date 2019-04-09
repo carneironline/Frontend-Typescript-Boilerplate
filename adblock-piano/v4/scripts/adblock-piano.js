@@ -6,8 +6,8 @@
         assetsPath: '',
         description: 'Para ter acesso ilimitado ao nosso conteúdo, basta assinar um dos nossos planos. Aproveite para conhecer todos os benefícios da assinatura O Globo.',
         textSignup: 'Quero assinar',
-        urlSignup: 'https://login.globo.com/cadastro/4728?tam=widget&url=https%3A%2F%2Fintervencao.globo.com%2Fintervencoes%2Fshow.do%3Fpopin%3Dtrue%26servicoId%3D4728%26urlIntervencao%3Dhttps%3A%2F%2Fs.glbimg.com%2Fgl%2Fba%2Fbarra-globocom.callback.html%2523https%253A%252F%252Foglobo.globo.com%252F',
-        urlSignin: 'https://login.globo.com/login/464/connect-confirm?url=https%3A%2F%2Fid.globo.com%2Fauth%2Frealms%2Fglobo.com%2Flogin-actions%2Fauthenticate%3Fsession_code%3DiHncYB5Xqp4N79ADb5ILuFVjxtTG6U_9R7eOFK1QzNM%26execution%3D1c219005-5ee2-474e-841b-8439de30d406%26client_id%3Dminha-conta-prod%26tab_id%3DUTUJAN7OMyA&error=',
+        urlSignup: 'https://login.qa.globoi.com/cadastro/4975?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23https%3A%2F%2Fm.globostg.globoi.com%2F',
+        urlSignin: 'https://login.qa.globoi.com/login/4975?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23https%3A%2F%2Fm.globostg.globoi.com%2F',
         footerTitle: 'Ainda não está pronto para assinar?',
         footerDescription: 'Nos adicione em sua lista de permissões ou desabilite seu bloqueador de pop-ups.',
         footerTextBtn: 'Saiba mais'
