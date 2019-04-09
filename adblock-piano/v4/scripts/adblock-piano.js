@@ -4,9 +4,13 @@
     let templateSettings = {
         template: 'default',
         assetsPath: '',
-        description: 'Gosta do nosso conteúdo? Você pode contribuir com nosso jornalismo fazendo uma assinatura e aproveitar o jornal O Globo utilizando seu bloqueador.',
-        urlSignup: 'http://oglobo.com.br',
-        urlSignin: 'http://google.com.br'
+        description: 'Para ter acesso ilimitado ao nosso conteúdo, basta assinar um dos nossos planos. Aproveite para conhecer todos os benefícios da assinatura O Globo.',
+        textSignup: 'Quero assinar',
+        urlSignup: 'https://login.qa.globoi.com/cadastro/4975?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23https%3A%2F%2Fm.globostg.globoi.com%2F',
+        urlSignin: 'https://login.qa.globoi.com/login/4975?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23https%3A%2F%2Fm.globostg.globoi.com%2F',
+        footerTitle: 'Ainda não está pronto para assinar?',
+        footerDescription: 'Nos adicione em sua lista de permissões ou desabilite seu bloqueador de pop-ups.',
+        footerTextBtn: 'Saiba mais'
     };
     
     function setTemplateSettings() {
@@ -63,25 +67,23 @@
                                 <div class="adblock-cpt__text">
                                     ${templateSettings.description}
                                 </div>
-                                <div class="adblock-cpt__signup"><a href="${templateSettings.urlSignup}" class="adblock-btn">Quero assinar</a></div>
+                                <div class="adblock-cpt__signup"><a href="${templateSettings.urlSignup}" class="adblock-btn">${templateSettings.textSignup}</a></div>
                                 <div class="adblock-cpt__signin">Já possui assinatura?  <a href="${templateSettings.urlSignin}">Faça o login</a></div>
                             </div>
                     </div>
 
                     <div class="adblock-cpt__footer">
                         <div class="adblock-cpt__footer-info">
-                            <div>Ainda não está pronto para assinar?</div>
-                            <div>Nos adicione em sua lista de permissões ou desabilite seu bloqueador de pop-ups.</div>
+                            <div>${templateSettings.footerTitle}</div>
+                            <div>${templateSettings.footerDescription}</div>
                         </div>
 
                         <div class="adblock-cpt__footer-btn">
-                            <a id="showRequirements" href="javascript:;" >Saiba como</a>
+                            <a id="showRequirements" href="javascript:;" >${templateSettings.footerTextBtn}</a>
                         </div>
                     </div>
 
                     <div class='adblock-cpt__requisitos'>
-                        <button class="adblock-cpt__requisitos-voltar" type="button">Voltar</button>
-
                         <h2>Adicione O Globo nas suas permissões</h2>
 
                         <h4>Adblock Plus</h4>
@@ -107,6 +109,8 @@
                             <li>Uma nova janela abrirá e você precisará clicar no botão “Exclude”</li>
                             <li>Após o clique, a página será recarregada</li>
                         </ol>
+
+                        <button class="adblock-cpt__requisitos-voltar" type="button">Voltar</button>
                     </div>
                 </div>
                 <div class='backdrop-adblock'> </div>
