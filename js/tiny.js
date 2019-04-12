@@ -706,7 +706,7 @@ Piano.util = {
 		window.tipoConteudoPiano = tipoConteudo;
 		window.conteudoExclusivo = isExclusivo;
 		window.nomeProdutoPiano = nomeProduto;
-    if (window.regrasTiny.nomeExperiencia){
+    if (typeof window.regrasTiny !== 'undefined'){
         window.regrasTiny.nomeExperiencia = "";
     }
     Piano.construtor.initTp();
