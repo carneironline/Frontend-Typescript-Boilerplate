@@ -701,6 +701,16 @@ Piano.util = {
 			return true;
 		else
 			return false;
+	},
+	recarregaPiano: function(tipoConteudo, isExclusivo, nomeProduto){
+		window.tipoConteudoPiano = tipoConteudo;
+		window.conteudoExclusivo = isExclusivo;
+		window.nomeProdutoPiano = nomeProduto;
+    if (window.regrasTiny.nomeExperiencia){
+        window.regrasTiny.nomeExperiencia = "";
+    }
+    Piano.construtor.initTp();
+    tp.experience.execute();
 	}
 };
 
