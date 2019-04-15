@@ -8,11 +8,11 @@
 #detecta-adblock {
     width: 100%;
     position: fixed;
-    height: calc(100vh - 86px);
-    z-index: 999;
-    top: 86px;
+    height: 100vh;
+    z-index: 99999;
+    top: 0;
     padding: 20px;
-    display: flex;
+    display: flex;  
     align-items: center;
     justify-content: center;
 }

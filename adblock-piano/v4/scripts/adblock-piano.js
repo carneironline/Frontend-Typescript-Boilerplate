@@ -67,8 +67,8 @@
                                 <div class="adblock-cpt__text">
                                     ${templateSettings.description}
                                 </div>
-                                <div class="adblock-cpt__signup"><a href="${templateSettings.urlSignup}" class="adblock-btn">${templateSettings.textSignup}</a></div>
-                                <div class="adblock-cpt__signin">Já possui assinatura?  <a href="${templateSettings.urlSignin}">Faça o login</a></div>
+                                <div class="adblock-cpt__signup"><a href="${templateSettings.urlSignup}" class="adblock-btn" data-ga="Clique em \'Quero assinar\' | Piano | Adblock ativado | Clique em Link - Quero assinar">${templateSettings.textSignup}</a></div>
+                                <div class="adblock-cpt__signin">Já possui assinatura?  <a href="${templateSettings.urlSignin}" data-ga="Clique em \'Faça o login\' | Piano | Adblock ativado | Clique em Link - Faça login">Faça o login</a></div>
                             </div>
                     </div>
 
@@ -79,7 +79,7 @@
                         </div>
 
                         <div class="adblock-cpt__footer-btn">
-                            <a id="showRequirements" href="javascript:;" >${templateSettings.footerTextBtn}</a>
+                            <a id="showRequirements" href="javascript:;" data-ga="Clique em \'Saiba mais\' | Piano | Adblock ativado | Clique em Link - Saiba mais">${templateSettings.footerTextBtn}</a>
                         </div>
                     </div>
 
@@ -117,10 +117,41 @@
             `;
     }
 
+    function ga() {
+//Piano.metricas.montaRotuloGA()
+        let elements = document.querySelectorAll('.adblock-cpt [data-ga]');
+
+        elements.forEach(el => {
+
+            el.addEventListener(
+                'click', setDataGa, false
+            );
+            
+            console.log(el)
+        })
+    }
+
+    function setDataGa(evt) {
+        evt.preventDefault();
+
+        if(!evt.target.dataset.ga)
+            return;
+
+        const evtData = evt.target.dataset.ga.split('|');
+        const evtName = evtData[0].trim();
+        const evtCategory = evtData[1].trim();
+        const evtAction = evtData[2].trim();
+        const evtLabel = evtData[3].trim();
+
+        console.log({'event': evtName, 'eventoGACategoria': evtCategory, 'eventoGAAcao': evtAction, 'eventoGARotulo':evtLabel})
+        // dataLayer.push({'event': evtName, 'eventoGACategoria': evtCategory, 'eventoGAAcao': evtAction, 'eventoGARotulo':evtLabel});
+    }
+
     function init() {
         setTemplateSettings();
         createWall();
         activeWallRequirements();
+        ga();
     }
 
     init();
