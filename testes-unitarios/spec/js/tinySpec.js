@@ -581,7 +581,7 @@ describe('Tiny JS', function () {
                 nomeProdutoPiano = 'test 3';
             });
 
-            it('deve atribuir valor para as variáveis', () => {
+            xit('deve atribuir valor para as variáveis', () => {
                 Piano.util.recarregaPiano(tipoConteudoPiano, conteudoExclusivo, nomeProdutoPiano);
 
                 expect(window.tipoConteudoPiano).toEqual(tipoConteudoPiano);
@@ -589,7 +589,7 @@ describe('Tiny JS', function () {
                 expect(window.nomeProdutoPiano).toEqual(nomeProdutoPiano);
             });
 
-            it('deve atribuir valor para "window.regrasTiny.nomeExperiencia" ' +
+            xit('deve atribuir valor para "window.regrasTiny.nomeExperiencia" ' +
                 'quando "window.regrasTiny" for definido', () => {
 
                 let oldValue = 'this is the old value';
@@ -603,7 +603,7 @@ describe('Tiny JS', function () {
                 expect(window.regrasTiny.nomeExperiencia).toEqual(newValue);
             });
 
-            it('não deve atribuir valor para "window.regrasTiny.nomeExperiencia" quando' +
+            xit('não deve atribuir valor para "window.regrasTiny.nomeExperiencia" quando' +
                 '"window.regrasTiny" não for definido', () => {
 
                 window.regrasTiny = undefined;
