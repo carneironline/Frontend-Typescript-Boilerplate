@@ -702,15 +702,15 @@ Piano.util = {
 		else
 			return false;
 	},
-	recarregaPiano: function(tipoConteudo, isExclusivo, nomeProduto){
+	recarregaPiano: function (tipoConteudo, isExclusivo, nomeProduto) {
 		window.tipoConteudoPiano = tipoConteudo;
 		window.conteudoExclusivo = isExclusivo;
 		window.nomeProdutoPiano = nomeProduto;
-    if (typeof window.regrasTiny !== 'undefined'){
-        window.regrasTiny.nomeExperiencia = "";
-    }
-    Piano.construtor.initTp();
-    tp.experience.execute();
+		if (typeof window.regrasTiny !== 'undefined') {
+			window.regrasTiny.nomeExperiencia = "";
+		}
+		Piano.construtor.initTp();
+		tp.experience.execute();
 	}
 };
 
