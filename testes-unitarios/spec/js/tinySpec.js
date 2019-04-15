@@ -625,6 +625,10 @@ describe('Tiny JS', function () {
 
     describe('Piano.construtor', function () {
 
+        beforeAll(()=>{
+            window.tp = []
+        });
+
         describe('função initTp', function () {
 
             it('deve chamar o método Piano.util.detectaBurlesco', function () {
