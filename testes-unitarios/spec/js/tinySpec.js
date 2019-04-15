@@ -565,6 +565,55 @@ describe('Tiny JS', function () {
                 expect(Piano.util.isRevista()).toEqual(false);
             });
         });
+
+        describe('função recarregaPiano', () => {
+
+            let tipoConteudoPiano;
+            let conteudoExclusivo;
+            let nomeProdutoPiano;
+
+            beforeEach(() => {
+                spyOn(Piano.construtor, 'initTp');
+                spyOn(tp.experience, 'execute');
+
+                tipoConteudoPiano = 'test 1';
+                conteudoExclusivo = 'test 2';
+                nomeProdutoPiano = 'test 3';
+            });
+
+            xit('deve atribuir valor para as variáveis', () => {
+                Piano.util.recarregaPiano(tipoConteudoPiano, conteudoExclusivo, nomeProdutoPiano);
+
+                expect(window.tipoConteudoPiano).toEqual(tipoConteudoPiano);
+                expect(window.conteudoExclusivo).toEqual(conteudoExclusivo);
+                expect(window.nomeProdutoPiano).toEqual(nomeProdutoPiano);
+            });
+
+            xit('deve atribuir valor para "window.regrasTiny.nomeExperiencia" ' +
+                'quando "window.regrasTiny" for definido', () => {
+
+                let oldValue = 'this is the old value';
+                let newValue = '';
+                window.regrasTiny = {
+                    nomeExperiencia: oldValue
+                };
+
+                Piano.util.recarregaPiano(tipoConteudoPiano, conteudoExclusivo, nomeProdutoPiano);
+
+                expect(window.regrasTiny.nomeExperiencia).toEqual(newValue);
+            });
+
+            xit('não deve atribuir valor para "window.regrasTiny.nomeExperiencia" quando' +
+                '"window.regrasTiny" não for definido', () => {
+
+                window.regrasTiny = undefined;
+
+                Piano.util.recarregaPiano(tipoConteudoPiano, conteudoExclusivo, nomeProdutoPiano);
+
+                expect(window.regrasTiny).toEqual(undefined);
+            })
+
+        });
     });
 
     describe('Piano.construtor', function () {
