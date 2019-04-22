@@ -54,22 +54,10 @@ Repositório criado para salvar estáticos usados para a Piano e suas [experiên
 
 ## Adblocks
 
+-  [Documentação](https://github.com/Infoglobo/paywall/wiki/Adblock)
+
 -  [Modal](https://static-stg.infoglobo.com.br/paywall/adblock-piano/v4/index.html)
 
-> ### Propriedades do template
-  
-
-    template: 'default',
-    assetsPath: '',
-    description: 'Para ter acesso ilimitado ao nosso conteúdo, basta assinar um dos nossos planos. Aproveite para conhecer todos os benefícios da assinatura O Globo.',
-    textSignup: 'Quero assinar',
-    urlSignup: 'https://login.qa.globoi.com/cadastro/4975?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23https%3A%2F%2Fm.globostg.globoi.com%2F',
-    urlSignin: 'https://login.qa.globoi.com/login/4975?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23https%3A%2F%2Fm.globostg.globoi.com%2F',
-    footerTitle: 'Ainda não está pronto para assinar?',
-    footerDescription: 'Nos adicione em sua lista de permissões ou desabilite seu bloqueador de pop-ups.',
-    footerTextBtn: 'Saiba mais'
-
-  
 
 ## Servidor STG
 
