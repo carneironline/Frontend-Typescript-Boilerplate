@@ -59,16 +59,16 @@ Piano.variaveis = {
 	getServicoId: function() {
 		var id = '0000';
 
-		if(Piano.variaveis.getNomeProduto() === 'oglobo' || Piano.variaveis.getNomeProduto() === 'blogs' || Piano.variaveis.getNomeProduto() === 'kogut'){
-			return id = '4975';
+		if(Piano.variaveis.getNomeProduto() === 'oglobo' 
+			|| Piano.variaveis.getNomeProduto() === 'blogs' 
+			|| Piano.variaveis.getNomeProduto() === 'kogut'
+			|| Piano.variaveis.getNomeProduto() === 'acervo'
+			|| Piano.variaveis.getNomeProduto() === 'jornaldigital'){
+			return id = '3981';
 		}
 		if (Piano.util.isRevista()) { 
 			return id = '6697';
 		} 
-		if (Piano.variaveis.getNomeProduto() === 'acervo' || Piano.variaveis.getNomeProduto() === 'jornaldigital'){
-			return id = '3981';	
-		}  
-
 		return id;
 	},
 	getCodigoProduto: function(){
