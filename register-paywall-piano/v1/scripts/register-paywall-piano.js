@@ -7,6 +7,7 @@ let alturaTela = window.innerHeight;
 let metadeTela = alturaTela / 2;
 let uri = encodeURIComponent(document.location.href);
 let url = window.ambienteUtilizadoPiano == 'prd' ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/';
+let urlValidaUsuarioBarramento = window.ambienteUtilizadoPiano == 'prd' ? 'https://assinatura.globostg.globoi.com/ValidaUsuarioBarramento.html' : 'https://assinatura.oglobo.globo.com/ValidaUsuarioBarramento.html';
 let protectedContentEl = document.querySelector(".protected-content");
 let eventoLinkUm = null;
 
@@ -101,7 +102,7 @@ if (paywallSiteContainer) {
                     <a 
                     onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 2 - Faça login', this.href, event, true, false);" 
                     class="link" 
-                    href="${url}login/${Piano.variaveis.getServicoId()}?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23${uri}" >
+                    href="${url}login/${Piano.variaveis.getServicoId()}?url=${montaUrlRetorno}" >
                         Faça login
                     </a>
                     <span class="barreira-register-paywall--cadastre">
@@ -109,7 +110,7 @@ if (paywallSiteContainer) {
                     <a 
                     onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 3 - Cadastro', this.href, event, true, false);" 
                     class="link"
-                     href="${url}cadastro/${Piano.variaveis.getServicoId()}?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23${uri}">
+                     href="${url}cadastro/${Piano.variaveis.getServicoId()}?url=${montaUrlRetorno}">
                         Cadastre-se
                     </a>
                     </span>.
@@ -219,14 +220,21 @@ if (paywallSiteContainer) {
         setTimeout(function() {
             notBlank == true ? window.location.href = elemento : window.open(elemento);
         }, 300);
-    }
-
-    
+    }    
 
     function intervencaoSwg (event) {
         event.preventDefault(event);
         validacaoUrlRetorno = true;
         swg.subscribe('br.com.infoglobo.oglobo.site.google');
+    }
+
+    function montaUrlRetorno () {
+        let urlRetorno = urlValidaUsuarioBarramento + '?codigoProduto=' +  Piano.variaveis.getCodigoProduto() 
+            + '&serviceId=' + Piano.variaveis.getServicoId()
+            + '&ambienteUtilizado=' + window.ambienteUtilizadoPiano
+            + '&urlRetorno=' + uri;
+
+        return encodeURIComponent(urlRetorno);
     }
     
     if(img1lL == 'ofertaSwg') {
