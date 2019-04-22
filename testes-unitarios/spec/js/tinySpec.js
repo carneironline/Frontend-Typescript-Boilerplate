@@ -529,7 +529,7 @@ describe('Tiny JS', function () {
                 expect(Piano.util.isRevista()).toEqual(true);
             });
 
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "vogue"', function(){
+            it('deve retornar "true" quando Piano.variaveis.getNomeProduto é "vogue"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('vogue');
 
                 expect(Piano.util.isRevista()).toEqual(true);
@@ -573,15 +573,22 @@ describe('Tiny JS', function () {
             let nomeProdutoPiano;
 
             beforeEach(() => {
+
                 spyOn(Piano.construtor, 'initTp');
-                spyOn(tp.experience, 'execute');
 
                 tipoConteudoPiano = 'test 1';
                 conteudoExclusivo = 'test 2';
                 nomeProdutoPiano = 'test 3';
+
+                window.tp = {
+                    experience: {
+                        execute() {}
+                    }
+                }
             });
 
-            xit('deve atribuir valor para as variáveis', () => {
+            it('deve atribuir valor para as variáveis', () => {
+
                 Piano.util.recarregaPiano(tipoConteudoPiano, conteudoExclusivo, nomeProdutoPiano);
 
                 expect(window.tipoConteudoPiano).toEqual(tipoConteudoPiano);
@@ -589,7 +596,7 @@ describe('Tiny JS', function () {
                 expect(window.nomeProdutoPiano).toEqual(nomeProdutoPiano);
             });
 
-            xit('deve atribuir valor para "window.regrasTiny.nomeExperiencia" ' +
+            it('deve atribuir valor para "window.regrasTiny.nomeExperiencia" ' +
                 'quando "window.regrasTiny" for definido', () => {
 
                 let oldValue = 'this is the old value';
@@ -603,7 +610,7 @@ describe('Tiny JS', function () {
                 expect(window.regrasTiny.nomeExperiencia).toEqual(newValue);
             });
 
-            xit('não deve atribuir valor para "window.regrasTiny.nomeExperiencia" quando' +
+            it('não deve atribuir valor para "window.regrasTiny.nomeExperiencia" quando' +
                 '"window.regrasTiny" não for definido', () => {
 
                 window.regrasTiny = undefined;
@@ -617,6 +624,10 @@ describe('Tiny JS', function () {
     });
 
     describe('Piano.construtor', function () {
+
+        beforeAll(()=>{
+            window.tp = []
+        });
 
         describe('função initTp', function () {
 
@@ -1021,7 +1032,7 @@ describe('Tiny JS', function () {
                 expect(Piano.variaveis.getCodigoProduto()).toEqual('pequenas-empresas');
             });            
 
-            xit('deve retornar revistas quando nomeProduto igual a vogue',function(){
+            it('deve retornar revistas quando nomeProduto igual a vogue',function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('vogue');
 
                 expect(Piano.variaveis.getCodigoProduto()).toEqual('vogue');
@@ -1205,7 +1216,6 @@ describe('Tiny JS', function () {
             it('não deve executar o método tp.push quando o método Piano.krux.ligado retornar false', function () {
                 spyOn(Piano.krux, 'ligado').and.returnValue(false);
                 spyOn(window["tp"], 'push');
-
                 Piano.krux.obtemSegmentacao();
                 expect(window["tp"].push).not.toHaveBeenCalled();
             });
