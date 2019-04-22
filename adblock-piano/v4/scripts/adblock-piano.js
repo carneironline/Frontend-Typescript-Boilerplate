@@ -117,18 +117,35 @@
             `;
     }
 
-    function ga() {
-//Piano.metricas.montaRotuloGA()
+    function ga() {          
         let elements = document.querySelectorAll('.adblock-cpt [data-ga]');
+
+        setLoadGa();
 
         elements.forEach(el => {
 
             el.addEventListener(
                 'click', setDataGa, false
             );
-            
-            console.log(el)
         })
+    }
+
+    function setLoadGa() {
+        const glbid = getCookie('GLBID');
+        const utp = getUtp();
+        let evtAction = 'Adblock ativado';
+        let evtName = 'usuários deslogados';
+
+        if(glbid && utp) {
+            let subscriber = utp.autorizado;
+
+            evtName = subscriber  ? 'usuários logados e que são assinantes' : 'usuários logados e que não são assinantes';
+            
+            if(subscriber)
+                evtAction = 'sem acao';
+        } 
+
+        setGa(evtName, 'Piano', evtAction, Piano.metricas.montaRotuloGA());
     }
 
     function setDataGa(evt) {
@@ -143,8 +160,27 @@
         const evtAction = evtData[2].trim();
         const evtLabel = evtData[3].trim();
 
-        console.log({'event': evtName, 'eventoGACategoria': evtCategory, 'eventoGAAcao': evtAction, 'eventoGARotulo':evtLabel})
-        // dataLayer.push({'event': evtName, 'eventoGACategoria': evtCategory, 'eventoGAAcao': evtAction, 'eventoGARotulo':evtLabel});
+        setGa(evtName, evtCategory, evtAction, evtLabel);
+    }
+
+    function setGa(evtName, evtCategory, evtAction, evtLabel) {
+        dataLayer.push({'event': evtName, 'eventoGACategoria': evtCategory, 'eventoGAAcao': evtAction, 'eventoGARotulo':evtLabel});
+    }
+
+    function getUtp() {
+        const utp = getCookie('_utp');
+
+        if(utp)
+            return JSON.parse(decodeURI(atob(unescape(utp))));
+
+        return false;
+    }
+
+    function getCookie(name) {
+        const value = "; " + document.cookie;
+        const parts = value.split("; " + name + "=");
+        if (parts.length == 2) 
+            return parts.pop().split(";").shift();
     }
 
     function init() {
