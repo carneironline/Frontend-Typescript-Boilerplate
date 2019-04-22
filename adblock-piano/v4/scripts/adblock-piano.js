@@ -1,5 +1,6 @@
 (function() {
     const bodyEl = document.querySelector('body');
+    window['dataLayer'] = window['dataLayer'] || [];
 
     let templateSettings = {
         template: 'default',
@@ -145,7 +146,7 @@
                 evtAction = 'sem acao';
         } 
 
-        setGa(evtName, 'Piano', evtAction, Piano.metricas.montaRotuloGA());
+        setGa(evtName, 'Piano', evtAction, 'Piano.metricas.montaRotuloGA()');
     }
 
     function setDataGa(evt) {
@@ -161,6 +162,9 @@
         const evtLabel = evtData[3].trim();
 
         setGa(evtName, evtCategory, evtAction, evtLabel);
+
+        if(evt.target.href)
+            location.href = evt.target.href;
     }
 
     function setGa(evtName, evtCategory, evtAction, evtLabel) {
