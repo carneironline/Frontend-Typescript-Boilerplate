@@ -7,7 +7,7 @@ let alturaTela = window.innerHeight;
 let metadeTela = alturaTela / 2;
 let uri = encodeURIComponent(document.location.href);
 let url = window.ambienteUtilizadoPiano == 'prd' ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/';
-let urlValidaUsuarioBarramento = window.ambienteUtilizadoPiano == 'prd' ? 'https://assinatura.globostg.globoi.com/ValidaUsuarioBarramento.html' : 'https://assinatura.oglobo.globo.com/ValidaUsuarioBarramento.html';
+let urlValidaUsuarioBarramento = window.ambienteUtilizadoPiano == 'prd' ? 'https://assinatura.oglobo.globo.com/ValidaUsuarioBarramento.html' : 'https://assinatura.globostg.globoi.com/ValidaUsuarioBarramento.html';
 let protectedContentEl = document.querySelector(".protected-content");
 let eventoLinkUm = null;
 
