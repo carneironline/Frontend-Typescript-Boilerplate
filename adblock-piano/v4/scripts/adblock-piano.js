@@ -163,8 +163,9 @@
 
         setGa(evtName, evtCategory, evtAction, evtLabel);
 
-        if(evt.target.href)
-            location.href = evt.target.href;
+        if(evt.target.href) {   
+            setTimeout(() => { location.href = evt.target.href; }, 500);
+        }
     }
 
     function setGa(evtName, evtCategory, evtAction, evtLabel) {
