@@ -1,12 +1,26 @@
-function getGlbidParam() {
-    var url = new URL(document.location);
-    var glbid = url.searchParams.get('glbid');
-    return glbid;
+function getParamValues() {
+    var search = location.search.substring(1);
+    var jsonParams = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}')
+    
+    return jsonParams;
 }
 
-async function requestBus(funcionalidade, data) {
+function getCookie(name) {
+    match = document.cookie.match(new RegExp(name+'=([^;]+)'));
+    var cookieTiny = match ? unescape(match[1].toString()) : "";
+    return cookieTiny;
+}
+
+function setCookie(c_name, value, expiredays) {
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + expiredays);
+    document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toUTCString()) +
+        "; path=/;" + "domain=" + location.hostname.split('.').reverse()[1] + "." + location.hostname.split('.').reverse()[0];
+}
+
+async function requestBus(funcionalidade, data, ambiente) {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", retornaUrl() + funcionalidade + "/autorizacao-acesso", false);
+    xhr.open("POST", getBusURL(ambiente, funcionalidade), false);
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(data);
@@ -22,67 +36,44 @@ async function requestBus(funcionalidade, data) {
     }
 }
 
-function setCookie(c_name, value, expiredays) {
-    var exdate = new Date();
-    exdate.setDate(exdate.getDate() + expiredays);
-    document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toUTCString()) +
-        "; path=/;" + "domain=" + location.hostname.split('.').reverse()[1] + "." + location.hostname.split('.').reverse()[0];
+function getBusURL(ambiente, funcionalidade) {
+    if (ambiente === 'QLT' || ambiente === 'INT'){
+        return 'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/' + funcionalidade + '/autorizacao-acesso'
+    }else{
+        return 'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/'+ funcionalidade +'/autorizacao-acesso'
+    }
 }
 
-function getBusURL() {
-    var url = new URL(document.location);
-    if (url.host.indexOf('stg') > -1) {
-        return 'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/'
-    } else {
-        return 'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/'
+function getGloboIdURL(ambiente){
+    if (ambiente === 'QLT' || ambiente === 'INT'){
+        return 'https://login.qa.globoi.com/login/4975'
+    }else{
+        return 'https://login.globo.com/login/4975'
     }
 }
 
 
 (async function() {
+
+    var params = getParamValues();
+
     var data = JSON.stringify({
-        "token-autenticacao": getGlbidParam(),
+        "token-autenticacao": getCookie('GLBID'),
         "ipUsuario": '127.0.0.1',
-        "codigoProduto": 'OG03'
+        "codigoProduto": params.codigoProduto
     });
 
-    var responseAssinatura = await requestBus('3981', data);
+    var responseAssinatura = await requestBus(params.serviceId, data, params.ambienteUtilizado);
+
+    var userTiny = btoa(encodeURI(JSON.stringify(responseAssinatura)))
+    setCookie("_utp",userTiny, 1);
 
     if (responseAssinatura.motivo === "AUTORIZADO") {
-
-        /*****
-         * redireciona para o conteúdo 
-         *****/
-
-        var userTiny = btoa(encodeURI(JSON.stringify(responseAssinatura)))
-        setCookie("_utp",userTiny, 1);
-        window.location = 'https://globostg.globoi.com'
-
-
+        window.location = params.urlRetorno;
     } else {
-        var responseRegister = await requestBus('4975', data)
-        if (responseRegister.motivo === "NAO_AUTORIZADO") {
-
-            /****
-             * redireciona para o 4975
-             * com url de retorno a matéria
-             ****/
-
-            var userTiny = btoa(encodeURI(JSON.stringify(responseRegister)));
-            setCookie("_utp",userTiny, 1);
-            window.location = 'https://login.qa.globoi.com/login/4975?url=' + 'url Assinatura';
-        } else {
-
-            /*****
-             * redireciona para a matéria
-             * continua o fluxo
-             ****/
-
-            var userTiny = btoa(encodeURI(JSON.stringify(responseRegister)));
-            setCookie("_utp",userTiny, 1);
-            window.location = 'https://globostg.globoi.com'
-        }
+        window.location = getGloboIdURL(params.ambienteUtilizado) + params.urlRetorno;
     }
+    
 })();
 
 
