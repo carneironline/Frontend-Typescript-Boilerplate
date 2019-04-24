@@ -37,7 +37,7 @@ async function requestBus(funcionalidade, data, ambiente) {
 }
 
 function getBusURL(ambiente, funcionalidade) {
-    if (ambiente === 'QLT' || ambiente === 'INT'){
+    if (ambiente === 'qlt' || ambiente === 'int'){
         return 'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/' + funcionalidade + '/autorizacao-acesso'
     }else{
         return 'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/'+ funcionalidade +'/autorizacao-acesso'
@@ -45,7 +45,7 @@ function getBusURL(ambiente, funcionalidade) {
 }
 
 function getGloboIdURL(ambiente){
-    if (ambiente === 'QLT' || ambiente === 'INT'){
+    if (ambiente === 'qlt' || ambiente === 'int'){
         return 'https://login.qa.globoi.com/login/4975'
     }else{
         return 'https://login.globo.com/login/4975'
