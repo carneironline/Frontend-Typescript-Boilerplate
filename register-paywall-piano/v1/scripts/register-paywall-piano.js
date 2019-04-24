@@ -102,7 +102,7 @@ if (paywallSiteContainer) {
                     <a 
                     onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 2 - Faça login', this.href, event, true, false);" 
                     class="link" 
-                    href="${url}login/${Piano.variaveis.getServicoId()}?url=${montaUrlRetorno}" >
+                    href="${url}login/${Piano.variaveis.getServicoId()}?url=${montaUrlRetorno()}" >
                         Faça login
                     </a>
                     <span class="barreira-register-paywall--cadastre">
@@ -110,7 +110,7 @@ if (paywallSiteContainer) {
                     <a 
                     onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 3 - Cadastro', this.href, event, true, false);" 
                     class="link"
-                     href="${url}cadastro/${Piano.variaveis.getServicoId()}?url=${montaUrlRetorno}">
+                     href="${url}cadastro/${Piano.variaveis.getServicoId()}?url=${montaUrlRetorno()}">
                         Cadastre-se
                     </a>
                     </span>.
