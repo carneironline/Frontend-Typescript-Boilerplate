@@ -113,7 +113,7 @@ if (paywallSiteContainer) {
                      href="${url}cadastro/${Piano.variaveis.getServicoId()}?url=${montaUrlRetorno()}">
                         Cadastre-se
                     </a>
-                    </span>.
+                    </span>
 				</div>
 				<div class="barreira-register-paywall--oftsecundaria">
                     <a class="img2l" target="_blank" 
