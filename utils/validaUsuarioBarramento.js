@@ -71,7 +71,7 @@ function getGloboIdURL(ambiente){
     if (responseAssinatura.motivo === "AUTORIZADO") {
         window.location = params.urlRetorno;
     } else {
-        window.location = getGloboIdURL(params.ambienteUtilizado) +'?url='+ params.urlRetorno;
+        window.location = getGloboIdURL(params.ambienteUtilizado) +'?url='+ encodeURIComponent(params.urlRetorno) ;
     }
 
 })();
