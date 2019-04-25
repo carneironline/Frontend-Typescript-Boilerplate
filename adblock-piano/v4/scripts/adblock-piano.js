@@ -135,7 +135,7 @@
         const glbid = getCookie('GLBID');
         const utp = getUtp();
         let evtAction = 'Adblock ativado';
-        let evtName = 'usuários deslogados';
+        let evtName = 'EventoGAPiano';
 
         if(glbid && utp) {
             let subscriber = utp.autorizado;
