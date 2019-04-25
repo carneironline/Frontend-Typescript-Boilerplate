@@ -68,8 +68,8 @@
                                 <div class="adblock-cpt__text">
                                     ${templateSettings.description}
                                 </div>
-                                <div class="adblock-cpt__signup"><a href="${templateSettings.urlSignup}" class="adblock-btn" data-ga="Clique em \'Quero assinar\' | Piano | Adblock ativado | Clique em Link - Quero assinar">${templateSettings.textSignup}</a></div>
-                                <div class="adblock-cpt__signin">Já possui assinatura?  <a href="${templateSettings.urlSignin}" data-ga="Clique em \'Faça o login\' | Piano | Adblock ativado | Clique em Link - Faça login">Faça o login</a></div>
+                                <div class="adblock-cpt__signup"><a href="${templateSettings.urlSignup}" class="adblock-btn" data-ga="EventoGAPiano | Piano | Adblock ativado | Clique em Link - Quero assinar">${templateSettings.textSignup}</a></div>
+                                <div class="adblock-cpt__signin">Já possui assinatura?  <a href="${templateSettings.urlSignin}" data-ga="EventoGAPiano | Piano | Adblock ativado | Clique em Link - Faça login">Faça o login</a></div>
                             </div>
                     </div>
 
@@ -80,7 +80,7 @@
                         </div>
 
                         <div class="adblock-cpt__footer-btn">
-                            <a id="showRequirements" href="javascript:;" data-ga="Clique em \'Saiba mais\' | Piano | Adblock ativado | Clique em Link - Saiba mais">${templateSettings.footerTextBtn}</a>
+                            <a id="showRequirements" href="javascript:;" data-ga="EventoGAPiano | Piano | Adblock ativado | Clique em Link - Saiba mais">${templateSettings.footerTextBtn}</a>
                         </div>
                     </div>
 
