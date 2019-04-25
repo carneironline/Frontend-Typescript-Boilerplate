@@ -131,22 +131,21 @@
         })
     }
 
-    function setLoadGa() {
+    function setLoadGa() { 
         const glbid = getCookie('GLBID');
         const utp = getUtp();
         let evtAction = 'Adblock ativado';
         let evtName = 'EventoGAPiano';
+        let evtLabel = window.Piano ? Piano.metricas.montaRotuloGA() : '';
 
         if(glbid && utp) {
             let subscriber = utp.autorizado;
 
-            evtName = subscriber  ? 'usuários logados e que são assinantes' : 'usuários logados e que não são assinantes';
-            
             if(subscriber)
                 evtAction = 'sem acao';
         } 
 
-        setGa(evtName, 'Piano', evtAction, Piano.metricas.montaRotuloGA());
+        setGa(evtName, 'Piano', evtAction, evtLabel );
     }
 
     function setDataGa(evt) {
