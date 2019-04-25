@@ -146,7 +146,7 @@
                 evtAction = 'sem acao';
         } 
 
-        setGa(evtName, 'Piano', evtAction, 'Piano.metricas.montaRotuloGA()');
+        setGa(evtName, 'Piano', evtAction, Piano.metricas.montaRotuloGA());
     }
 
     function setDataGa(evt) {
