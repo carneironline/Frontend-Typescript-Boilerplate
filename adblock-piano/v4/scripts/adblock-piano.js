@@ -132,14 +132,14 @@
     }
 
     function setLoadGa() { 
-        const glbid = getCookie('GLBID');
+        const glbid = getGLBID();
         const utp = getUtp();
         let evtAction = 'Adblock ativado';
         let evtName = 'EventoGAPiano';
-        let evtLabel = window.Piano ? Piano.metricas.montaRotuloGA() : '';
+        let evtLabel = window.Piano ? 'Adbclock barreira - ' + Piano.metricas.montaRotuloGA() : '';
 
         if(glbid && utp) {
-            let subscriber = utp.autorizado;
+            let subscriber = Boolean(utp.autorizado);
 
             if(subscriber)
                 evtAction = 'sem acao';
@@ -169,6 +169,10 @@
 
     function setGa(evtName, evtCategory, evtAction, evtLabel) {
         dataLayer.push({'event': evtName, 'eventoGACategoria': evtCategory, 'eventoGAAcao': evtAction, 'eventoGARotulo':evtLabel});
+    }
+
+    function getGLBID() {
+        return getCookie('GLBID');
     }
 
     function getUtp() {
