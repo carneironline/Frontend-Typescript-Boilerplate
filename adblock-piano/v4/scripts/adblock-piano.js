@@ -5,6 +5,7 @@
     let templateSettings = {
         template: 'default',
         assetsPath: '',
+        display: null,
         description: 'Para ter acesso ilimitado ao nosso conteúdo, basta assinar um dos nossos planos. Aproveite para conhecer todos os benefícios da assinatura O Globo.',
         textSignup: 'Quero assinar',
         urlSignup: 'https://login.qa.globoi.com/cadastro/4975?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23https%3A%2F%2Fm.globostg.globoi.com%2F',
@@ -118,7 +119,7 @@
             `;
     }
 
-    function ga() {          
+    function ga() {        
         let elements = document.querySelectorAll('.adblock-cpt [data-ga]');
 
         setLoadGa();
@@ -131,19 +132,13 @@
         })
     }
 
-    function setLoadGa() { 
-        const glbid = getGLBID();
-        const utp = getUtp();
+    function setLoadGa() {          
         let evtAction = 'Adblock ativado';
         let evtName = 'EventoGAPiano';
-        let evtLabel = window.Piano ? 'Adbclock barreira - ' + Piano.metricas.montaRotuloGA() : '';
+        let evtLabel = window.Piano ? 'Adblock-Barreira - ' + Piano.metricas.montaRotuloGA() : '';
 
-        if(glbid && utp) {
-            let subscriber = Boolean(utp.autorizado);
-
-            if(subscriber)
-                evtAction = 'sem acao';
-        } 
+        if(isUserAuthorized())
+            evtAction = 'sem acao';
 
         setGa(evtName, 'Piano', evtAction, evtLabel );
     }
@@ -167,7 +162,7 @@
         }
     }
 
-    function setGa(evtName, evtCategory, evtAction, evtLabel) {
+    function setGa(evtName, evtCategory, evtAction, evtLabel) { 
         dataLayer.push({'event': evtName, 'eventoGACategoria': evtCategory, 'eventoGAAcao': evtAction, 'eventoGARotulo':evtLabel});
     }
 
@@ -184,6 +179,18 @@
         return false;
     }
 
+    function isUserAuthorized() {
+        const glbid = getGLBID();
+        const utp = getUtp();
+
+        let isAuthorized = false;
+
+        if(glbid && utp)
+            isAuthorized = Boolean(utp.autorizado);
+
+        return isAuthorized;
+    }
+
     function getCookie(name) {
         const value = "; " + document.cookie;
         const parts = value.split("; " + name + "=");
@@ -191,10 +198,13 @@
             return parts.pop().split(";").shift();
     }
 
-    function init() {
-        setTemplateSettings();
-        createWall();
-        activeWallRequirements();
+    function init() { 
+        if( (!isUserAuthorized() || templateSettings.display) && templateSettings.display !== false ) {
+            setTemplateSettings();
+            createWall();
+            activeWallRequirements();
+        }
+
         ga();
     }
 
