@@ -135,7 +135,7 @@
     function setLoadGa() {          
         let evtAction = 'Adblock ativado';
         let evtName = 'EventoGAPiano';
-        let evtLabel = window.Piano ? 'Adblock-Barreira - ' + Piano.metricas.montaRotuloGA() : '';
+        let evtLabel = window.Piano ? Piano.metricas.montaRotuloGA() : '';
 
         if(isUserAuthorized())
             evtAction = 'sem acao';
