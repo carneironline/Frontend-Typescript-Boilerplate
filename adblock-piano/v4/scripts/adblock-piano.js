@@ -1,9 +1,11 @@
 (function() {
     const bodyEl = document.querySelector('body');
+    window['dataLayer'] = window['dataLayer'] || [];
 
     let templateSettings = {
         template: 'default',
         assetsPath: '',
+        display: null,
         description: 'Para ter acesso ilimitado ao nosso conteúdo, basta assinar um dos nossos planos. Aproveite para conhecer todos os benefícios da assinatura O Globo.',
         textSignup: 'Quero assinar',
         urlSignup: 'https://login.qa.globoi.com/cadastro/4975?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23https%3A%2F%2Fm.globostg.globoi.com%2F',
@@ -67,8 +69,8 @@
                                 <div class="adblock-cpt__text">
                                     ${templateSettings.description}
                                 </div>
-                                <div class="adblock-cpt__signup"><a href="${templateSettings.urlSignup}" class="adblock-btn">${templateSettings.textSignup}</a></div>
-                                <div class="adblock-cpt__signin">Já possui assinatura?  <a href="${templateSettings.urlSignin}">Faça o login</a></div>
+                                <div class="adblock-cpt__signup"><a href="${templateSettings.urlSignup}" class="adblock-btn" data-ga="EventoGAPiano | Piano | Adblock ativado | Clique em Link - Quero assinar">${templateSettings.textSignup}</a></div>
+                                <div class="adblock-cpt__signin">Já possui assinatura?  <a href="${templateSettings.urlSignin}" data-ga="EventoGAPiano | Piano | Adblock ativado | Clique em Link - Faça login">Faça o login</a></div>
                             </div>
                     </div>
 
@@ -79,7 +81,7 @@
                         </div>
 
                         <div class="adblock-cpt__footer-btn">
-                            <a id="showRequirements" href="javascript:;" >${templateSettings.footerTextBtn}</a>
+                            <a id="showRequirements" href="javascript:;" data-ga="EventoGAPiano | Piano | Adblock ativado | Clique em Link - Saiba mais">${templateSettings.footerTextBtn}</a>
                         </div>
                     </div>
 
@@ -117,10 +119,93 @@
             `;
     }
 
-    function init() {
-        setTemplateSettings();
-        createWall();
-        activeWallRequirements();
+    function ga() {        
+        let elements = document.querySelectorAll('.adblock-cpt [data-ga]');
+
+        setLoadGa();
+
+        elements.forEach(el => {
+
+            el.addEventListener(
+                'click', setDataGa, false
+            );
+        })
+    }
+
+    function setLoadGa() {          
+        let evtAction = 'Adblock ativado';
+        let evtName = 'EventoGAPiano';
+        let evtLabel = window.Piano ? Piano.metricas.montaRotuloGA() : '';
+
+        if(isUserAuthorized())
+            evtAction = 'sem acao';
+
+        setGa(evtName, 'Piano', evtAction, evtLabel );
+    }
+
+    function setDataGa(evt) {
+        evt.preventDefault();
+
+        if(!evt.target.dataset.ga)
+            return;
+
+        const evtData = evt.target.dataset.ga.split('|');
+        const evtName = evtData[0].trim();
+        const evtCategory = evtData[1].trim();
+        const evtAction = evtData[2].trim();
+        const evtLabel = evtData[3].trim();
+
+        setGa(evtName, evtCategory, evtAction, evtLabel);
+
+        if(evt.target.href) {   
+            setTimeout(() => { location.href = evt.target.href; }, 500);
+        }
+    }
+
+    function setGa(evtName, evtCategory, evtAction, evtLabel) { 
+        dataLayer.push({'event': evtName, 'eventoGACategoria': evtCategory, 'eventoGAAcao': evtAction, 'eventoGARotulo':evtLabel});
+    }
+
+    function getGLBID() {
+        return getCookie('GLBID');
+    }
+
+    function getUtp() {
+        const utp = getCookie('_utp');
+
+        if(utp)
+            return JSON.parse(decodeURI(atob(unescape(utp))));
+
+        return false;
+    }
+
+    function isUserAuthorized() {
+        const glbid = getGLBID();
+        const utp = getUtp();
+
+        let isAuthorized = false;
+
+        if(glbid && utp)
+            isAuthorized = Boolean(utp.autorizado);
+
+        return isAuthorized;
+    }
+
+    function getCookie(name) {
+        const value = "; " + document.cookie;
+        const parts = value.split("; " + name + "=");
+        if (parts.length == 2) 
+            return parts.pop().split(";").shift();
+    }
+
+    function init() { 
+        if( (!isUserAuthorized() || templateSettings.display) && templateSettings.display !== false ) {
+            setTemplateSettings();
+            createWall();
+            activeWallRequirements();
+        }
+
+        ga();
     }
 
     init();
