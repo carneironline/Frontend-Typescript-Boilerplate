@@ -343,7 +343,7 @@ Piano.checkPaywall = function() {
 	}, 1000);
 };
 
-Piano.registerPaywall = {
+Piano.registerPaywall = { 
 	mostrarBarreira: function(versao = null, tipo = null) {
 		Piano.typePaywall = tipo;
 
