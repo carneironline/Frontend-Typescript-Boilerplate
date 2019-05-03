@@ -1,3 +1,4 @@
+window.hasPaywall = window.hasPaywall || false;
 window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
 var PaywallAnalytics = {};
@@ -342,7 +343,7 @@ Piano.checkPaywall = function() {
 	}, 1000);
 };
 
-Piano.registerPaywall = {
+Piano.registerPaywall = { 
 	mostrarBarreira: function(versao = null, tipo = null) {
 		Piano.typePaywall = tipo;
 
@@ -352,7 +353,14 @@ Piano.registerPaywall = {
 			Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-paywall-piano/"+versao+"/styles/styles.css'>");
 			Piano.xmlHttpRequest.geraScriptNaPagina(
 				"https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-paywall-piano/"+versao+"/scripts/register-paywall-piano.js", 
-				data => { if(data.status !== 200) Piano.triggerAdvertising(); }
+				data => { 
+					if(data.status !== 200) { 
+						Piano.triggerAdvertising(); 
+					} 
+					else {
+						window.hasPaywall = true;
+					}
+				}
 			);
 			
 			if(Piano.typePaywall === 'register' || 'exclusivo' ) {
