@@ -232,6 +232,7 @@ if (paywallSiteContainer) {
         let urlRetorno = urlValidaUsuarioBarramento + '?codigoProduto=' +  Piano.variaveis.getCodigoProduto() 
             + '&serviceId=' + Piano.variaveis.getServicoId()
             + '&ambienteUtilizado=' + window.ambienteUtilizadoPiano
+	    + '&nomeProduto=' + Piano.variaveis.getNomeProduto()
             + '&urlRetorno=' + uri;
 
         return encodeURIComponent(urlRetorno);
