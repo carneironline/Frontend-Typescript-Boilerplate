@@ -1,10 +1,3 @@
-function getParamValues() {
-    var search = location.search.substring(1);
-    var jsonParams = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}')
-    
-    return jsonParams;
-}
-
 function getCookie(name) {
     match = document.cookie.match(new RegExp(name+'=([^;]+)'));
     var cookieTiny = match ? unescape(match[1].toString()) : "";
@@ -18,6 +11,13 @@ function setCookie(c_name, value, expiredays) {
         "; path=/;" + "domain=" + location.hostname.split('.').reverse()[1] + "." + location.hostname.split('.').reverse()[0];
 }
 
+function getLinkAssinatura (link) {
+    for (var i = 0; i < link.length; i++) {
+        if (link[i].rel == 'assinatura') return link[i].href;
+    }
+    return '';
+}
+
 async function requestBus(funcionalidade, data, ambiente) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", getBusURL(ambiente, funcionalidade), false);
@@ -29,7 +29,29 @@ async function requestBus(funcionalidade, data, ambiente) {
         if (xhr.status === 200) {
             var resposta = await xhr.responseText;
             var respJson = JSON.parse(resposta);
-            return respJson;
+            var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
+            if (typeof respJson.motivo != "undefined") {
+                respostaDeMotivo = respJson.motivo.toLowerCase();
+            }
+            if (typeof respJson.temTermoDeUso != "undefined") {
+                respostaDeTermoDeUso = respJson.temTermoDeUso;
+            }
+            if (typeof respJson.link != "undefined") {
+                hrefAssinaturaInadimplente = getLinkAssinatura(respJson.link);
+            }
+            var isAutorizado = respJson.autorizado || respJson.temTermoDeUso != false ? true : false;
+            var _jsonLeitor = {
+                    "autorizado" : respJson.autorizado,
+                    "motivo": respostaDeMotivo,
+                    "logado": isAutorizado,
+                    "temTermoDeUso": respostaDeTermoDeUso,
+                    "glbid": getCookie('GLBID'),
+                    "produto": getParametroDaQueryStringPeloNome('nomeProduto'),
+                    "codProduto": getParametroDaQueryStringPeloNome('codigoProduto'),
+                    "uuid": respJson.usuarioId
+                };
+
+             return _jsonLeitor;
         }else{
             console.error('Erro na requisição', xhr.response);
         }
@@ -52,26 +74,30 @@ function getGloboIdURL(ambiente){
     }
 }
 
+function getParametroDaQueryStringPeloNome(parametro) {
+    let urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(parametro);
+}
 
 (async function() {
 
-    var params = getParamValues();
-
-    var data = JSON.stringify({
+   var data = JSON.stringify({
         "token-autenticacao": getCookie('GLBID'),
         "ipUsuario": '127.0.0.1',
-        "codigoProduto": params.codigoProduto
+        "codigoProduto": getParametroDaQueryStringPeloNome("codigoProduto")
     });
 
-    var responseAssinatura = await requestBus(params.serviceId, data, params.ambienteUtilizado);
+    var responseAssinatura = await requestBus(getParametroDaQueryStringPeloNome("serviceId"), data, getParametroDaQueryStringPeloNome("ambienteUtilizado"));
 
-    var userTiny = btoa(encodeURI(JSON.stringify(responseAssinatura)))
-    setCookie("_utp",userTiny, 1);
+    if(responseAssinatura.motivo !== 'indisponivel' || hrefAssinaturaInadimplente == '') {
+        var userTiny = btoa(encodeURI(JSON.stringify(responseAssinatura)));
+        setCookie("_utp",userTiny, 1);
+    }
 
-    if (responseAssinatura.motivo === "AUTORIZADO") {
-        window.location = params.urlRetorno;
+    if (responseAssinatura.motivo === "autorizado") {
+        window.location = getParametroDaQueryStringPeloNome("urlRetorno");
     } else {
-        window.location = getGloboIdURL(params.ambienteUtilizado) +'?url='+ encodeURIComponent(params.urlRetorno);
+        window.location = getGloboIdURL(getParametroDaQueryStringPeloNome("ambienteUtilizado")) +'?url='+ encodeURIComponent(getParametroDaQueryStringPeloNome("urlRetorno"));
     }
 
 })();
