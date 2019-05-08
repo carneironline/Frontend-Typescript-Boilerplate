@@ -541,7 +541,7 @@ describe('Tiny JS', function () {
                 expect(Piano.util.isRevista()).toEqual(true);
             });
 
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "glamour"', function(){
+            it('deve retornar "true" quando Piano.variaveis.getNomeProduto é "glamour"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('glamour');
 
                 expect(Piano.util.isRevista()).toEqual(true);
@@ -901,22 +901,22 @@ describe('Tiny JS', function () {
 
         describe('função getServicoId', function () {
 
-            it('deve retornar 4975 quando Piano.variaveis.getNomeProduto() é oglobo', function () {
+            it('deve retornar 3981 quando Piano.variaveis.getNomeProduto() é oglobo', function () {
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('oglobo');
 
-                expect(Piano.variaveis.getServicoId()).toEqual('4975');
+                expect(Piano.variaveis.getServicoId()).toEqual('3981');
             });
 
-            it('deve retornar 4975 quando Piano.variaveis.getNomeProduto() é blogs', function () {
+            it('deve retornar 3981 quando Piano.variaveis.getNomeProduto() é blogs', function () {
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('blogs');
 
-                expect(Piano.variaveis.getServicoId()).toEqual('4975');
+                expect(Piano.variaveis.getServicoId()).toEqual('3981');
             });
 
-            it('deve retornar 4975 quando Piano.variaveis.getNomeProduto() é kogut', function () {
+            it('deve retornar 3981 quando Piano.variaveis.getNomeProduto() é kogut', function () {
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('kogut');
 
-                expect(Piano.variaveis.getServicoId()).toEqual('4975');
+                expect(Piano.variaveis.getServicoId()).toEqual('3981');
             });
 
             it('deve retornar 3981 quando Piano.variaveis.getNomeProduto() é "acervo"', function () {
@@ -1044,7 +1044,7 @@ describe('Tiny JS', function () {
                 expect(Piano.variaveis.getCodigoProduto()).toEqual('casa-vogue');
             });
 
-            xit('deve retornar revistas quando nomeProduto igual a glamour',function(){
+            it('deve retornar revistas quando nomeProduto igual a glamour',function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('glamour');
 
                 expect(Piano.variaveis.getCodigoProduto()).toEqual('glamour');
