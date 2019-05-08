@@ -85,7 +85,8 @@ Piano.variaveis = {
 				return 'OG01';
 			case 'auto-esporte':
 			case 'epoca':
-			case 'vogue': 
+			case 'vogue':
+			case 'glamour':
 				return nomeProduto;
 			default:
 				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter código do produto - " + nomeProduto);
@@ -705,7 +706,7 @@ Piano.util = {
 		document.body.insertBefore(e, document.body.lastChild);
 	},
 	isRevista: function(){
-		var revistas = ["epoca", "auto-esporte", "vogue"];
+		var revistas = ["epoca", "auto-esporte", "vogue", "glamour"];
 		if(revistas.indexOf(Piano.variaveis.getNomeProduto()) > -1)
 			return true;
 		else
