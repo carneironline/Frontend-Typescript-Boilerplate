@@ -1,5 +1,3 @@
-let barraGloboCom = document.querySelector('#barra-globocom');
-let headerBlog = document.querySelector('body > .site-header');
 let publicidadeFullBannerMobi = document.querySelector('#container-fullbanner');
 let paywallSiteContainer = document.querySelector('.paywall__site-container');
 let larguraTela = window.innerWidth;
@@ -10,6 +8,7 @@ let url = window.ambienteUtilizadoPiano == 'prd' ? 'https://login.globo.com/' : 
 let urlValidaUsuarioBarramento = window.ambienteUtilizadoPiano == 'prd' ? 'https://assinatura.oglobo.globo.com/ValidaUsuarioBarramento.html' : 'https://assinatura.globostg.globoi.com/ValidaUsuarioBarramento.html';
 let protectedContentEl = document.querySelector(".protected-content");
 let eventoLinkUm = null;
+let PaywallProductClass = `paywall-${nomeProdutoPiano}`;
 
 // scroll top para manter o header
 document.documentElement.scrollTop = 0;
@@ -40,14 +39,6 @@ if (paywallSiteContainer) {
     if (protectedContentEl) {
         protectedContentEl.setAttribute('data-content', 'removed');
         protectedContentEl.innerHTML = " ";
-    }
-
-    if (headerBlog) {
-        paywallSiteContainer.insertAdjacentElement('afterBegin', headerBlog);
-    }
-
-    if (barraGloboCom) {
-        paywallSiteContainer.insertAdjacentElement('afterBegin', barraGloboCom);
     }
 
     if (publicidadeFullBannerMobi) {
@@ -84,7 +75,7 @@ if (paywallSiteContainer) {
 
 
     let conteudoExperienciaRegisterPaywall = `
-		<div class="barreira-register-paywall" style="opacity: 0;">
+		<div class="barreira-register-paywall ${PaywallProductClass}" style="opacity: 0;">
 			<div class="barreira-register-paywall--content">
 				<div class="barreira-register-paywall--titulo">
 					Esse conteúdo é exclusivo para assinantes.<br /> Quer continuar sua leitura?
@@ -199,7 +190,7 @@ if (paywallSiteContainer) {
 
 
     if (larguraTela > 820 && alturaTela > 350) {
-        barreiraContainer.style.marginTop = metadeTela + 'px';
+        barreiraContainer.style.top = metadeTela + 'px';
     }
 
     setTimeout(function() {
