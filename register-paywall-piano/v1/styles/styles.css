@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
-html {
-    height: 100%;
+
+.barra-globocom {
+    position: fixed;
 }
 
 .paywall__site-container {
@@ -9,17 +10,32 @@ html {
     height: 100%;
     position: fixed;
     z-index: 1;
-    top: 0;
+    top: 44px;
     left: 0;
 }
 
 .barreira-register-paywall {
-    z-index: 2;
-    margin-top: 252px;
+    z-index: 999;
+    top: 252px;
     position: relative;
     background: #FFFFFF;
     box-shadow: 0 0 70px 0 rgba(0, 0, 0, 0.50);
     transition: opacity 500ms ease-in-out;
+    color: #000;
+}
+
+.barreira-register-paywall a {
+    color: #000;
+}
+
+.paywall-oglobo, 
+.paywall-blogs, 
+.paywall-kogut,
+.paywall-oglobo a, 
+.paywall-blogs a, 
+.paywall-kogut a
+ {
+    color: #325E94;
 }
 
 .barreira-register-paywall--content {
@@ -33,7 +49,6 @@ html {
 .barreira-register-paywall--titulo {
     font-size: 20px;
     font-weight: 700;
-    color: #325E94;
     padding: 15px 10px;
 }
 
@@ -68,7 +83,6 @@ html {
 }
 
 .barreira-register-paywall--login a {
-    color: #325E94;
     font-weight: 700;
 }
 
