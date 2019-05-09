@@ -225,7 +225,7 @@ if (paywallSiteContainer) {
     function intervencaoSwg (event) {
         event.preventDefault(event);
         validacaoUrlRetorno = true;
-        swg.subscribe('br.com.infoglobo.oglobo.site.google');
+        swg.subscribe('br.com.infoglobo.oglobo.swg.google');
     }
 
     function montaUrlRetorno () {
