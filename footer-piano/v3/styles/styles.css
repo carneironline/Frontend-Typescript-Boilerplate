@@ -52,3 +52,8 @@
 .footer-venda-oglobo-capas .btn-default:hover{background-color: #73d9ff;}
 .footer-venda-oglobo-capas .azul-medio {color: #139deb}
 .footer-venda-oglobo-capas .compartilha-cor {color: #fff;}
+
+/* Correction for projects */
+.banner-bottom-fixed-is-active {
+    padding-bottom: 70px;
+}

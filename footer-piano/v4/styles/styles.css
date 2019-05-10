@@ -105,3 +105,8 @@
 .links-institucionais, .site-footer_texts {
     padding-bottom: 60px;
 }
+
+/* Correction for projects */
+.banner-bottom-fixed-is-active {
+    padding-bottom: 70px;
+}

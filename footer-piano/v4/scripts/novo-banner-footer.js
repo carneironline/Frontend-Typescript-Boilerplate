@@ -1,6 +1,10 @@
 var footerOgloboPiano = document.createElement('div');
+const elBody = document.body;
 footerOgloboPiano.id = 'footerOgloboPianoId';
-document.body.appendChild(footerOgloboPiano);
+elBody.appendChild(footerOgloboPiano);
+
+if(nomeProdutoPiano === 'oglobo')
+	elBody.classList.add('banner-bottom-fixed-is-active')
 
 
 
