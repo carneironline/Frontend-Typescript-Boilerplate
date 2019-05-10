@@ -1,6 +1,10 @@
 var conteudoBannerFooter = document.createElement('div');
+const elBody = document.body;
 conteudoBannerFooter.id = 'divBannerFooter';
-document.body.appendChild(conteudoBannerFooter);
+elBody.appendChild(conteudoBannerFooter);
+
+if(nomeProdutoPiano === 'oglobo')
+	elBody.classList.add('banner-bottom-fixed-is-active')
 
 
 conteudoExperienciaBannerFooter = "" +
