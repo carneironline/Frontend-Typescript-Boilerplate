@@ -1478,6 +1478,24 @@ describe('Tiny JS', function () {
 
         });
 
+        describe('função bottomFixed', function () {
+
+            it('deve chamar a função adicionarCss', function () {
+                spyOn(Piano.util, 'adicionarCss');
+
+                Piano.banner.bottomFixed();
+                expect(Piano.util.adicionarCss).toHaveBeenCalled();
+            });
+
+            it('deve chamar o método XmlHttpRequest.geraScriptNaPagina', function () {
+                spyOn(Piano.xmlHttpRequest, 'geraScriptNaPagina');
+
+                Piano.banner.bottomFixed();
+                expect(Piano.xmlHttpRequest.geraScriptNaPagina).toHaveBeenCalled();
+            });
+
+        });
+
     });
 
     describe('Piano.register', function () {
