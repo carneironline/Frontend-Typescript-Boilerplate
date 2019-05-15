@@ -1,0 +1,16 @@
+#footerOgloboPianoId {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 9;
+}
+
+#footerOgloboPianoId .-image {
+    display: block;
+    height: 60px;
+}
+
+/* Correction for projects */
+.banner-bottom-fixed-is-active {
+    padding-bottom: 70px;
+}
