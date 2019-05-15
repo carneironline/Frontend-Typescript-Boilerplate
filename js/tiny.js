@@ -291,6 +291,12 @@ Piano.banner = {
 	mostrarBotaoAssinaturaHeaderFooter: function(versao) {
 		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/styles/styles.css'>");
 		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/scripts/banner-header-footer-piano.js");
+	},
+	bottomFixed: function(params = {}) {
+		window.glbBannerBottom = params;
+
+		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-bottom-fixed/styles/banner-bottom-fixed.css'>");
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-bottom-fixed/scripts/banner-bottom-fixed.js");
 	}
 };
 
