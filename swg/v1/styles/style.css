@@ -1,8 +1,18 @@
-.blockContainer{
+.banner-wrap {
+    display: flex;
+    align-items: center;
     background: rgb(230, 230, 230);
     box-sizing: content-box;
     margin: 0 auto 40px;
     max-width: 1260px;
     height: 4em;
     padding: 0 10px;
+}
+
+.image-banner {
+
+}
+
+.text-banner {
+    
 }
