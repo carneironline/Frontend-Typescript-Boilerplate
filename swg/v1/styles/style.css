@@ -1,18 +1,24 @@
-.banner-wrap {
+.teste{
+    display: flex;
+}
+
+.banner-swg-wrap {
     display: flex;
     align-items: center;
     background: rgb(230, 230, 230);
-    box-sizing: content-box;
-    margin: 0 auto 40px;
+    margin: 0 auto 0px;
     max-width: 1260px;
-    height: 4em;
-    padding: 0 10px;
+    padding: 3px 5px;
 }
 
-.image-banner {
-
+.image-swg-banner {
+    margin-right: 20px;
+    margin-left: 150px;
+    position: relative;
 }
 
-.text-banner {
-    
+.text-swg-banner {
+    font-family: 'Source Sans Pro', sans-serif;
+    top: 50%;
+    width: 60%;
 }
