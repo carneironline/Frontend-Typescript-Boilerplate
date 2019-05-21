@@ -5,13 +5,15 @@ const bannerSWG = (function() {
     let linkPiano = "https://assinatura.oglobo.globo.com/VitrineDigital.aspx?id_parc=6236&cod_vitrine=112&campanha=sim"
     let textPiano = "<strong> O GLOBO</strong> em parceria com o <strong>Google</strong> oferece assinatura com <strong>três meses grátis</strong> e <strong>50% de desconto</strong> nos nove meses seguintes em apenas dois cliques</p>";
     
-    const htmlAnuncio = `<div class="banner-swg-wrap" href="${linkPiano}" target="_blank">             
-                            <div class="image-swg-banner">
-                                <img alt="Assine com o Google" src="${imagePiano}"/>
-                            </div>
-                            <div class="text-swg-banner">
-                                <p class="main-title">${textPiano}</p>
-                            </div>   
+    const htmlAnuncio =`<div class="banner-swg" onclinck="">            
+                            <a class="banner-swg-link" href="${linkPiano}" target="_blank">    
+                                <div class="banner-swg-image" id="linkImage">
+                                    <img class="banner-swg-image-img" alt="Assine com o Google" src="${imagePiano}"/>
+                                </div>
+                                <div class="banner-swg-text">
+                                    <p class="main-title">${textPiano}</p>
+                                </div>
+                            </a>       
                         </div>`;
 
     function init(htmlAnuncio) {

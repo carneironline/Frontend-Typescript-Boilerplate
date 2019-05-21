@@ -2,23 +2,38 @@
     display: flex;
 }
 
-.banner-swg-wrap {
+.banner-swg-link {
+    text-decoration: none;
+    color: currentColor;
     display: flex;
     align-items: center;
-    background: rgb(230, 230, 230);
+    justify-content: center;
+    background: #efeff0;
+    border-top: #ddd 1px solid;
+    border-bottom: #ddd 1px solid;
+}
+
+.banner-swg {
     margin: 0 auto 0px;
     max-width: 1260px;
-    padding: 3px 5px;
+    padding: 74px 0px 0px;
 }
 
-.image-swg-banner {
-    margin-right: 20px;
-    margin-left: 150px;
+.banner-swg-image {
     position: relative;
+    width: calc(50%);
+    text-align: right;
 }
 
-.text-swg-banner {
+.banner-swg-image-img {
+    position: absolute;
+    right: 0;
+    top: -108px;
+}
+
+.banner-swg-text {
     font-family: 'Source Sans Pro', sans-serif;
-    top: 50%;
-    width: 60%;
+    width: 50%;
+    padding: 0 10% 0 20px;
+    color: darkslategray;
 }
