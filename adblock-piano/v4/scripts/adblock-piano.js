@@ -138,7 +138,7 @@
         let evtLabel = window.Piano ? Piano.metricas.montaRotuloGA() : '';
 
         if(isUserAuthorized())
-            evtAction = 'sem acao';
+            return false;
 
         setGa(evtName, 'Piano', evtAction, evtLabel );
     }
