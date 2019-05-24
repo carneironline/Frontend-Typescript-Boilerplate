@@ -2,6 +2,11 @@
     display: flex;
 }
 
+.banner-swg {
+    margin: 0 auto 0px;
+    max-width: 1260px;
+    padding: 74px 0px 50px;
+}
 
 .banner-swg-link {
     text-decoration: none;
@@ -14,15 +19,9 @@
     border-bottom: #ddd 1px solid;
 }
 
-.banner-swg {
-    margin: 0 auto 0px;
-    max-width: 1260px;
-    padding: 74px 0px 0px;
-}
-
 .banner-swg-image {
     position: relative;
-    width: calc(50%);
+    width: calc(21%);
     text-align: right;
 }
 @media (max-width: 1023px){
@@ -35,18 +34,25 @@
 .banner-swg-image-img {
     position: absolute;
     right: 0;
-    top: -108px;
+    top: -74px;
+    max-width: 80%;
 }
 @media (max-width: 1023px) {
     .banner-swg-image-img {
         position: unset;
-        max-width: 100%;
+        max-width: 87%;
     }
 }
 
 .banner-swg-text {
     font-family: 'Source Sans Pro', sans-serif;
-    width: 50%;
+    width: 60%;
     padding: 0 10% 0 20px;
     color: darkslategray;
+}
+
+@media (max-width: 1023px) {
+    .banner-swg-text {
+        font-size: 86%;
+    }
 }
