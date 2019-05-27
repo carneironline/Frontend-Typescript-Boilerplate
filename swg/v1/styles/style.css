@@ -4,6 +4,12 @@
     padding: 40px 0px 0px;
 }
 
+@media (max-width: 1023px) {
+    .banner-swg {
+        padding: 40px 0px 0px;
+    }
+}
+
 .banner-swg-link {
     text-decoration: none;
     color: currentColor;
