@@ -1,4 +1,3 @@
-let publicidadeFullBannerMobi = document.querySelector('#container-fullbanner');
 let paywallSiteContainer = document.querySelector('.paywall__site-container');
 let larguraTela = window.innerWidth;
 let alturaTela = window.innerHeight;
@@ -35,6 +34,17 @@ function hidePaywall () {
     });
 }
 
+function setFullbanner() {
+    const fullbanner = document.querySelector('#container-fullbanner');
+    const pubHost = ['blogs.oglobo', 'kogut', 'oglobo', 'globostg'];
+    const hostname = location.hostname;
+    const isHost = pubHost.find( item => hostname.includes(item) );
+
+    if (fullbanner && isHost) {
+        paywallSiteContainer.insertAdjacentElement('afterend', fullbanner);
+    }
+}
+
 if (paywallSiteContainer) {
     let tipoBarreiraPixel = '';
 
@@ -44,9 +54,7 @@ if (paywallSiteContainer) {
         protectedContentEl.innerHTML = " ";
     }
 
-    if (publicidadeFullBannerMobi) {
-        paywallSiteContainer.insertAdjacentElement('afterend', publicidadeFullBannerMobi);
-    }
+    setFullbanner();
 
     // identificando tipo de barreira para disparo de métricas
     if (typeof Piano.typePaywall == 'undefined' || Piano.typePaywall == null || Piano.typePaywall == '') {
