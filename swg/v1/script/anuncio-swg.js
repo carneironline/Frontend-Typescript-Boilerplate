@@ -6,7 +6,7 @@ const bannerSWG = (function() {
                                     <img class="banner-swg-image-img" alt="Assine com o Google" src="${imagePiano}"/>
                                 </div>
                                 <div class="banner-swg-text">
-                                    <p class="main-title">${textPiano}</p>
+                                    <div class="main-title">${textPiano}</div>
                                 </div>
                             </a>       
                         </div>`;
