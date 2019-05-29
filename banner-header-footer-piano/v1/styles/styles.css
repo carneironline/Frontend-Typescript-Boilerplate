@@ -21,12 +21,6 @@ footer .footer #banner-assinatura-footer a, .top-header ul.menu-interacao>li#ban
 	font-size: 0px;
 	text-decoration: none;
 	display: block;
-	animation-delay: 1s;
-	transition: .3s all;
-	animation-duration: 1s;
-	animation-name: scaleOnLoad;
-	animation-fill-mode: forwards;
-	transform: scale(1,1);
 }
 
 #banner-assinatura-header a {

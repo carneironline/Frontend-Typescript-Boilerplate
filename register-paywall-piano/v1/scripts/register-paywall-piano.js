@@ -7,7 +7,10 @@ let url = window.ambienteUtilizadoPiano == 'prd' ? 'https://login.globo.com/' : 
 let urlValidaUsuarioBarramento = window.ambienteUtilizadoPiano == 'prd' ? 'https://assinatura.oglobo.globo.com/ValidaUsuarioBarramento.html' : 'https://assinatura.globostg.globoi.com/ValidaUsuarioBarramento.html';
 let protectedContentEl = document.querySelector(".protected-content");
 let eventoLinkUm = null;
-let PaywallProductClass = `paywall-${nomeProdutoPiano}`;
+let PaywallProductClass = typeof nomeProdutoPiano !== 'undefined' ? `paywall-${nomeProdutoPiano}` : 'paywall-oglobo';
+let pwTargetImages = typeof paywallTargetImages !== 'undefined' ? paywallTargetImages : true;
+let pwTargetLogin = typeof paywallTargetLogin !== 'undefined' ? paywallTargetLogin : true;
+
 
 // scroll top para manter o header
 document.documentElement.scrollTop = 0;
@@ -90,7 +93,7 @@ if (paywallSiteContainer) {
 				</div>
 				<div class="barreira-register-paywall--oftprincipal">
                     <a class="img1l" target="_blank" 
-                    onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 1 - ${eventoLinkUm}', this.href, event, false, true);" 
+                    onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 1 - ${eventoLinkUm}', this.href, event, ${pwTargetImages}, true);" 
                     href="#" >
 						<img class="mobi img1m" src="#" />
 						<img class="desk img1d" src="#" />
@@ -99,7 +102,7 @@ if (paywallSiteContainer) {
 				<div class="barreira-register-paywall--login">
                     Já possui cadastro? 
                     <a 
-                    onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 2 - Faça login', this.href, event, true, false);" 
+                    onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 2 - Faça login', this.href, event, ${pwTargetLogin}, false);" 
                     class="link" 
                     href="${url}login/${Piano.variaveis.getServicoId()}?url=${montaUrlRetorno()}" >
                         Faça login
@@ -107,7 +110,7 @@ if (paywallSiteContainer) {
                     <span class="barreira-register-paywall--cadastre">
                     ou
                     <a 
-                    onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 3 - Cadastro', this.href, event, true, false);" 
+                    onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 3 - Cadastro', this.href, event, ${pwTargetLogin}, false);" 
                     class="link"
                      href="${url}cadastro/${Piano.variaveis.getServicoId()}?url=${montaUrlRetorno()}">
                         Cadastre-se
@@ -116,13 +119,13 @@ if (paywallSiteContainer) {
 				</div>
 				<div class="barreira-register-paywall--oftsecundaria">
                     <a class="img2l" target="_blank" 
-                    onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 4 - Banner oferta esquerda', this.href, event, false, true);" 
+                    onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 4 - Banner oferta esquerda', this.href, event, ${pwTargetImages}, true);" 
                     href="#" >
 						<img class="mobi img2m" src="#" />
 						<img class="desk img2d" src="#" />					
 					</a>
                     <a class="img3l" target="_blank" 
-                    onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 5 - Banner oferta direita', this.href, event, false, true);" 
+                    onclick="disparaEvento('${nomeBarreira}','Clique em link','Link 5 - Banner oferta direita', this.href, event, ${pwTargetImages}, true);" 
                     href="#" >
 						<img class="mobi img3m" src="#" />
 						<img class="desk img3d" src="#" />					
