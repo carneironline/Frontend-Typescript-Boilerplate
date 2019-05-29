@@ -10,6 +10,10 @@
     }
 }
 
+.main-content .banner-swg {
+    padding-top: 80px;
+}
+
 .banner-swg-link {
     text-decoration: none;
     color: currentColor;
