@@ -298,6 +298,13 @@ Piano.banner = {
 
 		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-bottom-fixed/styles/banner-bottom-fixed.css'>");
 		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-bottom-fixed/scripts/banner-bottom-fixed.js");
+	},
+	mostrarSWG: function() {
+		const css = `<link rel='stylesheet' type='text/css' href='https://static${Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/swg/v1/styles/style.css'>`;
+		const scriptJs = `https://static${Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/swg/v1/script/anuncio-swg.js`;
+
+		Piano.util.adicionarCss(css);
+		Piano.xmlHttpRequest.geraScriptNaPagina(scriptJs);
 	}
 };
 
