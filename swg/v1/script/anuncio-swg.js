@@ -11,16 +11,13 @@ const bannerSWG = (function() {
                             </a>       
                         </div>`;
 
-    function init(htmlAnuncio) {
+    function init() {
         const widgetHtmlSwgIn = document.querySelector('section.block.block--advertising.block--advertising-header');
 
         widgetHtmlSwgIn.insertAdjacentHTML("afterend", htmlAnuncio);
     }
     
-    init(htmlAnuncio);
+    init();
 
-    return {
-        bannerSWG
-    }
 })();
 
