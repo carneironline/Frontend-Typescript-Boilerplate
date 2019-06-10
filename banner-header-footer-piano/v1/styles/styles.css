@@ -24,5 +24,7 @@ footer .footer #banner-assinatura-footer a, .top-header ul.menu-interacao>li#ban
 }
 
 #banner-assinatura-header a {
-	margin-left: 10px;
+	margin-left: 0px;
+	width: unset !important;
+	height: unset !important;
 }
