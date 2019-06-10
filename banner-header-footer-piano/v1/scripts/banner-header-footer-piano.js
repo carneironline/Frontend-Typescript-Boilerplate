@@ -17,17 +17,23 @@ for (i = 0; i < x.length; i++) {
 // novo header do globo temporario
 
 var tagSite = document.getElementById("banner-assinatura-header");
+tagSite.style.display = "flex";
+tagSite.style.flexDirection = "row"
 
 if (tagSite) {
 	var aTag = document.createElement('a');
 	aTag.setAttribute('href',linkAssinaturaHeaderFooter);
 	
-	if (window.matchMedia("(max-width: 600px)").matches) {
-		aTag.setAttribute('style',"background-image: url("+imagemAssinaturaHeaderFooter+"); width: 46px; height: 20px");
-	} else {
-		aTag.setAttribute('style',"background-image: url("+imagemAssinaturaHeaderFooter+"); width: 180px; height: 44px");
+	if (window.matchMedia("(max-width: 767px)").matches) {
+		aTag.setAttribute('style',"background-image: url("+imagemAssinaturaHeaderFooter+"); width: 46px; height: 20px; order: 1");
 	}
-	
+	else if (window.matchMedia("(max-width: 1024px)").matches) {
+		aTag.setAttribute('style',"background-image: url("+imagemAssinaturaHeaderFooter+"); width: 110px; height: 44px; order: 1");
+	}
+	else {
+		aTag.setAttribute('style',"background-image: url("+imagemAssinaturaHeaderFooter+"); width: 180px; height: 44px; order: 1");
+	}
+
 	aTag.setAttribute('target', '_blank');
 	aTag.innerHTML = "Assinatura";
 	aTag.setAttribute('id', 'btn-assine-header');
