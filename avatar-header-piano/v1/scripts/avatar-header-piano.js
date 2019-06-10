@@ -3,7 +3,7 @@ var tagSite = document.getElementById("banner-assinatura-header");
 if (tagSite) {
 	var aTag = document.createElement('a');
     aTag.setAttribute('href',linkAvatarHeader);
-    aTag.setAttribute('style', "order: 2;");
+    aTag.setAttribute('style', "order: 2; width: 20px; height: 22px");
     
     var divTag = document.createElement('div');
 	
