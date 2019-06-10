@@ -293,6 +293,9 @@ Piano.banner = {
 		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/styles/styles.css'>");
 		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/banner-header-footer-piano/"+versao+"/scripts/banner-header-footer-piano.js");
 	},
+	mostrarAvatarHeader: function(versao) {
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/avatar-header-piano/"+versao+"/scripts/avatar-header-piano.js");
+	},
 	bottomFixed: function(params = {}) {
 		window.glbBannerBottom = params;
 
