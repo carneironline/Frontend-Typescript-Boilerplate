@@ -2,14 +2,18 @@ var tagSite = document.getElementById("banner-assinatura-header");
 
 if (tagSite) {
 	var aTag = document.createElement('a');
-	aTag.setAttribute('href',linkAvatarHeader);
+    aTag.setAttribute('href',linkAvatarHeader);
+    
+    var divTag = document.createElement('div');
 	
 	if (window.matchMedia("(max-width: 767px)").matches) {
-		aTag.setAttribute('style',"background-image: url("+imagemAvatarHeader+"); width: 20px; height: 23px; order: 2; margin-left: 30px");
+		divTag.setAttribute('style',"background-image: url("+imagemAvatarHeader+"); width: 20px; height: 22px; order: 2; margin-left: 30px; background-size: 20px; background-repeat: no-repeat;");
 	}
-	
-	aTag.setAttribute('target', '_blank');
-	aTag.innerHTML = "Assinatura";
-	aTag.setAttribute('id', 'btn-assine-header');
+    
+    
+    aTag.setAttribute('target', '_blank');
+    divTag.setAttribute('id', 'btn-avatar-header');
+    aTag.appendChild(divTag);
 	tagSite.appendChild(aTag);
 }
+
