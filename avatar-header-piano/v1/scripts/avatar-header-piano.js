@@ -12,7 +12,6 @@ if (tagSite) {
 	}
     
     
-    aTag.setAttribute('target', '_blank');
     divTag.setAttribute('id', 'btn-avatar-header');
     aTag.appendChild(divTag);
 	tagSite.appendChild(aTag);
