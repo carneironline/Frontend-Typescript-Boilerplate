@@ -1,19 +1,23 @@
-var tagSite = document.getElementById("banner-assinatura-header");
+(function(){
+    const tagSite = document.getElementById("banner-assinatura-header");
 
-if (tagSite) {
-	var aTag = document.createElement('a');
-    aTag.setAttribute('href',linkAvatarHeader);
-    aTag.setAttribute('style', "order: 2; width: 55px; height: 22px");
+    if(!tagSite)
+        return false;
+
+    if (window.matchMedia("(max-width: 767px)").matches) {
+        const aTag = document.createElement('a');
+        const divTag = document.createElement('img');
+
+        aTag.setAttribute('href',linkAvatarHeader);
+        aTag.setAttribute('style', "order: 2; width: 20px; height: unset; margin-left: 20px;");
     
-    var divTag = document.createElement('img');
 	
-	if (window.matchMedia("(max-width: 767px)").matches) {
-		divTag.setAttribute('style',"width: 20px; height: 30px; padding-top:5px; ");
-		divTag.setAttribute('src',imagemAvatarHeader);        
+        tagSite.style.alignItems = 'center';
+		divTag.setAttribute('style',"max-width: 100%; height: auto; display: block; ");
+        divTag.setAttribute('src',imagemAvatarHeader);   
+        
+        divTag.setAttribute('id', 'btn-avatar-header');
+        aTag.appendChild(divTag);
+        tagSite.appendChild(aTag);
     }
-    
-    
-    divTag.setAttribute('id', 'btn-avatar-header');
-    aTag.appendChild(divTag);
-	tagSite.appendChild(aTag);
-}
+})();
