@@ -11,7 +11,7 @@
 
         aTag.setAttribute('href',linkAvatarHeader);
         aTag.setAttribute('style', 'order: 2; width: 20px; height: unset; margin-left: 20px;');
-		divTag.setAttribute('style','max-width: 100%; height: auto; display: block; ');
+		divTag.setAttribute('style','max-width: 100%; height: auto; display: block; height: 30px');
         divTag.setAttribute('src',imagemAvatarHeader);   
         divTag.setAttribute('id', 'btn-avatar-header');
     
