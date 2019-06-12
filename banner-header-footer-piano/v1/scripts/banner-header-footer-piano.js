@@ -18,7 +18,7 @@ for (i = 0; i < x.length; i++) {
 
 var tagSite = document.getElementById("banner-assinatura-header");
 tagSite.style.display = "flex";
-tagSite.style.flexDirection = "row"
+tagSite.style.flexDirection = "row";
 
 if (tagSite) {
 	var aTag = document.createElement('a');

@@ -2,7 +2,7 @@
     if (window.matchMedia('(max-width: 767px)').matches) {
         const tagSite = document.getElementById('banner-assinatura-header');
 
-        if(!tagSite || typeof imagemAvatarHeader !== undefined)
+        if(!tagSite)
             return false;
 
     
