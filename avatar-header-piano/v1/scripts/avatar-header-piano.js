@@ -11,7 +11,7 @@
         const imgTag = document.createElement('img');
         const buttonTag = document.createElement('button');
         const pTag = document.createElement('p');
-        const uTag = document.createElement('u');
+        const uTag = document.createElement('ul');
         const liTag = document.createElement('li');
         const searchWrapper = document.querySelector('.site-header__search-wrapper');
         const siteHeader = document.querySelector('.site-header__banner-assinatura-wrapper');
