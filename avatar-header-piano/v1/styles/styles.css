@@ -1,0 +1,3 @@
+.account-avatar:hover .account-tooltip {
+    display: block !important;
+}
