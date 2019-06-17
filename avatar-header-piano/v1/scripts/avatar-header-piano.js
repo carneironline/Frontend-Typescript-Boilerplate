@@ -28,6 +28,7 @@
         pTag.setAttribute('style', 'font-family: OpenSans; font-size: 13px; color: #7a7a7a; margin-left: 14px;');
         uTag.setAttribute('style', 'margin-inline-start: -1em; font-family: OpenSans; color: #7a7a7a');
         liTag.innerHTML = 'minha conta';
+        buttonTag.innerHTML = 'SAIR';
         buttonTag.setAttribute('style', 'width: 39px; height: 19px; border-radius: 2px; border-style: solid; border-width: 1px; border-image-source: linear-gradient(to bottom, #e5e6e6, #b8b8b8); border-image-slice: 1; background-image: linear-gradient(to bottom, #ffffff, #efefef), linear-gradient(to bottom, #e5e6e6, #b8b8b8); background-origin: border-box; margin-left: 78px; font-family: OpenSans; font-size: 10px; font-weight: 600; color: #9a9a9a;');
 
         tagSite.style.display = 'flex';
