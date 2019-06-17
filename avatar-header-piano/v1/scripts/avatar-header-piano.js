@@ -19,7 +19,7 @@
         imgTag.setAttribute('src',imagemAvatarHeader);   
         imgTag.setAttribute('id', 'btn-avatar-header');
         toolTip.setAttribute('class', 'account-tooltip');
-        toolTip.setAttribute('style', 'position: absolute; width: 128px; height: 116px; top: 30px; right: 0; border-radius: 5px; box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.36); border: solid 1px #cccccc; background-color: #ffffff; z-index: 9;');
+        toolTip.setAttribute('style', 'position: absolute; display: none; width: 128px; height: 116px; top: 30px; right: 0; border-radius: 5px; box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.36); border: solid 1px #cccccc; background-color: #ffffff; z-index: 9;');
         
 
         tagSite.style.display = 'flex';
@@ -31,8 +31,8 @@
         siteHeader.style.overflow = 'unset';
         
         divTag.appendChild(imgTag);
+        divTag.appendChild(toolTip);
         tagSite.appendChild(divTag);
-        tagSite.appendChild(toolTip);
     }
 
 })();
