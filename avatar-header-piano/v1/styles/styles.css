@@ -1,3 +1,58 @@
 .account-avatar:hover .account-tooltip {
     display: block !important;
 }
+
+a.tooltip {
+    position: relative;
+    padding: 0;
+    color: #000000;
+    text-decoration: none;
+    border-bottom: 1px dotted #133783;
+    cursor: help;
+    z-index: 25;
+}
+a.tooltip:hover {
+    border: none;
+    height: auto;
+    background: transparent;
+    color: #133783;
+    z-index: 25;
+}
+a.tooltip span {
+    visibility: hidden;
+    position: absolute;
+    width: 290px;
+    top: 10em;
+    text-align: justify;
+    left: 0;
+    font: 12px arial, helvetica, sans-serif;
+    padding: 5px 10px;
+    border: 1px solid #133783;
+    background: #E3E3E3;
+    color: #000;
+    font: 11px arial, verdana, helvetica, sans-serif;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+a.tooltip:hover span {
+    visibility: visible;
+    opacity: 1;
+    top: 3em;
+}
+
+a.tooltip span:before{
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: -7px;
+    width: 15px;
+    height: 15px;
+    transform: rotateZ(45deg);
+    background-color: #E3E3E3;
+    border: 1px solid #333;
+}
+
+a.tooltip:hover span:before{
+    opacity: 1;
+    z-index: -1;
+}
