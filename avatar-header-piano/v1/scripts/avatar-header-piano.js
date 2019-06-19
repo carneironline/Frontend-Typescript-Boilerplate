@@ -34,7 +34,7 @@
         uTag.setAttribute('style', 'margin-inline-start: -1em; font-family: Open-Sans-Regular; color: #7a7a7a');
         liTag.innerHTML = 'minha conta';
         buttonTag.innerHTML = 'SAIR';
-        buttonTag.setAttribute('style', 'width: 39px; height: 19px; border-radius: 2px; border-style: solid; border-width: 1px; border-image-source: linear-gradient(to bottom, #e5e6e6, #b8b8b8); border-image-slice: 1; background-image: linear-gradient(to bottom, #ffffff, #efefef), linear-gradient(to bottom, #e5e6e6, #b8b8b8); background-origin: border-box; margin-left: 78px; font-family: Open-Sans-SemiBold; font-size: 10px; font-weight: 600; color: #9a9a9a;');
+        buttonTag.setAttribute('style', 'width: 39px !important; height: 19px !important; border-radius: 2px; border-style: solid; border-width: 1px; border-image-source: linear-gradient(to bottom, #e5e6e6, #b8b8b8); border-image-slice: 1; background-image: linear-gradient(to bottom, #ffffff, #efefef), linear-gradient(to bottom, #e5e6e6, #b8b8b8) !important; background-origin: border-box !important; margin-left: 78px !important; font-family: Open-Sans-SemiBold; font-size: 10px !important; font-weight: 600; color: #9a9a9a !important;');
 
         tagSite.style.display = 'flex';
         tagSite.style.flexDirection = 'row';
