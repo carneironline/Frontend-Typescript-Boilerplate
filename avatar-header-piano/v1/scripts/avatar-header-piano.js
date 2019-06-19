@@ -7,6 +7,7 @@
 
     
         const divTag = document.createElement('div');
+        const aTag = document.createElement('a');
         const toolTip = document.createElement('div');
         const imgTag = document.createElement('img');
         const buttonTag = document.createElement('button');
@@ -17,13 +18,15 @@
         const siteHeader = document.querySelector('.site-header__banner-assinatura-wrapper');
         const btnAssine = document.querySelector('#btn-assine-header');       
 
+        aTag.setAttribute('href', linkAccountLogout);
+        aTag.setAttribute('style', 'margin-inline-start: -1em; font-family: OpenSans; color: #7a7a7a');
         divTag.setAttribute('class', 'account-avatar');
         divTag.setAttribute('style', 'order: 2; width: 18px; height: unset; margin-left: 18px;');
 		imgTag.setAttribute('style','max-width: 100%; height: auto; display: block;');
         imgTag.setAttribute('src',imagemAvatarHeader);   
         imgTag.setAttribute('id', 'btn-avatar-header');
         toolTip.setAttribute('class', 'account-tooltip');
-        toolTip.setAttribute('style', 'position: absolute; display: none; width: 128px; height: 116px; top: 30px; right: 0; border-radius: 5px; box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.36); border: solid 1px #cccccc; background-color: #ffffff; z-index: 9;');
+        toolTip.setAttribute('style', 'position: absolute; display: none; width: 128px; height: 116px; top: 30px; right: -4px; border-radius: 5px; box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.36); border: solid 1px #cccccc; background-color: #ffffff; z-index: 9;');
         pTag.innerHTML = 'Olá';
         pTag.setAttribute('style', 'font-family: OpenSans; font-size: 13px; color: #7a7a7a; margin-left: 14px;');
         uTag.setAttribute('style', 'margin-inline-start: -1em; font-family: OpenSans; color: #7a7a7a');
@@ -39,8 +42,9 @@
         btnAssine.style.overflow = 'unset';
         siteHeader.style.overflow = 'unset';
 
+        aTag.appendChild(liTag)
         toolTip.appendChild(pTag);
-        uTag.appendChild(liTag);
+        uTag.appendChild(aTag);
         toolTip.appendChild(uTag);
         toolTip.appendChild(buttonTag);
 
