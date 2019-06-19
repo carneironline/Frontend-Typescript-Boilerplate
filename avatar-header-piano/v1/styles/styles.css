@@ -8,12 +8,13 @@
     content: "";
     position: absolute;
     right: 7px;
-    top: -7px;
+    top: -6px;
     width: 10px;
     height: 10px;
     transform: rotateZ(45deg);
     background-color: white;
-    border: solid 1px #cccccc;
+    border-top: #ccc solid 1px;
+    border-left: #ccc solid 1px;
     z-index: 0; 
 }
 
