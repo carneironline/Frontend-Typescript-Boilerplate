@@ -7,10 +7,11 @@
 
     
         const divTag = document.createElement('div');
-        const aTag = document.createElement('a');
+        const logoutLink = document.createElement('a');
+        const myAccount = document.createElement('a');
         const toolTip = document.createElement('div');
         const imgTag = document.createElement('img');
-        const buttonTag = document.createElement('button');
+        const buttonTag = document.createElement('a');
         const pTag = document.createElement('p');
         const uTag = document.createElement('ul');
         const liTag = document.createElement('li');
@@ -18,8 +19,9 @@
         const siteHeader = document.querySelector('.site-header__banner-assinatura-wrapper');
         const btnAssine = document.querySelector('#btn-assine-header');       
 
-        aTag.setAttribute('href', linkAccountLogout);
-        aTag.setAttribute('style', 'margin-inline-start: -1em; font-family: OpenSans; color: #7a7a7a');
+        logoutLink.setAttribute('href', linkAccountLogout);
+        myAccount.setAttribute('href', linkMyAccount);
+        myAccount.setAttribute('style', 'margin-inline-start: -1em; font-family: OpenSans; color: #7a7a7a');
         divTag.setAttribute('class', 'account-avatar');
         divTag.setAttribute('style', 'order: 2; width: 18px; height: unset; margin-left: 18px;');
 		imgTag.setAttribute('style','max-width: 100%; height: auto; display: block;');
@@ -42,9 +44,9 @@
         btnAssine.style.overflow = 'unset';
         siteHeader.style.overflow = 'unset';
 
-        aTag.appendChild(liTag)
+        myAccount.appendChild(liTag)
         toolTip.appendChild(pTag);
-        uTag.appendChild(aTag);
+        uTag.appendChild(myAccount);
         toolTip.appendChild(uTag);
         toolTip.appendChild(buttonTag);
 
