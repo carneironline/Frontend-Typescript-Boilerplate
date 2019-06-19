@@ -14,3 +14,22 @@
     border: solid 1px #cccccc;
     z-index: 0; 
 }
+
+.account-tooltip a {
+    background: unset;
+    background-size: unset;
+    background-repeat: unset;
+    background-color: unset;
+    background-position: unset;
+    width: unset;
+    height: unset;
+    overflow: unset;
+    text-indent: unset;
+    color: unset;
+    float: unset;
+    margin: unset;
+    padding: unset;
+    font-size: unset;
+    text-decoration: unset;
+    display: unset;
+}
