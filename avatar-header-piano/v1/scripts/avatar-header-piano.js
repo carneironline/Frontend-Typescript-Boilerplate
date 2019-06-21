@@ -29,7 +29,7 @@
         imgTag.setAttribute('id', 'btn-avatar-header');
         toolTip.setAttribute('class', 'account-tooltip');
         toolTip.setAttribute('style', 'position: absolute; display: none; width: 128px; height: 116px; top: 30px; right: -4px; border-radius: 5px; box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.36); border: solid 1px #cccccc; background-color: #ffffff; z-index: 9;');
-        pTag.innerHTML = 'Olá';
+        pTag.innerHTML = 'Olá!';
         pTag.setAttribute('style', 'font-family: Open-Sans-SemiBold; font-size: 13px; color: #7a7a7a; margin-left: 14px;');
         uTag.setAttribute('style', 'margin-inline-start: -1em; font-family: Open-Sans-Regular; color: #7a7a7a; font-size: 12px;');
         liTag.innerHTML = 'minha conta';
