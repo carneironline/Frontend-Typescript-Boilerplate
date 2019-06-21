@@ -21,6 +21,7 @@
 
         buttonTag.setAttribute('href', linkAccountLogout);
         myAccount.setAttribute('href', linkMyAccount);
+        myAccount.setAttribute('target', '_blank');
         myAccount.setAttribute('style', 'margin-inline-start: -1em; font-family: Open-Sans-Regular; color: #7a7a7a; font-size: 12px !important;');
         divTag.setAttribute('class', 'account-avatar');
         divTag.setAttribute('style', 'order: 2; width: 18px; height: unset; margin-left: 18px;');
