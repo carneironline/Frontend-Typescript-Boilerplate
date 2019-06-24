@@ -17,7 +17,7 @@
         const liTag = document.createElement('li');
         const searchWrapper = document.querySelector('.site-header__search-wrapper');
         const siteHeader = document.querySelector('.site-header__banner-assinatura-wrapper');
-        const btnAssine = document.querySelector('#btn-assine-header');       
+        const btnAssine = document.querySelector('#btn-assine-header') != null ? document.querySelector('#btn-assine-header') : "<div id='btn-assine-header'></div>";       
 
         buttonTag.setAttribute('href', linkAccountLogout);
         myAccount.setAttribute('href', linkMyAccount);
