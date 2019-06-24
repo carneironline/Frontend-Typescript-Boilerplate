@@ -17,7 +17,7 @@
         const liTag = document.createElement('li');
         const searchWrapper = document.querySelector('.site-header__search-wrapper');
         const siteHeader = document.querySelector('.site-header__banner-assinatura-wrapper');
-        const btnAssine = document.querySelector('#btn-assine-header') != null ? document.querySelector('#btn-assine-header') : "<div id='btn-assine-header'></div>";       
+        const btnAssine = document.querySelector('#btn-assine-header');       
 
         buttonTag.setAttribute('href', linkAccountLogout);
         myAccount.setAttribute('href', linkMyAccount);
@@ -43,7 +43,7 @@
         tagSite.style.alignItems = 'center';
         searchWrapper.style.marginRight = 0;
         siteHeader.style.marginRight = 0;
-        btnAssine.style.overflow = 'unset';
+        btnAssine != null ? btnAssine.style.overflow = 'unset' : "";
         siteHeader.style.overflow = 'unset';
 
         buttonDiv.appendChild(buttonTag);
