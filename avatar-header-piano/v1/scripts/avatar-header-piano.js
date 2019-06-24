@@ -41,10 +41,10 @@
         tagSite.style.display = 'flex';
         tagSite.style.flexDirection = 'row';
         tagSite.style.alignItems = 'center';
-        searchWrapper.style.marginRight = 0;
-        siteHeader.style.marginRight = 0;
+        searchWrapper != null ? searchWrapper.style.marginRight = 0 : "";
+        siteHeader != null ? siteHeader.style.marginRight = 0 : "";
         btnAssine != null ? btnAssine.style.overflow = 'unset' : "";
-        siteHeader.style.overflow = 'unset';
+        siteHeader != null ? siteHeader.style.overflow = 'unset' : "";
 
         buttonDiv.appendChild(buttonTag);
         myAccount.appendChild(liTag)
