@@ -89,9 +89,10 @@ Piano.variaveis = {
 			case 'glamour':
 			case 'casa-vogue':
 			case 'marie-claire':
-			case 'casa-e-jardim':
 			case 'quem':
 				return nomeProduto;
+			case 'casa-e-jardim':
+				return 'casa-jardim';
 			default:
 				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter código do produto - " + nomeProduto);
 				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
