@@ -469,7 +469,7 @@ describe('Tiny JS', function () {
         });
 
         describe('função isRevista', function(){
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "quem-acontece"', function(){
+            it('deve retornar "true" quando Piano.variaveis.getNomeProduto é "quem-acontece"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('quem-acontece');
 
                 expect(Piano.util.isRevista()).toEqual(true);
@@ -481,7 +481,7 @@ describe('Tiny JS', function () {
                 expect(Piano.util.isRevista()).toEqual(true);
             });
 
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "casa-e-jardim"', function(){
+            it('deve retornar "true" quando Piano.variaveis.getNomeProduto é "casa-e-jardim"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('casa-e-jardim');
 
                 expect(Piano.util.isRevista()).toEqual(true);
@@ -978,10 +978,10 @@ describe('Tiny JS', function () {
                 expect(Piano.variaveis.getCodigoProduto()).toEqual('OG01');
             });
 
-            xit('deve retornar revistas quando nomeProduto igual a quem-acontece',function(){
+            it('deve retornar revistas quando nomeProduto igual a quem-acontece',function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('quem-acontece');
 
-                expect(Piano.variaveis.getCodigoProduto()).toEqual('quem-acontece');
+                expect(Piano.variaveis.getCodigoProduto()).toEqual('quem');
             });            
 
             xit('deve retornar revistas quando nomeProduto igual a marie-claire',function(){
@@ -990,7 +990,7 @@ describe('Tiny JS', function () {
                 expect(Piano.variaveis.getCodigoProduto()).toEqual('marie-claire');
             });            
 
-            xit('deve retornar revistas quando nomeProduto igual a casa-e-jardim',function(){
+            it('deve retornar revistas quando nomeProduto igual a casa-e-jardim',function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('casa-e-jardim');
 
                 expect(Piano.variaveis.getCodigoProduto()).toEqual('casa-jardim');
