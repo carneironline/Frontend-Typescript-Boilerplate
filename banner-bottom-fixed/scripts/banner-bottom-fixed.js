@@ -21,7 +21,6 @@ const bannerBottom = (function(){
 		footerOgloboPiano.innerHTML = template();
 		elBody.appendChild(footerOgloboPiano);
 		
-		// if(nomeProdutoPiano && nomeProdutoPiano === 'oglobo')
 		elBody.classList.add('banner-bottom-fixed-is-active')
 	}
 
