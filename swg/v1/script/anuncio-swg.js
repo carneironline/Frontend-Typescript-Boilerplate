@@ -14,7 +14,8 @@ const bannerSWG = (function() {
     function init() {
         const widgetHtmlSwgIn = document.querySelector('section.block.block--advertising.block--advertising-header');
 
-        widgetHtmlSwgIn.insertAdjacentHTML("afterend", htmlAnuncio);
+        if(widgetHtmlSwgIn)
+            widgetHtmlSwgIn.insertAdjacentHTML("afterend", htmlAnuncio);
     }
     
     init();
