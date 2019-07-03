@@ -17,10 +17,12 @@ for (i = 0; i < x.length; i++) {
 // novo header do globo temporario
 
 var tagSite = document.getElementById("banner-assinatura-header");
-tagSite.style.display = "flex";
-tagSite.style.flexDirection = "row";
 
 if (tagSite) {
+	tagSite.style.display = "flex";
+	tagSite.style.flexDirection = "row";
+
+
 	var aTag = document.createElement('a');
 	aTag.setAttribute('href',linkAssinaturaHeaderFooter);
 	
