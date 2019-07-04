@@ -833,6 +833,7 @@ function loadPianoExperiences(callback){
 	catch (e) {
 		callback(e);
 	}
+	Piano.metricas.executaAposPageview(Piano.variaveis.isCallbackMetterExpired);
 }
 
 (function () {
@@ -856,14 +857,10 @@ function loadPianoExperiences(callback){
 			Piano.construtor.initTp();
 			loadPianoExperiences(callbackErro);
 		}
-	
 		Piano.checkPaywall();
 	}
 	catch (e) {
 		console.log("Erro lançado pela função principal, Menssage: " + e.message);
 		Piano.metricas.enviaEventosGA('Erro', e.message);
 	}
-	finally {
-		Piano.metricas.executaAposPageview(Piano.variaveis.isCallbackMetterExpired);
-	} 
 })();
