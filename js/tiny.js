@@ -388,7 +388,7 @@ Piano.registerPaywall = {
 				}
 			);
 			
-			if(Piano.typePaywall === 'register' || 'exclusivo' ) {
+			if(Piano.typePaywall === 'register' || Piano.typePaywall === 'exclusivo' ) {
 				Piano.metricas.enviaEventosGA("Exibicao Register", Piano.metricas.montaRotuloGA());
 				Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
 			} else {			
@@ -712,12 +712,12 @@ Piano.util = {
 	},
 	callbackMeter: function(meterData) {
 		regrasTiny = meterData;
-		//Piano.metricas.executaAposPageview();
+		Piano.metricas.executaAposPageview();
 	},
 	callbackMeterExpired: function(meterData) {
 		regrasTiny = meterData;
 		Piano.variaveis.isCallbackMetterExpired = true;
-		//Piano.metricas.executaAposPageview(true);
+		Piano.metricas.executaAposPageview(true);
 	},
 	getWindowLocationSearch: function(){
 		return window.location.search;
@@ -833,7 +833,6 @@ function loadPianoExperiences(callback){
 	catch (e) {
 		callback(e);
 	}
-	Piano.metricas.executaAposPageview(Piano.variaveis.isCallbackMetterExpired);
 }
 
 (function () {
