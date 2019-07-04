@@ -1,0 +1,34 @@
+@import './fonts.css';
+
+.account-avatar:hover .account-tooltip {
+    display: block !important;
+}
+
+.account-tooltip p:before {
+    content: "";
+    position: absolute;
+    right: 7px;
+    top: -6px;
+    width: 10px;
+    height: 10px;
+    transform: rotateZ(45deg);
+    background-color: white;
+    border-top: #ccc solid 1px;
+    border-left: #ccc solid 1px;
+    z-index: 0; 
+}
+
+.account-tooltip a {
+    background: unset !important;
+    background-size: unset !important;
+    background-repeat: unset !important;
+    background-color: unset !important;
+    background-position: unset !important;
+    overflow: unset !important;
+    text-indent: unset !important;
+    float: unset !important;
+    margin: unset !important;
+    padding: unset !important;
+    text-decoration: unset !important;
+    display: unset !important;
+}
