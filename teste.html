@@ -4,25 +4,39 @@
             
             section {
                 display: flex;
-                max-width: 640px;
+                max-width: calc(100% - 40px);
                 flex-direction: column;
-                padding: 30px 10px 30px 10px;
+                padding: 30px 20px 30px 20px;
                 margin: 0 auto;
             }
+            @media screen and (min-width: 640px) {
+                section {
+                    max-width: 620px;
+                    padding: 30px 10px 30px 10px;
+                }
+            }
+
             .jornal-profi {
-                width: 220px;
-                height: 36px;
+                width: 324px;
+                height: 55px;
+                margin: 0 auto;
                 background-size: 70px;
                 background-color: yellow;
                 background-repeat: no-repeat;
                 border-radius: 5px;
+                font-size: 16px;
+            }
+            @media screen and (min-width: 640px) {
+                .jornal-profi {
+                    margin: unset;
+                }
             }
             .text {
                 margin-bottom: 25px;
             }
             .title {
                 margin-bottom: 17px;
-                font-size: 18px;
+                font-size: 24px;
                 font-weight: 600;
             }
         </style>
@@ -34,7 +48,7 @@
                 24 horas por dia, 7 dias da semana, na maior redação de jornal de América Latina. Manter esse jornalismo de forma independente
                 tem um custo e precisa da sua assinatura
             </div>
-            <button class="jornal-profi">Assine O GLOBO</button>
+            <button class="jornal-profi">ASSINE O GLOBO</button>
         </section>
     </body>
 </html>
