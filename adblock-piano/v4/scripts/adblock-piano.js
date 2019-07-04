@@ -199,7 +199,7 @@
     }
 
     function init() { 
-        if( (!isUserAuthorized() || templateSettings.display) && templateSettings.display !== false ) {
+        if( templateSettings.display && templateSettings.display !== false ) {
             setTemplateSettings();
             createWall();
             activeWallRequirements();
