@@ -8,6 +8,7 @@ Piano.variaveis = {
 	ambientesAceitos: "int,qlt,prd",
 	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,503,504",
 	statusHttpObterAssinaturaInadimplente: "400,404,500,502,503,504",
+	isCallbackMetterExpired: false,
 	constante: {
 		cookie: {
 			GCOM: 'GLBID',
@@ -276,7 +277,7 @@ Piano.metricas = {
 			regrasTiny.fluxo = window.tpContext ? tpContext.toLowerCase() : '-';
 			regrasTiny.nomeExperiencia = window.nomeExperiencia ? window.nomeExperiencia : '';
 			Piano.metricas.setLimiteContagem(regrasTiny);
-			if (typeof expirou == 'undefined') Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
+			if (typeof expirou == false) Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
 			executouPageview = true;
 		}
 	},
@@ -711,11 +712,12 @@ Piano.util = {
 	},
 	callbackMeter: function(meterData) {
 		regrasTiny = meterData;
-		Piano.metricas.executaAposPageview();
+		//Piano.metricas.executaAposPageview();
 	},
 	callbackMeterExpired: function(meterData) {
 		regrasTiny = meterData;
-		Piano.metricas.executaAposPageview(true);
+		Piano.variaveis.isCallbackMetterExpired = true;
+		//Piano.metricas.executaAposPageview(true);
 	},
 	getWindowLocationSearch: function(){
 		return window.location.search;
@@ -814,35 +816,54 @@ Piano.construtor = {
 	}
 };
 
-function loadPianoExperiences(){
-	var a = document.createElement("script");
-	a.type = "text/javascript";
-	a.async = true;
-	a.src = Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlSandboxPiano;
-	var b = document.getElementsByTagName("script")[0];
-	b.parentNode.insertBefore(a, b);
+function callbackErro(e) {
+	console.log("Erro lançado pelo Callback, Menssage: " + e.message);
+	Piano.metricas.enviaEventosGA('Erro', e.message);
+}
+
+function loadPianoExperiences(callback){
+	try{
+		var a = document.createElement("script");
+		a.type = "text/javascript";
+		a.async = true;
+		a.src = Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlSandboxPiano;
+		var b = document.getElementsByTagName("script")[0];
+		b.parentNode.insertBefore(a, b);
+	}
+	catch (e) {
+		callback(e);
+	}
 }
 
 (function () {
-	if (typeof swg !== 'undefined') {
-			(self.SWG = self.SWG || []).push((subscriptions) => {
-				swg = subscriptions;
-				subscriptions.setOnEntitlementsResponse(entitlementsPromise => {
-					entitlementsPromise.then(entitlements => {
-						swgEntitlements = entitlements;
-						if (Piano !== 'undefined'){
-							Piano.construtor.initTp();
-							loadPianoExperiences();
-						}else{
-							console.warn("Piano nao foi carregada corretamente!")
-						}
+	try {
+		if (typeof swg !== 'undefined') {
+				(self.SWG = self.SWG || []).push((subscriptions) => {
+					swg = subscriptions;
+					subscriptions.setOnEntitlementsResponse(entitlementsPromise => {
+						entitlementsPromise.then(entitlements => {
+							swgEntitlements = entitlements;
+							if (Piano !== 'undefined'){
+								Piano.construtor.initTp();
+								loadPianoExperiences(callbackErro);
+							}else{
+								console.warn("Piano nao foi carregada corretamente!")
+							}
+						});
 					});
 				});
-			});
-	} else {
-		Piano.construtor.initTp();
-		loadPianoExperiences();
+		} else {
+			Piano.construtor.initTp();
+			loadPianoExperiences(callbackErro);
+		}
+	
+		Piano.checkPaywall();
 	}
-
-	Piano.checkPaywall();
+	catch (e) {
+		console.log("Erro lançado pela função principal, Menssage: " + e.message);
+		Piano.metricas.enviaEventosGA('Erro', e.message);
+	}
+	finally {
+		Piano.metricas.executaAposPageview(Piano.variaveis.isCallbackMetterExpired);
+	} 
 })();
