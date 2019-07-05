@@ -1,10 +1,13 @@
 <html>
+    <head>
+        <meta name=viewport content="width=device-width, initial-scale=1.0"/>
+    </head>
     <body>
         <style>
             
             section {
                 display: flex;
-                max-width: calc(100% - 40px);
+                max-width: 100%;
                 flex-direction: column;
                 padding: 30px 20px 30px 20px;
                 margin: 0 auto;
@@ -31,13 +34,32 @@
                     margin: unset;
                 }
             }
+
+            .button-img {
+                width: 238px;
+                height: 45px;
+                margin: 0 auto;
+            }
+            @media screen and (min-width: 640px) {
+                .button-img {
+                    margin: unset;
+                }
+            }
             .text {
                 margin-bottom: 25px;
+                font-size: 19px;
+                line-height: 28px;
             }
             .title {
                 margin-bottom: 17px;
-                font-size: 24px;
-                font-weight: 600;
+                font-size: 20px;
+                font-weight: 800;
+            }
+            @media screen and (min-width: 640px) {
+                .title {
+                    
+                    font-size: 24px;
+                }
             }
         </style>
         <section>
@@ -48,7 +70,7 @@
                 24 horas por dia, 7 dias da semana, na maior redação de jornal de América Latina. Manter esse jornalismo de forma independente
                 tem um custo e precisa da sua assinatura
             </div>
-            <button class="jornal-profi">ASSINE O GLOBO</button>
+            <img  class="button-img" src="./button-submit.png">
         </section>
     </body>
 </html>
