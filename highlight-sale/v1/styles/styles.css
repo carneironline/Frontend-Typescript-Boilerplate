@@ -1,3 +1,26 @@
+@font-face {
+    font-family: 'WhitmanDisplayCond-ExBold';
+    src: url('../fonts/WhitmanDisplayCondensed-ExtraBold.eot');
+    src: url('../fonts/WhitmanDisplayCondensed-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/WhitmanDisplayCondensed-ExtraBold.woff2') format('woff2'),
+        url('../fonts/WhitmanDisplayCondensed-ExtraBold.woff') format('woff'),
+        url('../fonts/WhitmanDisplayCondensed-ExtraBold.ttf') format('truetype'),
+        url('../fonts/WhitmanDisplayCondensed-ExtraBold.svg#WhitmanDisplayCondensed-ExtraBold') format('svg');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Georgia';
+    src: url('../fonts/Georgia.eot');
+    src: url('../fonts/Georgia.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Georgia.woff2') format('woff2'),
+        url('../fonts/Georgia.woff') format('woff'),
+        url('../fonts/Georgia.ttf') format('truetype'),
+        url('../fonts/Georgia.svg#Georgia') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
 #highlight-sale-section {
     display: flex;
@@ -18,21 +41,27 @@
 .highlight-sale-button{
     width: 238px;
     height: 45px;
-    margin: 0 auto;
 }
 
+.highlight-sale-button-url{
+    width: 238px;
+    height: 45px;
+    margin: 0 auto;
+}
 @media screen and (min-width: 640px) {
-    .highlight-sale-button {
+    .highlight-sale-button-url{
         margin: unset;
     }
 }
 
 .highlight-sale-text {
     margin-bottom: 25px;
+    font-family: 'Georgia';
 }
 
-.highlight-sale-title{
+.highlight-sale-title {
     margin-bottom: 17px;
     font-size: 24px;
     font-weight: 600;
+    font-family: 'WhitmanDisplayCond-ExBold';
 }

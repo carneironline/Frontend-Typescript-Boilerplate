@@ -4,6 +4,30 @@
     </head>
     <body>
         <style>
+
+        @font-face {
+            font-family: 'WhitmanDisplayCond-ExBold';
+            src: url('./highlight-sale/v1/fonts/WhitmanDisplayCondensed-ExtraBold.eot');
+            src: url('./highlight-sale/v1/fonts/WhitmanDisplayCondensed-ExtraBold.eot?#iefix') format('embedded-opentype'),
+                url('./highlight-sale/v1/fonts/WhitmanDisplayCondensed-ExtraBold.woff2') format('woff2'),
+                url('./highlight-sale/v1/fonts/WhitmanDisplayCondensed-ExtraBold.woff') format('woff'),
+                url('./highlight-sale/v1/fonts/WhitmanDisplayCondensed-ExtraBold.ttf') format('truetype'),
+                url('./highlight-sale/v1/fonts/WhitmanDisplayCondensed-ExtraBold.svg#WhitmanDisplayCondensed-ExtraBold') format('svg');
+            font-weight: 800;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Georgia';
+            src: url('./highlight-sale/v1/fonts/Georgia.eot');
+            src: url('./highlight-sale/v1/fonts/Georgia.eot?#iefix') format('embedded-opentype'),
+                url('./highlight-sale/v1/fonts/Georgia.woff2') format('woff2'),
+                url('./highlight-sale/v1/fonts/Georgia.woff') format('woff'),
+                url('./highlight-sale/v1/fonts/Georgia.ttf') format('truetype'),
+                url('./highlight-sale/v1/fonts/Georgia.svg#Georgia') format('svg');
+            font-weight: normal;
+            font-style: normal;
+}
             
             section {
                 display: flex;
@@ -38,39 +62,54 @@
             .button-img {
                 width: 238px;
                 height: 45px;
+            }
+
+            .button-img-url {
+                width: 238px;
+                height: 45px;
                 margin: 0 auto;
             }
             @media screen and (min-width: 640px) {
-                .button-img {
+                .button-img-url {
                     margin: unset;
                 }
             }
+           
             .text {
-                margin-bottom: 25px;
-                font-size: 19px;
-                line-height: 28px;
+                margin-bottom: 35px;
+                font-size: 15px;
+                line-height: 24px;
+                font-family: 'Georgia';
             }
+            @media screen and (min-width: 640px) {
+                .text {
+                    font-size: 16px;
+                }
+            }
+            
             .title {
-                margin-bottom: 17px;
-                font-size: 20px;
+                margin-bottom: 15px;
+                font-size: 21px;
                 font-weight: 800;
+                font-family: 'WhitmanDisplayCond-ExBold';
             }
             @media screen and (min-width: 640px) {
                 .title {
-                    
-                    font-size: 24px;
+                    font-size: 23px;
                 }
             }
         </style>
         <section>
             <div class="title">Apoie o jornalismo Profissional</div>
             <div class="text">
-                A missão da GLOBO é a mesma desde 1925: levar informação confiável e relevante para ajudar nossos leitores a compreender
+                A missão da GLOBO é a <strong>mesma</strong> desde 1925: levar informação confiável e relevante para ajudar nossos leitores a compreender
                 melhor o que se passa no Brasil e no mundo. Para isso, são mais de 400 profissionais e quase 100 colunistas se revezando 
                 24 horas por dia, 7 dias da semana, na maior redação de jornal de América Latina. Manter esse jornalismo de forma independente
                 tem um custo e precisa da sua assinatura
             </div>
+            <a class="button-img-url" href="#">
             <img  class="button-img" src="./button-submit.png">
+            </a>
         </section>
     </body>
 </html>
