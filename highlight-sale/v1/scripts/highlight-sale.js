@@ -24,7 +24,7 @@
         section.appendChild(divText);
         buttonImgUrl.appendChild(buttonImgTag);
         section.appendChild(buttonImgUrl);
-        highlightSale.innerHTML = section;
+        highlightSale.appendChild(section);
 
 
     }
