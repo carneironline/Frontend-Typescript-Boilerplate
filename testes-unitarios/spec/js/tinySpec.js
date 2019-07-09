@@ -1423,8 +1423,6 @@ describe('Tiny JS', function () {
                 + ' executou o pageview', function () {
                     spyOn(Piano.variaveis, 'executouPageview').and.returnValue(false);
                     spyOn(Piano.metricas, 'enviaEventosGA');
-                    debugger
-
                     Piano.metricas.executaAposPageview('abc');
                     expect(Piano.metricas.enviaEventosGA).not.toHaveBeenCalled();
                 });
