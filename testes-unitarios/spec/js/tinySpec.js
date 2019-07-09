@@ -448,11 +448,11 @@ describe('Tiny JS', function () {
 
         describe('função callbackMeter', function () {
 
-            it('deve chamar o método metricas.executaAposPageview sem nenhum parâmetro', function () {
+            it('deve chamar o método metricas.executaAposPageview com parâmetro = false', function () {
                 spyOn(Piano.metricas, 'executaAposPageview');
 
                 Piano.util.callbackMeter();
-                expect(Piano.metricas.executaAposPageview).toHaveBeenCalledWith();
+                expect(Piano.metricas.executaAposPageview).toHaveBeenCalledWith(false);
             });
 
         });
@@ -1411,11 +1411,11 @@ describe('Tiny JS', function () {
                     expect(regrasTiny.nomeExperiencia).toEqual('');
                 });
 
-            it('deve chamar o método metricas.enviaEventosGA quando expirou é undefined e não executou o pageview', function () {
+            it('deve chamar o método metricas.enviaEventosGA quando expirou é false e não executou o pageview', function () {
                 spyOn(Piano.variaveis, 'executouPageview').and.returnValue(false);
                 spyOn(Piano.metricas, 'enviaEventosGA');
 
-                Piano.metricas.executaAposPageview(undefined);
+                Piano.metricas.executaAposPageview(false);
                 expect(Piano.metricas.enviaEventosGA).toHaveBeenCalled();
             });
 
@@ -1423,6 +1423,7 @@ describe('Tiny JS', function () {
                 + ' executou o pageview', function () {
                     spyOn(Piano.variaveis, 'executouPageview').and.returnValue(false);
                     spyOn(Piano.metricas, 'enviaEventosGA');
+                    debugger
 
                     Piano.metricas.executaAposPageview('abc');
                     expect(Piano.metricas.enviaEventosGA).not.toHaveBeenCalled();

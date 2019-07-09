@@ -277,7 +277,7 @@ Piano.metricas = {
 			regrasTiny.fluxo = window.tpContext ? tpContext.toLowerCase() : '-';
 			regrasTiny.nomeExperiencia = window.nomeExperiencia ? window.nomeExperiencia : '';
 			Piano.metricas.setLimiteContagem(regrasTiny);
-			if (typeof expirou == false) Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
+			if (expirou == false) Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
 			executouPageview = true;
 		}
 	},
@@ -712,7 +712,7 @@ Piano.util = {
 	},
 	callbackMeter: function(meterData) {
 		regrasTiny = meterData;
-		Piano.metricas.executaAposPageview();
+		Piano.metricas.executaAposPageview(false);
 	},
 	callbackMeterExpired: function(meterData) {
 		regrasTiny = meterData;
@@ -781,6 +781,7 @@ Piano.configuracao = {
 
 Piano.construtor = {
 	initTp: function() {
+		Piano.metricas.enviaEventosGA("Carregamento Piano", "Inicio InitTp");
 		Piano.util.detectaBurlesco();
 		Piano.util.isTipoConteudoUndefined();
 		tp = window["tp"] || [];
@@ -813,53 +814,40 @@ Piano.construtor = {
 		Piano.util.isOrigemBuscador() || Piano.util.extraiParametrosCampanhaDaUrl();
 		tp.push(["addHandler", "meterActive", Piano.util.callbackMeter]);
 		tp.push(["addHandler", "meterExpired", Piano.util.callbackMeterExpired]);
+		Piano.metricas.enviaEventosGA("Carregamento Piano", "Fim InitTp");
 	}
 };
 
-function callbackErro(e) {
-	console.log("Erro lançado pelo Callback, Menssage: " + e.message);
-	Piano.metricas.enviaEventosGA('Erro', e.message);
-}
-
-function loadPianoExperiences(callback){
-	try{
-		var a = document.createElement("script");
-		a.type = "text/javascript";
-		a.async = true;
-		a.src = Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlSandboxPiano;
-		var b = document.getElementsByTagName("script")[0];
-		b.parentNode.insertBefore(a, b);
-	}
-	catch (e) {
-		callback(e);
-	}
+function loadPianoExperiences(){
+	var a = document.createElement("script");
+	a.type = "text/javascript";
+	a.async = true;
+	a.src = Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlSandboxPiano;
+	var b = document.getElementsByTagName("script")[0];
+	b.parentNode.insertBefore(a, b);
+	Piano.metricas.enviaEventosGA("Carregamento Piano", "Script adicionado");
 }
 
 (function () {
-	try {
-		if (typeof swg !== 'undefined') {
-				(self.SWG = self.SWG || []).push((subscriptions) => {
-					swg = subscriptions;
-					subscriptions.setOnEntitlementsResponse(entitlementsPromise => {
-						entitlementsPromise.then(entitlements => {
-							swgEntitlements = entitlements;
-							if (Piano !== 'undefined'){
-								Piano.construtor.initTp();
-								loadPianoExperiences(callbackErro);
-							}else{
-								console.warn("Piano nao foi carregada corretamente!")
-							}
-						});
+	if (typeof swg !== 'undefined') {
+			(self.SWG = self.SWG || []).push((subscriptions) => {
+				swg = subscriptions;
+				subscriptions.setOnEntitlementsResponse(entitlementsPromise => {
+					entitlementsPromise.then(entitlements => {
+						swgEntitlements = entitlements;
+						Piano.metricas.enviaEventosGA("Carregamento SWG", "Entitlements recebidos");
+						if (Piano !== 'undefined'){
+							Piano.construtor.initTp();
+							loadPianoExperiences();
+						}else{
+							Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Piano nao foi carregada corretamente!")
+						}
 					});
 				});
-		} else {
-			Piano.construtor.initTp();
-			loadPianoExperiences(callbackErro);
-		}
-		Piano.checkPaywall();
+			});
+	} else {
+		Piano.construtor.initTp();
+		loadPianoExperiences();
 	}
-	catch (e) {
-		console.log("Erro lançado pela função principal, Menssage: " + e.message);
-		Piano.metricas.enviaEventosGA('Erro', e.message);
-	}
+	Piano.checkPaywall();
 })();
