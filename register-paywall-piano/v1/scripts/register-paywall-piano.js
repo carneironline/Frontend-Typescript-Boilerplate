@@ -227,9 +227,9 @@ if (paywallSiteContainer) {
     function intervencaoSwg (event) {
         event.preventDefault(event);
         validacaoUrlRetorno = true;
-        urlParams.set('utm_campanha', utmCampanha ? utmCampanha : null );
-        urlParams.set('utm_midia', utmMedia ? utmMedia : null );
-        urlParams.set('utm_origem', utmOrigem ? utmOrigem : null );
+        urlParams.set('utm_campanha', utmCampanha ? utmCampanha : "" );
+        urlParams.set('utm_midia', utmMedia ? utmMedia : "" );
+        urlParams.set('utm_origem', utmOrigem ? utmOrigem : "" );
         swg.subscribe('br.com.infoglobo.oglobo.swg.google');
     }
 
