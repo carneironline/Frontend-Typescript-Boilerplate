@@ -10,7 +10,7 @@
         
 
         section.setAttribute('id', 'highlight-sale-section');
-        divTitle.setAttribute('id','highlight-sale-title' );
+        divTitle.setAttribute('class','highlight-sale-title' );
         divText.setAttribute('class', 'highlight-sale-text');
         buttonImgUrl.setAttribute('class', 'highlight-sale-button-url')
         buttonImgTag.setAttribute('class', 'highlight-sale-button');
