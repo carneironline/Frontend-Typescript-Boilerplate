@@ -227,6 +227,9 @@ if (paywallSiteContainer) {
     function intervencaoSwg (event) {
         event.preventDefault(event);
         validacaoUrlRetorno = true;
+        urlParams.set('utm_campanha', utmCampanha ? utmCampanha : null );
+        urlParams.set('utm_media', utmMedia ? utmMedia : null );
+        urlParams.set('utm_origem', utmOrigem ? utmOrigem : null );
         swg.subscribe('br.com.infoglobo.oglobo.swg.google');
     }
 
