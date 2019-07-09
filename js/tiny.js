@@ -8,6 +8,7 @@ Piano.variaveis = {
 	ambientesAceitos: "int,qlt,prd",
 	statusHttpObterAutorizacaoAcesso: "400,404,406,500,502,503,504",
 	statusHttpObterAssinaturaInadimplente: "400,404,500,502,503,504",
+	isCallbackMetterExpired: false,
 	constante: {
 		cookie: {
 			GCOM: 'GLBID',
@@ -276,7 +277,7 @@ Piano.metricas = {
 			regrasTiny.fluxo = window.tpContext ? tpContext.toLowerCase() : '-';
 			regrasTiny.nomeExperiencia = window.nomeExperiencia ? window.nomeExperiencia : '';
 			Piano.metricas.setLimiteContagem(regrasTiny);
-			if (typeof expirou == 'undefined') Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
+			if (expirou == false) Piano.metricas.enviaEventosGA(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
 			executouPageview = true;
 		}
 	},
@@ -387,7 +388,7 @@ Piano.registerPaywall = {
 				}
 			);
 			
-			if(Piano.typePaywall === 'register' || 'exclusivo' ) {
+			if(Piano.typePaywall === 'register' || Piano.typePaywall === 'exclusivo' ) {
 				Piano.metricas.enviaEventosGA("Exibicao Register", Piano.metricas.montaRotuloGA());
 				Piano.cookies.set(Piano.variaveis.constante.cookie.RTIEX, true, 1);
 			} else {			
@@ -711,10 +712,11 @@ Piano.util = {
 	},
 	callbackMeter: function(meterData) {
 		regrasTiny = meterData;
-		Piano.metricas.executaAposPageview();
+		Piano.metricas.executaAposPageview(false);
 	},
 	callbackMeterExpired: function(meterData) {
 		regrasTiny = meterData;
+		Piano.variaveis.isCallbackMetterExpired = true;
 		Piano.metricas.executaAposPageview(true);
 	},
 	getWindowLocationSearch: function(){
@@ -779,6 +781,7 @@ Piano.configuracao = {
 
 Piano.construtor = {
 	initTp: function() {
+		Piano.metricas.enviaEventosGA("Carregamento Piano", "Inicio InitTp");
 		Piano.util.detectaBurlesco();
 		Piano.util.isTipoConteudoUndefined();
 		tp = window["tp"] || [];
@@ -811,6 +814,7 @@ Piano.construtor = {
 		Piano.util.isOrigemBuscador() || Piano.util.extraiParametrosCampanhaDaUrl();
 		tp.push(["addHandler", "meterActive", Piano.util.callbackMeter]);
 		tp.push(["addHandler", "meterExpired", Piano.util.callbackMeterExpired]);
+		Piano.metricas.enviaEventosGA("Carregamento Piano", "Fim InitTp");
 	}
 };
 
@@ -821,6 +825,7 @@ function loadPianoExperiences(){
 	a.src = Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlSandboxPiano;
 	var b = document.getElementsByTagName("script")[0];
 	b.parentNode.insertBefore(a, b);
+	Piano.metricas.enviaEventosGA("Carregamento Piano", "Script adicionado");
 }
 
 (function () {
@@ -830,11 +835,12 @@ function loadPianoExperiences(){
 				subscriptions.setOnEntitlementsResponse(entitlementsPromise => {
 					entitlementsPromise.then(entitlements => {
 						swgEntitlements = entitlements;
+						Piano.metricas.enviaEventosGA("Carregamento SWG", "Entitlements recebidos");
 						if (Piano !== 'undefined'){
 							Piano.construtor.initTp();
 							loadPianoExperiences();
 						}else{
-							console.warn("Piano nao foi carregada corretamente!")
+							Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Piano nao foi carregada corretamente!")
 						}
 					});
 				});
@@ -843,6 +849,5 @@ function loadPianoExperiences(){
 		Piano.construtor.initTp();
 		loadPianoExperiences();
 	}
-
 	Piano.checkPaywall();
 })();

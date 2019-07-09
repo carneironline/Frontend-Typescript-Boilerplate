@@ -27,3 +27,17 @@ document.querySelector('.comunicacao-piano .fechar-modal').addEventListener('cli
 document.querySelector('.comunicacao-piano .back-drop').addEventListener('click', function() {
     document.querySelector('.comunicacao-piano').parentNode.removeChild(document.querySelector('.comunicacao-piano'));
 });
+
+function setGa(evtName, evtCategory, evtAction, evtLabel) { 
+    dataLayer.push({'event': evtName, 'eventoGACategoria': evtCategory, 'eventoGAAcao': evtAction, 'eventoGARotulo':evtLabel});
+}
+
+function setLoadGa() {          
+    let evtAction = 'CPF Associado';
+    let evtName = 'EventoGAPiano';
+    let evtLabel = window.Piano ? Piano.metricas.montaRotuloGA() : '';
+
+    setGa(evtName, 'Piano', evtAction, evtLabel );
+};
+
+setLoadGa();
