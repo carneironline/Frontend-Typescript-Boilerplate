@@ -228,13 +228,16 @@ if (paywallSiteContainer) {
         event.preventDefault(event);
         validacaoUrlRetorno = true;
 
-        if(typeof utmCampanha !== 'undefined' && utmCampanha !== "")
+        let utmCampanha = (typeof utmCampanha !== 'undefined') ? utmCampanha : null;
+        if(utmCampanha)
             urlParams.set('utm_campanha', utmCampanha);
         
-        if(typeof utmMidia !== 'undefined' && utmMidia !== "")
+        let utmMidia = (typeof utmMidia !== 'undefined') ? utmMidia : null;
+        if(utmMidia)
             urlParams.set('utm_midia', utmMidia);
 
-        if(typeof utmOrigem !== 'undefined' && utmOrigem !== "")
+        let utmOrigem = (typeof utmOrigem !== 'undefined') ? utmOrigem : null;
+        if(utmOrigem)
             urlParams.set('utm_origem', utmOrigem);
         
         swg.subscribe('br.com.infoglobo.oglobo.swg.google');
