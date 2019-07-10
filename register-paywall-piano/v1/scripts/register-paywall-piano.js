@@ -227,6 +227,19 @@ if (paywallSiteContainer) {
     function intervencaoSwg (event) {
         event.preventDefault(event);
         validacaoUrlRetorno = true;
+
+        let campanha = (typeof utmCampanha !== 'undefined') ? utmCampanha : null;
+        if(campanha)
+            urlParams.set('utm_campanha', campanha);
+        
+        let midia = (typeof utmMidia !== 'undefined') ? utmMidia : null;
+        if(midia)
+            urlParams.set('utm_midia', midia);
+
+        let origem = (typeof utmOrigem !== 'undefined') ? utmOrigem : null;
+        if(origem)
+            urlParams.set('utm_origem', origem);
+        
         swg.subscribe('br.com.infoglobo.oglobo.swg.google');
     }
 
