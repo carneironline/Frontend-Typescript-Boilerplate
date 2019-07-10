@@ -228,17 +228,17 @@ if (paywallSiteContainer) {
         event.preventDefault(event);
         validacaoUrlRetorno = true;
 
-        let utmCampanha = (typeof utmCampanha !== 'undefined') ? utmCampanha : null;
-        if(utmCampanha)
-            urlParams.set('utm_campanha', utmCampanha);
+        let campanha = (typeof utmCampanha !== 'undefined') ? utmCampanha : null;
+        if(campanha)
+            urlParams.set('utm_campanha', campanha);
         
-        let utmMidia = (typeof utmMidia !== 'undefined') ? utmMidia : null;
-        if(utmMidia)
-            urlParams.set('utm_midia', utmMidia);
+        let midia = (typeof utmMidia !== 'undefined') ? utmMidia : null;
+        if(midia)
+            urlParams.set('utm_midia', midia);
 
-        let utmOrigem = (typeof utmOrigem !== 'undefined') ? utmOrigem : null;
-        if(utmOrigem)
-            urlParams.set('utm_origem', utmOrigem);
+        let origem = (typeof utmOrigem !== 'undefined') ? utmOrigem : null;
+        if(origem)
+            urlParams.set('utm_origem', origem);
         
         swg.subscribe('br.com.infoglobo.oglobo.swg.google');
     }
