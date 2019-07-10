@@ -227,9 +227,16 @@ if (paywallSiteContainer) {
     function intervencaoSwg (event) {
         event.preventDefault(event);
         validacaoUrlRetorno = true;
-        urlParams.set('utm_campanha', utmCampanha ? utmCampanha : "" );
-        urlParams.set('utm_midia', utmMedia ? utmMedia : "" );
-        urlParams.set('utm_origem', utmOrigem ? utmOrigem : "" );
+
+        if(typeof utmCampanha !== 'undefined' || utmCampanha !== "")
+            urlParams.set('utm_campanha', utmCampanha);
+        
+        if(typeof utmMidia !== 'undefined' || utmMidia !== "")
+            urlParams.set('utm_midia', utmMidia);
+
+        if(typeof utmOrigem !== 'undefined' || utmOrigem !== "")
+            urlParams.set('utm_origem', utmOrigem);
+        
         swg.subscribe('br.com.infoglobo.oglobo.swg.google');
     }
 
