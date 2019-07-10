@@ -70,11 +70,25 @@
 .highlight-sale-text {
     margin-bottom: 25px;
     font-family: 'Georgia';
+    font-size: 15px;
+    line-height: 24px;
+}
+
+@media screen and (min-width: 640px) {
+    .highlight-sale-text {
+        font-size: 16px;
+    }
 }
 
 .highlight-sale-title {
     margin-bottom: 17px;
-    font-size: 24px;
+    font-size: 21px;
     font-weight: 600;
     font-family: 'WhitmanDisplayCond-ExBold';
+}
+
+@media screen and (min-width: 640px) {
+    .highlight-sale-title {
+        font-size: 24px;
+    }
 }
