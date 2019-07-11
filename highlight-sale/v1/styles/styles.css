@@ -1,0 +1,94 @@
+@font-face {
+    font-family: 'WhitmanDisplayCond-ExBold';
+    src: url('../fonts/WhitmanDisplayCondensed-ExtraBold.eot');
+    src: url('../fonts/WhitmanDisplayCondensed-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/WhitmanDisplayCondensed-ExtraBold.woff2') format('woff2'),
+        url('../fonts/WhitmanDisplayCondensed-ExtraBold.woff') format('woff'),
+        url('../fonts/WhitmanDisplayCondensed-ExtraBold.ttf') format('truetype'),
+        url('../fonts/WhitmanDisplayCondensed-ExtraBold.svg#WhitmanDisplayCondensed-ExtraBold') format('svg');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Georgia';
+    src: url('../fonts/Georgia.eot');
+    src: url('../fonts/Georgia.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Georgia.woff2') format('woff2'),
+        url('../fonts/Georgia.woff') format('woff'),
+        url('../fonts/Georgia.ttf') format('truetype'),
+        url('../fonts/Georgia.svg#Georgia') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Georgia Bold';
+    src: url('../fonts/Georgia-Bold.eot');
+    src: url('../fonts/Georgia-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Georgia-Bold.woff2') format('woff2'),
+        url('../fonts/Georgia-Bold.woff') format('woff'),
+        url('../fonts/Georgia-Bold.ttf') format('truetype'),
+        url('../fonts/Georgia-Bold.svg#Georgia-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+
+#highlight-sale-section {
+    display: flex;
+    max-width: 100%;
+    flex-direction: column;
+    padding: 30px 20px 30px 20px;
+    margin: 0 auto;
+}
+
+@media screen and (min-width: 640px) {
+    #highlight-sale-section {
+        max-width: 620px;
+        padding: 30px 10px 30px 10px;
+    }
+}
+
+
+.highlight-sale-button{
+    width: 238px;
+    height: 45px;
+}
+
+.highlight-sale-button-url{
+    width: 238px;
+    height: 45px;
+    margin: 0 auto;
+}
+@media screen and (min-width: 640px) {
+    .highlight-sale-button-url{
+        margin: unset;
+    }
+}
+
+.highlight-sale-text {
+    margin-bottom: 25px;
+    font-family: 'Georgia';
+    font-size: 15px;
+    line-height: 24px;
+}
+
+@media screen and (min-width: 640px) {
+    .highlight-sale-text {
+        font-size: 16px;
+    }
+}
+
+.highlight-sale-title {
+    margin-bottom: 17px;
+    font-size: 21px;
+    font-weight: 600;
+    font-family: 'WhitmanDisplayCond-ExBold';
+}
+
+@media screen and (min-width: 640px) {
+    .highlight-sale-title {
+        font-size: 24px;
+    }
+}
