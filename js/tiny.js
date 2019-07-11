@@ -96,7 +96,7 @@ Piano.variaveis = {
 			case 'quem-acontece':
 				return 'quem';
 			default:
-				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter código do produto - " + nomeProduto);
+				Piano.metricas.enviaEventosErroGA("Ao obter código do produto", nomeProduto + " - " + document.location.href);
 				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
 				return 'error';
 		}
@@ -246,6 +246,11 @@ Piano.metricas = {
 	enviaEventosGA: function(_GAAcao, _GARotulo) {
 		dataLayer.push({'event': 'EventoGAPiano', 'eventoGACategoria': 'Piano', 'eventoGAAcao': _GAAcao, 'eventoGARotulo':_GARotulo});
 	},
+
+	enviaEventosErroGA: function (_tipoDeErro, _rastreamentoDoErro) {
+		dataLayer.push({'event': 'EventoGAPiano', 'eventoGACategoria': 'Piano Erro', 'eventoGAAcao': _tipoDeErro, 'eventoGARotulo':_rastreamentoDoErro});
+	},
+
 	montaRotuloGA: function() {
 		if(window.regrasTiny && window.regrasTiny.nomeExperiencia) {
 			return window.subsegmentacaoPiano ? regrasTiny.nomeExperiencia + " - " + subsegmentacaoPiano : regrasTiny.nomeExperiencia;
@@ -478,9 +483,9 @@ Piano.xmlHttpRequest = {
 
 			}else{
 				if (xhr.status != 0 && Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(xhr.status) > -1) {
-					Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente da API - " + xhr.status);
+					Piano.metricas.enviaEventosErroGA("Api de inadimplente", xhr.status + " - " + hrefAssinaturaInadimplente);
 				}
-				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter inadimplente - " + xhr.status);
+				Piano.metricas.enviaEventosErroGA("Api de inadimplente", "Status Desconhecido" + " - " + hrefAssinaturaInadimplente);
 			}
 		}
 	},
@@ -541,7 +546,7 @@ Piano.xmlHttpRequest = {
 
 				
 			}else{
-				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter autorizacao da API - " + xhr.status + " - " + glbid);
+				Piano.metricas.enviaEventosErroGA("API de autorizacao de acesso", xhr.status + " - " + glbid);
 				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
 			}	
 		}
@@ -628,7 +633,7 @@ Piano.util = {
 	},
 	isTipoConteudoUndefined: function() {
 		if (typeof Piano.variaveis.getTipoConteudoPiano() == 'undefined') {
-			Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Variavel tipoConteudoPiano nao esta definida nesta url - " + document.location.href);
+			Piano.metricas.enviaEventosErroGA("Variavel tipoConteudoPiano nao esta definida", document.location.href);
 			return;
 		};
 	},
@@ -840,12 +845,13 @@ function loadPianoExperiences(){
 							Piano.construtor.initTp();
 							loadPianoExperiences();
 						}else{
-							Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Piano nao foi carregada corretamente!")
+							Piano.metricas.enviaEventosErroGA("Piano nao foi carregada corretamente!", document.location.href);
 						}
 					});
 				});
 			});
 	} else {
+		Piano.metricas.enviaEventosErroGA("Entitlements não carregado", document.location.href);
 		Piano.construtor.initTp();
 		loadPianoExperiences();
 	}
