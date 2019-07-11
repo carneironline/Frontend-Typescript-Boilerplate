@@ -96,7 +96,7 @@ Piano.variaveis = {
 			case 'quem-acontece':
 				return 'quem';
 			default:
-				Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Ao obter código do produto - " + nomeProduto + " " +document.location.href);
+				Piano.metricas.enviaEventosErroGA("Ao obter código do produto", nomeProduto + " - " + document.location.href);
 				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
 				return 'error';
 		}
@@ -845,13 +845,13 @@ function loadPianoExperiences(){
 							Piano.construtor.initTp();
 							loadPianoExperiences();
 						}else{
-							Piano.metricas.enviaEventosGA(Piano.variaveis.constante.metricas.ERRO, "Piano nao foi carregada corretamente!")
+							Piano.metricas.enviaEventosErroGA("Piano nao foi carregada corretamente!", document.location.href);
 						}
 					});
 				});
 			});
 	} else {
-		Piano.metricas.enviaEventosErroGA("Entitlements não carregado", document.location.href)
+		Piano.metricas.enviaEventosErroGA("Entitlements não carregado", document.location.href);
 		Piano.construtor.initTp();
 		loadPianoExperiences();
 	}
