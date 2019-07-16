@@ -56,6 +56,10 @@ Piano.variaveis = {
 		return window.executouPageview ? true : false;
 	},
 	getNomeProduto: function() {
+		if (!window.nomeProdutoPiano){
+			Piano.metricas.enviaEventosErroGA("Nome do produto não definido.", window.location.href);
+			return;
+		}
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
@@ -554,7 +558,7 @@ Piano.xmlHttpRequest = {
 };
 
 Piano.google = {
-    isAuthorized: function () {
+  isAuthorized: function () {
 		if(swgEntitlements.getEntitlementForSource("oglobo.globo.com")){
 			Piano.metricas.setaVariaveis(swgEntitlements.getEntitlementForSource("oglobo.globo.com").subscriptionToken, "Conta Google", "O Globo");
 			return true;
@@ -565,16 +569,19 @@ Piano.google = {
 			return true;
 		}
 
-
 		return false;
-    },
+  },
 
-    isSpecificGoogleUser: function() {
+  isSpecificGoogleUser: function() {
 		if (Piano.google.isAuthorized())
 			return;
 
-		var oGloboBusiness = new OGloboBusiness();
-		oGloboBusiness.verifyIfUserHasAccessOrDeferred(swgEntitlements);
+		try{
+			var oGloboBusiness = new OGloboBusiness();
+			oGloboBusiness.verifyIfUserHasAccessOrDeferred(swgEntitlements);
+		} catch(error) {
+			Piano.metricas.enviaEventosErroGA("Erro ao executar o Aldebaran", "Error: " + error + " - Entitlements: " + swgEntitlements);
+		}			
 	},
 
 	showSaveSubscription: function(response){
@@ -701,13 +708,6 @@ Piano.util = {
 		}
 		return false;
 	},
-	detectaBurlesco: function() {
-		window.onload = function(){ 
-			if(typeof addControlContent == "undefined"){
-				dataLayer.push({'event': 'EventoGAPiano', 'eventoGACategoria': 'ExtensaoBurlesco', 'eventoGAAcao': 'Sim', 'eventoGARotulo': '', 'eventoGAInteracao': 'true'});
-			};
-		};
-	},
 	isDominioOGlobo: function() {
 		var regex = new RegExp("://(.*?)/"), url = Piano.util.getWindowLocationHref();
 		if (url.match(regex)[1].indexOf("oglobo") > -1 || (url.match(regex)[1].indexOf("globoi") > -1 && url.match(regex)[1].indexOf("edg") == -1)) {
@@ -787,7 +787,6 @@ Piano.configuracao = {
 Piano.construtor = {
 	initTp: function() {
 		Piano.metricas.enviaEventosGA("Carregamento Piano", "Inicio InitTp");
-		Piano.util.detectaBurlesco();
 		Piano.util.isTipoConteudoUndefined();
 		tp = window["tp"] || [];
 		tp.push(["setTags", [Piano.variaveis.getTipoConteudoPiano()]]);
