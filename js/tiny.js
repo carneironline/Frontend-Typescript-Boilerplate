@@ -1,7 +1,6 @@
 window.hasPaywall = window.hasPaywall || false;
 window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
-import listaRevistas from './revistas';
 const listaRevistasJson = getRevistasJson('https://s3.glbimg.com/v1/AUTH_9119af978ee74bfd9ea6d41ee07bfb7f/highlight-sale/revistas.json');
 var PaywallAnalytics = {};
 Piano.activePaywall = true;
