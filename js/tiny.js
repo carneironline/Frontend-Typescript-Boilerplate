@@ -1,7 +1,7 @@
 window.hasPaywall = window.hasPaywall || false;
 window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
-const listaRevistas = require('./revistas');
+import listaRevistas from './revistas';
 var PaywallAnalytics = {};
 Piano.activePaywall = true;
 Piano.typePaywall = null;
