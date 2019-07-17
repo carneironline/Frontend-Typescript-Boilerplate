@@ -1,6 +1,7 @@
 window.hasPaywall = window.hasPaywall || false;
 window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
+const listaRevistas = require('./revistas');
 var PaywallAnalytics = {};
 Piano.activePaywall = true;
 Piano.typePaywall = null;
@@ -68,9 +69,12 @@ Piano.variaveis = {
 			|| Piano.variaveis.getNomeProduto() === 'jornaldigital'){
 			return id = '3981';
 		}
-		if (Piano.util.isRevista()) { 
-			return id = '6697';
-		} 
+		listaRevistas.forEach(revistas, () => {
+			if (Piano.variaveis.getNomeProduto() === revistas.name) {
+				return revista.id;
+			}
+		})
+
 		return id;
 	},
 	getCodigoProduto: function(){
@@ -739,13 +743,13 @@ Piano.util = {
 		e.innerHTML = cssPath;
 		document.body.insertBefore(e, document.body.lastChild);
 	},
-	isRevista: function(){
-		var revistas = ["epoca", "auto-esporte", "vogue", "glamour", "casa-vogue", "marie-claire","casa-e-jardim","quem-acontece"];
-		if(revistas.indexOf(Piano.variaveis.getNomeProduto()) > -1)
-			return true;
-		else
-			return false;
-	},
+	// isRevista: function(){
+	// 	var revistas = ["epoca", "auto-esporte", "vogue", "glamour", "casa-vogue", "marie-claire","casa-e-jardim","quem-acontece"];
+	// 	if(revistas.indexOf(Piano.variaveis.getNomeProduto()) > -1)
+	// 		return true;
+	// 	else
+	// 		return false;
+	// },
 	recarregaPiano: function (tipoConteudo, isExclusivo, nomeProduto) {
 		window.tipoConteudoPiano = tipoConteudo;
 		window.conteudoExclusivo = isExclusivo;
