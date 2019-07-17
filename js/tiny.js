@@ -2,6 +2,7 @@ window.hasPaywall = window.hasPaywall || false;
 window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
 import listaRevistas from './revistas';
+const listaRevistasJson = getRevistasJson('https://s3.glbimg.com/v1/AUTH_9119af978ee74bfd9ea6d41ee07bfb7f/highlight-sale/revistas.json');
 var PaywallAnalytics = {};
 Piano.activePaywall = true;
 Piano.typePaywall = null;
@@ -69,7 +70,7 @@ Piano.variaveis = {
 			|| Piano.variaveis.getNomeProduto() === 'jornaldigital'){
 			return id = '3981';
 		}
-		listaRevistas.forEach(revistas, () => {
+		listaRevistasJson.forEach(revistas, () => {
 			if (Piano.variaveis.getNomeProduto() === revistas.name) {
 				return revista.id;
 			}
@@ -474,6 +475,23 @@ Piano.xmlHttpRequest = {
 				callback(xhr); 
 		};	
 	},
+
+	getRevistasJson: function(urlScript, callback) {
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", urlScript);
+		xhr.send();
+		xhr.onreadystatechange = function() {
+			if(this.readyState === 4 && this.status === 200) {
+					var resposta = xhr.responseText;
+					return JSON.parse(resposta);
+				
+			} 
+			
+			if(callback)
+				callback(xhr); 
+		};	
+	},
+
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
 		
 		var xhr = new XMLHttpRequest();
