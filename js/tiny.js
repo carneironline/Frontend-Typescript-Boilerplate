@@ -1,8 +1,7 @@
 window.hasPaywall = window.hasPaywall || false;
 window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
-//const listaRevistasJson = Piano.xmlHttpRequest.getRevistasJson('https://s3.glbimg.com/v1/AUTH_9119af978ee74bfd9ea6d41ee07bfb7f/highlight-sale/revistas.json');
-const urljson = 'https://s3.glbimg.com/v1/AUTH_addc5e8f316f48ea9181af37160b22b4/aldebaran/json.json';
+const urlRevistasJson = 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/revistas.json';
 var PaywallAnalytics = {};
 Piano.activePaywall = true;
 Piano.typePaywall = null;
@@ -71,25 +70,16 @@ Piano.variaveis = {
 			return id = '3981';
 		}
 
-		getRevistasJson(urljson);
-
-		//Utilizando fetch
-		// fetch(urljson).then(response => {
-		// 	return response.json();
-		// }).then(data => {
-		// 	var revistas = data;
-
-		// 	console.log(revistas);
-		
-		// 	revistas.forEach(revista => {
-		// 		if (revista.name === 'casa-e-jardim')
-		// 			return revista.id;
-		// 	})
-			
-		// })
+		const revistas = getRevistasJson(urlRevistasJson);
+		revistas.forEach(item => {
+			if(item.name === Piano.variaveis.getNomeProduto()) {
+				return item.id;
+			}
+		})
 
 		return id;
 	},
+	
 	getCodigoProduto: function(){
 		var nomeProduto = Piano.variaveis.getNomeProduto();
 		switch (nomeProduto){
@@ -489,7 +479,7 @@ Piano.xmlHttpRequest = {
 	},
 
 	getRevistasJson: function (url) {
-        var xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
 		xhr.open("GET", url, true);
 		xhr.responseType = 'json';
 		xhr.onreadystatechange = function() {
@@ -500,13 +490,8 @@ Piano.xmlHttpRequest = {
              
         };
         xhr.onload = function () {
-            var revistas = xhr.response;
-            console.log(revistas);
-            revistas.forEach(revista => {
-                if (revista.name === 'casa-e-jardim')
-                    return revista.id;
-            });
-
+					var revistas = xhr.response;
+					return revistas;
         };
 
         xhr.send();
