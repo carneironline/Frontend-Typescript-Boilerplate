@@ -76,7 +76,8 @@ Piano.variaveis = {
 			return id = '6697';
 		}
 		if (id === '0000')
-			Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href);
+			Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
+				' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
 
 		return id;
 	},
@@ -472,7 +473,9 @@ Piano.xmlHttpRequest = {
 					appendDeScript.innerHTML = resposta;
 					document.body.appendChild(appendDeScript);
 				} else {
-					Piano.metricas.enviaEventosErroGA('Erro na função gerar script na página.', urlScript);
+					Piano.metricas.enviaEventosErroGA('Erro na função gerar script na página.', 'url: ' + urlScript
+						+ ' StatusErro: ' + this.status
+						+ ' Stack: ' + this.statusText);
 				}
 			}
 
@@ -498,8 +501,9 @@ Piano.xmlHttpRequest = {
 			}else{
 				if (xhr.status != 0 && Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(xhr.status) > -1) {
 					Piano.metricas.enviaEventosErroGA("Api de inadimplente", xhr.status + " - " + hrefAssinaturaInadimplente);
+				} else {
+					Piano.metricas.enviaEventosErroGA("Api de inadimplente", "Status Desconhecido" + " - " + hrefAssinaturaInadimplente);
 				}
-				Piano.metricas.enviaEventosErroGA("Api de inadimplente", "Status Desconhecido" + " - " + hrefAssinaturaInadimplente);
 			}
 		}
 	},
@@ -597,7 +601,7 @@ Piano.google = {
 			var oGloboBusiness = new OGloboBusiness();
 			oGloboBusiness.verifyIfUserHasAccessOrDeferred(swgEntitlements);
 		} catch(error) {
-			Piano.metricas.enviaEventosErroGA("Erro ao executar o Aldebaran", "Error: " + error + " - Entitlements: " + swgEntitlements);
+			Piano.metricas.enviaEventosErroGA("Erro ao executar o Aldebaran", "Error: " + error + " - Entitlements: " + swgEntitlements.entitlements[0].subscriptionToken);
 		}			
 	},
 
