@@ -2,6 +2,7 @@ window.hasPaywall = window.hasPaywall || false;
 window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
 //const listaRevistasJson = Piano.xmlHttpRequest.getRevistasJson('https://s3.glbimg.com/v1/AUTH_9119af978ee74bfd9ea6d41ee07bfb7f/highlight-sale/revistas.json');
+const urljson = 'https://s3.glbimg.com/v1/AUTH_addc5e8f316f48ea9181af37160b22b4/aldebaran/json.json';
 var PaywallAnalytics = {};
 Piano.activePaywall = true;
 Piano.typePaywall = null;
@@ -69,10 +70,22 @@ Piano.variaveis = {
 			|| Piano.variaveis.getNomeProduto() === 'jornaldigital'){
 			return id = '3981';
 		}
-		// listaRevistas.forEach(revistas, () => {
-		// 	if (Piano.variaveis.getNomeProduto() === revistas.name) {
-		// 		return revista.id;
-		// 	}
+
+		getRevistasJson(urljson);
+
+		//Utilizando fetch
+		// fetch(urljson).then(response => {
+		// 	return response.json();
+		// }).then(data => {
+		// 	var revistas = data;
+
+		// 	console.log(revistas);
+		
+		// 	revistas.forEach(revista => {
+		// 		if (revista.name === 'casa-e-jardim')
+		// 			return revista.id;
+		// 	})
+			
 		// })
 
 		return id;
@@ -473,6 +486,30 @@ Piano.xmlHttpRequest = {
 			if(callback)
 				callback(xhr); 
 		};	
+	},
+
+	getRevistasJson: function (url) {
+        var xhr = new XMLHttpRequest();
+		xhr.open("GET", url, true);
+		xhr.responseType = 'json';
+		xhr.onreadystatechange = function() {
+			if(this.readyState === 4 && this.status === 200) 
+                console.log('Ok');
+			else
+                console.log('readystate: ' + xhr.readyState + ' response: ' + xhr.response);
+             
+        };
+        xhr.onload = function () {
+            var revistas = xhr.response;
+            console.log(revistas);
+            revistas.forEach(revista => {
+                if (revista.name === 'casa-e-jardim')
+                    return revista.id;
+            });
+
+        };
+
+        xhr.send();
 	},
 
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
