@@ -379,7 +379,7 @@ Piano.paywall = {
 			);
 			
 		}
-	};
+	}
 };
 
 Piano.triggerAdvertising = function() {
