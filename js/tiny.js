@@ -355,10 +355,31 @@ Piano.helper = {
 
 Piano.paywall = {
 	redirecionarBarreira: function(url) {
-		Piano.metricas.enviaEventosGA("Barreira", Piano.metricas.montaRotuloGA());
+		Piano.metricas.enviaEventosGA("Barreira" , Piano.metricas.montaRotuloGA());
 		Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 		setTimeout(function() {window.location = url;}, 200);
-	}
+	},
+	show: function(typePaywall = null) {
+		Piano.typePaywall = typePaywall;
+	
+		if(!Piano.activePaywall) {
+			Piano.triggerAdvertising(); 
+		} else {
+			Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/cpnt-paywall/dist/styles/bundle.css'>");
+			Piano.xmlHttpRequest.geraScriptNaPagina(
+				"https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/cpnt-paywall/dist/scripts/bundle.js", 
+				data => { 
+					if(data.status !== 200) { 
+						Piano.triggerAdvertising(); 
+					} 
+					else {
+						window.hasPaywall = true;
+					}
+				}
+			);
+			
+		}
+	};
 };
 
 Piano.triggerAdvertising = function() {
