@@ -355,7 +355,7 @@ Piano.helper = {
 
 Piano.paywall = {
 	redirecionarBarreira: function(url) {
-		Piano.metricas.enviaEventosGA("Barreira" , Piano.metricas.montaRotuloGA());
+		Piano.metricas.enviaEventosGA("Barreira", Piano.metricas.montaRotuloGA());
 		Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 		setTimeout(function() {window.location = url;}, 200);
 	},
