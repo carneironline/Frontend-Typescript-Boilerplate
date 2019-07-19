@@ -61,6 +61,7 @@ Piano.variaveis = {
 	},
 	getServicoId: function() {
 		var id = '0000';
+		const revistas = Piano.xmlHttpRequest.getRevistasJson(urlRevistasJson);
 
 		if(Piano.variaveis.getNomeProduto() === 'oglobo' 
 			|| Piano.variaveis.getNomeProduto() === 'blogs' 
@@ -70,7 +71,6 @@ Piano.variaveis = {
 			return id = '3981';
 		}
 
-		const revistas = getRevistasJson(urlRevistasJson);
 		revistas.forEach(item => {
 			if(item.name === Piano.variaveis.getNomeProduto()) {
 				return item.id;
