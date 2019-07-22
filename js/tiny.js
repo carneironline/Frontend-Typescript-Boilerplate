@@ -731,8 +731,8 @@ Piano.util = {
 		var parametros = Piano.util.getWindowLocationSearch();
 		return parametros.indexOf(paramName) != -1 ? true : false;
 	},
-	getValorParametroNaUrl: function(parametro) {
-		if (Piano.util.temParametroNaUrl(parametro)) {
+	getValorParametroNaUrl: function(parametro = null) {
+		if (parametro && Piano.util.temParametroNaUrl(parametro)) {
 			var parametros = Piano.util.getWindowLocationSearch();
 			var regex = new RegExp("[\?(&)]" + parametro + "=([^&#]*)");
 			return parametros.match(regex)[1];
