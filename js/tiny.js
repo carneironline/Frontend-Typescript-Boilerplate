@@ -61,7 +61,6 @@ Piano.variaveis = {
 	},
 	getServicoId: function() {
 		var id = '0000';
-		console.log('Estou global', urlRevistasJson);
 
 		if(Piano.variaveis.getNomeProduto() === 'oglobo' 
 			|| Piano.variaveis.getNomeProduto() === 'blogs' 
@@ -75,7 +74,7 @@ Piano.variaveis = {
 
 			response.forEach(revista => {
 				if (revista.name === Piano.variaveis.getNomeProduto())
-					return console.log('Retornei revista id', revista.id);
+					return revista.id;
 			});
 		});
 
@@ -485,11 +484,6 @@ Piano.xmlHttpRequest = {
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", url, true);
 		xhr.responseType = 'json';
-		xhr.onreadystatechange = function() {
-			if(this.readyState === 4 && this.status === 200) {
-				console.log('Ok');
-			}
-		};
 		
 		xhr.onload = function () {
 			revistas = xhr.response;
