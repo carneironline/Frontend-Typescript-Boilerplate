@@ -61,7 +61,7 @@ Piano.variaveis = {
 	},
 	getServicoId: function() {
 		var id = '0000';
-		const revistas = Piano.xmlHttpRequest.getRevistasJson(urlRevistasJson);
+		console.log('Estou global', urlRevistasJson);
 
 		if(Piano.variaveis.getNomeProduto() === 'oglobo' 
 			|| Piano.variaveis.getNomeProduto() === 'blogs' 
@@ -71,11 +71,13 @@ Piano.variaveis = {
 			return id = '3981';
 		}
 
-		revistas.forEach(item => {
-			if(item.name === Piano.variaveis.getNomeProduto()) {
-				return item.id;
-			}
-		})
+		Piano.xmlHttpRequest.getRevistasJson(urlRevistasJson, function(response) {
+
+			response.forEach(revista => {
+				if (revista.name === Piano.variaveis.getNomeProduto())
+					return console.log('Retornei revista id', revista.id);
+			});
+		});
 
 		return id;
 	},
@@ -478,23 +480,23 @@ Piano.xmlHttpRequest = {
 		};	
 	},
 
-	getRevistasJson: function (url) {
-    var xhr = new XMLHttpRequest();
+	getRevistasJson: function (url, callback) {
+
+		var xhr = new XMLHttpRequest();
 		xhr.open("GET", url, true);
 		xhr.responseType = 'json';
 		xhr.onreadystatechange = function() {
-			if(this.readyState === 4 && this.status === 200) 
-                console.log('Ok');
-			else
-                console.log('readystate: ' + xhr.readyState + ' response: ' + xhr.response);
-             
-        };
-        xhr.onload = function () {
-					var revistas = xhr.response;
-					return revistas;
-        };
+			if(this.readyState === 4 && this.status === 200) {
+				console.log('Ok');
+			}
+		};
+		
+		xhr.onload = function () {
+			revistas = xhr.response;
+			callback(revistas);
+		};
 
-        xhr.send();
+		xhr.send();
 	},
 
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
