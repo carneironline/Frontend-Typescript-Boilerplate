@@ -72,10 +72,13 @@ Piano.variaveis = {
 
 
 		Piano.xmlHttpRequest.getRevistasJson(urlRevistasJson, function(response) {
-
+			console.log('Estou fazendo a requisação das revistas')
 			response.forEach(revista => {
-				if (revista.name === Piano.variaveis.getNomeProduto())
+				console.log('procurando revista')
+				if (revista.name === Piano.variaveis.getNomeProduto()) {
+					console.log('achei o id: ', revista.id)
 					return revista.id;
+				}
 			});
 		});
 
@@ -489,8 +492,13 @@ Piano.xmlHttpRequest = {
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", url, true);
 		xhr.responseType = 'json';
-		
+		xhr.onreadystatechange = function() {
+			if(this.readyState === 4 && this.status === 200) {
+				console.log('Requisição das revistas: OK!');
+			}
+		};	
 		xhr.onload = function () {
+			console.log('Onload Revistas JSON');
 			revistas = xhr.response;
 			callback(revistas);
 		};
