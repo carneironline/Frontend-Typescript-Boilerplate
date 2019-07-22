@@ -85,7 +85,8 @@ Piano.variaveis = {
 		if (id === '0000')
 			Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
 				' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
-
+		
+		console.log('retornando 0');
 		return id;
 	},
 	
