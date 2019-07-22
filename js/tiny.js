@@ -70,6 +70,7 @@ Piano.variaveis = {
 			return id = '3981';
 		}
 
+
 		Piano.xmlHttpRequest.getRevistasJson(urlRevistasJson, function(response) {
 
 			response.forEach(revista => {
@@ -77,6 +78,10 @@ Piano.variaveis = {
 					return revista.id;
 			});
 		});
+
+		if (id === '0000')
+			Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
+				' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
 
 		return id;
 	},
