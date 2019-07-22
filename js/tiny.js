@@ -70,21 +70,14 @@ Piano.variaveis = {
 			return id = '3981';
 		}
 
+		var revista = Piano.xmlHttpRequest.getRevistasJson(urlRevistasJson, Piano.variaveis.getNomeProduto());
 
-		Piano.xmlHttpRequest.getRevistasJson(urlRevistasJson, function(response) {
-			console.log('Estou fazendo a requisação das revistas')
-			response.forEach(revista => {
-				console.log('procurando revista')
-				if (revista.name === Piano.variaveis.getNomeProduto()) {
-					console.log('achei o id: ', revista.id)
-					id = revista.id;
-				}
-			});
-		});
+		if (revista != undefined){
+			return revista.id;
+		}
 
-		if (id === '0000')
-			Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
-				' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
+		Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
+			' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
 		
 		console.log('retornando 0');
 		return id;
@@ -488,23 +481,22 @@ Piano.xmlHttpRequest = {
 		};	
 	},
 
-	getRevistasJson: function (url, callback) {
+	getRevistasJson: function (url, nomeRevista) {
 
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", url, true);
-		xhr.responseType = 'json';
+		
 		xhr.onreadystatechange = function() {
 			if(this.readyState === 4 && this.status === 200) {
-				console.log('Requisição das revistas: OK!');
+				return JSON.parse(this.responseText);
 			}
 		};	
-		xhr.onload = function () {
-			console.log('Onload Revistas JSON');
-			revistas = xhr.response;
-			callback(revistas);
-		};
-
+		
+		xhr.open("GET", url, true);
 		xhr.send();
+
+		var infoRevistas = xhr.response;
+
+		return infoRevistas[nomeRevista];
 	},
 
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
