@@ -77,7 +77,7 @@ Piano.variaveis = {
 				console.log('procurando revista')
 				if (revista.name === Piano.variaveis.getNomeProduto()) {
 					console.log('achei o id: ', revista.id)
-					return revista.id;
+					return id = revista.id;
 				}
 			});
 		});
