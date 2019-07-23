@@ -101,14 +101,6 @@ Piano.variaveis = {
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
-		if(Piano.variaveis.getNomeProduto() === 'oglobo' 
-			|| Piano.variaveis.getNomeProduto() === 'blogs' 
-			|| Piano.variaveis.getNomeProduto() === 'kogut'
-			|| Piano.variaveis.getNomeProduto() === 'acervo'
-			|| Piano.variaveis.getNomeProduto() === 'jornaldigital'){
-			Piano.produtos.id = '3981';
-			return Piano.produtos.id;
-		}
 
 		if (Piano.util.isRevista()) { 
 			return id = '6697';
