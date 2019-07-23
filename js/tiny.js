@@ -79,7 +79,6 @@ Piano.variaveis = {
 		Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
 			' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
 		
-		console.log('retornando 0');
 		return id;
 	},
 	
@@ -484,7 +483,8 @@ Piano.xmlHttpRequest = {
 	getRevistasJson: function (url, nomeRevista) {
 
 		var xhr = new XMLHttpRequest();
-		
+		xhr.responseType = 'json';
+
 		xhr.onreadystatechange = function() {
 			if(this.readyState === 4 && this.status === 200) {
 				return JSON.parse(this.responseText);
@@ -494,9 +494,11 @@ Piano.xmlHttpRequest = {
 		xhr.open("GET", url, true);
 		xhr.send();
 
-		var infoRevistas = xhr.response;
+		xhr.onload = function () {
+			var infoRevistas = xhr.response;
 
-		return infoRevistas[nomeRevista];
+			return infoRevistas[nomeRevista];
+		}
 	},
 
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
