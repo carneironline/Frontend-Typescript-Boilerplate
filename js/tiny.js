@@ -1,8 +1,45 @@
 window.hasPaywall = window.hasPaywall || false;
 window["dataLayer"] = window["dataLayer"] || [];
-var Piano = {};
-const urlRevistasJson = 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/revistas.json';
+var Piano = {
+	produtos: {}
+};
 var PaywallAnalytics = {};
+
+Piano.produtos.id = '0000';
+Piano.produtos.all = null;
+
+Piano.produtos.init = function(callback) {
+	Piano.produtos.get(function(data){
+		if(callback)
+			callback(data);
+	});
+}
+
+Piano.produtos.getProdutoId = function(produto) {
+	return (Piano.produtos.all && Piano.produtos.all[produto]) ? Piano.produtos.all[produto].id : Piano.produtos.id;
+}
+
+Piano.produtos.getProduto = function(produto) {
+	return Piano.produtos.all[produto];
+};
+
+Piano.produtos.get = function (callback) {
+	const url = 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/produtos.json';
+	const req = fetch(url);
+
+	return req   
+		.then(data => data.json())
+		.then(data => {
+			Piano.produtos.all = data;
+			callback(Piano.produtos.all)
+		})
+		.catch(e => {
+			throw new Error('Produtos.json not requested')
+		})
+}
+
+Piano.produtos.init();
+
 Piano.activePaywall = true;
 Piano.typePaywall = null;
 Piano.variaveis = {
@@ -60,26 +97,19 @@ Piano.variaveis = {
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
-		var id = '0000';
-
 		if(Piano.variaveis.getNomeProduto() === 'oglobo' 
 			|| Piano.variaveis.getNomeProduto() === 'blogs' 
 			|| Piano.variaveis.getNomeProduto() === 'kogut'
 			|| Piano.variaveis.getNomeProduto() === 'acervo'
 			|| Piano.variaveis.getNomeProduto() === 'jornaldigital'){
-			return id = '3981';
-		}
-
-		var revista = Piano.xmlHttpRequest.getRevistasJson(urlRevistasJson, Piano.variaveis.getNomeProduto());
-
-		if (revista != undefined){
-			return revista.id;
+			Piano.produtos.id = '3981';
+			return Piano.produtos.id;
 		}
 
 		Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
-			' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
+		' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
 		
-		return id;
+		return Piano.produtos.getProdutoId(Piano.variaveis.getNomeProduto())
 	},
 	
 	getCodigoProduto: function(){
@@ -480,27 +510,6 @@ Piano.xmlHttpRequest = {
 		};	
 	},
 
-	getRevistasJson: function (url, nomeRevista) {
-
-		var xhr = new XMLHttpRequest();
-		xhr.responseType = 'json';
-
-		xhr.onreadystatechange = function() {
-			if(this.readyState === 4 && this.status === 200) {
-				//return JSON.parse(this.responseText);
-			}
-		};	
-		
-		xhr.open("GET", url, true);
-		xhr.send();
-
-		xhr.onload = function () {
-			var infoRevistas = xhr.response;
-
-			return infoRevistas[nomeRevista];
-		}
-	},
-
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
 		
 		var xhr = new XMLHttpRequest();
@@ -770,13 +779,13 @@ Piano.util = {
 		e.innerHTML = cssPath;
 		document.body.insertBefore(e, document.body.lastChild);
 	},
-	isRevista: function(){
-		var revistas = ["epoca", "auto-esporte", "vogue", "glamour", "casa-vogue", "marie-claire","casa-e-jardim","quem-acontece"];
-		if(revistas.indexOf(Piano.variaveis.getNomeProduto()) > -1)
-			return true;
-		else
-			return false;
-	},
+	// isRevista: function(){
+	// 	var revistas = ["epoca", "auto-esporte", "vogue", "glamour", "casa-vogue", "marie-claire","casa-e-jardim","quem-acontece"];
+	// 	if(revistas.indexOf(Piano.variaveis.getNomeProduto()) > -1)
+	// 		return true;
+	// 	else
+	// 		return false;
+	// },
 	recarregaPiano: function (tipoConteudo, isExclusivo, nomeProduto) {
 		window.tipoConteudoPiano = tipoConteudo;
 		window.conteudoExclusivo = isExclusivo;
