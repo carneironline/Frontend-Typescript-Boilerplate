@@ -487,7 +487,7 @@ Piano.xmlHttpRequest = {
 
 		xhr.onreadystatechange = function() {
 			if(this.readyState === 4 && this.status === 200) {
-				return JSON.parse(this.responseText);
+				//return JSON.parse(this.responseText);
 			}
 		};	
 		
