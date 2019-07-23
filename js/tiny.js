@@ -110,6 +110,18 @@ Piano.variaveis = {
 			return Piano.produtos.id;
 		}
 
+		if (Piano.util.isRevista()) { 
+			return id = '6697';
+		}
+
+		if(Piano.variaveis.getNomeProduto() === 'valor'){
+            return id = '6668';
+        }
+
+		if (id === '0000')
+			Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
+				' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
+
 		Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
 		' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
 		
@@ -402,7 +414,6 @@ Piano.paywall = {
 		if(!Piano.activePaywall) {
 			Piano.triggerAdvertising(); 
 		} else {
-			Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/cpnt-paywall/dist/styles/bundle.css'>");
 			Piano.xmlHttpRequest.geraScriptNaPagina(
 				"https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/cpnt-paywall/dist/scripts/bundle.js", 
 				data => { 
