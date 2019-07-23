@@ -101,23 +101,14 @@ Piano.variaveis = {
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
+		var id = Piano.produtos.getProdutoId(Piano.variaveis.getNomeProduto());
 
-		if (Piano.util.isRevista()) { 
-			return id = '6697';
-		}
-
-		if(Piano.variaveis.getNomeProduto() === 'valor'){
-            return id = '6668';
-        }
-
-		if (id === '0000')
+		if(id === "0000") {
 			Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
-				' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
-
-		Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
-		' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
+			' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
+		}
 		
-		return Piano.produtos.getProdutoId(Piano.variaveis.getNomeProduto())
+		return id;
 	},
 	
 	getCodigoProduto: function(){
