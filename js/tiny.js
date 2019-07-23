@@ -97,11 +97,14 @@ Piano.variaveis = {
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
+		var id = Piano.produtos.getProdutoId(Piano.variaveis.getNomeProduto());
 
-		Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
-		' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
+		if(id === "0000") {
+			Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
+			' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
+		}
 		
-		return Piano.produtos.getProdutoId(Piano.variaveis.getNomeProduto())
+		return id;
 	},
 	
 	getCodigoProduto: function(){
