@@ -75,6 +75,11 @@ Piano.variaveis = {
 		if (Piano.util.isRevista()) { 
 			return id = '6697';
 		}
+
+		if(Piano.variaveis.getNomeProduto() === 'valor'){
+            return id = '6668';
+        }
+
 		if (id === '0000')
 			Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
 				' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
@@ -103,6 +108,8 @@ Piano.variaveis = {
 				return 'casa-jardim';
 			case 'quem-acontece':
 				return 'quem';
+			case 'valor':
+				return 'valordigital';
 			default:
 				Piano.metricas.enviaEventosErroGA("Ao obter código do produto", nomeProduto + " - " + document.location.href);
 				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
