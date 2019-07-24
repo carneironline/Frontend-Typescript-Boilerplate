@@ -15,6 +15,10 @@ Piano.produtos.init = function(callback) {
 	});
 }
 
+Piano.produtos.getProdutoCodProd = function(produto) {
+	return (Piano.produtos.all && Piano.produtos.all[produto]) ? Piano.produtos.all[produto].cod_prod : 'error';
+}
+
 Piano.produtos.getProdutoId = function(produto) {
 	return (Piano.produtos.all && Piano.produtos.all[produto]) ? Piano.produtos.all[produto].id : Piano.produtos.id;
 }
@@ -101,62 +105,27 @@ Piano.variaveis = {
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
-		if(Piano.variaveis.getNomeProduto() === 'oglobo' 
-			|| Piano.variaveis.getNomeProduto() === 'blogs' 
-			|| Piano.variaveis.getNomeProduto() === 'kogut'
-			|| Piano.variaveis.getNomeProduto() === 'acervo'
-			|| Piano.variaveis.getNomeProduto() === 'jornaldigital'){
-			Piano.produtos.id = '3981';
-			return Piano.produtos.id;
-		}
+		var id = Piano.produtos.getProdutoId(Piano.variaveis.getNomeProduto());
 
-		if (Piano.util.isRevista()) { 
-			return id = '6697';
-		}
-
-		if(Piano.variaveis.getNomeProduto() === 'valor'){
-            return id = '6668';
-        }
-
-		if (id === '0000')
+		if(id === "0000") {
 			Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
-				' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
-
-		Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
-		' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
+			' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
+		}
 		
-		return Piano.produtos.getProdutoId(Piano.variaveis.getNomeProduto())
+		return id;
 	},
 	
 	getCodigoProduto: function(){
-		var nomeProduto = Piano.variaveis.getNomeProduto();
-		switch (nomeProduto){
-			case 'oglobo':
-			case 'blogs':
-			case 'kogut':
-				return 'OG03';
-			case 'acervo':
-				return 'OG04';
-			case 'jornaldigital':
-				return 'OG01';
-			case 'auto-esporte':
-			case 'epoca':
-			case 'vogue':
-			case 'glamour':
-			case 'casa-vogue':
-			case 'marie-claire':
-				return nomeProduto;
-			case 'casa-e-jardim':
-				return 'casa-jardim';
-			case 'quem-acontece':
-				return 'quem';
-			case 'valor':
-				return 'valordigital';
-			default:
-				Piano.metricas.enviaEventosErroGA("Ao obter código do produto", nomeProduto + " - " + document.location.href);
-				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
-				return 'error';
+
+		var codProd = Piano.produtos.getProdutoCodProd(Piano.variaveis.getNomeProduto());
+
+		if (codProd === 'error') {
+			Piano.metricas.enviaEventosErroGA("Ao obter código do produto", nomeProduto + " - " + document.location.href);
+			Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
 		}
+
+		return codProd;
+
 	}	
 };
 
@@ -559,6 +528,7 @@ Piano.xmlHttpRequest = {
 		xhr.open("GET", hrefAssinaturaInadimplente, false);
 		xhr.setRequestHeader("Accept", "application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.setRequestHeader("Ig-Request-Id", "testeNovaBarreira");
 		xhr.send();
 	
 		if(xhr.readyState == 4){
@@ -590,6 +560,7 @@ Piano.xmlHttpRequest = {
 		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor, false);
 		xhr.setRequestHeader("Accept","application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.setRequestHeader("Ig-Request-Id", "testeNovaBarreira");
 		xhr.send(data);
 		
 		if(xhr.readyState === 4){
@@ -831,13 +802,6 @@ Piano.util = {
 		e.innerHTML = cssPath;
 		document.body.insertBefore(e, document.body.lastChild);
 	},
-	// isRevista: function(){
-	// 	var revistas = ["epoca", "auto-esporte", "vogue", "glamour", "casa-vogue", "marie-claire","casa-e-jardim","quem-acontece"];
-	// 	if(revistas.indexOf(Piano.variaveis.getNomeProduto()) > -1)
-	// 		return true;
-	// 	else
-	// 		return false;
-	// },
 	recarregaPiano: function (tipoConteudo, isExclusivo, nomeProduto) {
 		window.tipoConteudoPiano = tipoConteudo;
 		window.conteudoExclusivo = isExclusivo;
