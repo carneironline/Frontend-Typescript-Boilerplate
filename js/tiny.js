@@ -15,6 +15,10 @@ Piano.produtos.init = function(callback) {
 	});
 }
 
+Piano.produtos.getProdutoCodProd = function(produto) {
+	return (Piano.produtos.all && Piano.produtos.all[produto]) ? Piano.produtos.all[produto].cod_prod : 'error';
+}
+
 Piano.produtos.getProdutoId = function(produto) {
 	return (Piano.produtos.all && Piano.produtos.all[produto]) ? Piano.produtos.all[produto].id : Piano.produtos.id;
 }
@@ -108,8 +112,17 @@ Piano.variaveis = {
 	},
 	
 	getCodigoProduto: function(){
-		var nomeProduto = Piano.variaveis.getNomeProduto();
-		switch (nomeProduto){
+
+		var codProd = Piano.produtos.getProdutoCodProd(Piano.variaveis.getNomeProduto());
+
+		if (codProd === 'error') {
+			Piano.metricas.enviaEventosErroGA("Ao obter código do produto", nomeProduto + " - " + document.location.href);
+			Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
+		}
+
+		return codProd;
+
+		/*switch (nomeProduto){
 			case 'oglobo':
 			case 'blogs':
 			case 'kogut':
@@ -133,7 +146,7 @@ Piano.variaveis = {
 				Piano.metricas.enviaEventosErroGA("Ao obter código do produto", nomeProduto + " - " + document.location.href);
 				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
 				return 'error';
-		}
+		}*/
 	}	
 };
 
