@@ -120,7 +120,7 @@ Piano.variaveis = {
 		var codProd = Piano.produtos.getProdutoCodProd(Piano.variaveis.getNomeProduto());
 
 		if (codProd === 'error') {
-			Piano.metricas.enviaEventosErroGA("Ao obter código do produto", nomeProduto + " - " + document.location.href);
+			Piano.metricas.enviaEventosErroGA("Ao obter código do produto", Piano.variaveis.getNomeProduto() + " - " + document.location.href);
 			Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
 		}
 
