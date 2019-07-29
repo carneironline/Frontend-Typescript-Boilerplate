@@ -408,12 +408,13 @@ Piano.checkPaywall = function() {
 	let count = 0;
 	
 	const checkGate = setInterval(() => {
-		let hasGate = document.querySelector('.barreira-register-paywall');
+		let hasGate = document.querySelector('.barreira-register-paywall, .paywall-cpt');
 		let hasPub = document.querySelector('#pub-retangulo-1 iframe, #pub-retangulo-2 iframe, #pub-fullbanner-1 iframe');
 
 		if(count > 2) {
 			Piano.triggerAdvertising();
 			Piano.activePaywall = false;
+			clearInterval(checkGate);
 		}
 
 		if( ( (hasGate && Piano.activePaywall) || hasPub) || count > 8) 
