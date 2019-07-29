@@ -28,7 +28,7 @@ Piano.produtos.getProduto = function(produto) {
 };
 
 Piano.produtos.get = function (callback) {
-	const url = 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/produtos.json';
+	const url = 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/produtos.json'; 
 	const req = fetch(url);
 
 	return req   
