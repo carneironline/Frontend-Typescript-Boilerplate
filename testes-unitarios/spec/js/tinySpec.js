@@ -1911,9 +1911,8 @@ describe('Tiny JS', function () {
 
                 Piano.xmlHttpRequest.fazRequisicaoBarramentoApiObterAssinaturaInadimplente();
                 expect(XMLHttpRequest.prototype.setRequestHeader.calls.allArgs()).toEqual( [ 
-                    [ 'Accept', 'application/json' ], 
-                    [ 'Content-Type', 'application/json' ], 
-                    [ 'Ig-Request-Id', 'testeNovaBarreira' ] ] );
+                    [ 'Accept', 'application/json' ],
+                    [ 'Content-Type', 'application/json' ] ] );
             });
 
             it('deve chamar o método xhr.send com o parâmetro síncrono', function () {

@@ -529,7 +529,6 @@ Piano.xmlHttpRequest = {
 		xhr.open("GET", hrefAssinaturaInadimplente, false);
 		xhr.setRequestHeader("Accept", "application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
-		xhr.setRequestHeader("Ig-Request-Id", "testeNovaBarreira");
 		xhr.send();
 	
 		if(xhr.readyState == 4){
@@ -561,7 +560,6 @@ Piano.xmlHttpRequest = {
 		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor, false);
 		xhr.setRequestHeader("Accept","application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
-		xhr.setRequestHeader("Ig-Request-Id", "testeNovaBarreira");
 		xhr.send(data);
 		
 		if(xhr.readyState === 4){
