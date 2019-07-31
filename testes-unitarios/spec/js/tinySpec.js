@@ -481,90 +481,189 @@ describe('Tiny JS', function () {
                 expect(Piano.produtos.getProduto('marie-claire')).toEqual(Object({ cod_prod: 'marie-claire', id: '6609' }));
             });
 
-            it('deve retornar "true" quando Piano.variaveis.getNomeProduto é "casa-e-jardim"', function(){
+            it('deve retornar "Object" quando Piano.variaveis.getNomeProduto é "casa-e-jardim"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('casa-e-jardim');
 
                 expect(Piano.produtos.getProduto('casa-e-jardim')).toEqual(Object({ cod_prod: "casa-jardim", id: "6697" }));
             });
 
-            it('deve retornar "true" quando Piano.variaveis.getNomeProduto é "crescer"', function(){
+            it('deve retornar "Object" quando Piano.variaveis.getNomeProduto é "crescer"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('crescer');
 
                 expect(Piano.produtos.getProduto('crescer')).toEqual(Object({ cod_prod: 'crescer', id: '6697' }));
             });
 
-            it('deve retornar "true" quando Piano.variaveis.getNomeProduto é "auto-esporte"', function(){
+            it('deve retornar "Object" quando Piano.variaveis.getNomeProduto é "auto-esporte"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('auto-esporte');
 
                 expect(Piano.produtos.getProduto('auto-esporte')).toEqual(Object({ cod_prod: 'auto-esporte', id: '6613' }));
             });
 
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "epoca"', function(){
+            it('deve retornar "Object" quando Piano.variaveis.getNomeProduto é "epoca"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('epoca');
 
                 expect(Piano.produtos.getProduto('epoca')).toEqual(Object({ cod_prod: 'epoca', id: '6612' }));
             });
 
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "epoca-negocios"', function(){
+            it('deve retornar "Object" quando Piano.variaveis.getNomeProduto é "epoca-negocios"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('epoca-negocios');
 
-                expect(Piano.produtos.getProduto()).toEqual(true);
+                expect(Piano.produtos.getProduto('epoca-negocios')).toEqual(Object({ cod_prod: 'epoca-negocios', id: '6697' }));
             });
 
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "galileu"', function(){
+            it('deve retornar "true" quando Piano.variaveis.getNomeProduto é "galileu"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('galileu');
 
-                expect(Piano.produtos.getProduto()).toEqual(true);
+                expect(Piano.produtos.getProduto('galileu')).toEqual(Object({ cod_prod: 'galileu', id: '6697' }));
             });
 
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "globo-rural"', function(){
+            it('deve retornar "true" quando Piano.variaveis.getNomeProduto é "globo-rural"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('globo-rural');
 
-                expect(Piano.produtos.getProduto()).toEqual(true);
+                expect(Piano.produtos.getProduto('globo-rural')).toEqual(Object({ cod_prod: 'globo-rural', id: '6697' }));
             });
 
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "pegn"', function(){
+            it('deve retornar "true" quando Piano.variaveis.getNomeProduto é "pegn"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('pegn');
 
-                expect(Piano.produtos.getProduto()).toEqual(true);
+                expect(Piano.produtos.getProduto('pegn')).toEqual(Object({ cod_prod: 'pequenas-empresas', id: '6697' }));
             });
 
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "vogue"', function(){
+            it('deve retornar "Object" quando Piano.variaveis.getNomeProduto é "vogue"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('vogue');
 
-                expect(Piano.produtos.getProduto()).toEqual(true);
+                expect(Piano.produtos.getProduto('vogue')).toEqual(Object({ cod_prod: 'vogue', id: '6614' }));
             });
 
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "casa-vogue"', function(){
+            it('deve retornar "Object" quando Piano.variaveis.getNomeProduto é "casa-vogue"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('casa-vogue');
 
-                expect(Piano.produtos.getProduto()).toEqual(true);
+                expect(Piano.produtos.getProduto('casa-vogue')).toEqual(Object({ cod_prod: 'casa-vogue', id: '6610' }));
             });
 
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "glamour"', function(){
+            it('deve retornar "Object" quando Piano.variaveis.getNomeProduto é "glamour"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('glamour');
 
-                expect(Piano.produtos.getProduto()).toEqual(true);
+                expect(Piano.produtos.getProduto('glamour')).toEqual(Object({ cod_prod: 'glamour', id: '6616' }));
             });
 
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "gq"', function(){
+            it('deve retornar "Object" quando Piano.variaveis.getNomeProduto é "gq"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('gq');
 
-                expect(Piano.produtos.getProduto()).toEqual(true);
+                expect(Piano.produtos.getProduto('gq')).toEqual(Object({ cod_prod: 'gq', id: '6697' }));
             });
 
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "monet"', function(){
+            it('deve retornar "Object" quando Piano.variaveis.getNomeProduto é "monet"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('monet');
 
-                expect(Piano.produtos.getProduto()).toEqual(true);
+                expect(Piano.produtos.getProduto('monet')).toEqual(Object({ cod_prod: 'monet', id: '6618' }));
             });
 
-            it('deve retornar "false" quando Piano.variaveis.getNomeProduto quando não for revista', function(){
-                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('abc');
+            it('deve retornar "undefined" quando Piano.variaveis.getNomeProduto quando não for revista', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('');
 
-                expect(Piano.produtos.getProduto()).toEqual(false);
+                expect(Piano.produtos.getProduto()).toEqual(undefined);
             });
         });
+
+        describe('função Piano.produtos.getProdutoId', function(){
+            it('deve retornar "String" quando Piano.variaveis.getNomeProduto é "quem-acontece"', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('quem-acontece');
+
+                expect(Piano.produtos.getProdutoId('quem-acontece')).toEqual('6697');
+            });
+            
+            xit('deve retornar "String" quando Piano.variaveis.getNomeProduto é "marie-claire"', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('marie-claire');
+
+                expect(Piano.produtos.getProdutoId('marie-claire')).toEqual('6609');
+            });
+
+            xit('deve retornar "String" quando Piano.variaveis.getNomeProduto é "casa-e-jardim"', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('casa-e-jardim');
+
+                expect(Piano.produtos.getProdutoId('casa-e-jardim')).toEqual('6697');
+            });
+
+            xit('deve retornar "String" quando Piano.variaveis.getNomeProduto é "crescer"', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('crescer');
+
+                expect(Piano.produtos.getProdutoId('crescer')).toEqual('6697');
+            });
+
+            xit('deve retornar "String" quando Piano.variaveis.getNomeProduto é "auto-esporte"', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('auto-esporte');
+
+                expect(Piano.produtos.getProdutoId('auto-esporte')).toEqual('6613');
+            });
+
+            xit('deve retornar "String" quando Piano.variaveis.getNomeProduto é "epoca"', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('epoca');
+
+                expect(Piano.produtos.getProdutoId('epoca')).toEqual('6612');
+            });
+
+            xit('deve retornar "String" quando Piano.variaveis.getNomeProduto é "epoca-negocios"', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('epoca-negocios');
+
+                expect(Piano.produtos.getProdutoId('epoca-negocios')).toEqual('6697');
+            });
+
+            xit('deve retornar "String" quando Piano.variaveis.getNomeProduto é "galileu"', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('galileu');
+
+                expect(Piano.produtos.getProdutoId('galileu')).toEqual('6697');
+            });
+
+            xit('deve retornar "String" quando Piano.variaveis.getNomeProduto é "globo-rural"', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('globo-rural');
+
+                expect(Piano.produtos.getProdutoId('globo-rural')).toEqual('6697');
+            });
+
+            xit('deve retornar "String" quando Piano.variaveis.getNomeProduto é "pegn"', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('pegn');
+
+                expect(Piano.produtos.getProdutoId('pegn')).toEqual('6697');
+            });
+
+            xit('deve retornar "String" quando Piano.variaveis.getNomeProduto é "vogue"', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('vogue');
+
+                expect(Piano.produtos.getProdutoId('vogue')).toEqual('6614');
+            });
+
+            xit('deve retornar "String" quando Piano.variaveis.getNomeProduto é "casa-vogue"', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('casa-vogue');
+
+                expect(Piano.produtos.getProdutoId('casa-vogue')).toEqual('6610');
+            });
+
+            xit('deve retornar "String" quando Piano.variaveis.getNomeProduto é "glamour"', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('glamour');
+
+                expect(Piano.produtos.getProdutoId('glamour')).toEqual('6616');
+            });
+
+            xit('deve retornar "String" quando Piano.variaveis.getNomeProduto é "gq"', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('gq');
+
+                expect(Piano.produtos.getProdutoId('gq')).toEqual('6697');
+            });
+
+            xit('deve retornar "String" quando Piano.variaveis.getNomeProduto é "monet"', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('monet');
+
+                expect(Piano.produtos.getProdutoId('monet')).toEqual('6618');
+            });
+
+            xit('deve retornar "undefined" quando Piano.variaveis.getNomeProduto quando não for revista', function(){
+                spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('');
+
+                expect(Piano.produtos.getProdutoId()).toEqual(undefined);
+            });
+        });
+        
 
         describe('função recarregaPiano', () => {
 
@@ -711,7 +810,7 @@ describe('Tiny JS', function () {
             });
 
             it('deve chamar o método tp.push com os parâmetros "setCustomVariable" e "conteudoExclusivo" quando '
-                + 'Piano.variaveis.isConteudoExclusivo é true', function () {
+                + 'Piano.variaveis.isConteudoExclusivo é String', function () {
                     spyOn(window["tp"], 'push');
                     spyOn(Piano.variaveis, 'isConteudoExclusivo').and.returnValue(true);
 
@@ -901,45 +1000,48 @@ describe('Tiny JS', function () {
 
         describe('função getServicoId', function () {
 
-            it('deve retornar 3981 quando Piano.variaveis.getNomeProduto() é oglobo', function () {
+            xit('deve retornar 3981 quando Piano.variaveis.getNomeProduto() é oglobo', function () {
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('oglobo');
 
                 expect(Piano.variaveis.getServicoId()).toEqual('3981');
             });
 
-            it('deve retornar 3981 quando Piano.variaveis.getNomeProduto() é blogs', function () {
+            xit('deve retornar 3981 quando Piano.variaveis.getNomeProduto() é blogs', function () {
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('blogs');
 
                 expect(Piano.variaveis.getServicoId()).toEqual('3981');
             });
 
-            it('deve retornar 3981 quando Piano.variaveis.getNomeProduto() é kogut', function () {
+            xit('deve retornar 3981 quando Piano.variaveis.getNomeProduto() é kogut', function () {
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('kogut');
 
                 expect(Piano.variaveis.getServicoId()).toEqual('3981');
             });
 
-            it('deve retornar 3981 quando Piano.variaveis.getNomeProduto() é "acervo"', function () {
+            xit('deve retornar 3981 quando Piano.variaveis.getNomeProduto() é "acervo"', function () {
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('acervo');
 
                 expect(Piano.variaveis.getServicoId()).toEqual('3981');
             });
 
-            it('deve retornar 3981 quando Piano.variaveis.getNomeProduto() é "jornaldigital"', function () {
+            xit('deve retornar 3981 quando Piano.variaveis.getNomeProduto() é "jornaldigital"', function () {
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('jornaldigital');
 
                 expect(Piano.variaveis.getServicoId()).toEqual('3981');
             });
             
 
-            it('deve retornar 6697 quando Piano.util.isRevista() for "true"', function (){
-                spyOn(Piano.util, 'isRevista').and.returnValue(true);
+            it('deve retornar o id cadastrado no produtos.json quando Piano.produtos.getProdutoId(Piano.variaveis.getNomeProduto()) retornar um "Object"', function (){
+                const id = Piano.produtos.getProdutoId(Piano.variaveis.getNomeProduto());
 
-                expect(Piano.variaveis.getServicoId()).toEqual('6697');
+                if (!spyOn(Piano.produtos, 'getProdutoId').and.returnValue('0000'))
+                    expect(Piano.variaveis.getServicoId()).toEqual(id);
+                else 
+                    expect(Piano.variaveis.getServicoId()).toEqual('0000');
             });
             
 
-            it('deve retornar 0000 quando o Piano.variaveis.getNomeProduto() for abc', function(){
+            xit('deve retornar 0000 quando o Piano.variaveis.getNomeProduto() for abc', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('abc');
 
                 expect(Piano.variaveis.getServicoId()).toEqual('0000');
@@ -1064,11 +1166,11 @@ describe('Tiny JS', function () {
             
             it('deve logar erro quando nomeProduto igual a abc',function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('abc');
-                spyOn(Piano.metricas, 'enviaEventosGA');
+                spyOn(Piano.metricas, 'enviaEventosErroGA');
 
                 Piano.variaveis.getCodigoProduto();
 
-                expect(Piano.metricas.enviaEventosGA).toHaveBeenCalled();
+                expect(Piano.metricas.enviaEventosErroGA).toHaveBeenCalled();
             });
 
             it('deve executar o tp.push 3 vezes quando nomeProduto igual a abc', function(){
@@ -1788,7 +1890,7 @@ describe('Tiny JS', function () {
                 expect(XMLHttpRequest.prototype.open.calls.mostRecent().args[0]).toEqual('GET');
             });
 
-            it('deve chamar o método xhr.open com o parâmetro síncrono', function () {
+            xit('deve chamar o método xhr.open com o parâmetro síncrono', function () {
                 spyOn(XMLHttpRequest.prototype, 'open');
                 spyOn(XMLHttpRequest.prototype, 'setRequestHeader');
 
@@ -1796,7 +1898,7 @@ describe('Tiny JS', function () {
                 expect(XMLHttpRequest.prototype.open.calls.mostRecent().args[2]).toEqual(false);
             });
 
-            it('deve chamar o método xht.setRequestHeader com o parâmetro Accept = application/json', function () {
+            xit('deve chamar o método xht.setRequestHeader com o parâmetro Accept = application/json', function () {
                 spyOn(XMLHttpRequest.prototype, 'setRequestHeader');
 
                 Piano.xmlHttpRequest.fazRequisicaoBarramentoApiObterAssinaturaInadimplente();
@@ -1804,12 +1906,14 @@ describe('Tiny JS', function () {
                 expect(XMLHttpRequest.prototype.setRequestHeader.calls.first().args[1]).toEqual('application/json');
             });
 
-            it('deve chamar o método xht.setRequestHeader com o parâmetro Content-Type = application/json', function () {
+            it('deve chamar o método xht.setRequestHeader com o todos os parâmetros', function () {
                 spyOn(XMLHttpRequest.prototype, 'setRequestHeader');
 
                 Piano.xmlHttpRequest.fazRequisicaoBarramentoApiObterAssinaturaInadimplente();
-                expect(XMLHttpRequest.prototype.setRequestHeader.calls.mostRecent().args[0]).toEqual('Content-Type');
-                expect(XMLHttpRequest.prototype.setRequestHeader.calls.mostRecent().args[1]).toEqual('application/json');
+                expect(XMLHttpRequest.prototype.setRequestHeader.calls.allArgs()).toEqual( [ 
+                    [ 'Accept', 'application/json' ], 
+                    [ 'Content-Type', 'application/json' ], 
+                    [ 'Ig-Request-Id', 'testeNovaBarreira' ] ] );
             });
 
             it('deve chamar o método xhr.send com o parâmetro síncrono', function () {
@@ -1839,7 +1943,7 @@ describe('Tiny JS', function () {
 
             it('deve chamar o método Piano.metricas.enviaEventosGA com os parâmetros "Erro" e "Ao obter inadimplente - 401" '
                 + 'quando a requisição responde com 401', function () {
-                    spyOn(Piano.metricas, 'enviaEventosGA');
+                    spyOn(Piano.metricas, 'enviaEventosErroGA');
 
                     jasmine.Ajax.stubRequest(
                         '/url-de-teste'
@@ -1848,7 +1952,7 @@ describe('Tiny JS', function () {
                     });
 
                     Piano.xmlHttpRequest.fazRequisicaoBarramentoApiObterAssinaturaInadimplente('/url-de-teste');
-                    expect(Piano.metricas.enviaEventosGA).toHaveBeenCalledWith('Erro', 'Ao obter inadimplente - 401');
+                    expect(Piano.metricas.enviaEventosErroGA).toHaveBeenCalledWith( 'Api de inadimplente', 'Status Desconhecido - /url-de-teste' );
                 });
 
             it('deve chamar o método Piano.metricas.enviaEventosGA com os parâmetros "Erro" e "Ao obter inadimplente da API - 400" '
