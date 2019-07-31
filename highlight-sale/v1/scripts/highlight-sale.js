@@ -3,7 +3,6 @@
         return;
 
     const highlightSale = document.getElementById('highlight-sale');
-    const blogSection = document.createElement('section');
     const section = document.createElement('section');
     const divTitle = document.createElement('div');
     const divText = document.createElement('div');
@@ -40,10 +39,10 @@
         return;
     }
 
-    if(nomeProduto === 'kogut') {
+    if(nomeProdutoPiano === 'kogut') {
         divTitle.classList.add('highlight-kogut-title');
         divTitle.classList.add('highlight-kogut-text');
-    } else if(nomeProduto === 'blogs') {
+    } else if(nomeProdutoPiano === 'blogs') {
         section.classList.add('highlight-border');
         section.classList.add('highlight-blogs-section');
         divTitle.classList.add('highlight-kogut-title');
