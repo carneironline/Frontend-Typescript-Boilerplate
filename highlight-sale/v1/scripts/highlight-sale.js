@@ -9,7 +9,6 @@
     const buttonImgTag = document.createElement('img');
     const buttonImgUrl = document.createElement('a');
     
-
     section.setAttribute('id', 'highlight-sale-section');
     divTitle.setAttribute('class','highlight-sale-title' );
     divText.setAttribute('class', 'highlight-sale-text');
@@ -38,6 +37,16 @@
         highlightSaleButtonImgUrl ? buttonImgUrl.setAttribute('href', highlightSaleButtonImgUrl) : '';
     } else {
         return;
+    }
+
+    if(nomeProdutoPiano === 'kogut') {
+        divTitle.classList.add('highlight-kogut-title');
+        divTitle.classList.add('highlight-kogut-text');
+    } else if(nomeProdutoPiano === 'blogs') {
+        section.classList.add('highlight-border');
+        section.classList.add('highlight-blogs-section');
+        divTitle.classList.add('highlight-kogut-title');
+        divTitle.classList.add('highlight-kogut-text');
     }
 
     section.appendChild(divTitle);

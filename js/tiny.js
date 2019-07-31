@@ -397,7 +397,7 @@ Piano.paywall = {
 			
 		}
 	}
-};
+}; 
 
 Piano.triggerAdvertising = function() {
 	let event = new CustomEvent('clearForAds')
@@ -529,6 +529,7 @@ Piano.xmlHttpRequest = {
 		xhr.open("GET", hrefAssinaturaInadimplente, false);
 		xhr.setRequestHeader("Accept", "application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.setRequestHeader("Ig-Request-Id", "testeNovaBarreira");
 		xhr.send();
 	
 		if(xhr.readyState == 4){
@@ -560,6 +561,7 @@ Piano.xmlHttpRequest = {
 		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor, false);
 		xhr.setRequestHeader("Accept","application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.setRequestHeader("Ig-Request-Id", "testeNovaBarreira");
 		xhr.send(data);
 		
 		if(xhr.readyState === 4){
@@ -750,8 +752,8 @@ Piano.util = {
 		var parametros = Piano.util.getWindowLocationSearch();
 		return parametros.indexOf(paramName) != -1 ? true : false;
 	},
-	getValorParametroNaUrl: function(parametro) {
-		if (Piano.util.temParametroNaUrl(parametro)) {
+	getValorParametroNaUrl: function(parametro = null) {
+		if (parametro && Piano.util.temParametroNaUrl(parametro)) {
 			var parametros = Piano.util.getWindowLocationSearch();
 			var regex = new RegExp("[\?(&)]" + parametro + "=([^&#]*)");
 			return parametros.match(regex)[1];
@@ -801,7 +803,6 @@ Piano.util = {
 		e.innerHTML = cssPath;
 		document.body.insertBefore(e, document.body.lastChild);
 	},
-
 	recarregaPiano: function (tipoConteudo, isExclusivo, nomeProduto) {
 		window.tipoConteudoPiano = tipoConteudo;
 		window.conteudoExclusivo = isExclusivo;
