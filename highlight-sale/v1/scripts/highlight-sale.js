@@ -39,16 +39,24 @@
         return;
     }
 
-    if(nomeProdutoPiano === 'kogut') {
-        divTitle.classList.add('highlight-kogut-title');
-        divText.classList.add('highlight-kogut-text');
-    } else if(nomeProdutoPiano === 'blogs') {
-        section.classList.add('highlight-border');
-        section.classList.add('highlight-blogs-section');
-        divTitle.classList.add('highlight-blogs-title');
-        divText.classList.add('highlight-blogs-text');
-    }
 
+    if (typeof nomeProdutoPiano !== 'undefined') {
+
+        if(nomeProdutoPiano === 'kogut') {
+            divTitle.classList.add('highlight-kogut-title');
+            divText.classList.add('highlight-kogut-text');
+            buttonImgTag.classList.add('highlight-kogut-blogs-button');
+        } else if(nomeProdutoPiano === 'blogs') {
+            section.classList.add('highlight-border');
+            section.classList.add('highlight-blogs-section');
+            divTitle.classList.add('highlight-blogs-title');
+            divText.classList.add('highlight-blogs-text');
+            buttonImgTag.classList.add('highlight-kogut-blogs-button');
+        }
+        
+    } else {
+        return;
+    }
     section.appendChild(divTitle);
     section.appendChild(divText);
     buttonImgUrl.appendChild(buttonImgTag);

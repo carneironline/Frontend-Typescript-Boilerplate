@@ -67,6 +67,12 @@
     }
 }
 
+.highlight-kogut-blogs-button {
+
+    width: 230px !important;
+    height: 37px !important;
+}
+
 .highlight-sale-text {
     margin-bottom: 25px;
     font-family: 'Georgia';
