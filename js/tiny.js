@@ -5,44 +5,36 @@ var Piano = {
 };
 var PaywallAnalytics = {};
 
-Piano.produtos.id = '0000';
-Piano.produtos.all = null;
+Piano.produtos = {
 
-Piano.produtos.init = function(callback) {
-	Piano.produtos.get(function(data){
-		if(callback)
-			callback(data);
-	});
+	id : '0000',
+	all : null,
+
+	init : async function() {
+		await Piano.produtos.get();
+	},
+
+	getProduto : function(produto) {
+		return Piano.produtos.all[produto];
+	},
+	
+	get : async function () {
+		const url = 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/produtos.json';
+		
+		try {
+			const response = await fetch(url);
+			const json = await response.json();
+				
+			Piano.produtos.all = json;
+
+			return Piano.produtos.all;
+
+		}catch (e) {
+			throw new Error('Produtos.json not requested');
+			console.log('Error: ', e);
+		}
+	}
 }
-
-Piano.produtos.getProdutoCodProd = function(produto) {
-	return (Piano.produtos.all && Piano.produtos.all[produto]) ? Piano.produtos.all[produto].cod_prod : 'error';
-}
-
-Piano.produtos.getProdutoId = function(produto) {
-	return (Piano.produtos.all && Piano.produtos.all[produto]) ? Piano.produtos.all[produto].id : Piano.produtos.id;
-}
-
-Piano.produtos.getProduto = function(produto) {
-	return Piano.produtos.all[produto];
-};
-
-Piano.produtos.get = function (callback) {
-	const url = 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/produtos.json'; 
-	const req = fetch(url);
-
-	return req   
-		.then(data => data.json())
-		.then(data => {
-			Piano.produtos.all = data;
-			callback(Piano.produtos.all)
-		})
-		.catch(e => {
-			throw new Error('Produtos.json not requested')
-		})
-}
-
-Piano.produtos.init();
 
 Piano.activePaywall = true;
 Piano.typePaywall = null;
@@ -105,7 +97,7 @@ Piano.variaveis = {
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
-		var id = Piano.produtos.getProdutoId(Piano.variaveis.getNomeProduto());
+		var id = (Piano.produtos.all && Piano.produtos.all[Piano.variaveis.getNomeProduto()]) ? Piano.produtos.all[Piano.variaveis.getNomeProduto()].id : Piano.produtos.id;
 
 		if(id === "0000") {
 			Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
@@ -116,8 +108,7 @@ Piano.variaveis = {
 	},
 	
 	getCodigoProduto: function(){
-
-		var codProd = Piano.produtos.getProdutoCodProd(Piano.variaveis.getNomeProduto());
+		var codProd = (Piano.produtos.all && Piano.produtos.all[Piano.variaveis.getNomeProduto()]) ? Piano.produtos.all[Piano.variaveis.getNomeProduto()].cod_prod : 'error'; 
 
 		if (codProd === 'error') {
 			Piano.metricas.enviaEventosErroGA("Ao obter código do produto", Piano.variaveis.getNomeProduto() + " - " + document.location.href);
@@ -662,7 +653,7 @@ Piano.autenticacao = {
 		}
 		return glbid != '';
 	},
-	verificaUsuarioLogadoNoBarramento: function(glbid, utp) {
+	verificaUsuarioLogadoNoBarramento: async function(glbid, utp) {
 		if (Piano.autenticacao.isLogadoCadun(glbid, utp)) {
 			if (utp) {
 				var _leitor = JSON.parse(decodeURI(atob(utp)));
@@ -675,6 +666,7 @@ Piano.autenticacao = {
 				}
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 			}
+			await Piano.produtos.init();
 			Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid);
 		}
 	},
