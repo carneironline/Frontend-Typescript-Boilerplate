@@ -378,7 +378,7 @@ Piano.paywall = {
 		setTimeout(function() {window.location = url;}, 200);
 	},
 	show: function(typePaywall = null) {
-		Piano.typePaywall = typePaywall;
+		Piano.typePaywall = (typePaywall) ? typePaywall.toLowerCase() : typePaywall;
 	
 		if(!Piano.activePaywall) {
 			Piano.triggerAdvertising(); 
