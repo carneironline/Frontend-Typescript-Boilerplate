@@ -416,8 +416,9 @@ Piano.checkPaywall = function() {
 };
 
 Piano.registerPaywall = { 
-	mostrarBarreira: function(versao = null, tipo = null) {
+	mostrarBarreira: async function(versao = null, tipo = null) {
 		Piano.typePaywall = tipo;
+		await Piano.produtos.init();
 
 		if(!Piano.activePaywall || (!versao || !Piano.typePaywall) ) {
 			Piano.triggerAdvertising(); 
