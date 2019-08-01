@@ -89,17 +89,12 @@ function getParametroDaQueryStringPeloNome(parametro) {
 
     var responseAssinatura = await requestBus(getParametroDaQueryStringPeloNome("serviceId"), data, getParametroDaQueryStringPeloNome("ambienteUtilizado"));
 
-    if(responseAssinatura.motivo !== 'indisponivel' || hrefAssinaturaInadimplente == '') {
-        var userTiny = btoa(encodeURI(JSON.stringify(responseAssinatura)));
-        setCookie("_utp",userTiny, 1);
-    }
-
-    if (responseAssinatura.motivo === "autorizado") {
+    if (responseAssinatura.motivo === "autorizado" || responseAssinatura.motivo === "indisponivel") {
+        setCookie("_utp","", -1);
         window.location = getParametroDaQueryStringPeloNome("urlRetorno");
     } else {
+        setCookie("_utp",userTiny, 1);
         window.location = getGloboIdURL(getParametroDaQueryStringPeloNome("ambienteUtilizado")) +'?url='+ encodeURIComponent(getParametroDaQueryStringPeloNome("urlRetorno"));
     }
 
 })();
-
-
