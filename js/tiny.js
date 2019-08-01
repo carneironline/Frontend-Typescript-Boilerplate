@@ -30,8 +30,7 @@ Piano.produtos = {
 			return Piano.produtos.all;
 
 		}catch (e) {
-			throw new Error('Produtos.json not requested');
-			console.log('Error: ', e);
+			throw new Error('Produtos.json not requested - ', e);
 		}
 	}
 }
