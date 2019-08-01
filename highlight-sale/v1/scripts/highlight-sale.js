@@ -41,12 +41,12 @@
 
     if(nomeProdutoPiano === 'kogut') {
         divTitle.classList.add('highlight-kogut-title');
-        divTitle.classList.add('highlight-kogut-text');
+        divText.classList.add('highlight-kogut-text');
     } else if(nomeProdutoPiano === 'blogs') {
         section.classList.add('highlight-border');
         section.classList.add('highlight-blogs-section');
-        divTitle.classList.add('highlight-kogut-title');
-        divTitle.classList.add('highlight-kogut-text');
+        divTitle.classList.add('highlight-blogs-title');
+        divText.classList.add('highlight-blogs-text');
     }
 
     section.appendChild(divTitle);
