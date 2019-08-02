@@ -9,7 +9,6 @@
     const buttonImgTag = document.createElement('img');
     const buttonImgUrl = document.createElement('a');
     
-
     section.setAttribute('id', 'highlight-sale-section');
     divTitle.setAttribute('class','highlight-sale-title' );
     divText.setAttribute('class', 'highlight-sale-text');
@@ -40,6 +39,23 @@
         return;
     }
 
+
+    if (typeof nomeProdutoPiano !== 'undefined') {
+
+        if(nomeProdutoPiano === 'kogut') {
+            divTitle.classList.add('highlight-kogut-title');
+            divText.classList.add('highlight-kogut-text');
+            buttonImgTag.classList.add('highlight-kogut-button');
+        } else if(nomeProdutoPiano === 'blogs') {
+            highlightSale.classList.add('highlight-border');
+            section.classList.add('highlight-blogs-section');
+            divTitle.classList.add('highlight-blogs-title');
+            divText.classList.add('highlight-blogs-text');
+        }
+        
+    } else {
+        return;
+    }
     section.appendChild(divTitle);
     section.appendChild(divText);
     buttonImgUrl.appendChild(buttonImgTag);
