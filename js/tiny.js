@@ -1,7 +1,40 @@
 window.hasPaywall = window.hasPaywall || false;
 window["dataLayer"] = window["dataLayer"] || [];
-var Piano = {};
+var Piano = {
+	produtos: {}
+};
 var PaywallAnalytics = {};
+
+Piano.produtos = {
+
+	id : '0000',
+	all : null,
+
+	init : async function() {
+		await Piano.produtos.get();
+	},
+
+	getProduto : function(produto) {
+		return Piano.produtos.all[produto];
+	},
+	
+	get : async function () {
+		const url = 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/produtos.json';
+		
+		try {
+			const response = await fetch(url);
+			const json = await response.json();
+				
+			Piano.produtos.all = json;
+
+			return Piano.produtos.all;
+
+		}catch (e) {
+			throw new Error('Produtos.json not requested - ', e);
+		}
+	}
+}
+
 Piano.activePaywall = true;
 Piano.typePaywall = null;
 Piano.variaveis = {
@@ -63,29 +96,16 @@ Piano.variaveis = {
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
-		var id = '0000';
+		var id = (Piano.produtos.all && Piano.produtos.all[Piano.variaveis.getNomeProduto()]) ? Piano.produtos.all[Piano.variaveis.getNomeProduto()].id : Piano.produtos.id;
 
-		if(Piano.variaveis.getNomeProduto() === 'oglobo' 
-			|| Piano.variaveis.getNomeProduto() === 'blogs' 
-			|| Piano.variaveis.getNomeProduto() === 'kogut'
-			|| Piano.variaveis.getNomeProduto() === 'acervo'
-			|| Piano.variaveis.getNomeProduto() === 'jornaldigital'){
-			return id = '3981';
-		}
-		if (Piano.util.isRevista()) { 
-			return id = '6697';
-		}
-
-		if(Piano.variaveis.getNomeProduto() === 'valor'){
-            return id = '6668';
-        }
-
-		if (id === '0000')
+		if(id === "0000") {
 			Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
-				' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
-
+			' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
+		}
+		
 		return id;
 	},
+	
 	getCodigoProduto: function(){
 		var nomeProduto = Piano.variaveis.getNomeProduto();
 		switch (nomeProduto){
@@ -116,6 +136,7 @@ Piano.variaveis = {
 				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
 				return 'error';
 		}
+		return codProd;
 	}	
 };
 
@@ -368,7 +389,7 @@ Piano.paywall = {
 		setTimeout(function() {window.location = url;}, 200);
 	},
 	show: function(typePaywall = null) {
-		Piano.typePaywall = typePaywall;
+		Piano.typePaywall = (typePaywall) ? typePaywall.toLowerCase() : typePaywall;
 	
 		if(!Piano.activePaywall) {
 			Piano.triggerAdvertising(); 
@@ -387,7 +408,7 @@ Piano.paywall = {
 			
 		}
 	}
-};
+}; 
 
 Piano.triggerAdvertising = function() {
 	let event = new CustomEvent('clearForAds')
@@ -398,12 +419,13 @@ Piano.checkPaywall = function() {
 	let count = 0;
 	
 	const checkGate = setInterval(() => {
-		let hasGate = document.querySelector('.barreira-register-paywall');
+		let hasGate = document.querySelector('.barreira-register-paywall, .paywall-cpt');
 		let hasPub = document.querySelector('#pub-retangulo-1 iframe, #pub-retangulo-2 iframe, #pub-fullbanner-1 iframe');
 
 		if(count > 2) {
 			Piano.triggerAdvertising();
 			Piano.activePaywall = false;
+			clearInterval(checkGate);
 		}
 
 		if( ( (hasGate && Piano.activePaywall) || hasPub) || count > 8) 
@@ -511,12 +533,14 @@ Piano.xmlHttpRequest = {
 				callback(xhr); 
 		};	
 	},
+
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
 		
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", hrefAssinaturaInadimplente, false);
 		xhr.setRequestHeader("Accept", "application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.setRequestHeader("Ig-Request-Id", "testeNovaBarreira");
 		xhr.send();
 	
 		if(xhr.readyState == 4){
@@ -548,6 +572,7 @@ Piano.xmlHttpRequest = {
 		xhr.open("POST", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlVerificaLeitor, false);
 		xhr.setRequestHeader("Accept","application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.setRequestHeader("Ig-Request-Id", "testeNovaBarreira");
 		xhr.send(data);
 		
 		if(xhr.readyState === 4){
@@ -738,8 +763,8 @@ Piano.util = {
 		var parametros = Piano.util.getWindowLocationSearch();
 		return parametros.indexOf(paramName) != -1 ? true : false;
 	},
-	getValorParametroNaUrl: function(parametro) {
-		if (Piano.util.temParametroNaUrl(parametro)) {
+	getValorParametroNaUrl: function(parametro = null) {
+		if (parametro && Piano.util.temParametroNaUrl(parametro)) {
 			var parametros = Piano.util.getWindowLocationSearch();
 			var regex = new RegExp("[\?(&)]" + parametro + "=([^&#]*)");
 			return parametros.match(regex)[1];
@@ -789,7 +814,7 @@ Piano.util = {
 		e.innerHTML = cssPath;
 		document.body.insertBefore(e, document.body.lastChild);
 	},
-	isRevista: function(){
+isRevista: function(){
 		var revistas = ["epoca", "auto-esporte", "vogue", "glamour", "casa-vogue", "marie-claire","casa-e-jardim","quem-acontece","gq"];
 		if(revistas.indexOf(Piano.variaveis.getNomeProduto()) > -1)
 			return true;
@@ -839,7 +864,8 @@ Piano.configuracao = {
 
 
 Piano.construtor = {
-	initTp: function() {
+	initTp: async function() {
+		await Piano.produtos.init();
 		Piano.metricas.enviaEventosGA("Carregamento Piano", "Inicio InitTp");
 		tp = window["tp"] || [];
 		tp.push(["setTags", [Piano.variaveis.getTipoConteudoPiano()]]);
