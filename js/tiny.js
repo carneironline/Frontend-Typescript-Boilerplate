@@ -103,6 +103,7 @@ Piano.variaveis = {
 			case 'glamour':
 			case 'casa-vogue':
 			case 'marie-claire':
+			case 'globo-rural':
 				return nomeProduto;
 			case 'casa-e-jardim':
 				return 'casa-jardim';
