@@ -47,7 +47,7 @@
             divText.classList.add('highlight-kogut-text');
             buttonImgTag.classList.add('highlight-kogut-blogs-button');
         } else if(nomeProdutoPiano === 'blogs') {
-            section.classList.add('highlight-border');
+            highlightSale.classList.add('highlight-border');
             section.classList.add('highlight-blogs-section');
             divTitle.classList.add('highlight-blogs-title');
             divText.classList.add('highlight-blogs-text');
