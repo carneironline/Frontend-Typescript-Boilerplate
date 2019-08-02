@@ -30,8 +30,7 @@ Piano.produtos = {
 			return Piano.produtos.all;
 
 		}catch (e) {
-			throw new Error('Produtos.json not requested');
-			console.log('Error: ', e);
+			throw new Error('Produtos.json not requested - ', e);
 		}
 	}
 }
@@ -416,9 +415,8 @@ Piano.checkPaywall = function() {
 };
 
 Piano.registerPaywall = { 
-	mostrarBarreira: async function(versao = null, tipo = null) {
+	mostrarBarreira: function(versao = null, tipo = null) {
 		Piano.typePaywall = tipo;
-		await Piano.produtos.init();
 
 		if(!Piano.activePaywall || (!versao || !Piano.typePaywall) ) {
 			Piano.triggerAdvertising(); 
@@ -656,7 +654,7 @@ Piano.autenticacao = {
 		}
 		return glbid != '';
 	},
-	verificaUsuarioLogadoNoBarramento: async function(glbid, utp) {
+	verificaUsuarioLogadoNoBarramento: function(glbid, utp) {
 		if (Piano.autenticacao.isLogadoCadun(glbid, utp)) {
 			if (utp) {
 				var _leitor = JSON.parse(decodeURI(atob(utp)));
@@ -669,7 +667,6 @@ Piano.autenticacao = {
 				}
 				Piano.cookies.set(Piano.variaveis.constante.cookie.UTP, "", -1);
 			}
-			await Piano.produtos.init();
 			Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid);
 		}
 	},
@@ -839,7 +836,8 @@ Piano.configuracao = {
 
 
 Piano.construtor = {
-	initTp: function() {
+	initTp: async function() {
+		await Piano.produtos.init();
 		Piano.metricas.enviaEventosGA("Carregamento Piano", "Inicio InitTp");
 		tp = window["tp"] || [];
 		tp.push(["setTags", [Piano.variaveis.getTipoConteudoPiano()]]);
