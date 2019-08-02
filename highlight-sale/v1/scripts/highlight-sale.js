@@ -45,13 +45,12 @@
         if(nomeProdutoPiano === 'kogut') {
             divTitle.classList.add('highlight-kogut-title');
             divText.classList.add('highlight-kogut-text');
-            buttonImgTag.classList.add('highlight-kogut-blogs-button');
+            buttonImgTag.classList.add('highlight-kogut-button');
         } else if(nomeProdutoPiano === 'blogs') {
             highlightSale.classList.add('highlight-border');
             section.classList.add('highlight-blogs-section');
             divTitle.classList.add('highlight-blogs-title');
             divText.classList.add('highlight-blogs-text');
-            buttonImgTag.classList.add('highlight-kogut-blogs-button');
         }
         
     } else {
