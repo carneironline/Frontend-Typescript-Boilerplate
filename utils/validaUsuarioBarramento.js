@@ -93,7 +93,8 @@ function getParametroDaQueryStringPeloNome(parametro) {
         setCookie("_utp","", -1);
         window.location = getParametroDaQueryStringPeloNome("urlRetorno");
     } else {
-        setCookie("_utp",userTiny, 1);
+        var jsonLeitor = btoa(encodeURI(JSON.stringify(responseAssinatura)));
+        setCookie("_utp",jsonLeitor, 1);
         window.location = getGloboIdURL(getParametroDaQueryStringPeloNome("ambienteUtilizado")) +'?url='+ encodeURIComponent(getParametroDaQueryStringPeloNome("urlRetorno"));
     }
 
