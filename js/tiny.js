@@ -104,6 +104,7 @@ Piano.variaveis = {
 			case 'casa-vogue':
 			case 'marie-claire':
 			case 'globo-rural':
+			case 'gq':
 				return nomeProduto;
 			case 'casa-e-jardim':
 				return 'casa-jardim';
@@ -791,7 +792,7 @@ Piano.util = {
 		document.body.insertBefore(e, document.body.lastChild);
 	},
 	isRevista: function(){
-		var revistas = ["epoca", "auto-esporte", "vogue", "glamour", "casa-vogue", "marie-claire","casa-e-jardim","quem-acontece","globo-rural"];
+		var revistas = ["epoca", "auto-esporte", "vogue", "glamour", "casa-vogue", "marie-claire", "casa-e-jardim", "quem-acontece", "globo-rural", "gq"];
 		if(revistas.indexOf(Piano.variaveis.getNomeProduto()) > -1)
 			return true;
 		else
