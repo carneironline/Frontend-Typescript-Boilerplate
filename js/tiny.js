@@ -72,14 +72,16 @@ Piano.variaveis = {
 			|| Piano.variaveis.getNomeProduto() === 'jornaldigital'){
 			return id = '3981';
 		}
-		if (Piano.util.isRevista()) { 
+		if (Piano.util.isRevista() && Piano.variaveis.getNomeProduto() === 'monet'){ 
+			return id = '6618';
+		}else if (Piano.util.isRevista()){
 			return id = '6697';
 		}
 
 		if(Piano.variaveis.getNomeProduto() === 'valor'){
             return id = '6668';
-        }
-
+		}
+		
 		if (id === '0000')
 			Piano.metricas.enviaEventosErroGA('ServiceID não definido.', document.location.href + 
 				' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
@@ -105,6 +107,7 @@ Piano.variaveis = {
 			case 'marie-claire':
 			case 'globo-rural':
 			case 'gq':
+			case 'monet':
 				return nomeProduto;
 			case 'casa-e-jardim':
 				return 'casa-jardim';
@@ -792,7 +795,7 @@ Piano.util = {
 		document.body.insertBefore(e, document.body.lastChild);
 	},
 	isRevista: function(){
-		var revistas = ["epoca", "auto-esporte", "vogue", "glamour", "casa-vogue", "marie-claire", "casa-e-jardim", "quem-acontece", "globo-rural", "gq"];
+		var revistas = ["epoca", "auto-esporte", "vogue", "glamour", "casa-vogue", "marie-claire", "casa-e-jardim", "quem-acontece", "globo-rural", "gq", "monet"];
 		if(revistas.indexOf(Piano.variaveis.getNomeProduto()) > -1)
 			return true;
 		else
