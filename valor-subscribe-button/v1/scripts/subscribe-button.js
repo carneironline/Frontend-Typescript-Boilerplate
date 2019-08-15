@@ -1,40 +1,22 @@
 (function (){
 
     const subscribeDiv = document.querySelector('.header__actions__action.header__subscribe');
-
-    if (!subscribeDiv)
-        return;
-
+    const imageValue = (typeof buttonValorImg !== 'undefined' && !buttonValorImg.trim()) ? true : false;
+    const urlValue = (typeof buttonValorUrl !== 'undefined' && !buttonValorUrl.trim()) ? true : false;
     const button = document.createElement('a');
     const buttonImg = document.createElement('img');
 
+    if (!subscribeDiv || !imageValue || !urlValue)
+        return;
+
     button.setAttribute('target', '_blank');
-    // button.setAttribute('class', 'subscribe-button-valor');
+    buttonImg.setAttribute('src', imageValue);
+    button.setAttribute('href', urlValue);
 
-    if (typeof buttonValorImg !== 'undefined') {
-        buttonImg.setAttribute('src', buttonValorImg);
-    } else {
-        return;
-    }
-
-    if (typeof buttonValorUrl !== 'undefined') {
-        button.setAttribute('href', buttonValorUrl);
-    } else {
-        return;
-    }
-
-    button.appendChild(buttonImg);
     subscribeDiv.innerHTML = '';
+    button.appendChild(buttonImg);
     subscribeDiv.appendChild(button);
-    
 })();
-
-
-
-
-
-
-
 
 
 

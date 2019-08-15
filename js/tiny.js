@@ -345,7 +345,6 @@ Piano.banner = {
 		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/highlight-sale/"+versao+"/scripts/highlight-sale.js");
 	},
 	mostrarSubscribeButtonValor: function(versao) {
-		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/valor-subscribe-button/"+versao+"/styles/styles.css'>");
 		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/valor-subscribe-button/"+versao+"/scripts/subscribe-button.js");
 	}
 
