@@ -25,7 +25,7 @@
 
     button.appendChild(buttonImg);
     subscribeDiv.innerHTML = '';
-    subscribeDiv.insertAdjacentElement('afterend', button);
+    subscribeDiv.appendChild(button);
     
 })();
 
