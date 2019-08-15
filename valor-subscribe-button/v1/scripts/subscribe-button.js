@@ -6,11 +6,13 @@
         return;
 
     const button = document.createElement('a');
-    button.setAttribute('target', '_blank');
-    button.setAttribute('class', 'subscribe-button-valor');
+    const buttonImg = document.createElement('img');
 
-    if (typeof buttonValorText !== 'undefined') {
-        buttonValorText ? button.innerHTML = buttonValorText : '';
+    button.setAttribute('target', '_blank');
+    // button.setAttribute('class', 'subscribe-button-valor');
+
+    if (typeof buttonValorImg !== 'undefined') {
+        buttonImg.setAttribute('src', buttonValorImg);
     } else {
         return;
     }
@@ -21,7 +23,10 @@
         return;
     }
 
-    subscribeDiv.innerHTML = button;
+    button.appendChild(buttonImg);
+    subscribeDiv.innerHTML = '';
+    subscribeDiv.insertAdjacentElement('afterend', button);
+    
 })();
 
 
