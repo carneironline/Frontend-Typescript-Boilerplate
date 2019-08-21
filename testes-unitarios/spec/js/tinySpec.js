@@ -487,7 +487,7 @@ describe('Tiny JS', function () {
                 expect(Piano.util.isRevista()).toEqual(true);
             });
 
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "crescer"', function(){
+            it('deve retornar "true" quando Piano.variaveis.getNomeProduto é "crescer"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('crescer');
 
                 expect(Piano.util.isRevista()).toEqual(true);
@@ -553,7 +553,7 @@ describe('Tiny JS', function () {
                 expect(Piano.util.isRevista()).toEqual(true);
             });
 
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "monet"', function(){
+            it('deve retornar "true" quando Piano.variaveis.getNomeProduto é "monet"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('monet');
 
                 expect(Piano.util.isRevista()).toEqual(true);
@@ -999,7 +999,7 @@ describe('Tiny JS', function () {
                 expect(Piano.variaveis.getCodigoProduto()).toEqual('casa-jardim');
             });            
 
-            xit('deve retornar revistas quando nomeProduto igual a crescer',function(){
+            it('deve retornar revistas quando nomeProduto igual a crescer',function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('crescer');
 
                 expect(Piano.variaveis.getCodigoProduto()).toEqual('crescer');
@@ -1059,7 +1059,7 @@ describe('Tiny JS', function () {
                 expect(Piano.variaveis.getCodigoProduto()).toEqual('gq');
             });            
 
-            xit('deve retornar revistas quando nomeProduto igual a monet',function(){
+            it('deve retornar revistas quando nomeProduto igual a monet',function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('monet');
 
                 expect(Piano.variaveis.getCodigoProduto()).toEqual('monet');
