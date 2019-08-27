@@ -1,7 +1,7 @@
 window.hasPaywall = window.hasPaywall || false;
 window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
-var PaywallAnalytics = {};
+var PaywallAnalytics =  {};
 Piano.activePaywall = true;
 Piano.typePaywall = null;
 Piano.variaveis = {
