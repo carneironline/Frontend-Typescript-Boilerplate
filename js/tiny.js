@@ -1,7 +1,7 @@
 window.hasPaywall = window.hasPaywall || false;
 window["dataLayer"] = window["dataLayer"] || [];
 var Piano = {};
-var PaywallAnalytics = {};
+var PaywallAnalytics =  {};
 Piano.activePaywall = true;
 Piano.typePaywall = null;
 Piano.variaveis = {
@@ -109,6 +109,7 @@ Piano.variaveis = {
 			case 'gq':
 			case 'monet':
 			case 'crescer':
+			case 'galileu':
 				return nomeProduto;
 			case 'casa-e-jardim':
 				return 'casa-jardim';
@@ -800,7 +801,7 @@ Piano.util = {
 		document.body.insertBefore(e, document.body.lastChild);
 	},
 	isRevista: function(){
-		var revistas = ["epoca", "auto-esporte", "vogue", "glamour", "casa-vogue", "marie-claire", "casa-e-jardim", "quem-acontece", "globo-rural", "gq", "monet", 'crescer'];
+		var revistas = ["epoca", "auto-esporte", "vogue", "glamour", "casa-vogue", "marie-claire", "casa-e-jardim", "quem-acontece", "globo-rural", "gq", "monet", 'crescer','galileu'];
 		if(revistas.indexOf(Piano.variaveis.getNomeProduto()) > -1)
 			return true;
 		else
