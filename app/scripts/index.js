@@ -347,8 +347,6 @@ Piano.paywall = {
 		setTimeout(function() {window.location.href = url;}, 1000);
 	},
 	show: function(typePaywall = null) {
-		if(window.tinyCpt.debug.paywall)
-			console.log('log-method', 'Piano.paywall.show')
 
 		Piano.typePaywall = typePaywall;
 	
@@ -665,15 +663,15 @@ Piano.autenticacao = {
 
 Piano.util = {
 	isSection: function() {
-		return Piano.variaveis.getTipoConteudoPiano() == "section" ? true : false;
+		return Piano.variaveis.getTipoConteudoPiano() === 'section' ? true : false;
 	},
 	temVariaveisObrigatorias: function() {
-		if (typeof Piano.variaveis.getTipoConteudoPiano() == 'undefined') {
-			GA.setEventsError("Variavel tipoConteudoPiano nao esta definida", document.location.href);
+		if (typeof Piano.variaveis.getTipoConteudoPiano() === 'undefined') {
+			GA.setEventsError('Variavel tipoConteudoPiano nao esta definida', document.location.href);
 			return false;
 		};
-		if (typeof Piano.variaveis.getNomeProduto() == 'undefined') {
-			GA.setEventsError("Variavel nomeProdutoPiano nao esta definida", document.location.href);
+		if (typeof Piano.variaveis.getNomeProduto() === 'undefined') {
+			GA.setEventsError('Variavel nomeProdutoPiano nao esta definida', document.location.href);
 			return false;
 		};
 		return true;
@@ -870,9 +868,6 @@ Piano.construtor = {
 };
 
 function loadPianoExperiences(){
-	if(window.tinyCpt.debug.tiny)
-		console.log('log-method', 'loadPianoExperiences')
-
 	var a = document.createElement("script");
 	a.type = "text/javascript";
 	a.async = true;
@@ -887,15 +882,9 @@ function loadPianoExperiences(){
 }
 
 function pianoInit() { 
-	if(window.tinyCpt.debug.tiny)
-		console.log('log-method', 'pianoInit')
-
     if (window.tinyCpt.Swg.global) { 
 		window.SWG.push((subscriptions) => {
-			if(window.tinyCpt.debug.swg)
-				console.log('log-subscriptions', subscriptions)
-
-			swg = subscriptions;
+			window.swg = subscriptions;
 
 			subscriptions.setOnEntitlementsResponse(entitlementsPromise => {
 				entitlementsPromise.then(entitlements => { 
@@ -904,10 +893,11 @@ function pianoInit() {
 					GA.setEvents("Carregamento SWG", "Entitlements recebidos");
 
 					if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
-						if (Piano !== 'undefined'){
+						try{
 							window.tinyCpt.Piano.construtor.initTp();
 							loadPianoExperiences();
-						}else{
+						}
+						catch(error){
 							GA.setEventsError("Piano nao foi carregada corretamente!", document.location.href);
 						}
 					}

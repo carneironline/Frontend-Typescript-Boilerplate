@@ -1,2 +1,16 @@
-coverage/
 .ds_store
+
+# dependencies
+node_modules
+bower_components
+
+# compiled output
+/dist
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# other folders
+coverage/
+/.tmp

@@ -96,7 +96,7 @@ export default class PaywallCpt  {
 	if(this.elCpt)
 		this.elCpt.remove();
 
-	const elToRemove = document.querySelectorAll('.protected-content');
+	const elToRemove = document.querySelectorAll('.protected-content, #infoarte-main-content');
 
 	elToRemove.forEach(element => {
 	  element.remove();
@@ -158,7 +158,7 @@ export default class PaywallCpt  {
 			this.GA.trigger(element); 
 
 			if(!isLogin && isUrlSwg)
-				this.SWG.setUtms();  
+				this.SWG.subscribe();  
 
             if (url && !isUrlSwg) { 
                 setTimeout(function() {
