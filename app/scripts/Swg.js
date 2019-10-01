@@ -17,7 +17,7 @@ export default class Swg {
     }
 
     get isDefined() { 
-        return (window.tinyCpt.Swg.global) ? true : true; 
+        return (window.tinyCpt.Swg.global) ? true : false; 
     }
 
     setGlobalSWG() {
@@ -30,7 +30,10 @@ export default class Swg {
 
     setUtms() {             
         const urlParams = new URLSearchParams(window.location.search.substring(1));
-        const utmsProps = (typeof window.glbPaywall.swg !== 'undefined' && typeof window.glbPaywall.swg.utms !== 'undefined') ? window.glbPaywall.swg.utms : null; 
+        const utmsProps = (typeof window.glbPaywall !== 'undefined' && (typeof window.glbPaywall.swg !== 'undefined' && typeof window.glbPaywall.swg.utms !== 'undefined' )) 
+        ? window.glbPaywall.swg.utms : null; 
+
+        if(!utmsProps) return;
 
         utmsProps.forEach((item) => { 
             let name = item.name.toLowerCase();
