@@ -1,0 +1,70 @@
+[
+    {
+    "productName": "O Globo",
+    "pianoProductName": "oglobo",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "O Globo"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": ["CreativeWork", "Product"],
+      "name": "O Globo",
+      "productID": "oglobo.globo.com:br.com.infoglobo.oglobo.site.google"
+    }
+  },
+  
+  {
+    "productName": "Blogs",
+    "pianoProductName": "blogs",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "O Globo"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": ["CreativeWork", "Product"],
+      "name": "O Globo",
+      "productID": "oglobo.globo.com:br.com.infoglobo.oglobo.site.google"
+    }
+  },
+  
+  {
+    "productName": "Kogut",
+    "pianoProductName": "kogut",
+    "@context": "http://schema.org",
+          "@type": "NewsArticle",
+          "isAccessibleForFree": false,
+          "publisher": {
+              "@type": "Organization",
+              "name": "O Globo"
+          },
+          "hasPart": {
+              "@type": "WebPageElement",
+              "isAccessibleForFree": "false",
+              "cssSelector": ".paywall"
+          },
+          "isPartOf": {
+              "@type": ["CreativeWork", "Product"],
+              "name": "O Globo",
+              "productID": "oglobo.globo.com:br.com.infoglobo.oglobo.site.google"
+          }
+  }
+  
+  ]
+  
+  
