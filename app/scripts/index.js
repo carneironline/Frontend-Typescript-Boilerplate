@@ -69,6 +69,32 @@ Piano.variaveis = {
 		}
 		return window.nomeProdutoPiano;
 	},
+	getServicoId: function() {
+		var id = '0000';
+
+		if(Piano.variaveis.getNomeProduto() === 'oglobo' 
+			|| Piano.variaveis.getNomeProduto() === 'blogs' 
+			|| Piano.variaveis.getNomeProduto() === 'kogut'
+			|| Piano.variaveis.getNomeProduto() === 'acervo'
+			|| Piano.variaveis.getNomeProduto() === 'jornaldigital'){
+			return id = '3981';
+		}
+		if (Piano.util.isRevista() && Piano.variaveis.getNomeProduto() === 'monet'){ 
+			return id = '6618';
+		}else if (Piano.util.isRevista()){
+			return id = '6697';
+		}
+
+		if(Piano.variaveis.getNomeProduto() === 'valor'){
+            return id = '6668';
+		}
+		
+		if (id === '0000')
+			GA.setEventsError('ServiceID não definido.', document.location.href + 
+				' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
+
+		return id;
+	},
 	getCodigoProduto: function(){
 		var nomeProduto = Piano.variaveis.getNomeProduto();
 		switch (nomeProduto){
@@ -347,6 +373,8 @@ Piano.paywall = {
 		setTimeout(function() {window.location.href = url;}, 1000);
 	},
 	show: function(typePaywall = null) {
+		if(window.tinyCpt.debug.paywall)
+			console.log('log-method', 'Piano.paywall.show')
 
 		Piano.typePaywall = typePaywall;
 	
@@ -663,15 +691,15 @@ Piano.autenticacao = {
 
 Piano.util = {
 	isSection: function() {
-		return Piano.variaveis.getTipoConteudoPiano() === 'section' ? true : false;
+		return Piano.variaveis.getTipoConteudoPiano() == "section" ? true : false;
 	},
 	temVariaveisObrigatorias: function() {
-		if (typeof Piano.variaveis.getTipoConteudoPiano() === 'undefined') {
-			GA.setEventsError('Variavel tipoConteudoPiano nao esta definida', document.location.href);
+		if (typeof Piano.variaveis.getTipoConteudoPiano() == 'undefined') {
+			GA.setEventsError("Variavel tipoConteudoPiano nao esta definida", document.location.href);
 			return false;
 		};
-		if (typeof Piano.variaveis.getNomeProduto() === 'undefined') {
-			GA.setEventsError('Variavel nomeProdutoPiano nao esta definida', document.location.href);
+		if (typeof Piano.variaveis.getNomeProduto() == 'undefined') {
+			GA.setEventsError("Variavel nomeProdutoPiano nao esta definida", document.location.href);
 			return false;
 		};
 		return true;
@@ -799,7 +827,8 @@ Piano.configuracao = {
 			'idSandboxTinypassRevistas':'VnaP3rYVKc',
 			'setSandBox':'true',
 			'urlSandboxPiano':'https://sandbox.tinypass.com/xbuilder/experience/load?aid=dXu7dvFKRi',
-			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/'+ window.tinyCpt.Product.id +'/autorizacao-acesso',
+			'urlSandboxPianoRevistas':'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
+			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/'+Piano.variaveis.getServicoId()+'/autorizacao-acesso',
 			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
 			'urlDominioSiteOGlobo':''+Piano.util.isDominioOGlobo()+'/'
 		},
@@ -808,7 +837,8 @@ Piano.configuracao = {
 			'idSandboxTinypassRevistas':'VnaP3rYVKc',
 			'setSandBox':'false',
 			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
-			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/'+ window.tinyCpt.Product.id +'/autorizacao-acesso',
+			'urlSandboxPianoRevistas':'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
+			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/'+Piano.variaveis.getServicoId()+'/autorizacao-acesso',
 			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
 			'urlDominioSiteOGlobo':''+Piano.util.isDominioOGlobo()+'/'
 		},
@@ -817,7 +847,8 @@ Piano.configuracao = {
 			'idSandboxTinypassRevistas':'VnaP3rYVKc',
 			'setSandBox':'false',
 			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
-			'urlVerificaLeitor':'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/'+ window.tinyCpt.Product.id +'/autorizacao-acesso',
+			'urlSandboxPianoRevistas':'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
+			'urlVerificaLeitor':'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/'+Piano.variaveis.getServicoId()+'/autorizacao-acesso',
 			'urlDominioPaywall':'https://assinatura.oglobo.globo.com/',
 			'urlDominioSiteOGlobo':''+Piano.util.isDominioOGlobo()+'/'
 		}
@@ -868,6 +899,9 @@ Piano.construtor = {
 };
 
 function loadPianoExperiences(){
+	if(window.tinyCpt.debug.tiny)
+		console.log('log-method', 'loadPianoExperiences')
+
 	var a = document.createElement("script");
 	a.type = "text/javascript";
 	a.async = true;
@@ -882,9 +916,15 @@ function loadPianoExperiences(){
 }
 
 function pianoInit() { 
+	if(window.tinyCpt.debug.tiny)
+		console.log('log-method', 'pianoInit')
+
     if (window.tinyCpt.Swg.global) { 
 		window.SWG.push((subscriptions) => {
-			window.swg = subscriptions;
+			if(window.tinyCpt.debug.swg)
+				console.log('log-subscriptions', subscriptions)
+
+			swg = subscriptions;
 
 			subscriptions.setOnEntitlementsResponse(entitlementsPromise => {
 				entitlementsPromise.then(entitlements => { 
@@ -893,11 +933,10 @@ function pianoInit() {
 					GA.setEvents("Carregamento SWG", "Entitlements recebidos");
 
 					if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
-						try{
+						if (Piano !== 'undefined'){
 							window.tinyCpt.Piano.construtor.initTp();
 							loadPianoExperiences();
-						}
-						catch(error){
+						}else{
 							GA.setEventsError("Piano nao foi carregada corretamente!", document.location.href);
 						}
 					}
