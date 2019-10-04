@@ -1,10 +1,8 @@
-import LogsModule from './Logs'; 
 import ProductsModule from './Products'; 
 
 export default class Tiny  {
 	constructor() { 
         this.Products = new ProductsModule();
-        this.Logs = new LogsModule();
         window.hasPaywall = window.hasPaywall || false;
         window.tp = window.tp || [];
         window.Piano = window.Piano || {};

@@ -13,7 +13,6 @@ export default class Swg {
         this.elHead = document.head; 
 
         this.setGlobalSWG();
-        this.setUtms();
     }
 
     get isDefined() { 
@@ -28,28 +27,25 @@ export default class Swg {
         };
     }
 
-    setUtms() {             
+    setUtms() {                 
         const urlParams = new URLSearchParams(window.location.search.substring(1));
-        const utmsProps = (typeof window.glbPaywall !== 'undefined' && (typeof window.glbPaywall.swg !== 'undefined' && typeof window.glbPaywall.swg.utms !== 'undefined' )) 
-        ? window.glbPaywall.swg.utms : null; 
-
-        if(!utmsProps) return;
+        const utmsProps = (typeof window.glbPaywall.swg !== 'undefined' && typeof window.glbPaywall.swg.utms !== 'undefined') ? window.glbPaywall.swg.utms : null; 
 
         utmsProps.forEach((item) => { 
             let name = item.name.toLowerCase();
             let value = item.value;
             urlParams.set(`utm_${name}`, value);
-        });
-        
-        if (history.pushState) {
-            let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + urlParams.toString();
-            window.history.pushState({path: newurl}, window.document.title, newurl);
-        }
-    }
+        })
 
-    subscribe() {
-        if( this.disabled || !this.isDefined ) return;
-            window.tinyCpt.Swg.global.subscribe('br.com.infoglobo.oglobo.swg.google');
+        if(window.tinyCpt.debug.swg) { 
+            console.log('log-method', 'setUtms')
+            console.log('log-method-setUtms', utmsProps)
+            console.log('log-method-setUtms', location)
+        }
+
+        if( (this.disabled || !this.isDefined) || !utmsProps ) return;
+        
+        window.tinyCpt.Swg.global.subscribe('br.com.infoglobo.oglobo.swg.google');
     }
 
     async getProducts() {
@@ -82,10 +78,16 @@ export default class Swg {
         const productJSON =  await this.removeProperties(await this.getProduct()) || null; 
         const product = Object.keys(productJSON).length ? JSON.stringify(productJSON) : null;
 
-        if(!product) return;
+        if(!product) {
+            return;
+        } else {
+            this.hasProductJSON = true;
 
-        this.hasProductJSON = true;
-        this.productJSON = `${ product }`;
+            if(this.debug)
+                console.log({'log-SWG-Product': product});
+
+            this.productJSON = `${ product }`;
+        }
     }
 
     async setMarkup() { 
@@ -94,6 +96,7 @@ export default class Swg {
 
         const element = document.createElement('script');
 
+       
         element.type = 'application/ld+json';
         element.innerHTML = this.productJSON;
         this.elHead.insertAdjacentElement('beforeend', element);

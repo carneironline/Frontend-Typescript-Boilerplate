@@ -1,5 +1,3 @@
-import productsId from '../mocks/products/products-id';
-
 export default class Products  {
 	constructor() { 
         this.productName = (typeof window.nomeProdutoPiano !== 'undefined') ? window.nomeProdutoPiano : null;
@@ -8,8 +6,7 @@ export default class Products  {
     setGlobal() {
         const productsSettings = {
             Product: {
-                name: this.productName,
-                id: this.productId
+                name: this.productName
             }
         }
 
@@ -18,14 +15,6 @@ export default class Products  {
     
     get isProductValor() {
         return (this.productName && this.productName === 'valor') ? true : false;
-    }
-
-    get productId() {
-        
-        return ( (typeof productsId[this.productName] !==  'undefined') 
-        && (typeof productsId[this.productName].id !==  'undefined') )
-        ? productsId[this.productName].id : null;
-        
     }
 
 }
