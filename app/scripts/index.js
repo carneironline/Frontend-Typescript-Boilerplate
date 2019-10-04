@@ -69,6 +69,32 @@ Piano.variaveis = {
 		}
 		return window.nomeProdutoPiano;
 	},
+	getServicoId: function() {
+		var id = '0000';
+
+		if(Piano.variaveis.getNomeProduto() === 'oglobo' 
+			|| Piano.variaveis.getNomeProduto() === 'blogs' 
+			|| Piano.variaveis.getNomeProduto() === 'kogut'
+			|| Piano.variaveis.getNomeProduto() === 'acervo'
+			|| Piano.variaveis.getNomeProduto() === 'jornaldigital'){
+			return id = '3981';
+		}
+		if (Piano.util.isRevista() && Piano.variaveis.getNomeProduto() === 'monet'){ 
+			return id = '6618';
+		}else if (Piano.util.isRevista()){
+			return id = '6697';
+		}
+
+		if(Piano.variaveis.getNomeProduto() === 'valor'){
+            return id = '6668';
+		}
+		
+		if (id === '0000')
+			GA.setEventsError('ServiceID não definido.', document.location.href + 
+				' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
+
+		return id;
+	},
 	getCodigoProduto: function(){
 		var nomeProduto = Piano.variaveis.getNomeProduto();
 		switch (nomeProduto){
@@ -347,7 +373,6 @@ Piano.paywall = {
 		setTimeout(function() {window.location.href = url;}, 1000);
 	},
 	show: function(typePaywall = null) {
-
 		Piano.typePaywall = typePaywall;
 	
 		if(!Piano.activePaywall) {
@@ -824,7 +849,6 @@ Piano.configuracao = {
 	}
 };
 
-
 Piano.construtor = {
 	initTp: function() {
 		GA.setEvents("Carregamento Piano", "Inicio InitTp");
@@ -882,9 +906,15 @@ function loadPianoExperiences(){
 }
 
 function pianoInit() { 
+	if(window.tinyCpt.debug.tiny)
+		console.log('log-method', 'pianoInit')
+
     if (window.tinyCpt.Swg.global) { 
 		window.SWG.push((subscriptions) => {
-			window.swg = subscriptions;
+			if(window.tinyCpt.debug.swg)
+				console.log('log-subscriptions', subscriptions)
+
+			swg = subscriptions;
 
 			subscriptions.setOnEntitlementsResponse(entitlementsPromise => {
 				entitlementsPromise.then(entitlements => { 

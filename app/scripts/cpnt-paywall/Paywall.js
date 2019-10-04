@@ -158,7 +158,7 @@ export default class PaywallCpt  {
 			this.GA.trigger(element); 
 
 			if(!isLogin && isUrlSwg)
-				this.SWG.subscribe();  
+				this.SWG.setUtms();  
 
             if (url && !isUrlSwg) { 
                 setTimeout(function() {
