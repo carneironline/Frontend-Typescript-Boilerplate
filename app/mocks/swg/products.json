@@ -1,5 +1,5 @@
 [
-    {
+  {
     "productName": "O Globo",
     "pianoProductName": "oglobo",
     "@context": "http://schema.org",
@@ -15,12 +15,14 @@
       "cssSelector": ".paywall"
     },
     "isPartOf": {
-      "@type": ["CreativeWork", "Product"],
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
       "name": "O Globo",
       "productID": "oglobo.globo.com:br.com.infoglobo.oglobo.site.google"
     }
   },
-  
   {
     "productName": "Blogs",
     "pianoProductName": "blogs",
@@ -37,34 +39,348 @@
       "cssSelector": ".paywall"
     },
     "isPartOf": {
-      "@type": ["CreativeWork", "Product"],
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
       "name": "O Globo",
       "productID": "oglobo.globo.com:br.com.infoglobo.oglobo.site.google"
     }
   },
-  
   {
     "productName": "Kogut",
     "pianoProductName": "kogut",
     "@context": "http://schema.org",
-          "@type": "NewsArticle",
-          "isAccessibleForFree": false,
-          "publisher": {
-              "@type": "Organization",
-              "name": "O Globo"
-          },
-          "hasPart": {
-              "@type": "WebPageElement",
-              "isAccessibleForFree": "false",
-              "cssSelector": ".paywall"
-          },
-          "isPartOf": {
-              "@type": ["CreativeWork", "Product"],
-              "name": "O Globo",
-              "productID": "oglobo.globo.com:br.com.infoglobo.oglobo.site.google"
-          }
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "O Globo"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "O Globo",
+      "productID": "oglobo.globo.com:br.com.infoglobo.oglobo.site.google"
+    }
+  },
+  {
+    "productName": "Época",
+    "pianoProductName": "epoca",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Época"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "Época",
+      "productID": "epoca.globo.com:basico"
+    }
+  },
+  {
+    "productName": "Galileu",
+    "pianoProductName": "galileu",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Galileu"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "Galileu",
+      "productID": "revistagalileu.globo.com:basico"
+    }
+  },
+  {
+    "productName": "Época Negócios",
+    "pianoProductName": "epoca-negocios",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Época Negócios"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "Época Negócios",
+      "productID": "epocanegocios.globo.com:basico"
+    }
+  },
+  {
+    "productName": "Marie Claire",
+    "pianoProductName": "marie-claire",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Marie Claire"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "Marie Claire",
+      "productID": "revistamarieclaire.globo.com:basico"
+    }
+  },
+  {
+    "productName": "Crescer",
+    "pianoProductName": "crescer",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Crescer"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "Crescer",
+      "productID": "revistacrescer.globo.com:basico"
+    }
+  },
+  {
+    "productName": "Globo Rural",
+    "pianoProductName": "globo-rural",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Globo Rural"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "Globo Rural",
+      "productID": "revistagloborural.globo.com:basico"
+    }
+  },
+  {
+    "productName": "Globo Rural",
+    "pianoProductName": "globo-rural",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Globo Rural"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "Globo Rural",
+      "productID": "revistagloborural.globo.com:basico"
+    }
+  },
+  {
+    "productName": "PEGN",
+    "pianoProductName": "pegn",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "PEGN"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "PEGN",
+      "productID": "revistapegn.globo.com:basico"
+    }
+  },
+  {
+    "productName": "Auto Esporte",
+    "pianoProductName": "auto-esporte",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Auto Esporte"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "Auto Esporte",
+      "productID": "revistaautoesporte.globo.com:basico"
+    }
+  },
+  {
+    "productName": "Vogue",
+    "pianoProductName": "vogue",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Vogue"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "Vogue",
+      "productID": "vogue.globo.com:basico"
+    }
+  },
+  {
+    "productName": "Casa Vogue",
+    "pianoProductName": "casa-vogue",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Casa Vogue"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "Casa Vogue",
+      "productID": "casavogue.globo.com:basico"
+    }
+  },
+  {
+    "productName": "GQ",
+    "pianoProductName": "gq",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "GQ"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "GQ",
+      "productID": "gq.globo.com:basico"
+    }
+  },
+  {
+    "productName": "Glamour",
+    "pianoProductName": "glamour",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Glamour"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "Glamour",
+      "productID": "revistaglamour.globo.com:basico"
+    }
   }
-  
-  ]
-  
-  
+]
