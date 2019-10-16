@@ -216,14 +216,14 @@
     }
   },
   {
-    "productName": "Globo Rural",
-    "pianoProductName": "globo-rural",
+    "productName": "Casa e Jardim",
+    "pianoProductName": "casa-e-jardim",
     "@context": "http://schema.org",
     "@type": "NewsArticle",
     "isAccessibleForFree": false,
     "publisher": {
       "@type": "Organization",
-      "name": "Globo Rural"
+      "name": "Casa e Jardim"
     },
     "hasPart": {
       "@type": "WebPageElement",
@@ -235,8 +235,8 @@
         "CreativeWork",
         "Product"
       ],
-      "name": "Globo Rural",
-      "productID": "revistagloborural.globo.com:basico"
+      "name": "Casa e Jardim",
+      "productID": "revistacasaejardim.globo.com:basico"
     }
   },
   {
