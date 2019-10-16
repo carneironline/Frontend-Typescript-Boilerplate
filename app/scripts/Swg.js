@@ -49,10 +49,11 @@ export default class Swg {
     }
 
     async getProducts() {
-        if(this.debug)
-            return await fetch('../app/mocks/swg/products.json').then(res => res.json());
+        const url = window.tinyCpt.isProduction  
+        ? 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/swg/prod/products.json' 
+        : 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/swg/dev/products.json';
 
-        return await fetch('https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/swg/products.json').then(res => res.json());
+        return await fetch(url).then(res => res.json());
     }
 
     async getProduct() { 

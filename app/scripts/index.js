@@ -270,9 +270,9 @@ Piano.metricas = {
 
 	montaRotuloGA: function() { //TODO: at Piano as setExperience() | Check on old tiny before remove
 		if(window.regrasTiny && window.regrasTiny.nomeExperiencia) {
-			return window.subsegmentacaoPiano ? regrasTiny.nomeExperiencia + " - " + subsegmentacaoPiano : regrasTiny.nomeExperiencia;
+			return window.subsegmentacaoPiano ? window.regrasTiny.nomeExperiencia + " - " + window.subsegmentacaoPiano : window.regrasTiny.nomeExperiencia;
 		} else if (window.nomeExperiencia) {
-			return window.subsegmentacaoPiano ? window.nomeExperiencia + " - " + subsegmentacaoPiano : window.nomeExperiencia;
+			return window.subsegmentacaoPiano ? window.nomeExperiencia + " - " + window.subsegmentacaoPiano : window.nomeExperiencia;
 		}
 		return " ";
 	},
@@ -296,10 +296,10 @@ Piano.metricas = {
 	},
 	executaAposPageview: function(expirou) {
 		if (!Piano.variaveis.executouPageview()) {
-			regrasTiny.fluxo = window.tpContext ? tpContext.toLowerCase() : '-';
-			regrasTiny.nomeExperiencia = window.nomeExperiencia ? window.nomeExperiencia : '';
-			Piano.metricas.setLimiteContagem(regrasTiny);
-			if (expirou == false) GA.setEvents(Piano.metricas.identificarPassagemRegister(regrasTiny), Piano.metricas.montaRotuloGA());
+			window.regrasTiny.fluxo = window.tpContext ? tpContext.toLowerCase() : '-';
+			window.regrasTiny.nomeExperiencia = window.nomeExperiencia ? window.nomeExperiencia : '';
+			Piano.metricas.setLimiteContagem(window.regrasTiny);
+			if (expirou == false) GA.setEvents(Piano.metricas.identificarPassagemRegister(window.regrasTiny), Piano.metricas.montaRotuloGA());
 			executouPageview = true;
 		}
 	},
@@ -773,11 +773,11 @@ Piano.util = {
 		return '';
 	},
 	callbackMeter: function(meterData) {
-		regrasTiny = meterData;
+		window.regrasTiny = meterData;
 		Piano.metricas.executaAposPageview(false);
 	},
 	callbackMeterExpired: function(meterData) {
-		regrasTiny = meterData;
+		window.regrasTiny = meterData;
 		Piano.variaveis.isCallbackMetterExpired = true;
 		Piano.metricas.executaAposPageview(true);
 	},
