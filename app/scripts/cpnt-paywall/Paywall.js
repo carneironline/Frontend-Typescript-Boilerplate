@@ -229,7 +229,7 @@ export default class PaywallCpt  {
   getUrlLoginRegister(type = '') {
 	const urlValidaUsuarioBarramento = window.ambienteUtilizadoPiano === 'prd' ? 'https://assinatura.oglobo.globo.com/ValidaUsuarioBarramento.html' : 'https://assinatura.globostg.globoi.com/ValidaUsuarioBarramento.html';
 	const uri = location.href;
-	const serviceId = window.tinyCpt.Product.id;
+	const serviceId = window.tinyCpt.Piano.variaveis.getServicoId() || null;
 	let str = '';
 	let urlReturn = '';
 

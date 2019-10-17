@@ -9,7 +9,7 @@ export default class Products  {
         const productsSettings = {
             Product: {
                 name: this.productName,
-                id: this.productId
+                // id: this.productId
             }
         }
 
