@@ -379,8 +379,14 @@ Piano.paywall = {
 			console.warn('Paywall - Is not avaiable')
 			Piano.triggerAdvertising(); 
 		} else { 
-			new PaywallCpt();
+			try {
+				new PaywallCpt();
 				window.hasPaywall = true;
+			}
+			catch(e) {
+				console.error('Paywall - Error on load')
+				Piano.triggerAdvertising(); 
+			}
 		}
 	}
 };
