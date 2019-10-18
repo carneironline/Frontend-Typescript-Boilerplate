@@ -373,9 +373,6 @@ Piano.paywall = {
 		setTimeout(function() {window.location.href = url;}, 1000);
 	},
 	show: function(typePaywall = null) {
-		if(window.tinyCpt.debug.paywall)
-			console.log('log-method', 'Piano.paywall.show')
-
 		Piano.typePaywall = typePaywall;
 	
 		if(!Piano.activePaywall) {
@@ -691,15 +688,15 @@ Piano.autenticacao = {
 
 Piano.util = {
 	isSection: function() {
-		return Piano.variaveis.getTipoConteudoPiano() == "section" ? true : false;
+		return Piano.variaveis.getTipoConteudoPiano() === 'section' ? true : false;
 	},
 	temVariaveisObrigatorias: function() {
-		if (typeof Piano.variaveis.getTipoConteudoPiano() == 'undefined') {
-			GA.setEventsError("Variavel tipoConteudoPiano nao esta definida", document.location.href);
+		if (typeof Piano.variaveis.getTipoConteudoPiano() === 'undefined') {
+			GA.setEventsError('Variavel tipoConteudoPiano nao esta definida', document.location.href);
 			return false;
 		};
-		if (typeof Piano.variaveis.getNomeProduto() == 'undefined') {
-			GA.setEventsError("Variavel nomeProdutoPiano nao esta definida", document.location.href);
+		if (typeof Piano.variaveis.getNomeProduto() === 'undefined') {
+			GA.setEventsError('Variavel nomeProdutoPiano nao esta definida', document.location.href);
 			return false;
 		};
 		return true;
@@ -827,8 +824,7 @@ Piano.configuracao = {
 			'idSandboxTinypassRevistas':'VnaP3rYVKc',
 			'setSandBox':'true',
 			'urlSandboxPiano':'https://sandbox.tinypass.com/xbuilder/experience/load?aid=dXu7dvFKRi',
-			'urlSandboxPianoRevistas':'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
-			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/'+Piano.variaveis.getServicoId()+'/autorizacao-acesso',
+			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/'+ window.tinyCpt.Product.id +'/autorizacao-acesso',
 			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
 			'urlDominioSiteOGlobo':''+Piano.util.isDominioOGlobo()+'/'
 		},
@@ -837,8 +833,7 @@ Piano.configuracao = {
 			'idSandboxTinypassRevistas':'VnaP3rYVKc',
 			'setSandBox':'false',
 			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
-			'urlSandboxPianoRevistas':'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
-			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/'+Piano.variaveis.getServicoId()+'/autorizacao-acesso',
+			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/'+ window.tinyCpt.Product.id +'/autorizacao-acesso',
 			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
 			'urlDominioSiteOGlobo':''+Piano.util.isDominioOGlobo()+'/'
 		},
@@ -847,14 +842,12 @@ Piano.configuracao = {
 			'idSandboxTinypassRevistas':'VnaP3rYVKc',
 			'setSandBox':'false',
 			'urlSandboxPiano':'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
-			'urlSandboxPianoRevistas':'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
-			'urlVerificaLeitor':'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/'+Piano.variaveis.getServicoId()+'/autorizacao-acesso',
+			'urlVerificaLeitor':'https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/'+ window.tinyCpt.Product.id +'/autorizacao-acesso',
 			'urlDominioPaywall':'https://assinatura.oglobo.globo.com/',
 			'urlDominioSiteOGlobo':''+Piano.util.isDominioOGlobo()+'/'
 		}
 	}
 };
-
 
 Piano.construtor = {
 	initTp: function() {
@@ -899,9 +892,6 @@ Piano.construtor = {
 };
 
 function loadPianoExperiences(){
-	if(window.tinyCpt.debug.tiny)
-		console.log('log-method', 'loadPianoExperiences')
-
 	var a = document.createElement("script");
 	a.type = "text/javascript";
 	a.async = true;
@@ -933,10 +923,11 @@ function pianoInit() {
 					GA.setEvents("Carregamento SWG", "Entitlements recebidos");
 
 					if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
-						if (Piano !== 'undefined'){
+						try{
 							window.tinyCpt.Piano.construtor.initTp();
 							loadPianoExperiences();
-						}else{
+						}
+						catch(error){
 							GA.setEventsError("Piano nao foi carregada corretamente!", document.location.href);
 						}
 					}

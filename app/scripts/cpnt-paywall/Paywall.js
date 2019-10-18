@@ -229,22 +229,23 @@ export default class PaywallCpt  {
   getUrlLoginRegister(type = '') {
 	const urlValidaUsuarioBarramento = window.ambienteUtilizadoPiano === 'prd' ? 'https://assinatura.oglobo.globo.com/ValidaUsuarioBarramento.html' : 'https://assinatura.globostg.globoi.com/ValidaUsuarioBarramento.html';
 	const uri = location.href;
+	const serviceId = window.tinyCpt.Piano.variaveis.getServicoId() || null;
 	let str = '';
 	let urlReturn = '';
 
 	if(!this.debug && this.Piano.isDefined) {
 		urlReturn = encodeURIComponent(
 			urlValidaUsuarioBarramento + '?codigoProduto=' +  this.Piano.content.variaveis.getCodigoProduto() 
-			+ '&serviceId=' + this.Piano.content.variaveis.getServicoId()
+			+ '&serviceId=' + serviceId
 			+ '&ambienteUtilizado=' + window.ambienteUtilizadoPiano
 			+ '&nomeProduto=' + this.Piano.content.variaveis.getNomeProduto()
 			+ '&urlRetorno=' + uri
 		);
 
 		if(type === 'register') {
-			str = `${this.domain}cadastro/${this.Piano.content.variaveis.getServicoId()}?url=${urlReturn}`;
+			str = `${this.domain}cadastro/${serviceId}?url=${urlReturn}`;
 		} else {
-			str = `${this.domain}login/${this.Piano.content.variaveis.getServicoId()}?url=${urlReturn}`;
+			str = `${this.domain}login/${serviceId}?url=${urlReturn}`;
 		}
 	}
 
