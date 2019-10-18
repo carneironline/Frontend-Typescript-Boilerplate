@@ -952,7 +952,8 @@ async function tinyInit() {
 		await Swg.init();
 	}
 	catch(e) { console.error(e) }
-
+	new PaywallCpt();
+	window.hasPaywall = true;
 	pianoInit(); 
 };
 

@@ -46,14 +46,17 @@ export default class Swg {
         if( (this.disabled || !this.isDefined) || !utmsProps ) return;
 
         const productJson = await this.getProduct();
-        
+     
         window.tinyCpt.Swg.global.subscribe(productJson ? productJson.offer : 'br.com.infoglobo.oglobo.site.google');
     }
 
     async getProducts() {
-        const url = window.tinyCpt.isProduction  
+        let url = window.tinyCpt.isProduction  
         ? 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/swg/prod/products.json' 
         : 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/swg/dev/products.json';
+
+        if(window.tinyCpt.debug.swg)
+        url = 'app/mocks/swg/products.json'
 
         return await fetch(url).then(res => res.json());
     }
