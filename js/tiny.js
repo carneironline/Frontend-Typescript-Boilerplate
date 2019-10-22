@@ -571,7 +571,6 @@ function () {
                 return fetch(url).then(function (res) {
                   return res.json();
                 });
-
               case 3:
                 return _context.abrupt("return", _context.sent);
 
