@@ -821,7 +821,7 @@ Piano.configuracao = {
 	jsonConfiguracaoTinyPass: {
 		'int': {
 			'idSandboxTinypass':'dXu7dvFKRi',
-			'idSandboxTinypassRevistas':'VnaP3rYVKc',
+			'idSandboxTinypassRevistas':'MctFgRCEsu',
 			'setSandBox':'true',
 			'urlSandboxPiano':'https://sandbox.tinypass.com/xbuilder/experience/load?aid=dXu7dvFKRi',
 			'urlSandboxPianoRevistas':'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
