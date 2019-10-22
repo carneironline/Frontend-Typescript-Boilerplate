@@ -957,7 +957,6 @@ async function tinyInit() {
 		await Swg.init();
 	}
 	catch(e) { console.error(e) }
-
 	pianoInit(); 
 };
 
