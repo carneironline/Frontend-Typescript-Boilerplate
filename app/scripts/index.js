@@ -821,10 +821,10 @@ Piano.configuracao = {
 	jsonConfiguracaoTinyPass: {
 		'int': {
 			'idSandboxTinypass':'dXu7dvFKRi',
-			'idSandboxTinypassRevistas':'VnaP3rYVKc',
+			'idSandboxTinypassRevistas':'MctFgRCEsu',
 			'setSandBox':'true',
 			'urlSandboxPiano':'https://sandbox.tinypass.com/xbuilder/experience/load?aid=dXu7dvFKRi',
-			'urlSandboxPianoRevistas':'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
+			'urlSandboxPianoRevistas':'https://sandbox.tinypass.com/xbuilder/experience/load?aid=MctFgRCEsu',
 			'urlVerificaLeitor':'https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/'+ Piano.variaveis.getServicoId() +'/autorizacao-acesso',
 			'urlDominioPaywall':'https://assinatura.globostg.globoi.com/',
 			'urlDominioSiteOGlobo':''+Piano.util.isDominioOGlobo()+'/'
