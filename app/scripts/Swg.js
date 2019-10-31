@@ -58,9 +58,12 @@ export default class Swg {
     }
 
     async getProducts() {
-        const url = window.tinyCpt.isProduction  
+        let url = window.tinyCpt.isProduction  
         ? 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/swg/prod/products.json' 
         : 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/swg/dev/products.json';
+
+        if(window.tinyCpt.debug.swg)
+        url = 'app/mocks/swg/products.json'
 
         return await fetch(url).then(res => res.json());
     }
@@ -74,7 +77,7 @@ export default class Swg {
     }
 
     async removeProperties(obj) { 
-        const propsToRemove = ['productName', 'pianoProductName'];
+        const propsToRemove = ['productName', 'pianoProductName', 'offer'];
         const newObj = Object.assign({}, obj);
 
         propsToRemove.forEach(element => {
