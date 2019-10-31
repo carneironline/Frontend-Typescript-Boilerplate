@@ -158,7 +158,7 @@ export default class PaywallCpt  {
 			this.GA.trigger(element); 
 
 			if(!isLogin && isUrlSwg)
-				this.SWG.setUtms();  
+				this.SWG.setUtms(element);  
 
             if (url && !isUrlSwg) { 
                 setTimeout(function() {
@@ -264,7 +264,7 @@ export default class PaywallCpt  {
 			${this.templateVars.title}
 		</div>
 		  <div class="paywall-cpt-wrap__top">
-		  	<a href="${this.templateVars.topLink}" data-ga-image-position="top" data-ga-action="Clique em link" data-ga-label="Link 1 -" data-ga-resetUtp="true" data-href-target="${this.templateVars.targetBlank}">
+		  	<a href="${this.templateVars.topLink}" data-area="top" data-ga-image-position="top" data-ga-action="Clique em link" data-ga-label="Link 1 -" data-ga-resetUtp="true" data-href-target="${this.templateVars.targetBlank}">
 				<picture>
 					<source srcset="${this.templateVars.topMobi}" media="(max-width: 1023px)">
 					<source srcset="${this.templateVars.topDesk}" media="(min-width: 1024px)">
@@ -276,7 +276,7 @@ export default class PaywallCpt  {
 		  	${this.templateVars.loginTag}
 		  </div>
 		  <div class="paywall-cpt-wrap__left">
-		  	<a href="${this.templateVars.leftLink}" data-ga-action="Clique em link" data-ga-label="Link 4 - Banner oferta esquerda" data-ga-resetUtp="true" data-href-target="${this.templateVars.targetBlank}">
+		  	<a href="${this.templateVars.leftLink}" data-area="left" data-ga-action="Clique em link" data-ga-label="Link 4 - Banner oferta esquerda" data-ga-resetUtp="true" data-href-target="${this.templateVars.targetBlank}">
 				<picture>
 					<source srcset="${this.templateVars.leftMobi}" media="(max-width: 1023px)">
 					<source srcset="${this.templateVars.leftDesk}" media="(min-width: 1024px)">
@@ -285,7 +285,7 @@ export default class PaywallCpt  {
 			</a>
 		  </div>
 		  <div class="paywall-cpt-wrap__right">
-		  	<a href="${this.templateVars.rightLink}"  data-ga-action="Clique em link" data-ga-label="Link 5 - Banner oferta direita" data-ga-resetUtp="true" data-href-target="${this.templateVars.targetBlank}">
+		  	<a href="${this.templateVars.rightLink}" data-area="right" data-ga-action="Clique em link" data-ga-label="Link 5 - Banner oferta direita" data-ga-resetUtp="true" data-href-target="${this.templateVars.targetBlank}">
 				<picture>
 					<source srcset="${this.templateVars.rightMobi}" media="(max-width: 1023px)">
 					<source srcset="${this.templateVars.rightDesk}" media="(min-width: 1024px)">

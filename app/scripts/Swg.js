@@ -27,9 +27,17 @@ export default class Swg {
         };
     }
 
-    async setUtms() {                 
+    setUtms(element) {                 
         const urlParams = new URLSearchParams(window.location.search.substring(1));
         const utmsProps = (typeof window.glbPaywall.swg !== 'undefined' && typeof window.glbPaywall.swg.utms !== 'undefined') ? window.glbPaywall.swg.utms : null; 
+        let swgProductId = null;
+
+        switch(element.dataset.area) {
+            case 'top': swgProductId = window.glbPaywall.topSwgProductid; break;
+            case 'left': swgProductId = window.glbPaywall.leftSwgProductid; break;
+            case 'right': swgProductId = window.glbPaywall.rightSwgProductid; break;
+        }
+
 
         utmsProps.forEach((item) => { 
             let name = item.name.toLowerCase();
@@ -44,10 +52,9 @@ export default class Swg {
         }
 
         if( (this.disabled || !this.isDefined) || !utmsProps ) return;
-
-        const productJson = await this.getProduct();
-     
-        window.tinyCpt.Swg.global.subscribe(productJson ? productJson.offer : 'br.com.infoglobo.oglobo.site.google');
+        
+        if(swgProductId)
+            window.tinyCpt.Swg.global.subscribe(swgProductId);
     }
 
     async getProducts() {
