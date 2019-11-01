@@ -877,7 +877,7 @@ Piano.construtor = {
 			tp.push(["setCustomVariable", "conteudoExclusivo", true]);
 		}
 		
-		if (typeof swg !== 'undefined' && swgEntitlements.enablesThis()) {
+		if (typeof swg !== 'undefined' && (typeof swgEntitlements !== 'undefined' && swgEntitlements.enablesThis()) ) {
 			Piano.google.isSpecificGoogleUser(swgEntitlements);
 			Piano.autenticacao.defineUsuarioPiano(true,"AUTORIZADO", true, "");
 		}else{
