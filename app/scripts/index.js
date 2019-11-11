@@ -9,7 +9,6 @@ const GA = new GAModule();
 
 GA.setGlobalVars();
 
-Piano.activePaywall = true;
 Piano.typePaywall = null;
 Piano.variaveis = {
 	ambientesAceitos: "int,qlt,prd",
@@ -375,25 +374,20 @@ Piano.paywall = {
 	show: function(typePaywall = null) {
 		Piano.typePaywall = typePaywall;
 	
-		if(!Piano.activePaywall) {
-			console.warn('Paywall - Is not avaiable')
+		try {
+			new PaywallCpt();			
+			window.hasPaywall = true;
+		}
+		catch(e) {
+			console.error('Paywall - Error on load')
 			Piano.triggerAdvertising(); 
-		} else { 
-			try {
-				new PaywallCpt();
-				window.hasPaywall = true;
-			}
-			catch(e) {
-				console.error('Paywall - Error on load')
-				Piano.triggerAdvertising(); 
-			}
 		}
 	}
 };
 
 Piano.triggerAdvertising = function() {
-	let event = new CustomEvent('clearForAds')
 	window.hasPaywall = false;
+	let event = new CustomEvent('clearForAds')
 	document.dispatchEvent(event);
 };
 
@@ -401,20 +395,16 @@ Piano.checkPaywall = function() {
 	let count = 0;
 	
 	const checkGate = setInterval(() => {
-		let hasGate = document.querySelector('.barreira-register-paywall, .paywall-cpt');
 		let hasPub = document.querySelector('#pub-retangulo-1 iframe, #pub-retangulo-2 iframe, #pub-fullbanner-1 iframe');
 
-		if(count > 2) {
+		if(count === 19) 
 			Piano.triggerAdvertising();
-			Piano.activePaywall = false;
-			clearInterval(checkGate);
-		}
 
-		if( ( (hasGate && Piano.activePaywall) || hasPub) || count > 8) 
+		if( ( (window.hasPaywall || window.hasPaywall === false) || hasPub) || count > 19) 
 			clearInterval(checkGate);
 
 		count++;
-	}, 1000);
+	}, 500);
 };
 
 Piano.registerPaywall = { 
