@@ -393,6 +393,7 @@ Piano.paywall = {
 
 Piano.triggerAdvertising = function() {
 	let event = new CustomEvent('clearForAds')
+	window.hasPaywall = false;
 	document.dispatchEvent(event);
 };
 
