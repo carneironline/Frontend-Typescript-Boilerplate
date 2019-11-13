@@ -258,6 +258,19 @@ Piano.krux = {
 	}
 };
 
+Piano.regionalizacao = {	
+	getRegion: function() {
+		localStorage.getItem('kxglobo_geo').split('&').forEach(item => {
+			let data = item.split('=');
+			let key = data[0];
+			let value = data[1];
+			if (key === 'region') {
+				tp.push(["setCustomVariable", "region", value]);				
+			}
+		}); 
+	}
+};
+
 Piano.metricas = {
 	enviaEventosGA: function(_GAAcao, _GARotulo) { //TODO: arquivo tinypass.js, inserido pela Piano, utiliza essa função
 		const isProductValor = (typeof window.nomeProdutoPiano !== 'undefined' && window.nomeProdutoPiano === 'valor') ? true : false;
@@ -884,6 +897,7 @@ Piano.construtor = {
 			Piano.autenticacao.verificaUsuarioLogadoNoBarramento(Helpers.getCookie(Piano.variaveis.constante.cookie.GCOM), Helpers.getCookie(Piano.variaveis.constante.cookie.UTP));
 		}
 		
+		Piano.regionalizacao.getRegion();
 		Piano.krux.obtemSegmentacao();
 
 		tp.push(["setCustomVariable", "bannerContadorLigado", true]);
