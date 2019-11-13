@@ -259,7 +259,7 @@ Piano.krux = {
 };
 
 Piano.regionalizacao = {	
-	obtemRegion: function() {
+	getRegion: function() {
 		localStorage.getItem('kxglobo_geo').split('&').forEach(item => {
 			let data = item.split('=');
 			let key = data[0];
@@ -897,7 +897,7 @@ Piano.construtor = {
 			Piano.autenticacao.verificaUsuarioLogadoNoBarramento(Helpers.getCookie(Piano.variaveis.constante.cookie.GCOM), Helpers.getCookie(Piano.variaveis.constante.cookie.UTP));
 		}
 		
-		Piano.regionalizacao.obtemRegion();
+		Piano.regionalizacao.getRegion();
 		Piano.krux.obtemSegmentacao();
 
 		tp.push(["setCustomVariable", "bannerContadorLigado", true]);
