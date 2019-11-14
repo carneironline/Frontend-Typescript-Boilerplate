@@ -260,14 +260,17 @@ Piano.krux = {
 
 Piano.regionalizacao = {	
 	getRegion: function() {
-		localStorage.getItem('kxglobo_geo').split('&').forEach(item => {
-			let data = item.split('=');
-			let key = data[0];
-			let value = data[1];
-			if (key === 'region') {
-				tp.push(["setCustomVariable", "region", value]);				
-			}
-		}); 
+		var kruxGeo = localStorage.getItem('kxglobo_geo');
+		if (kruxGeo) {
+			kruxGeo.split('&').forEach(item => {
+				let data = item.split('=');
+				let key = data[0];
+				let value = data[1];
+				if (key === 'region') {
+					tp.push(["setCustomVariable", "region", value]);				
+				}
+			});
+		}
 	}
 };
 
