@@ -427,7 +427,7 @@ Piano.registerPaywall = {
 	mostrarBarreira: function(versao = null, tipo = null) {
 		Piano.typePaywall = tipo;
 
-		if(!Piano.activePaywall || (!versao || !Piano.typePaywall) ) {
+		if(!versao || !Piano.typePaywall ) {
 			Piano.triggerAdvertising(); 
 		} else {
 			Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-paywall-piano/"+versao+"/styles/styles.css'>");
