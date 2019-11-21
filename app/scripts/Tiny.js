@@ -3,7 +3,7 @@ import ProductsModule from './Products';
 export default class Tiny  {
 	constructor() { 
         this.Products = new ProductsModule();
-        window.hasPaywall = window.hasPaywall || false;
+        window.hasPaywall = window.hasPaywall || null;
         window.tp = window.tp || [];
         window.Piano = window.Piano || {};
         window.PaywallAnalytics = window.PaywallAnalytics || {};
