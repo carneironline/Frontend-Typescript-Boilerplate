@@ -401,26 +401,63 @@ Piano.paywall = {
 	}
 };
 
+Piano.checkPianoActive = function () { console.log('checkPianoActive')
+	let count = 0
+	let hasTp = false
+	let hasExperiences = false
+	let hasLastresults = false
+	let hasResults = false
+	let hasResultsEvents = false
+	
+	let interval = setInterval(function () {
+		if(window.tp !== 'undefined' 
+          && window.tp.experience
+          && window.tp.experience._getLastExecutionResult()
+          && window.tp.experience._getLastExecutionResult().result
+          && window.tp.experience._getLastExecutionResult().result.events)
+	     {
+			Piano.checkPaywall(window.tp.experience._getLastExecutionResult().result.events)
+			clearInterval(interval)
+		} 
+		else {
+			if(count === 10) {
+				Piano.triggerAdvertising()
+				clearInterval(interval)
+			}
+				
+			
+			count++
+		}
+		
+	  }, 500);
+
+};
+
+
+Piano.checkPaywall = function(PianoResultEvents = null) { 
+   let hasRunJsWithPaywall = false
+
+	if(PianoResultEvents) {  console.log('PianoResultEvents') 
+        PianoResultEvents.forEach(item => {
+            if(item.eventType === 'runJs') {
+                if(item.eventParams.snippet !== 'undefined' && item.eventParams.snippet.includes('paywall.show')) {
+                    window.hasPaywall = true
+                    console.log(item)
+                    hasRunJsWithPaywall = true
+                }
+            }
+        })
+
+        if(!hasRunJsWithPaywall)
+           Piano.triggerAdvertising()
+    }
+
+};
+
 Piano.triggerAdvertising = function() {
 	window.hasPaywall = false;
 	let event = new CustomEvent('clearForAds')
 	document.dispatchEvent(event);
-};
-
-Piano.checkPaywall = function() {
-	let count = 0;
-	
-	const checkGate = setInterval(() => {
-		let hasPub = document.querySelector('#pub-retangulo-1 iframe, #pub-retangulo-2 iframe, #pub-fullbanner-1 iframe');
-
-		if(count === 19) 
-			Piano.triggerAdvertising();
-
-		if( ( (window.hasPaywall || window.hasPaywall === false) || hasPub) || count > 19) 
-			clearInterval(checkGate);
-
-		count++;
-	}, 500);
 };
 
 Piano.registerPaywall = { 
@@ -919,6 +956,8 @@ function loadPianoExperiences(){
 }
 
 function pianoInit() { 
+	window.Piano.checkPianoActive()
+	
 	if(window.tinyCpt.debug.tiny)
 		console.log('log-method', 'pianoInit')
 
@@ -954,7 +993,6 @@ function pianoInit() {
             loadPianoExperiences();
         }
     }
-    window.tinyCpt.Piano.checkPaywall();
 }
 
 async function tinyInit() {
