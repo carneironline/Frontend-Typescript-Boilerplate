@@ -401,13 +401,8 @@ Piano.paywall = {
 	}
 };
 
-Piano.checkPianoActive = function () { console.log('checkPianoActive')
+Piano.checkPianoActive = function () { 
 	let count = 0
-	let hasTp = false
-	let hasExperiences = false
-	let hasLastresults = false
-	let hasResults = false
-	let hasResultsEvents = false
 	
 	let interval = setInterval(function () {
 		if(window.tp !== 'undefined' 
@@ -425,7 +420,6 @@ Piano.checkPianoActive = function () { console.log('checkPianoActive')
 				clearInterval(interval)
 			}
 				
-			
 			count++
 		}
 		
@@ -433,16 +427,14 @@ Piano.checkPianoActive = function () { console.log('checkPianoActive')
 
 };
 
-
 Piano.checkPaywall = function(PianoResultEvents = null) { 
    let hasRunJsWithPaywall = false
 
-	if(PianoResultEvents) {  console.log('PianoResultEvents') 
+	if(PianoResultEvents) { 
         PianoResultEvents.forEach(item => {
             if(item.eventType === 'runJs') {
                 if(item.eventParams.snippet !== 'undefined' && item.eventParams.snippet.includes('paywall.show')) {
                     window.hasPaywall = true
-                    console.log(item)
                     hasRunJsWithPaywall = true
                 }
             }
