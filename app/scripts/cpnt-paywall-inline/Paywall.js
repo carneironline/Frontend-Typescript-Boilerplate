@@ -1,41 +1,26 @@
 import PianoModule from '../Piano';
-import PaywallGAModule from './Paywall-ga';
-import SwgModule from '../Swg';
-import FbModule from '../FB';
 
 export default class PaywallCptInline  {
 	constructor() { 
-	this.Piano = new PianoModule();
-	this.GA = new PaywallGAModule();
-	this.SWG = new SwgModule();
-	this.FB = new FbModule(this.GA.metrics.fb);
+		this.Piano = new PianoModule();
 
-	this.debug = window.tinyCpt.debug.paywall;
-	this.domain = window.tinyCpt.isProduction ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/';	
-	this.createTemplate()
-	this.activeEvents()
-	window.PaywallCptInline = this;
+		this.domain = window.tinyCpt.isProduction ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/';	
+		this.paywallId = '#paywall-inline'
+		this.createTemplate()
+		this.activeEvents()
+		
+		window.PaywallCptInline = this;
 
-	window.tinyCpt.Paywall = {
-		domain: this.domain,
-		GA: this.GA.metrics,
-	};
-  }
-
-	setDebugTemplateSettings() {
-		let obj = {};
-		obj.imageMobi = 'https://via.placeholder.com/300x150';
-		obj.imageDesk = 'https://via.placeholder.com/804x128';
-		obj.link = 'https://google.com?l1';
-
-		window.glbPaywall = Object.assign({}, window.glbPaywall, obj);
+		window.tinyCpt.Paywall = {
+			domain: this.domain
+		}
 	}
 
+
     activeEvents() {
-		this.classname = document.getElementsByClassName("btn-read-more");
-		Array.from(this.classname).forEach(element => {
+		this.classname = document.querySelectorAll(".btn-read-more");
+		this.classname.forEach(element => {
 			element.addEventListener('click', () => {
-			console.log(element)
 			this.createTemplate(element)
 			})
 		})
@@ -50,7 +35,7 @@ export default class PaywallCptInline  {
 				const removedElement = Array.from(element.parentNode.parentNode.childNodes).find((element) => element.className === 'other-content')
 				removedElement.parentNode.removeChild(removedElement)
 			} else {
-				const paywallInline = document.getElementById('paywall-inline')
+				const paywallInline = document.querySelector(this.paywallId)
 				paywallInline.parentNode.removeChild(paywallInline)
 			}
 		}
@@ -59,7 +44,7 @@ export default class PaywallCptInline  {
   get template() { 
 	const template = `
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway&display=swap" rel="stylesheet">
-		<div class="paywall-cpt-inline" id="paywall-inline"> 
+		<div class="paywall-cpt-inline" id=${this.paywallId}> 
 			<h1 class ="paywall-cpt-inline-title">Para continuar sua leitura, é preciso se cadastrar. <br> É rápido e grátis!</h1>
 			<button class="paywall-cpt-inline-button">
 				<span class="paywall-cpt-inline-span">Cadastre-se gratuitamente agora</span>
