@@ -5,7 +5,7 @@ export default class PaywallCptInline  {
 		this.Piano = new PianoModule();
 
 		this.domain = window.tinyCpt.isProduction ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/';	
-		this.paywallId = '#paywall-inline'
+		this.paywallId = 'paywall-inline'
 		this.createTemplate()
 		this.activeEvents()
 		
@@ -35,7 +35,7 @@ export default class PaywallCptInline  {
 				const removedElement = Array.from(element.parentNode.parentNode.childNodes).find((element) => element.className === 'other-content')
 				removedElement.parentNode.removeChild(removedElement)
 			} else {
-				const paywallInline = document.querySelector(this.paywallId)
+				const paywallInline = document.querySelector(`#${this.paywallId}`)
 				paywallInline.parentNode.removeChild(paywallInline)
 			}
 		}
