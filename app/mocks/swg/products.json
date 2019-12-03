@@ -2,7 +2,6 @@
   {
     "productName": "O Globo",
     "pianoProductName": "oglobo",
-    "offer": "br.com.infoglobo.oglobo.site.google",
     "@context": "http://schema.org",
     "@type": "NewsArticle",
     "isAccessibleForFree": false,
@@ -27,7 +26,6 @@
   {
     "productName": "Blogs",
     "pianoProductName": "blogs",
-    "offer": "br.com.infoglobo.oglobo.site.google",
     "@context": "http://schema.org",
     "@type": "NewsArticle",
     "isAccessibleForFree": false,
@@ -52,7 +50,6 @@
   {
     "productName": "Kogut",
     "pianoProductName": "kogut",
-    "offer": "br.com.infoglobo.oglobo.site.google",
     "@context": "http://schema.org",
     "@type": "NewsArticle",
     "isAccessibleForFree": false,
@@ -77,7 +74,6 @@
   {
     "productName": "Época",
     "pianoProductName": "epoca",
-    "offer": "swg_teste_premium_mensal_1.99",
     "@context": "http://schema.org",
     "@type": "NewsArticle",
     "isAccessibleForFree": false,
@@ -102,7 +98,6 @@
   {
     "productName": "Galileu",
     "pianoProductName": "galileu",
-    "offer": "swg_teste_premium_mensal_1.99",
     "@context": "http://schema.org",
     "@type": "NewsArticle",
     "isAccessibleForFree": false,
@@ -127,7 +122,6 @@
   {
     "productName": "Época Negócios",
     "pianoProductName": "epoca-negocios",
-    "offer": "swg_teste_premium_mensal_1.99",
     "@context": "http://schema.org",
     "@type": "NewsArticle",
     "isAccessibleForFree": false,
@@ -152,7 +146,6 @@
   {
     "productName": "Marie Claire",
     "pianoProductName": "marie-claire",
-    "offer": "swg_teste_premium_mensal_1.99",
     "@context": "http://schema.org",
     "@type": "NewsArticle",
     "isAccessibleForFree": false,
@@ -177,7 +170,6 @@
   {
     "productName": "Crescer",
     "pianoProductName": "crescer",
-    "offer": "swg_teste_premium_mensal_1.99",
     "@context": "http://schema.org",
     "@type": "NewsArticle",
     "isAccessibleForFree": false,
@@ -202,7 +194,6 @@
   {
     "productName": "Globo Rural",
     "pianoProductName": "globo-rural",
-    "offer": "swg_teste_premium_mensal_1.99",
     "@context": "http://schema.org",
     "@type": "NewsArticle",
     "isAccessibleForFree": false,
@@ -227,7 +218,6 @@
   {
     "productName": "Casa e Jardim",
     "pianoProductName": "casa-e-jardim",
-    "offer": "swg_teste_premium_mensal_1.99",
     "@context": "http://schema.org",
     "@type": "NewsArticle",
     "isAccessibleForFree": false,
@@ -252,7 +242,6 @@
   {
     "productName": "PEGN",
     "pianoProductName": "pegn",
-    "offer": "swg_teste_premium_mensal_1.99",
     "@context": "http://schema.org",
     "@type": "NewsArticle",
     "isAccessibleForFree": false,
@@ -277,7 +266,6 @@
   {
     "productName": "Auto Esporte",
     "pianoProductName": "auto-esporte",
-    "offer": "swg_teste_premium_mensal_1.99",
     "@context": "http://schema.org",
     "@type": "NewsArticle",
     "isAccessibleForFree": false,
@@ -302,7 +290,6 @@
   {
     "productName": "Vogue",
     "pianoProductName": "vogue",
-    "offer": "swg_teste_premium_mensal_1.99",
     "@context": "http://schema.org",
     "@type": "NewsArticle",
     "isAccessibleForFree": false,
@@ -327,7 +314,6 @@
   {
     "productName": "Casa Vogue",
     "pianoProductName": "casa-vogue",
-    "offer": "swg_teste_premium_mensal_1.99",
     "@context": "http://schema.org",
     "@type": "NewsArticle",
     "isAccessibleForFree": false,
@@ -352,7 +338,6 @@
   {
     "productName": "GQ",
     "pianoProductName": "gq",
-    "offer": "swg_teste_premium_mensal_1.99",
     "@context": "http://schema.org",
     "@type": "NewsArticle",
     "isAccessibleForFree": false,
@@ -377,7 +362,6 @@
   {
     "productName": "Glamour",
     "pianoProductName": "glamour",
-    "offer": "swg_teste_premium_mensal_1.99",
     "@context": "http://schema.org",
     "@type": "NewsArticle",
     "isAccessibleForFree": false,

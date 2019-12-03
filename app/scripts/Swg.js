@@ -27,7 +27,7 @@ export default class Swg {
         };
     }
 
-    async setUtms() {                 
+    setUtms() {                 
         const urlParams = new URLSearchParams(window.location.search.substring(1));
         const utmsProps = (typeof window.glbPaywall.swg !== 'undefined' && typeof window.glbPaywall.swg.utms !== 'undefined') ? window.glbPaywall.swg.utms : null; 
 
@@ -44,19 +44,14 @@ export default class Swg {
         }
 
         if( (this.disabled || !this.isDefined) || !utmsProps ) return;
-
-        const productJson = await this.getProduct();
-     
-        window.tinyCpt.Swg.global.subscribe(productJson ? productJson.offer : 'br.com.infoglobo.oglobo.site.google');
+        
+        window.tinyCpt.Swg.global.subscribe('br.com.infoglobo.oglobo.swg.google');
     }
 
     async getProducts() {
-        let url = window.tinyCpt.isProduction  
+        const url = window.tinyCpt.isProduction  
         ? 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/swg/prod/products.json' 
         : 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/swg/dev/products.json';
-
-        if(window.tinyCpt.debug.swg)
-        url = 'app/mocks/swg/products.json'
 
         return await fetch(url).then(res => res.json());
     }
@@ -70,7 +65,7 @@ export default class Swg {
     }
 
     async removeProperties(obj) { 
-        const propsToRemove = ['productName', 'pianoProductName', 'offer'];
+        const propsToRemove = ['productName', 'pianoProductName'];
         const newObj = Object.assign({}, obj);
 
         propsToRemove.forEach(element => {

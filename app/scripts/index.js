@@ -3,13 +3,13 @@ import TinyModule from './Tiny';
 import GAModule from './GA';
 import SwgModule from './Swg';
 import PaywallCpt from './cpnt-paywall/Paywall';
+import PaywallCptInline from './cpnt-paywall-inline/Paywall';
 
 const Tiny = new TinyModule();
 const GA = new GAModule();
 
 GA.setGlobalVars();
 
-Piano.activePaywall = true;
 Piano.typePaywall = null;
 Piano.variaveis = {
 	ambientesAceitos: "int,qlt,prd",
@@ -258,6 +258,22 @@ Piano.krux = {
 	}
 };
 
+Piano.regionalizacao = {	
+	getRegion: function() {
+		var kruxGeo = localStorage.getItem('kxglobo_geo');
+		if (kruxGeo) {
+			kruxGeo.split('&').forEach(item => {
+				let data = item.split('=');
+				let key = data[0];
+				let value = data[1];
+				if (key === 'region') {
+					tp.push(["setCustomVariable", "region", value]);				
+				}
+			});
+		}
+	}
+};
+
 Piano.metricas = {
 	enviaEventosGA: function(_GAAcao, _GARotulo) { //TODO: arquivo tinypass.js, inserido pela Piano, utiliza essa função
 		const isProductValor = (typeof window.nomeProdutoPiano !== 'undefined' && window.nomeProdutoPiano === 'valor') ? true : false;
@@ -375,52 +391,81 @@ Piano.paywall = {
 	show: function(typePaywall = null) {
 		Piano.typePaywall = typePaywall;
 	
-		if(!Piano.activePaywall) {
-			console.warn('Paywall - Is not avaiable')
+		try {
+			new PaywallCpt();			
+			window.hasPaywall = true;
+		}
+		catch(e) {
+			console.error('Paywall - Error on load')
 			Piano.triggerAdvertising(); 
-		} else { 
-			try {
-				new PaywallCpt();
-				window.hasPaywall = true;
-			}
-			catch(e) {
-				console.error('Paywall - Error on load')
-				Piano.triggerAdvertising(); 
-			}
+		}
+	},
+	analytic: function () {
+		try {
+			new PaywallCptInline();
+			window.hasPaywall = true
+		} catch (err) {
+			console.error('Paywall - Error on load', err)
 		}
 	}
 };
 
-Piano.triggerAdvertising = function() {
-	let event = new CustomEvent('clearForAds')
-	document.dispatchEvent(event);
+Piano.checkPianoActive = function () { 
+	let count = 0
+	
+	let interval = setInterval(function () {
+		if(window.tp !== 'undefined' 
+          && window.tp.experience
+          && window.tp.experience._getLastExecutionResult()
+          && window.tp.experience._getLastExecutionResult().result
+          && window.tp.experience._getLastExecutionResult().result.events)
+	     {
+			Piano.checkPaywall(window.tp.experience._getLastExecutionResult().result.events)
+			clearInterval(interval)
+		} 
+		else {
+			if(count === 10) {
+				Piano.triggerAdvertising()
+				clearInterval(interval)
+			}
+				
+			count++
+		}
+		
+	  }, 500);
+
 };
 
-Piano.checkPaywall = function() {
-	let count = 0;
-	
-	const checkGate = setInterval(() => {
-		let hasGate = document.querySelector('.barreira-register-paywall, .paywall-cpt');
-		let hasPub = document.querySelector('#pub-retangulo-1 iframe, #pub-retangulo-2 iframe, #pub-fullbanner-1 iframe');
+Piano.checkPaywall = function(PianoResultEvents = null) { 
+   let hasRunJsWithPaywall = false
 
-		if(count > 2) {
-			Piano.triggerAdvertising();
-			Piano.activePaywall = false;
-			clearInterval(checkGate);
-		}
+	if(PianoResultEvents) { 
+        PianoResultEvents.forEach(item => {
+            if(item.eventType === 'runJs') {
+                if(item.eventParams.snippet !== 'undefined' && (item.eventParams.snippet.includes('paywall.show') || item.eventParams.snippet.includes('mostrarBarreira') ) ) {
+                    window.hasPaywall = true
+                    hasRunJsWithPaywall = true
+                }
+            }
+        })
 
-		if( ( (hasGate && Piano.activePaywall) || hasPub) || count > 8) 
-			clearInterval(checkGate);
+        if(!hasRunJsWithPaywall)
+           Piano.triggerAdvertising()
+    }
 
-		count++;
-	}, 1000);
+};
+
+Piano.triggerAdvertising = function() {
+	window.hasPaywall = false;
+	let event = new CustomEvent('clearForAds')
+	document.dispatchEvent(event);
 };
 
 Piano.registerPaywall = { 
 	mostrarBarreira: function(versao = null, tipo = null) {
 		Piano.typePaywall = tipo;
 
-		if(!Piano.activePaywall || (!versao || !Piano.typePaywall) ) {
+		if(!versao || !Piano.typePaywall ) {
 			Piano.triggerAdvertising(); 
 		} else {
 			Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-paywall-piano/"+versao+"/styles/styles.css'>");
@@ -877,13 +922,14 @@ Piano.construtor = {
 			tp.push(["setCustomVariable", "conteudoExclusivo", true]);
 		}
 		
-		if (typeof swg !== 'undefined' && swgEntitlements.enablesThis()) {
+		if (typeof swg !== 'undefined' && (typeof swgEntitlements !== 'undefined' && swgEntitlements.enablesThis()) ) {
 			Piano.google.isSpecificGoogleUser(swgEntitlements);
 			Piano.autenticacao.defineUsuarioPiano(true,"AUTORIZADO", true, "");
 		}else{
 			Piano.autenticacao.verificaUsuarioLogadoNoBarramento(Helpers.getCookie(Piano.variaveis.constante.cookie.GCOM), Helpers.getCookie(Piano.variaveis.constante.cookie.UTP));
 		}
 		
+		Piano.regionalizacao.getRegion();
 		Piano.krux.obtemSegmentacao();
 
 		tp.push(["setCustomVariable", "bannerContadorLigado", true]);
@@ -911,6 +957,8 @@ function loadPianoExperiences(){
 }
 
 function pianoInit() { 
+	window.Piano.checkPianoActive()
+	
 	if(window.tinyCpt.debug.tiny)
 		console.log('log-method', 'pianoInit')
 
@@ -946,7 +994,6 @@ function pianoInit() {
             loadPianoExperiences();
         }
     }
-    window.tinyCpt.Piano.checkPaywall();
 }
 
 async function tinyInit() {
