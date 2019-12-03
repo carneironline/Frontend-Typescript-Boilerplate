@@ -6,7 +6,9 @@ export default class PaywallCptInline  {
 
 		this.domain = window.tinyCpt.isProduction ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/';	
 		this.paywallId = 'paywall-inline'
-		this.createTemplate()
+		this.setTemplateSettings(() => {
+			this.createTemplate()
+		});
 		this.activeEvents()
 		
 		window.PaywallCptInline = this;
@@ -16,6 +18,23 @@ export default class PaywallCptInline  {
 		}
 	}
 
+	setTemplateSettings(callback) {
+		let templateSettings = {
+			title: 'Para continuar sua leitura, é preciso se cadastrar.',
+			subtitle: 'É rápido e grátis!',
+			buttonText: 'Cadastre-se gratuitamente agora',
+			loginPreText: 'Já possui cadastro? ',
+			loginText: 'Faça login',
+			offerLink: "https://google.com?l1",
+			imageMobi: "https://via.placeholder.com/300x150",
+			imageDesk: "https://via.placeholder.com/804x128",
+			imageLink: "https://via.placeholder.com/300x150"
+		};
+
+		window.glbPaywall = (window.glbPaywall) ?  Object.assign({}, templateSettings, window.glbPaywall) : templateSettings; 
+
+		callback();
+	}
 
     activeEvents() {
 		this.classname = document.querySelectorAll(".btn-read-more");
@@ -28,37 +47,37 @@ export default class PaywallCptInline  {
 
   	createTemplate(element) {
 		if (element) {
-			if (element.firstChild.nodeValue === 'Fechar') {
-				this.elBody = element;
-				this.elBody.insertAdjacentHTML('beforebegin', this.cssMinified); 
-				this.elBody.insertAdjacentHTML('beforebegin', this.template); 
-				const removedElement = Array.from(element.parentNode.parentNode.childNodes).find((element) => element.className === 'other-content')
-				removedElement.parentNode.removeChild(removedElement)
-			} else {
-				const paywallInline = document.querySelector(`#${this.paywallId}`)
-				paywallInline.parentNode.removeChild(paywallInline)
-			}
+			this.elBody = element;
+			this.elBody.insertAdjacentHTML('beforebegin', this.cssMinified); 
+			this.elBody.insertAdjacentHTML('beforebegin', this.template); 
+			const removedElement = Array.from(element.parentNode.parentNode.childNodes).find((element) => element.className === 'other-content')
+			removedElement.parentNode.removeChild(removedElement)
+			element.remove()
 		}
   	}
+
+  get templateVars() {
+	return window.glbPaywall;
+  }
 
   get template() { 
 	const template = `
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway&display=swap" rel="stylesheet">
 		<div class="paywall-cpt-inline" id=${this.paywallId}> 
-			<h1 class ="paywall-cpt-inline-title">Para continuar sua leitura, é preciso se cadastrar. <br> É rápido e grátis!</h1>
+			<h1 class ="paywall-cpt-inline-title">${this.templateVars.title}<br>${this.templateVars.subtitle}</h1>
 			<button class="paywall-cpt-inline-button">
-				<span class="paywall-cpt-inline-span">Cadastre-se gratuitamente agora</span>
+				<span class="paywall-cpt-inline-span">${this.templateVars.buttonText}</span>
 			</button> 
-			<p class="paywall-cpt-inline-p">Já possui cadastro? <a href="https://login.globo.com/" class="paywall-cpt-inline-a">Faça login</a></p>
+			<p class="paywall-cpt-inline-p">${this.templateVars.loginPreText}<a href=${this.templateVars.loginLink} class="paywall-cpt-inline-a">${this.templateVars.loginText}</a></p>
 			<div class="paywall-cpt-inline-offer">
-				<a href="https://google.com?l1">
-					<picture>
-						<source srcset="https://via.placeholder.com/300x150" media="(max-width: 1023px)">
-						<source srcset="https://via.placeholder.com/804x128" media="(min-width: 1024px)">
-						<img src="https://via.placeholder.com/300x150" />
-					</picture>
-				</a>
-			</div>
+			<a href=${this.templateVars.offerLink}>
+				<picture>
+					<source srcset=${this.templateVars.imageMobi} media="(max-width: 1023px)">
+					<source srcset="${this.templateVars.imageDesk} media="(min-width: 1024px)">
+					<img src=${this.templateVars.imageLink} />
+				</picture>
+			</a>
+		</div>
 		</div>
 	`;
 
