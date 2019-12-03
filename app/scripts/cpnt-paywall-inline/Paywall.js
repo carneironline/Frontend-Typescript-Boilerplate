@@ -26,7 +26,7 @@ export default class PaywallCptInline  {
 			buttonLink: 'https://google.com?l1',
 			loginPreText: 'Já possui cadastro? ',
 			loginText: 'Faça login',
-			loginLink: 'https://google.com?l1', 
+			loginLink: window.tinyCpt.isProduction ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/', 
 			offerLink: "https://google.com?l1",
 			imageMobi: "https://via.placeholder.com/300x150",
 			imageDesk: "https://via.placeholder.com/804x128",
