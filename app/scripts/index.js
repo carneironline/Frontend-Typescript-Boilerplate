@@ -444,7 +444,8 @@ Piano.checkPaywall = function(PianoResultEvents = null) {
             if(item.eventType === 'runJs') {
                 if(item.eventParams.snippet !== 'undefined' && (item.eventParams.snippet.includes('paywall.show') || item.eventParams.snippet.includes('mostrarBarreira') ) ) {
                     window.hasPaywall = true
-                    hasRunJsWithPaywall = true
+					hasRunJsWithPaywall = true
+					Piano.triggerPaywallOpened()
                 }
             }
         })
@@ -458,6 +459,11 @@ Piano.checkPaywall = function(PianoResultEvents = null) {
 Piano.triggerAdvertising = function() {
 	window.hasPaywall = false;
 	let event = new CustomEvent('clearForAds')
+	document.dispatchEvent(event);
+};
+
+Piano.triggerPaywallOpened = function() {
+	let event = new CustomEvent('blockForAds')
 	document.dispatchEvent(event);
 };
 
