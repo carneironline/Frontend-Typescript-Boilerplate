@@ -33,7 +33,7 @@ export default class PaywallCptInline  {
 			imageLink: "https://via.placeholder.com/300x150"
 		};
 
-		window.glbPaywall = (window.glbPaywall) ?  Object.assign({}, templateSettings, window.glbPaywall) : templateSettings; 
+		window.glbPaywallInline = (window.glbPaywallInline) ?  Object.assign({}, templateSettings, window.glbPaywallInline) : templateSettings; 
 
 		callback();
 	}
@@ -56,10 +56,36 @@ export default class PaywallCptInline  {
 			removedElement.parentNode.removeChild(removedElement)
 			element.remove()
 		}
-  	}
+	  }
+	  
+	getUrlLoginRegister(type = '') {
+		const urlValidaUsuarioBarramento = window.ambienteUtilizadoPiano === 'prd' ? 'https://assinatura.oglobo.globo.com/ValidaUsuarioBarramento.html' : 'https://assinatura.globostg.globoi.com/ValidaUsuarioBarramento.html';
+		const uri = location.href;
+		const serviceId = window.tinyCpt.Piano.variaveis.getServicoId() || null;
+		let str = '';
+		let urlReturn = '';
+	
+		if(!this.debug && this.Piano.isDefined) {
+			urlReturn = encodeURIComponent(
+				urlValidaUsuarioBarramento + '?codigoProduto=' +  this.Piano.content.variaveis.getCodigoProduto() 
+				+ '&serviceId=' + serviceId
+				+ '&ambienteUtilizado=' + window.ambienteUtilizadoPiano
+				+ '&nomeProduto=' + this.Piano.content.variaveis.getNomeProduto()
+				+ '&urlRetorno=' + uri
+			);
+	
+			if(type === 'button') {
+				str = `${this.domain}cadastro/${serviceId}?url=${urlReturn}`;
+			} else {
+				str = `${this.domain}login/${serviceId}?url=${urlReturn}`;
+			}
+		}
+	
+		return str;
+	}
 
   get templateVars() {
-	return window.glbPaywall;
+	return window.glbPaywallInline;
   }
 
   get template() { 
@@ -67,10 +93,12 @@ export default class PaywallCptInline  {
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway&display=swap" rel="stylesheet">
 		<div class="paywall-cpt-inline" id=${this.paywallId}> 
 			<h1 class ="paywall-cpt-inline-title">${this.templateVars.title}<br>${this.templateVars.subtitle}</h1>
-			<button onclick="location.href = ${this.templateVars.buttonLink};" class="paywall-cpt-inline-button">
-				<span class="paywall-cpt-inline-span">${this.templateVars.buttonText}</span>
-			</button> 
-			<p class="paywall-cpt-inline-p">${this.templateVars.loginPreText}<a href=${this.templateVars.loginLink} class="paywall-cpt-inline-a">${this.templateVars.loginText}</a></p>
+			<a href=${this.getUrlLoginRegister('button')}>
+				<button class="paywall-cpt-inline-button">
+					<span class="paywall-cpt-inline-span">${this.templateVars.buttonText}</span>
+				</button> 
+			</a>
+			<p class="paywall-cpt-inline-p">${this.templateVars.loginPreText}<a href=${this.getUrlLoginRegister()} class="paywall-cpt-inline-a">${this.templateVars.loginText}</a></p>
 			<div class="paywall-cpt-inline-offer">
 			<a href=${this.templateVars.offerLink}>
 				<picture>
