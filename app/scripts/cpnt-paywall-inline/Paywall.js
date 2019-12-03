@@ -23,8 +23,10 @@ export default class PaywallCptInline  {
 			title: 'Para continuar sua leitura, é preciso se cadastrar.',
 			subtitle: 'É rápido e grátis!',
 			buttonText: 'Cadastre-se gratuitamente agora',
+			buttonLink: 'https://google.com?l1',
 			loginPreText: 'Já possui cadastro? ',
 			loginText: 'Faça login',
+			loginLink: 'https://google.com?l1', 
 			offerLink: "https://google.com?l1",
 			imageMobi: "https://via.placeholder.com/300x150",
 			imageDesk: "https://via.placeholder.com/804x128",
@@ -65,7 +67,7 @@ export default class PaywallCptInline  {
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway&display=swap" rel="stylesheet">
 		<div class="paywall-cpt-inline" id=${this.paywallId}> 
 			<h1 class ="paywall-cpt-inline-title">${this.templateVars.title}<br>${this.templateVars.subtitle}</h1>
-			<button class="paywall-cpt-inline-button">
+			<button onclick="location.href = ${this.templateVars.buttonLink};" class="paywall-cpt-inline-button">
 				<span class="paywall-cpt-inline-span">${this.templateVars.buttonText}</span>
 			</button> 
 			<p class="paywall-cpt-inline-p">${this.templateVars.loginPreText}<a href=${this.templateVars.loginLink} class="paywall-cpt-inline-a">${this.templateVars.loginText}</a></p>
