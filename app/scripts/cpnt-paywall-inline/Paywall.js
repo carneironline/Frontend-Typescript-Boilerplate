@@ -92,7 +92,7 @@ export default class PaywallCptInline  {
 	const template = `
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway&display=swap" rel="stylesheet">
 		<div class="paywall-cpt-inline" id=${this.paywallId}> 
-			<h1 class ="paywall-cpt-inline-title">${this.templateVars.title}<br>${this.templateVars.subtitle}</h1>
+			<h1 class ="paywall-cpt-inline-title"><span class=paywall-cpt-inline-title-first_line>${this.templateVars.title}</span><br><span class=paywall-cpt-inline-title-second_line>${this.templateVars.subtitle}</span></h1>
 			<a href=${this.getUrlLoginRegister('button')}>
 				<button class="paywall-cpt-inline-button">
 					<span class="paywall-cpt-inline-span">${this.templateVars.buttonText}</span>
@@ -102,8 +102,8 @@ export default class PaywallCptInline  {
 			<div class="paywall-cpt-inline-offer">
 			<a href=${this.templateVars.offerLink}>
 				<picture>
-					<source srcset=${this.templateVars.imageMobi} media="(max-width: 1023px)">
-					<source srcset=${this.templateVars.imageDesk} media="(min-width: 1024px)">
+					<source srcset=${this.templateVars.imageMobi} media="(max-width: 375px)">
+					<source srcset=${this.templateVars.imageDesk} media="(min-width: 374px)">
 					<img src=${this.templateVars.imageLink} />
 				</picture>
 			</a>
@@ -115,7 +115,14 @@ export default class PaywallCptInline  {
   }
 
   get cssMinified() {
-	  return `<style>.paywall-cpt-inline{margin: 0 auto 40px;padding:20px;border-radius: 4px;border: solid 1px #dbdde1;background-color: #f2f2f5;}.paywall-cpt-inline-title{margin-left:auto;margin-right:auto; margin-bottom:30px;display:block;font-family:Raleway;font-size:20px;font-weight:700;font-stretch:normal;font-style:normal;line-height:1.2;letter-spacing:normal;text-align:center;color:#325e94}.paywall-cpt-inline-button{margin-left:auto;margin-right:auto;margin-bottom:30px;display:block;width:356px;height:48px;background-color:#f59c00;border-radius:4px;border:solid 3px #f59c00}.paywall-cpt-inline-span{font-family:Open Sans;font-size:14px;font-weight:600;font-stretch:normal;font-style:normal;line-height:1.38;letter-spacing:normal;text-align:center;color:#fff}.paywall-cpt-inline-p{margin-left:auto;margin-right:auto;margin-botton:30px;display:block;font-family:Raleway;font-size:14px;font-weight:400;font-stretch:normal;font-style:normal;line-height:1.14;letter-spacing:normal;text-align:center;color:#707070}.paywall-cpt-inline-a{font-weight:700;color:#325e94}.paywall-cpt-inline-offer{margin-left:auto;margin-right:auto;background-color:#fff}
+	  return `
+	  <style>
+	  .paywall-cpt-inline{margin: 0 auto 40px;padding:20px;border-radius: 4px;border: solid 1px #dbdde1;background-color: #f2f2f5;}.paywall-cpt-inline-title{margin-left:auto;margin-right:auto; margin-bottom:30px;display:block;font-family:Raleway;font-size:20px;font-weight:700;font-stretch:normal;font-style:normal;line-height:1.2;letter-spacing:normal;text-align:center;color:#325e94}
+	  .paywall-cpt-inline-button{margin-left:auto;margin-right:auto;margin-bottom:30px;display:block;width:256px;height:48px;background-color:#f59c00;border-radius:4px;border:solid 3px #f59c00;}
+	  @media screen and (min-width: 424px) {
+		.paywall-cpt-inline-button { width: 356px; }
+	 }  
+	  .paywall-cpt-inline-span{font-family:Open Sans;font-size:14px;font-weight:600;font-stretch:normal;font-style:normal;line-height:1.38;letter-spacing:normal;text-align:center;color:#fff;}.paywall-cpt-inline-p{margin-left:auto;margin-right:auto;margin-botton:30px;display:block;font-family:Raleway;font-size:14px;font-weight:400;font-stretch:normal;font-style:normal;line-height:1.14;letter-spacing:normal;text-align:center;color:#707070;}.paywall-cpt-inline-a{font-weight:700;color:#325e94;}.paywall-cpt-inline-offer{margin-left:auto;margin-right:auto;background-color:#fff;}
 	  </style>`
   }
 }
