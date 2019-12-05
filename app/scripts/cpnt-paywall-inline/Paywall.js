@@ -103,7 +103,7 @@ export default class PaywallCptInline  {
 			<a href=${this.templateVars.offerLink}>
 				<picture>
 					<source srcset=${this.templateVars.imageMobi} media="(max-width: 1023px)">
-					<source srcset="${this.templateVars.imageDesk} media="(min-width: 1024px)">
+					<source srcset=${this.templateVars.imageDesk} media="(min-width: 1024px)">
 					<img src=${this.templateVars.imageLink} />
 				</picture>
 			</a>
