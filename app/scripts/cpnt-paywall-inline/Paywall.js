@@ -104,7 +104,7 @@ export default class PaywallCptInline  {
 				<picture>
 					<source srcset=${this.templateVars.imageMobi} media="(max-width: 375px)">
 					<source srcset=${this.templateVars.imageDesk} media="(min-width: 374px)">
-					<img src=${this.templateVars.imageLink} />
+					<img class="paywall-cpt-inline-img" src=${this.templateVars.imageLink} />
 				</picture>
 			</a>
 		</div>
@@ -122,7 +122,7 @@ export default class PaywallCptInline  {
 	  @media screen and (min-width: 424px) {
 		.paywall-cpt-inline-button { width: 356px; }
 	 }  
-	  .paywall-cpt-inline-span{font-family:Open Sans;font-size:14px;font-weight:600;font-stretch:normal;font-style:normal;line-height:1.38;letter-spacing:normal;text-align:center;color:#fff;}.paywall-cpt-inline-p{margin-left:auto;margin-right:auto;margin-botton:30px;display:block;font-family:Raleway;font-size:14px;font-weight:400;font-stretch:normal;font-style:normal;line-height:1.14;letter-spacing:normal;text-align:center;color:#707070;}.paywall-cpt-inline-a{font-weight:700;color:#325e94;}.paywall-cpt-inline-offer{margin-left:auto;margin-right:auto;background-color:#fff;}
+	 .paywall-cpt-inline-img {margin: auto;width: 80em;}.paywall-cpt-inline-span {font-family:Open Sans;font-size:14px;font-weight:600;font-stretch:normal;font-style:normal;line-height:1.38;letter-spacing:normal;text-align:center;color:#fff;}.paywall-cpt-inline-p{margin-left:auto;margin-right:auto;margin-botton:30px;display:block;font-family:Raleway;font-size:14px;font-weight:400;font-stretch:normal;font-style:normal;line-height:1.14;letter-spacing:normal;text-align:center;color:#707070;}.paywall-cpt-inline-a{font-weight:700;color:#325e94;}.paywall-cpt-inline-offer{margin-left:auto;margin-right:auto;background-color:#fff;} 
 	  </style>`
   }
 }
