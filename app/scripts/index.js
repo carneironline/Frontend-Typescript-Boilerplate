@@ -406,6 +406,7 @@ Piano.paywall = {
 			window.hasPaywall = true
 		} catch (err) {
 			console.error('Paywall - Error on load', err)
+			Piano.triggerAdvertising(); 
 		}
 	}
 };
