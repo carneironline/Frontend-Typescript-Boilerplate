@@ -3,6 +3,7 @@ import TinyModule from './Tiny';
 import GAModule from './GA';
 import SwgModule from './Swg';
 import PaywallCpt from './cpnt-paywall/Paywall';
+import PaywallCptInline from './cpnt-paywall-inline/Paywall';
 
 const Tiny = new TinyModule();
 const GA = new GAModule();
@@ -396,6 +397,15 @@ Piano.paywall = {
 		}
 		catch(e) {
 			console.error('Paywall - Error on load')
+			Piano.triggerAdvertising(); 
+		}
+	},
+	analytic: function () {
+		try {
+			new PaywallCptInline();
+			window.hasPaywall = true
+		} catch (err) {
+			console.error('Paywall - Error on load', err)
 			Piano.triggerAdvertising(); 
 		}
 	}
