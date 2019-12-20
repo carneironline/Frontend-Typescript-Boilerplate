@@ -25,8 +25,8 @@ export default class PaywallGAModule {
       return;
 
     const _Piano = this.Piano.content;
-
-    this.GA.setEvents('Exibicao Register', window.Piano.experience.name);
+    
+    this.GA.setEvents(this.metrics.paywall.name, window.Piano.experience.name);
     Helpers.setCookie(_Piano.variaveis.constante.cookie.RTIEX, true, 1);
   }
 
