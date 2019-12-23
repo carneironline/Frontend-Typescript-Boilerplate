@@ -5,35 +5,35 @@ import GAModule from '../GA';
 export default class PaywallGAModule {
   constructor() {
     this.Piano = new PianoModule();
-    this.GA = new GAModule(); 
+    this.GA = new GAModule();
 
     window.dataLayer = window.dataLayer || [];
     this.debug = window.tinyCpt.debug.paywall;
     this.disabled = false;
     this.metrics = {
-        paywall: {}, 
+        paywall: {},
         fb: {
             pixel: {}
-        } 
+        }
     };
 
     this.paywallType();
   }
 
-  paywallLoad() { 
+  paywallLoad() {
     if(!this.Piano.isDefined)
       return;
 
     const _Piano = this.Piano.content;
-    
+
     this.GA.setEvents(this.metrics.paywall.name, window.Piano.experience.name);
     Helpers.setCookie(_Piano.variaveis.constante.cookie.RTIEX, true, 1);
   }
 
-  trigger(element) { 
+  trigger(element) {
     if(this.disabled)
       return;
-    
+
     const resetUtp = element.dataset.gaResetutp || null;
     const imageTop = element.dataset.gaImagePosition;
     const label = (imageTop === 'top') ? element.dataset.gaLabel + this.metrics.paywall.label : element.dataset.gaLabel;
@@ -45,17 +45,17 @@ export default class PaywallGAModule {
       eventoGARotulo: label,
       eventoGAValor: 0,
       eventoGAInteracao: false,
-    }; 
+    };
 
     if (resetUtp)
         this.Piano.resetUtp();
- 
+
     this.setDatalayer(data);
   }
 
   paywallType() {
-    const type = ( (typeof window.tinyCpt.Piano !== 'undefined' && typeof window.tinyCpt.Piano.typePaywall !== 'undefined') && window.tinyCpt.Piano.typePaywall) 
-      ? window.tinyCpt.Piano.typePaywall.toLowerCase() 
+    const type = ( (typeof window.tinyCpt.Piano !== 'undefined' && typeof window.tinyCpt.Piano.typePaywall !== 'undefined') && window.tinyCpt.Piano.typePaywall)
+      ? window.tinyCpt.Piano.typePaywall.toLowerCase()
       : 'paywall';
 
     switch (type) {
@@ -70,7 +70,7 @@ export default class PaywallGAModule {
         this.metrics.fb.pixel.name = 'ViewLoginExclusivo';
         break;
       case 'paywall':
-        this.metrics.paywall.name = 'paywall';
+        this.metrics.paywall.name = 'Barreira';
         this.metrics.paywall.label = 'Assine agora';
         this.metrics.fb.pixel.name = 'ViewPaywallExclusivo';
         break;
