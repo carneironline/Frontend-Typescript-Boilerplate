@@ -293,14 +293,17 @@ Piano.metricas = {
 		return " ";
 	},
 	setLimiteContagem: function(metricas) {
-		var _GALimite = "-";
-		var _GAContagem = "-";
+		window._GALimite = "-";
+		window._GAContagem = "-";
+
 		if(!metricas) return;
-		_GAContagem = "" + metricas.views;
-		if (_GAContagem.length == 1) {
-			_GAContagem = "0" + _GAContagem;
+
+		window._GAContagem = "" + metricas.views;
+
+		if (window._GAContagem.length == 1) {
+			window._GAContagem = "0" + window._GAContagem;
 		}
-		_GALimite = metricas.nomeExperiencia +" : "+ metricas.maxViews;
+		window._GALimite = metricas.nomeExperiencia +" : "+ metricas.maxViews;
 	},
 	identificarPassagemRegister: function(regras) {
 		var passagem = Piano.variaveis.constante.metricas.EVENTO_SEM_ACAO;
