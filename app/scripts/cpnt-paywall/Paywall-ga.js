@@ -60,13 +60,13 @@ export default class PaywallGAModule {
 
     switch (type) {
       case 'register':
-        this.metrics.paywall.viewName = 'Exibicao register'
+        this.metrics.paywall.viewName = 'Exibicao Register'
         this.metrics.paywall.name = 'Register comum';
         this.metrics.paywall.label = 'Cadastre-se';
         this.metrics.fb.pixel.name = 'ViewRegisterWall';
         break;
       case 'exclusivo':
-        this.metrics.paywall.viewName = 'Exibicao register'
+        this.metrics.paywall.viewName = 'Exibicao Register'
         this.metrics.paywall.name = 'Register exclusivo';
         this.metrics.paywall.label = 'Assine agora';
         this.metrics.fb.pixel.name = 'ViewLoginExclusivo';
