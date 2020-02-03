@@ -447,7 +447,9 @@ Piano.checkPaywall = function(PianoResultEvents = null) {
 	if(PianoResultEvents) {
         PianoResultEvents.forEach(item => {
             if(item.eventType === 'runJs') {
-                if(item.eventParams.snippet !== 'undefined' && (item.eventParams.snippet.includes('paywall.show') || item.eventParams.snippet.includes('mostrarBarreira') ) ) {
+				if(item.eventParams.snippet !== 'undefined' && (item.eventParams.snippet.includes('paywall.show') 
+				|| item.eventParams.snippet.includes('paywall.analytic') 
+				|| item.eventParams.snippet.includes('mostrarBarreira') ) ) {
                     window.hasPaywall = true
 					hasRunJsWithPaywall = true
 					Piano.triggerPaywallOpened()
