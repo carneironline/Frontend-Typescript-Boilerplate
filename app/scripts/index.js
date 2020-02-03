@@ -76,7 +76,8 @@ Piano.variaveis = {
 			|| Piano.variaveis.getNomeProduto() === 'blogs'
 			|| Piano.variaveis.getNomeProduto() === 'kogut'
 			|| Piano.variaveis.getNomeProduto() === 'acervo'
-			|| Piano.variaveis.getNomeProduto() === 'jornaldigital'){
+			|| Piano.variaveis.getNomeProduto() === 'jornaldigital'
+			|| Piano.variaveis.getNomeProduto() === 'blogAnalitico'){
 			return id = '3981';
 		}
 		if (Piano.util.isRevista() && Piano.variaveis.getNomeProduto() === 'monet'){
