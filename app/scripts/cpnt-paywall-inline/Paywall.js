@@ -40,7 +40,6 @@ export default class PaywallCptInline  {
 
     activeEvents() {
 		this.classname = document.querySelectorAll(".btn-read-more");
-		console.log('classname', this.classname);
 		this.classname.forEach(element => {
 			console.log('element', element);
 			element.addEventListener('click', () => {
