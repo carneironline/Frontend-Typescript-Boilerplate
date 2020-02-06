@@ -72,14 +72,15 @@ Piano.variaveis = {
 	getServicoId: function() {
 		var id = '0000';
 
-		if(Piano.variaveis.getNomeProduto() === 'oglobo' 
-			|| Piano.variaveis.getNomeProduto() === 'blogs' 
+		if(Piano.variaveis.getNomeProduto() === 'oglobo'
+			|| Piano.variaveis.getNomeProduto() === 'blogs'
 			|| Piano.variaveis.getNomeProduto() === 'kogut'
 			|| Piano.variaveis.getNomeProduto() === 'acervo'
-			|| Piano.variaveis.getNomeProduto() === 'jornaldigital'){
+			|| Piano.variaveis.getNomeProduto() === 'jornaldigital'
+			|| Piano.variaveis.getNomeProduto() === 'blogAnalitico'){
 			return id = '3981';
 		}
-		if (Piano.util.isRevista() && Piano.variaveis.getNomeProduto() === 'monet'){ 
+		if (Piano.util.isRevista() && Piano.variaveis.getNomeProduto() === 'monet'){
 			return id = '6618';
 		}else if (Piano.util.isRevista()){
 			return id = '6697';
@@ -88,9 +89,9 @@ Piano.variaveis = {
 		if(Piano.variaveis.getNomeProduto() === 'valor'){
             return id = '6668';
 		}
-		
+
 		if (id === '0000')
-			GA.setEventsError('ServiceID não definido.', document.location.href + 
+			GA.setEventsError('ServiceID não definido.', document.location.href +
 				' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
 
 		return id;
@@ -129,7 +130,7 @@ Piano.variaveis = {
 				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
 				return 'error';
 		}
-	}	
+	}
 };
 
 Piano.janelaAnonima = {
@@ -153,7 +154,7 @@ Piano.janelaAnonima = {
 	isIE10OrLater : function(user_agent) {
 		let ua = user_agent.toLowerCase();
 		let match = /(?:msie|rv:)\s?([\d\.]+)/.exec(ua);
-		
+
 		if (ua.indexOf('msie') === 0 && ua.indexOf('trident') === 0) {
 			return false;
 		}
@@ -258,7 +259,7 @@ Piano.krux = {
 	}
 };
 
-Piano.regionalizacao = {	
+Piano.regionalizacao = {
 	getRegion: function() {
 		var kruxGeo = localStorage.getItem('kxglobo_geo');
 		if (kruxGeo) {
@@ -267,7 +268,7 @@ Piano.regionalizacao = {
 				let key = data[0];
 				let value = data[1];
 				if (key === 'region') {
-					tp.push(["setCustomVariable", "region", value]);				
+					tp.push(["setCustomVariable", "region", value]);
 				}
 			});
 		}
@@ -293,14 +294,17 @@ Piano.metricas = {
 		return " ";
 	},
 	setLimiteContagem: function(metricas) {
-		_GALimite = "-";
-		_GAContagem = "-";
+		window._GALimite = "-";
+		window._GAContagem = "-";
+
 		if(!metricas) return;
-		_GAContagem = "" + metricas.views;
-		if (_GAContagem.length == 1) {
-			_GAContagem = "0" + _GAContagem;
+
+		window._GAContagem = "" + metricas.views;
+
+		if (window._GAContagem.length == 1) {
+			window._GAContagem = "0" + window._GAContagem;
 		}
-		_GALimite = metricas.nomeExperiencia +" : "+ metricas.maxViews;
+		window._GALimite = metricas.nomeExperiencia +" : "+ metricas.maxViews;
 	},
 	identificarPassagemRegister: function(regras) {
 		var passagem = Piano.variaveis.constante.metricas.EVENTO_SEM_ACAO;
@@ -390,14 +394,14 @@ Piano.paywall = {
 	},
 	show: function(typePaywall = null) {
 		Piano.typePaywall = typePaywall;
-	
+
 		try {
-			new PaywallCpt();			
+			new PaywallCpt();
 			window.hasPaywall = true;
 		}
 		catch(e) {
 			console.error('Paywall - Error on load')
-			Piano.triggerAdvertising(); 
+			Piano.triggerAdvertising();
 		}
 	},
 	analytic: function () {
@@ -406,16 +410,16 @@ Piano.paywall = {
 			window.hasPaywall = true
 		} catch (err) {
 			console.error('Paywall - Error on load', err)
-			Piano.triggerAdvertising(); 
+			Piano.triggerAdvertising();
 		}
 	}
 };
 
-Piano.checkPianoActive = function () { 
+Piano.checkPianoActive = function () {
 	let count = 0
-	
+
 	let interval = setInterval(function () {
-		if(window.tp !== 'undefined' 
+		if(window.tp !== 'undefined'
           && window.tp.experience
           && window.tp.experience._getLastExecutionResult()
           && window.tp.experience._getLastExecutionResult().result
@@ -423,27 +427,29 @@ Piano.checkPianoActive = function () {
 	     {
 			Piano.checkPaywall(window.tp.experience._getLastExecutionResult().result.events)
 			clearInterval(interval)
-		} 
+		}
 		else {
 			if(count === 10) {
 				Piano.triggerAdvertising()
 				clearInterval(interval)
 			}
-				
+
 			count++
 		}
-		
+
 	  }, 500);
 
 };
 
-Piano.checkPaywall = function(PianoResultEvents = null) { 
+Piano.checkPaywall = function(PianoResultEvents = null) {
    let hasRunJsWithPaywall = false
 
-	if(PianoResultEvents) { 
+	if(PianoResultEvents) {
         PianoResultEvents.forEach(item => {
             if(item.eventType === 'runJs') {
-                if(item.eventParams.snippet !== 'undefined' && (item.eventParams.snippet.includes('paywall.show') || item.eventParams.snippet.includes('mostrarBarreira') ) ) {
+				if(item.eventParams.snippet !== 'undefined' && (item.eventParams.snippet.includes('paywall.show') 
+				|| item.eventParams.snippet.includes('paywall.analytic') 
+				|| item.eventParams.snippet.includes('mostrarBarreira') ) ) {
                     window.hasPaywall = true
 					hasRunJsWithPaywall = true
 					Piano.triggerPaywallOpened()
@@ -468,34 +474,34 @@ Piano.triggerPaywallOpened = function() {
 	document.dispatchEvent(event);
 };
 
-Piano.registerPaywall = { 
+Piano.registerPaywall = {
 	mostrarBarreira: function(versao = null, tipo = null) {
 		Piano.typePaywall = tipo;
 
 		if(!versao || !Piano.typePaywall ) {
-			Piano.triggerAdvertising(); 
+			Piano.triggerAdvertising();
 		} else {
 			Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-paywall-piano/"+versao+"/styles/styles.css'>");
 			Piano.xmlHttpRequest.geraScriptNaPagina(
-				"https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-paywall-piano/"+versao+"/scripts/register-paywall-piano.js", 
-				data => { 
-					if(data.status !== 200) { 
-						Piano.triggerAdvertising(); 
-					} 
+				"https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-paywall-piano/"+versao+"/scripts/register-paywall-piano.js",
+				data => {
+					if(data.status !== 200) {
+						Piano.triggerAdvertising();
+					}
 					else {
 						window.hasPaywall = true;
 					}
 				}
 			);
-			
+
 			if(Piano.typePaywall === 'register' || Piano.typePaywall === 'exclusivo' ) {
 				GA.setEvents("Exibicao Register", Piano.metricas.montaRotuloGA());
 				Helpers.setCookie(Piano.variaveis.constante.cookie.RTIEX, true, 1);
-			} else {			
+			} else {
 				GA.setEvents("Barreira", Piano.metricas.montaRotuloGA());
 			}
 		}
-		
+
 	}
 };
 
@@ -510,7 +516,7 @@ Piano.adblock = {
 	mostrarAdBlock: function(params = {}) {
 
 		params.assetsPath = `https://static${Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/adblock-piano/v4/`;
-		
+
 		window.glbAdblock = params;
 
 		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/adblock-piano/v4/styles/styles.css'>");
@@ -563,17 +569,17 @@ Piano.xmlHttpRequest = {
 			}
 
 			if(callback)
-				callback(xhr); 
-		};	
+				callback(xhr);
+		};
 	},
 	fazRequisicaoBarramentoApiObterAssinaturaInadimplente: function(hrefAssinaturaInadimplente) {
-		
+
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", hrefAssinaturaInadimplente, false);
 		xhr.setRequestHeader("Accept", "application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.send();
-	
+
 		if(xhr.readyState == 4){
 			if(xhr.status == 200){
 				var resposta = xhr.responseText;
@@ -591,7 +597,7 @@ Piano.xmlHttpRequest = {
 		}
 	},
 	fazRequisicaoBarramentoApiAutorizacaoAcesso: function(glbid) {
-		
+
 		var codigoProduto = Piano.variaveis.getCodigoProduto();
 		if(codigoProduto == 'error') {
 			return;
@@ -604,7 +610,7 @@ Piano.xmlHttpRequest = {
 		xhr.setRequestHeader("Accept","application/json");
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.send(data);
-		
+
 		if(xhr.readyState === 4){
 			if (xhr.status === 200){
 				var resposta = xhr.responseText;
@@ -633,30 +639,30 @@ Piano.xmlHttpRequest = {
 					};
 				_jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)));
 				Helpers.setCookie(Piano.variaveis.constante.cookie.UTP, _jsonLeitor, 1);
-				
+
 				if (typeof swg !== 'undefined') {
 					if(Piano.google.showSaveSubscription(respJson)){
 						try{
 							var swgService = new SwgService();
 							swgService.saveGloboSubscription(glbid);
 						} catch(error) {
-							GA.setEventsError('Erro ao chamar a função showSaveSubscription do Aldebaran.', 
-																'URL: ' + document.location.href 
+							GA.setEventsError('Erro ao chamar a função showSaveSubscription do Aldebaran.',
+																'URL: ' + document.location.href
 																+ ' GLBID: ' + glbid
 																+ ' Erro: ' + error);
 						}
 					}
 				}
-				
+
 				if(respJson.autorizado == true){
 					Piano.metricas.setaVariaveis(respJson.usuarioId, "Globo ID", "O Globo");
 				}
 
-				
+
 			}else{
 				GA.setEventsError("API de autorizacao de acesso", xhr.status + " - " + glbid);
 				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
-			}	
+			}
 		}
 	}
 };
@@ -667,7 +673,7 @@ Piano.google = {
 			Piano.metricas.setaVariaveis(swgEntitlements.getEntitlementForSource("oglobo.globo.com").subscriptionToken, "Conta Google", "O Globo");
 			return true;
 		}
-		
+
 		if(Helpers.getCookie(Piano.variaveis.constante.cookie.CREATED_GLOBOID)){
 			Piano.metricas.setaVariaveis(Helpers.getCookie(Piano.variaveis.constante.cookie.CREATED_GLOBOID), "Conta Google", "Google");
 			return true;
@@ -685,7 +691,7 @@ Piano.google = {
 			oGloboBusiness.verifyIfUserHasAccessOrDeferred(swgEntitlements);
 		} catch(error) {
 			GA.setEventsError("Erro ao executar o Aldebaran", "Error: " + error + " - Entitlements: " + swgEntitlements.entitlements[0].subscriptionToken);
-		}			
+		}
 	},
 
 	showSaveSubscription: function(response){
@@ -928,14 +934,14 @@ Piano.construtor = {
 		if (Piano.variaveis.isConteudoExclusivo()) {
 			tp.push(["setCustomVariable", "conteudoExclusivo", true]);
 		}
-		
+
 		if (typeof swg !== 'undefined' && (typeof swgEntitlements !== 'undefined' && swgEntitlements.enablesThis()) ) {
 			Piano.google.isSpecificGoogleUser(swgEntitlements);
 			Piano.autenticacao.defineUsuarioPiano(true,"AUTORIZADO", true, "");
 		}else{
 			Piano.autenticacao.verificaUsuarioLogadoNoBarramento(Helpers.getCookie(Piano.variaveis.constante.cookie.GCOM), Helpers.getCookie(Piano.variaveis.constante.cookie.UTP));
 		}
-		
+
 		Piano.regionalizacao.getRegion();
 		Piano.krux.obtemSegmentacao();
 
@@ -952,24 +958,24 @@ function loadPianoExperiences(){
 	a.type = "text/javascript";
 	a.async = true;
 	if(Piano.util.isRevista() || Piano.util.isValor()) {
-		a.src = Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlSandboxPianoRevistas;	
+		a.src = Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlSandboxPianoRevistas;
 	} else {
 		a.src = Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].urlSandboxPiano;
 	}
-	
+
 	var b = document.getElementsByTagName("script")[0];
 
 	b.parentNode.insertBefore(a, b);
 	GA.setEvents("Carregamento Piano", "Script adicionado");
 }
 
-function pianoInit() { 
+function pianoInit() {
 	window.Piano.checkPianoActive()
-	
+
 	if(window.tinyCpt.debug.tiny)
 		console.log('log-method', 'pianoInit')
 
-    if (window.tinyCpt.Swg.global) { 
+    if (window.tinyCpt.Swg.global) {
 		window.SWG.push((subscriptions) => {
 			if(window.tinyCpt.debug.swg)
 				console.log('log-subscriptions', subscriptions)
@@ -977,7 +983,7 @@ function pianoInit() {
 			swg = subscriptions;
 
 			subscriptions.setOnEntitlementsResponse(entitlementsPromise => {
-				entitlementsPromise.then(entitlements => { 
+				entitlementsPromise.then(entitlements => {
 					window.swgEntitlements = entitlements;
 
 					GA.setEvents("Carregamento SWG", "Entitlements recebidos");
@@ -1004,7 +1010,7 @@ function pianoInit() {
 }
 
 async function tinyInit() {
-	Tiny.setPiano(Piano); 
+	Tiny.setPiano(Piano);
     const Swg = new SwgModule();
 
 	try {
@@ -1012,7 +1018,7 @@ async function tinyInit() {
 	}
 	catch(e) { console.error(e) }
 
-	pianoInit(); 
+	pianoInit();
 };
 
 tinyInit();

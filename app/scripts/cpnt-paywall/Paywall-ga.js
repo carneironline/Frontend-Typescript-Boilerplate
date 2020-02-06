@@ -26,7 +26,7 @@ export default class PaywallGAModule {
 
     const _Piano = this.Piano.content;
 
-    this.GA.setEvents(this.metrics.paywall.name, window.Piano.experience.name);
+    this.GA.setEvents(this.metrics.paywall.viewName, window.Piano.experience.name);
     Helpers.setCookie(_Piano.variaveis.constante.cookie.RTIEX, true, 1);
   }
 
@@ -60,16 +60,19 @@ export default class PaywallGAModule {
 
     switch (type) {
       case 'register':
+        this.metrics.paywall.viewName = 'Exibicao Register'
         this.metrics.paywall.name = 'Register comum';
         this.metrics.paywall.label = 'Cadastre-se';
         this.metrics.fb.pixel.name = 'ViewRegisterWall';
         break;
       case 'exclusivo':
+        this.metrics.paywall.viewName = 'Exibicao Register'
         this.metrics.paywall.name = 'Register exclusivo';
         this.metrics.paywall.label = 'Assine agora';
         this.metrics.fb.pixel.name = 'ViewLoginExclusivo';
         break;
       case 'paywall':
+        this.metrics.paywall.viewName = 'Barreira'
         this.metrics.paywall.name = 'Barreira';
         this.metrics.paywall.label = 'Assine agora';
         this.metrics.fb.pixel.name = 'ViewPaywallExclusivo';

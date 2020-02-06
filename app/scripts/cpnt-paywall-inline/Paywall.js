@@ -6,16 +6,15 @@ export default class PaywallCptInline  {
 
 		this.domain = window.tinyCpt.isProduction ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/';	
 		this.paywallId = 'paywall-inline'
+
+		window.glbPaywallInline = {
+			cssLoaded: false
+		};
+
 		this.setTemplateSettings(() => {
 			this.createTemplate()
 		});
 		this.activeEvents()
-		
-		window.PaywallCptInline = this;
-
-		window.tinyCpt.Paywall = {
-			domain: this.domain
-		}
 	}
 
 	setTemplateSettings(callback) {
@@ -39,21 +38,28 @@ export default class PaywallCptInline  {
 	}
 
     activeEvents() {
-		this.classname = document.querySelectorAll(".btn-read-more");
-		this.classname.forEach(element => {
-			element.addEventListener('click', () => {
-			this.createTemplate(element)
-			})
-		})
+		const targetPost = window.analiticoPost;
+
+		if(!targetPost) return null
+
+		const postBox = targetPost.querySelector(".btn-read-more");
+
+		this.createTemplate(postBox)
 	}
 
   	createTemplate(element) {
 		if (element) {
-			this.elBody = element;
-			this.elBody.insertAdjacentHTML('beforebegin', this.cssMinified); 
-			this.elBody.insertAdjacentHTML('beforebegin', this.template); 
+			if(!window.glbPaywallInline.cssLoaded) {
+				document.body.insertAdjacentHTML('beforebegin', this.cssMinified); 
+				window.glbPaywallInline.cssLoaded = true
+			}
+			
+			element.insertAdjacentHTML('beforebegin', this.template); 
 			const removedElement = Array.from(element.parentNode.parentNode.childNodes).find((element) => element.className === 'other-content')
-			removedElement.parentNode.removeChild(removedElement)
+			
+			if(removedElement)
+				removedElement.parentNode.removeChild(removedElement)
+
 			element.remove()
 		}
 	  }
