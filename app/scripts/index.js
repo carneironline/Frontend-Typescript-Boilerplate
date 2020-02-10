@@ -861,13 +861,12 @@ Piano.util = {
 		window.tipoConteudoPiano = tipoConteudo;
 		window.conteudoExclusivo = isExclusivo;
 		window.nomeProdutoPiano = nomeProduto;
-		// if (typeof window.regrasTiny !== 'undefined') {
-		// 	window.regrasTiny.nomeExperiencia = "";
-		// }
-		// Piano.construtor.initTp();
-		// tp.experience.execute();
+		if (typeof window.regrasTiny !== 'undefined') {
+			window.regrasTiny.nomeExperiencia = "";
+		}
 
-		tinyInit();
+		window.tinyCpt.Piano.construtor.initTp();
+		window.tinyCpt.experience.execute();
 	},
 	isValor: function () {
 		if(Piano.variaveis.getNomeProduto() === "valor")
@@ -915,7 +914,8 @@ Piano.configuracao = {
 Piano.construtor = {
 	initTp: function() {
 		GA.setEvents("Carregamento Piano", "Inicio InitTp");
-		tp = window["tp"] || [];
+		// tp = window["tp"] || [];
+		tp = []
 		tp.push(["setTags", [Piano.variaveis.getTipoConteudoPiano()]]);
 		if (Piano.util.isRevista() || Piano.util.isValor()) {
 			tp.push(["setAid", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].idSandboxTinypassRevistas]);
