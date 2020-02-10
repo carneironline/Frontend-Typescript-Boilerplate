@@ -863,7 +863,7 @@ Piano.util = {
 		window.nomeProdutoPiano = nomeProduto;
 
 		if (typeof window.regrasTiny !== 'undefined') {
-		window.regrasTiny.nomeExperiencia = "";
+			window.regrasTiny.nomeExperiencia = "";
 		}
 		window["tp"] = []
 		Piano.construtor.initTp();
