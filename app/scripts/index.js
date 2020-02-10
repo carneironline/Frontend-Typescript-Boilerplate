@@ -408,9 +408,12 @@ Piano.paywall = {
 		try {
 			new PaywallCptInline();
 			window.hasPaywall = true
+			let event = new CustomEvent('analyticalBlockedForPiano')
+			document.dispatchEvent(event);
 		} catch (err) {
 			console.error('Paywall - Error on load', err)
-			Piano.triggerAdvertising();
+			let event = new CustomEvent('analyticalUnblockedForPiano')
+			document.dispatchEvent(event);
 		}
 	}
 };
