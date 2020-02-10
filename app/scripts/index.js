@@ -864,11 +864,13 @@ Piano.util = {
 		window.tipoConteudoPiano = tipoConteudo;
 		window.conteudoExclusivo = isExclusivo;
 		window.nomeProdutoPiano = nomeProduto;
+
 		if (typeof window.regrasTiny !== 'undefined') {
 			window.regrasTiny.nomeExperiencia = "";
 		}
+		window["tp"] = []
 		Piano.construtor.initTp();
-		tp.experience.execute();
+		loadPianoExperiences();
 	},
 	isValor: function () {
 		if(Piano.variaveis.getNomeProduto() === "valor")
