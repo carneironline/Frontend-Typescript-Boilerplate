@@ -861,11 +861,13 @@ Piano.util = {
 		window.tipoConteudoPiano = tipoConteudo;
 		window.conteudoExclusivo = isExclusivo;
 		window.nomeProdutoPiano = nomeProduto;
-		if (typeof window.regrasTiny !== 'undefined') {
-			window.regrasTiny.nomeExperiencia = "";
-		}
-		Piano.construtor.initTp();
-		tp.experience.execute();
+		// if (typeof window.regrasTiny !== 'undefined') {
+		// 	window.regrasTiny.nomeExperiencia = "";
+		// }
+		// Piano.construtor.initTp();
+		// tp.experience.execute();
+
+		tinyInit();
 	},
 	isValor: function () {
 		if(Piano.variaveis.getNomeProduto() === "valor")
