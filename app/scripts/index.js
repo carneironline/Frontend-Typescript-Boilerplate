@@ -914,8 +914,7 @@ Piano.configuracao = {
 Piano.construtor = {
 	initTp: function() {
 		GA.setEvents("Carregamento Piano", "Inicio InitTp");
-		// tp = window["tp"] || [];
-		tp = []
+		tp = window["tp"] || [];
 		tp.push(["setTags", [Piano.variaveis.getTipoConteudoPiano()]]);
 		if (Piano.util.isRevista() || Piano.util.isValor()) {
 			tp.push(["setAid", Piano.configuracao.jsonConfiguracaoTinyPass[Piano.variaveis.getAmbientePiano()].idSandboxTinypassRevistas]);
