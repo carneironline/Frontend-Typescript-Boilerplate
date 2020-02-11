@@ -102,6 +102,7 @@ Piano.variaveis = {
 			case 'oglobo':
 			case 'blogs':
 			case 'kogut':
+			case 'blogAnalitico':
 				return 'OG03';
 			case 'acervo':
 				return 'OG04';
