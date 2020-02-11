@@ -409,15 +409,58 @@ Piano.paywall = {
 		try {
 			new PaywallCptInline();
 			window.hasPaywall = true
-			let event = new CustomEvent('analyticalBlockedForPiano')
-			document.dispatchEvent(event);
 		} catch (err) {
 			console.error('Paywall - Error on load', err)
-			let event = new CustomEvent('analyticalUnblockedForPiano')
-			document.dispatchEvent(event);
 		}
 	}
 };
+
+function analyticalUnblockedForPiano() {
+	let event = new CustomEvent('analyticalUnblockedForPiano')
+	document.dispatchEvent(event);
+}
+
+function analyticalBlockedForPiano() {
+	let event = new CustomEvent('analyticalBlockedForPiano')
+	document.dispatchEvent(event);
+}
+
+function checkExperiencesHasChange() {
+	return new Promise( (resolve, reject) => {
+		let count = 0; 
+		
+		let interval = setInterval(() => {
+			if(window.tp !== 'undefined'
+			&& window.tp.experience
+			&& window.tp.experience._getLastExecutionResult()
+			&& window.tp.experience._getLastExecutionResult().result
+			&& window.tp.experience._getLastExecutionResult().result.events)
+			{
+				const experiences = window.tp.experience._getLastExecutionResult().result.events
+				const experiencesClone = Array.from(window.tp.experience._getLastExecutionResult().result.events)
+				const experiencesChanged = Object.is(JSON.stringify(experiences), JSON.stringify(experiencesClone))
+
+				if(experiencesChanged) {
+					experiences.forEach(item => {
+						if(item.eventType === 'runJs') {
+							if(item.eventParams.snippet !== 'undefined' && (item.eventParams.snippet.includes('paywall.analytic') ) ) {
+								resolve(true);
+								clearInterval(interval);
+							}
+						}
+					})
+				}
+				
+				if(count === 10) {
+					resolve(false);
+					clearInterval(interval);
+				}
+
+				count++;
+			}
+		}, 100);
+	});
+}
 
 Piano.checkPianoActive = function () {
 	let count = 0
@@ -872,6 +915,15 @@ Piano.util = {
 		window["tp"] = []
 		Piano.construtor.initTp();
 		loadPianoExperiences();
+
+		checkExperiencesHasChange()
+		.then(changed => {
+			if(changed) {
+				analyticalBlockedForPiano()
+			} else {
+				analyticalUnblockedForPiano()
+			}
+		})
 	},
 	isValor: function () {
 		if(Piano.variaveis.getNomeProduto() === "valor")
