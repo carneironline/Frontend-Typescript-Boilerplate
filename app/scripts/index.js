@@ -486,7 +486,7 @@ Piano.checkPianoActive = function () {
 
 	  }, 500);
 
-};
+}; 
 
 Piano.checkPaywall = function(PianoResultEvents = null) {
    let hasRunJsWithPaywall = false
