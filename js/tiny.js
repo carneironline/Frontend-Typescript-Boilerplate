@@ -1921,10 +1921,51 @@ Piano.paywall = {
       window.hasPaywall = true;
     } catch (err) {
       console.error('Paywall - Error on load', err);
-      Piano.triggerAdvertising();
     }
   }
 };
+
+function analyticalUnblockedForPiano() {
+  var event = new CustomEvent('analyticalUnblockedForPiano');
+  document.dispatchEvent(event);
+}
+
+function analyticalBlockedForPiano() {
+  var event = new CustomEvent('analyticalBlockedForPiano');
+  document.dispatchEvent(event);
+}
+
+function checkExperiencesHasChange() {
+  return new Promise(function (resolve, reject) {
+    var count = 0;
+    var interval = setInterval(function () {
+      if (window.tp !== 'undefined' && window.tp.experience && window.tp.experience._getLastExecutionResult() && window.tp.experience._getLastExecutionResult().result && window.tp.experience._getLastExecutionResult().result.events) {
+        var experiences = window.tp.experience._getLastExecutionResult().result.events;
+
+        var experiencesClone = Array.from(window.tp.experience._getLastExecutionResult().result.events);
+        var experiencesChanged = Object.is(JSON.stringify(experiences), JSON.stringify(experiencesClone));
+
+        if (experiencesChanged) {
+          experiences.forEach(function (item) {
+            if (item.eventType === 'runJs') {
+              if (item.eventParams.snippet !== 'undefined' && item.eventParams.snippet.includes('paywall.analytic')) {
+                resolve(true);
+                clearInterval(interval);
+              }
+            }
+          });
+        }
+
+        if (count === 10) {
+          resolve(false);
+          clearInterval(interval);
+        }
+
+        count++;
+      }
+    }, 100);
+  });
+}
 
 Piano.checkPianoActive = function () {
   var count = 0;
@@ -2373,6 +2414,13 @@ Piano.util = {
     window["tp"] = [];
     Piano.construtor.initTp();
     loadPianoExperiences();
+    checkExperiencesHasChange().then(function (changed) {
+      if (changed) {
+        analyticalBlockedForPiano();
+      } else {
+        analyticalUnblockedForPiano();
+      }
+    });
   },
   isValor: function isValor() {
     if (Piano.variaveis.getNomeProduto() === "valor") return true;else return false;
