@@ -7,14 +7,9 @@ export default class PaywallCptInline  {
 		this.domain = window.tinyCpt.isProduction ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/';	
 		this.paywallId = 'paywall-inline'
 
-		window.glbPaywallInline = {
-			cssLoaded: false
-		};
-
 		this.setTemplateSettings(() => {
-			this.createTemplate()
+			this.activeEvents()
 		});
-		this.activeEvents()
 	}
 
 	setTemplateSettings(callback) {
@@ -29,7 +24,8 @@ export default class PaywallCptInline  {
 			offerLink: "https://google.com?l1",
 			imageMobi: "https://via.placeholder.com/300x150",
 			imageDesk: "https://via.placeholder.com/804x128",
-			imageLink: "https://via.placeholder.com/300x150"
+			imageLink: "https://via.placeholder.com/300x150",
+			cssLoaded: false
 		};
 
 		window.glbPaywallInline = (window.glbPaywallInline) ?  Object.assign({}, templateSettings, window.glbPaywallInline) : templateSettings; 
