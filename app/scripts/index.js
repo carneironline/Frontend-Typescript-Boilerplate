@@ -102,6 +102,7 @@ Piano.variaveis = {
 			case 'oglobo':
 			case 'blogs':
 			case 'kogut':
+			case 'blogAnalitico':
 				return 'OG03';
 			case 'acervo':
 				return 'OG04';
@@ -861,11 +862,13 @@ Piano.util = {
 		window.tipoConteudoPiano = tipoConteudo;
 		window.conteudoExclusivo = isExclusivo;
 		window.nomeProdutoPiano = nomeProduto;
+
 		if (typeof window.regrasTiny !== 'undefined') {
 			window.regrasTiny.nomeExperiencia = "";
 		}
+		window["tp"] = []
 		Piano.construtor.initTp();
-		tp.experience.execute();
+		loadPianoExperiences();
 	},
 	isValor: function () {
 		if(Piano.variaveis.getNomeProduto() === "valor")

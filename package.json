@@ -10,7 +10,7 @@
     "build:prod": "webpack --colors --progress --mode production",
     "build:dev": "webpack --colors --progress --mode development",
     "watch": "npm run build:dev -- --watch",
-    "serve": "webpack-dev-server --open --colors --progress"
+    "start": "webpack-dev-server --open --colors --progress"
   },
   "jest": {
     "testEnvironment": "node",
