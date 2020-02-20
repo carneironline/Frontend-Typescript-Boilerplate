@@ -54,7 +54,7 @@ export default class PaywallCptInline  {
 			}
 
 			footerElement.setAttribute('style', `
-			padding-top: 0px;`);
+			padding-top: 0px; position:relative`);
 
 			mainElement.setAttribute('style', `
 			position: relative;
