@@ -415,6 +415,19 @@ Piano.paywall = {
 	}
 };
 
+function openAnalyticalPost(postElement) {
+	if(!postElement) return null
+
+	const buttonElement = postElement.querySelector('.btn-read-more')
+	const hiddenContentElement = postElement.querySelector('.hidden-content')
+
+	buttonElement.removeAttribute('disabled');
+	buttonElement.textContent = 'Fechar'
+
+	if(hiddenContentElement) 
+	hiddenContentElement.classList.remove('hidden-content')
+}
+
 function analyticalUnblockedForPiano() {
 	let event = new CustomEvent('analyticalUnblockedForPiano')
 	document.dispatchEvent(event);
@@ -905,23 +918,32 @@ Piano.util = {
 			return false;
 	},
 	recarregaPiano: function (tipoConteudo, isExclusivo, nomeProduto) {
+		const postElement = window.analiticoPost;
 		window.tipoConteudoPiano = tipoConteudo;
 		window.conteudoExclusivo = isExclusivo;
 		window.nomeProdutoPiano = nomeProduto;
+		window["tp"] = []
+
+		if(postElement) {
+			const analyticalButton = postElement.querySelector('.btn-read-more')
+			analyticalButton.textContent = 'Carregando'
+			analyticalButton.setAttribute('disabled', 'disabled');
+		}
 
 		if (typeof window.regrasTiny !== 'undefined') {
 			window.regrasTiny.nomeExperiencia = "";
 		}
-		window["tp"] = []
+		
 		Piano.construtor.initTp();
 		loadPianoExperiences();
-
+		
 		checkExperiencesHasChange()
 		.then(changed => {
 			if(changed) {
 				analyticalBlockedForPiano()
 			} else {
 				analyticalUnblockedForPiano()
+				openAnalyticalPost(postElement)
 			}
 		});
 	},
