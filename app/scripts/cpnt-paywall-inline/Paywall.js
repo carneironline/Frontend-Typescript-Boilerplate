@@ -44,6 +44,7 @@ export default class PaywallCptInline  {
   	createTemplate(postElement) {
 		const element = postElement.querySelector(".btn-read-more");
 		const mainElement = postElement.querySelector('.main-content')
+		const footerElement = postElement.querySelector('.post-footer')
 		const opacityElement = `<div class="paywall-cpt-inline-opacity"></div>`
 
 		if (element) {
@@ -52,12 +53,16 @@ export default class PaywallCptInline  {
 				window.glbPaywallInline.cssLoaded = true
 			}
 
+			footerElement.setAttribute('style', `
+			padding-top: 0px;`);
+
 			mainElement.setAttribute('style', `
 			position: relative;
 			height: 120px;
 			overflow: hidden;`);
 
 			mainElement.insertAdjacentHTML('beforeend', opacityElement); 
+			// postElement.classList.remove('hidden-content')
 			
 			
 			element.insertAdjacentHTML('beforebegin', this.template); 
