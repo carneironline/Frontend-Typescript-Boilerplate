@@ -422,7 +422,7 @@ function openAnalyticalPost(postElement) {
 	const hiddenContentElement = postElement.querySelector('.hidden-content')
 
 	buttonElement.removeAttribute('disabled');
-	buttonElement.textContent = 'Fechar'
+	buttonElement.innerHTML = buttonElement.dataset.close
 
 	if(hiddenContentElement) 
 	hiddenContentElement.classList.remove('hidden-content')
@@ -922,30 +922,36 @@ Piano.util = {
 		window.tipoConteudoPiano = tipoConteudo;
 		window.conteudoExclusivo = isExclusivo;
 		window.nomeProdutoPiano = nomeProduto;
-		window["tp"] = []
+		window["tp"] = [];
+		
+		if (typeof window.regrasTiny !== 'undefined') {
+		window.regrasTiny.nomeExperiencia = "";
+		}
 
 		if(postElement) {
 			const analyticalButton = postElement.querySelector('.btn-read-more')
-			analyticalButton.textContent = 'Carregando'
-			analyticalButton.setAttribute('disabled', 'disabled');
-		}
 
-		if (typeof window.regrasTiny !== 'undefined') {
-			window.regrasTiny.nomeExperiencia = "";
-		}
-		
-		Piano.construtor.initTp();
-		loadPianoExperiences();
-		
-		checkExperiencesHasChange()
-		.then(changed => {
-			if(changed) {
-				analyticalBlockedForPiano()
+			if(analyticalButton.classList.contains('open')) {
+                analyticalButton.innerHTML = analyticalButton.dataset.open
+                postElement.querySelector('.article__content-container').classList.add('hidden-content')
+                analyticalButton.removeAttribute('disabled');
 			} else {
-				analyticalUnblockedForPiano()
-				openAnalyticalPost(postElement)
+				analyticalButton.textContent = 'Carregando'
+				analyticalButton.setAttribute('disabled', 'disabled');
+				
+				Piano.construtor.initTp();
+				loadPianoExperiences();
+				
+                checkExperiencesHasChange().then(function (changed) {
+                  if (changed) {
+                    analyticalBlockedForPiano();
+                  } else {
+                    analyticalUnblockedForPiano();
+                    openAnalyticalPost(postElement);
+                  }
+                });
 			}
-		});
+		}
 	},
 	isValor: function () {
 		if(Piano.variaveis.getNomeProduto() === "valor")
