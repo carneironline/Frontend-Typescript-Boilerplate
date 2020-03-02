@@ -922,7 +922,7 @@ Piano.util = {
 		window["tp"] = [];
 		
 		if (typeof window.regrasTiny !== 'undefined') {
-		window.regrasTiny.nomeExperiencia = "";
+			window.regrasTiny.nomeExperiencia = "";
 		}
 
 		if(postElement) {
@@ -933,7 +933,6 @@ Piano.util = {
 			} else {
 				analyticalPostIsLoading()
 
-				
 				Piano.construtor.initTp();
 				loadPianoExperiences();
 				
