@@ -73,6 +73,38 @@
 
     <script>
     window.analiticoPost = document.querySelector('#testAnalytical')
+
+    document.addEventListener('analyticalPostIsOpened', () => {
+        const postElement = window.analiticoPost;
+        if(!postElement) return null
+        const analyticalButton = postElement.querySelector('.btn-read-more')
+
+        analyticalButton.innerHTML = analyticalButton.dataset.open
+        postElement.querySelector('.article__content-container').classList.add('hidden-content')
+        analyticalButton.removeAttribute('disabled');
+    })
+    
+    document.addEventListener('analyticalPostIsLoading', () => {
+        const postElement = window.analiticoPost;
+        const analyticalButton = postElement.querySelector('.btn-read-more')
+
+        analyticalButton.textContent = 'Carregando'
+        analyticalButton.setAttribute('disabled', 'disabled');
+    })
+
+    document.addEventListener('analyticalUnblockedForPiano', () => {
+        const postElement = window.analiticoPost;
+        if(!postElement) return null
+        
+        const buttonElement = postElement.querySelector('.btn-read-more')
+        const hiddenContentElement = postElement.querySelector('.hidden-content')
+
+        buttonElement.removeAttribute('disabled');
+        buttonElement.innerHTML = buttonElement.dataset.close
+
+        if(hiddenContentElement) 
+            hiddenContentElement.classList.remove('hidden-content')
+    })
     </script>
 <script type="text/javascript" src="tiny.js"></script></body>
 </html>
