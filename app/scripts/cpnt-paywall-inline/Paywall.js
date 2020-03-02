@@ -110,18 +110,19 @@ export default class PaywallCptInline  {
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway&display=swap" rel="stylesheet">
 		<div class="paywall-cpt-inline" id=${this.paywallId}> 
 			<h1 class ="paywall-cpt-inline-title"><span class=paywall-cpt-inline-title-first_line>${this.templateVars.title}</span><br><span class=paywall-cpt-inline-title-second_line>${this.templateVars.subtitle}</span></h1>
-			<a href=${this.templateVars.buttonLink}>
+
+			<a href="${this.templateVars.buttonLink}">
 				<button class="paywall-cpt-inline-button">
 					<span class="paywall-cpt-inline-span">${this.templateVars.buttonText}</span>
 				</button> 
 			</a>
-			<p class="paywall-cpt-inline-p">${this.templateVars.loginPreText}<a href=${this.getUrlLoginRegister()} class="paywall-cpt-inline-a">${this.templateVars.loginText}</a></p>
+			<p class="paywall-cpt-inline-p">${this.templateVars.loginPreText}<a href="${this.getUrlLoginRegister()}" class="paywall-cpt-inline-a">${this.templateVars.loginText}</a></p>
 			<div class="paywall-cpt-inline-offer">
 			<a href=${this.templateVars.offerLink}>
 				<picture>
-					<source srcset=${this.templateVars.imageMobi} media="(max-width: 375px)">
-					<source srcset=${this.templateVars.imageDesk} media="(min-width: 374px)">
-					<img class="paywall-cpt-inline-img" src=${this.templateVars.imageLink} />
+					<source srcset="${this.templateVars.imageMobi}" media="(max-width: 375px)">
+					<source srcset="${this.templateVars.imageDesk}" media="(min-width: 374px)">
+					<img class="paywall-cpt-inline-img" src="${this.templateVars.imageLink}" />
 				</picture>
 			</a>
 		</div>
