@@ -426,7 +426,7 @@ function analyticalBlockedForPiano() {
 }
 
 function analyticalPostIsOpened() {
-	let event = new CustomEvent('analyticalPostOpened')
+	let event = new CustomEvent('analyticalPostIsOpened')
 	document.dispatchEvent(event);
 }
 
