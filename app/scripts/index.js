@@ -914,7 +914,7 @@ Piano.util = {
 		else
 			return false;
 	},
-	recarregaPiano: function (tipoConteudo, isExclusivo, nomeProduto) {
+	recarregaPiano: function (tipoConteudo, isExclusivo, nomeProduto, postOpened) {
 		const postElement = window.analiticoPost;
 		window.tipoConteudoPiano = tipoConteudo;
 		window.conteudoExclusivo = isExclusivo;
@@ -926,9 +926,7 @@ Piano.util = {
 		}
 
 		if(postElement) {
-			const analyticalButton = postElement.querySelector('.btn-read-more')
-
-			if(analyticalButton.classList.contains('open')) {				
+			if(!postOpened) {				
 				analyticalPostIsOpened()
 			} else {
 				analyticalPostIsLoading()
