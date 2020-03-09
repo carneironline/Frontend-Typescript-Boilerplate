@@ -425,6 +425,16 @@ function analyticalBlockedForPiano() {
 	document.dispatchEvent(event);
 }
 
+function analyticalPostIsOpened() {
+	let event = new CustomEvent('analyticalPostIsOpened')
+	document.dispatchEvent(event);
+}
+
+function analyticalPostIsLoading() {
+	let event = new CustomEvent('analyticalPostIsLoading')
+	document.dispatchEvent(event);
+}
+
 function checkExperiencesHasChange() {
 	return new Promise( (resolve, reject) => {
 		let count = 0; 
@@ -904,26 +914,35 @@ Piano.util = {
 		else
 			return false;
 	},
-	recarregaPiano: function (tipoConteudo, isExclusivo, nomeProduto) {
+	recarregaPiano: function (tipoConteudo, isExclusivo, nomeProduto, postOpened) {
+		const postElement = window.analiticoPost;
 		window.tipoConteudoPiano = tipoConteudo;
 		window.conteudoExclusivo = isExclusivo;
 		window.nomeProdutoPiano = nomeProduto;
-
+		window["tp"] = [];
+		
 		if (typeof window.regrasTiny !== 'undefined') {
 			window.regrasTiny.nomeExperiencia = "";
 		}
-		window["tp"] = []
-		Piano.construtor.initTp();
-		loadPianoExperiences();
 
-		checkExperiencesHasChange()
-		.then(changed => {
-			if(changed) {
-				analyticalBlockedForPiano()
+		if(postElement) {
+			if(!postOpened) {				
+				analyticalPostIsOpened()
 			} else {
-				analyticalUnblockedForPiano()
+				analyticalPostIsLoading()
+
+				Piano.construtor.initTp();
+				loadPianoExperiences();
+				
+                checkExperiencesHasChange().then(function (changed) {
+                  if (changed) {
+                    analyticalBlockedForPiano();
+                  } else {
+                    analyticalUnblockedForPiano();
+                  }
+                });
 			}
-		});
+		}
 	},
 	isValor: function () {
 		if(Piano.variaveis.getNomeProduto() === "valor")
