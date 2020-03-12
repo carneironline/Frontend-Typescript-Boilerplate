@@ -34,21 +34,36 @@ export default class PaywallCptInline  {
 	}
 
     activeEvents() {
-		const targetPost = window.analiticoPost;
+		const postElement = window.analiticoPost;
 
-		if(!targetPost) return null
+		if(!postElement) return null
 
-		const postBox = targetPost.querySelector(".btn-read-more");
-
-		this.createTemplate(postBox)
+		this.createTemplate(postElement)
 	}
 
-  	createTemplate(element) {
+  	createTemplate(postElement) {
+		const element = postElement.querySelector(".btn-read-more");
+		const mainElement = postElement.querySelector('.main-content')
+		const footerElement = postElement.querySelector('.post-footer')
+		const opacityElement = `<div class="paywall-cpt-inline-opacity"></div>`
+
 		if (element) {
 			if(!window.glbPaywallInline.cssLoaded) {
 				document.body.insertAdjacentHTML('beforebegin', this.cssMinified); 
 				window.glbPaywallInline.cssLoaded = true
 			}
+
+			footerElement.setAttribute('style', `
+			padding-top: 0px; position:relative`);
+
+			mainElement.setAttribute('style', `
+			position: relative;
+			height: 120px;
+			overflow: hidden;`);
+
+			mainElement.insertAdjacentHTML('beforeend', opacityElement); 
+			// postElement.classList.remove('hidden-content')
+			
 			
 			element.insertAdjacentHTML('beforebegin', this.template); 
 			const removedElement = Array.from(element.parentNode.parentNode.childNodes).find((element) => element.className === 'other-content')
@@ -95,6 +110,7 @@ export default class PaywallCptInline  {
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway&display=swap" rel="stylesheet">
 		<div class="paywall-cpt-inline" id=${this.paywallId}> 
 			<h1 class ="paywall-cpt-inline-title"><span class=paywall-cpt-inline-title-first_line>${this.templateVars.title}</span><br><span class=paywall-cpt-inline-title-second_line>${this.templateVars.subtitle}</span></h1>
+
 			<a href="${this.templateVars.buttonLink}">
 				<button class="paywall-cpt-inline-button">
 					<span class="paywall-cpt-inline-span">${this.templateVars.buttonText}</span>
@@ -119,7 +135,7 @@ export default class PaywallCptInline  {
   get cssMinified() {
 	  return `
 	  <style>
-	  .paywall-cpt-inline{margin: 0 auto 40px;padding:20px;border-radius: 4px;border: solid 1px #dbdde1;background-color: #f2f2f5;}.paywall-cpt-inline-title{margin-left:auto;margin-right:auto; margin-bottom:30px;display:block;font-family:Raleway;font-size:20px;font-weight:700;font-stretch:normal;font-style:normal;line-height:1.2;letter-spacing:normal;text-align:center;color:#325e94}
+	  .paywall-cpt-inline{margin: 0 auto 40px;padding:20px;border-radius: 4px;border: solid 1px #dbdde1;background-color: #f2f2f5;}.paywall-cpt-inline-opacity{background: linear-gradient(180deg,hsla(0,0%,100%,0) 0,#fff 40%,#fff 100%);position: absolute;bottom: 0;width: 100%;height: 58px;overflow: hidden;}.paywall-cpt-inline-title{margin-left:auto;margin-right:auto; margin-bottom:30px;display:block;font-family:Raleway;font-size:20px;font-weight:700;font-stretch:normal;font-style:normal;line-height:1.2;letter-spacing:normal;text-align:center;color:#325e94}
 	  .paywall-cpt-inline-button{cursor:pointer;margin-left:auto;margin-right:auto;margin-bottom:30px;display:block;width:256px;height:48px;background-color:#f59c00;border-radius:4px;border:solid 3px #f59c00;}
 	  @media screen and (min-width: 424px) {
 		.paywall-cpt-inline-button { width: 356px; }
