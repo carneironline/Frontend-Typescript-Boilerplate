@@ -86,6 +86,14 @@ Piano.variaveis = {
 			return id = '6697';
 		}
 
+		if (Piano.variaveis.getNomeProduto() === 'pegn'){
+			return id = '6615';
+		}
+
+		if (Piano.variaveis.getNomeProduto() === 'epoca-negocios'){
+			return id = '6611';
+		}
+
 		if(Piano.variaveis.getNomeProduto() === 'valor'){
             return id = '6668';
 		}
@@ -119,11 +127,14 @@ Piano.variaveis = {
 			case 'monet':
 			case 'crescer':
 			case 'galileu':
+			case 'epoca-negocios':
 				return nomeProduto;
 			case 'casa-e-jardim':
 				return 'casa-jardim';
 			case 'quem-acontece':
 				return 'quem';
+			case 'pegn':
+				return 'pequenas-empresas';
 			case 'valor':
 				return 'valordigital';
 			default:
