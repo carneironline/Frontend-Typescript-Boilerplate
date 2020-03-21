@@ -33,7 +33,7 @@ export default {
     },
     'epoca-negocios': {
     'cod_prod': 'epoca-negocios',
-    'id': '0000'
+    'id': '6611'
     },
     'globo-rural': {
     'cod_prod': 'globo-rural',
@@ -41,7 +41,7 @@ export default {
     },
     'pegn': {
     'cod_prod': 'pequenas-empresas',
-    'id': '0000'
+    'id': '6615'
     },
     'galileu': {
     'cod_prod': 'galileu',
