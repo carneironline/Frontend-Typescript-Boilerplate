@@ -70,7 +70,7 @@ Piano.variaveis = {
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
-		var magazinesObject = Piano.variaveis.getMagazinesObject();
+		var magazinesObject = Piano.variaveis.getProductsObject();
 
 		var id = magazinesObject[Piano.variaveis.getNomeProduto()]['id'];
 
@@ -86,7 +86,7 @@ Piano.variaveis = {
 	getCodigoProduto: function(){
 		var nomeProduto = Piano.variaveis.getNomeProduto();
 
-		var magazinesObject = Piano.variaveis.getMagazinesObject();
+		var magazinesObject = Piano.variaveis.getProductsObject();
 
 		var codProd = magazinesObject[Piano.variaveis.getNomeProduto()]['cod_prod'];
 
@@ -98,7 +98,7 @@ Piano.variaveis = {
 	
 		return codProd;
 	},
-	getMagazinesObject: function() {
+	getProductsObject: function() {
 		return {
 			'oglobo': {
 				'id': '3981',
