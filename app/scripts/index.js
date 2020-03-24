@@ -70,9 +70,9 @@ Piano.variaveis = {
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
-		var magazinesObject = Piano.variaveis.getProductsObject();
+		var productsObject = Piano.variaveis.getProductsObject();
 
-		var id = magazinesObject[Piano.variaveis.getNomeProduto()]['id'];
+		var id = productsObject[Piano.variaveis.getNomeProduto()]['id'];
 
 		if (!id){
 			GA.setEventsError('ServiceID não definido.', document.location.href +
@@ -86,9 +86,9 @@ Piano.variaveis = {
 	getCodigoProduto: function(){
 		var nomeProduto = Piano.variaveis.getNomeProduto();
 
-		var magazinesObject = Piano.variaveis.getProductsObject();
+		var productsObject = Piano.variaveis.getProductsObject();
 
-		var codProd = magazinesObject[Piano.variaveis.getNomeProduto()]['cod_prod'];
+		var codProd = productsObject[Piano.variaveis.getNomeProduto()]['cod_prod'];
 
 		if (!codProd){
 			GA.setEventsError("Ao obter código do produto", nomeProduto + " - " + document.location.href);
