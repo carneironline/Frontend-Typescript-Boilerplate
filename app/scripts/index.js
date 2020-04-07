@@ -70,66 +70,124 @@ Piano.variaveis = {
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
-		var id = '0000';
+		var productsObject = Piano.variaveis.getProductsObject();
 
-		if(Piano.variaveis.getNomeProduto() === 'oglobo'
-			|| Piano.variaveis.getNomeProduto() === 'blogs'
-			|| Piano.variaveis.getNomeProduto() === 'kogut'
-			|| Piano.variaveis.getNomeProduto() === 'acervo'
-			|| Piano.variaveis.getNomeProduto() === 'jornaldigital'
-			|| Piano.variaveis.getNomeProduto() === 'blogAnalitico'){
-			return id = '3981';
-		}
-		if (Piano.util.isRevista() && Piano.variaveis.getNomeProduto() === 'monet'){
-			return id = '6618';
-		}else if (Piano.util.isRevista()){
-			return id = '6697';
-		}
+		var id = productsObject[Piano.variaveis.getNomeProduto()]['id'];
 
-		if(Piano.variaveis.getNomeProduto() === 'valor'){
-            return id = '6668';
-		}
-
-		if (id === '0000')
+		if (!id){
 			GA.setEventsError('ServiceID não definido.', document.location.href +
 				' nomeProduto: ' + Piano.variaveis.getNomeProduto() );
+
+			return '0000';
+		}
 
 		return id;
 	},
 	getCodigoProduto: function(){
 		var nomeProduto = Piano.variaveis.getNomeProduto();
-		switch (nomeProduto){
-			case 'oglobo':
-			case 'blogs':
-			case 'kogut':
-			case 'blogAnalitico':
-				return 'OG03';
-			case 'acervo':
-				return 'OG04';
-			case 'jornaldigital':
-				return 'OG01';
-			case 'auto-esporte':
-			case 'epoca':
-			case 'vogue':
-			case 'glamour':
-			case 'casa-vogue':
-			case 'marie-claire':
-			case 'globo-rural':
-			case 'gq':
-			case 'monet':
-			case 'crescer':
-			case 'galileu':
-				return nomeProduto;
-			case 'casa-e-jardim':
-				return 'casa-jardim';
-			case 'quem-acontece':
-				return 'quem';
-			case 'valor':
-				return 'valordigital';
-			default:
-				GA.setEventsError("Ao obter código do produto", nomeProduto + " - " + document.location.href);
-				Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
-				return 'error';
+
+		var productsObject = Piano.variaveis.getProductsObject();
+
+		var codProd = productsObject[Piano.variaveis.getNomeProduto()]['cod_prod'];
+
+		if (!codProd){
+			GA.setEventsError("Ao obter código do produto", nomeProduto + " - " + document.location.href);
+			Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, " ");
+			return 'error';
+		}
+	
+		return codProd;
+	},
+	getProductsObject: function() {
+		return {
+			'oglobo': {
+				'id': '3981',
+				'cod_prod': 'OG03'
+			},
+			'blogs': {
+				'id': '3981',
+				'cod_prod': 'OG03'
+			},
+			'kogut': {
+				'id': '3981',
+				'cod_prod': 'OG03'
+			},
+			'blogAnalitico': {
+				'id': '3981',
+				'cod_prod': 'OG04'
+			},
+			'acervo': {
+				'id': '3981',
+				'cod_prod': 'OG04'
+			},
+			'jornaldigital': {
+				'id': '3981',
+				'cod_prod': 'OG01'
+			},
+			'monet': {
+				'id': '6618',
+				'cod_prod': 'monet'
+			},
+			'auto-esporte': {
+				'id': '6613',
+				'cod_prod': 'auto-esporte'
+			},
+			'epoca': {
+				'id': '6612',
+				'cod_prod': 'epoca'
+			},
+			'vogue': {
+				'id': '6614',
+				'cod_prod': 'vogue'
+			},
+			'glamour': {
+				'id': '6616',
+				'cod_prod': 'glamour'
+			},
+			'casa-vogue': {
+				'id': '6610',
+				'cod_prod': 'casa-vogue'
+			},
+			'marie-claire': {
+				'id': '6609',
+				'cod_prod': 'marie-claire'
+			},
+			'globo-rural': {
+				'id': '6621',
+				'cod_prod': 'globo-rural'
+			},
+			'gq': {
+				'id': '6622',
+				'cod_prod': 'gq'
+			},
+			'crescer': {
+				'id': '6620',
+				'cod_prod': 'crescer'
+			},
+			'galileu': {
+				'id': '6617',
+				'cod_prod': 'galileu'
+			},
+			'epoca-negocios': {
+				'id': '6611',
+				'cod_prod': 'epoca-negocios'
+			},
+			'casa-e-jardim': {
+				'id': '6619',
+				'cod_prod': 'casa-jardim'
+			},
+			'quem-acontece': {
+				'id': '6608',
+				'cod_prod': 'quem'
+			},
+			'pegn': {
+				'id': '6615',
+				'cod_prod': 'pequenas-empresas'
+			},
+			'valor': {
+				'id': '6668',
+				'cod_prod': 'valordigital'
+			}
 		}
 	}
 };
@@ -908,7 +966,7 @@ Piano.util = {
 		document.body.insertBefore(e, document.body.lastChild);
 	},
 	isRevista: function(){
-		var revistas = ["epoca", "auto-esporte", "vogue", "glamour", "casa-vogue", "marie-claire", "casa-e-jardim", "quem-acontece", "globo-rural", "gq", "monet", 'crescer','galileu'];
+		var revistas = ["epoca", "auto-esporte", "vogue", "glamour", "casa-vogue", "marie-claire", "casa-e-jardim", "quem-acontece", "globo-rural", "gq", "monet", 'crescer', 'galileu', 'epoca-negocios', 'pegn'];
 		if(revistas.indexOf(Piano.variaveis.getNomeProduto()) > -1)
 			return true;
 		else

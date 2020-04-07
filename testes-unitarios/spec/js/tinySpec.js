@@ -505,10 +505,10 @@ describe('Tiny JS', function () {
                 expect(Piano.util.isRevista()).toEqual(true);
             });
 
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "epoca-negocios"', function(){
+            it('deve retornar "false" quando Piano.variaveis.getNomeProduto é "epoca-negocios"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('epoca-negocios');
 
-                expect(Piano.util.isRevista()).toEqual(true);
+                expect(Piano.util.isRevista()).toEqual(false);
             });
 
             it('deve retornar "true" quando Piano.variaveis.getNomeProduto é "galileu"', function(){
@@ -523,10 +523,10 @@ describe('Tiny JS', function () {
                 expect(Piano.util.isRevista()).toEqual(true);
             });
 
-            xit('deve retornar "true" quando Piano.variaveis.getNomeProduto é "pegn"', function(){
+            it('deve retornar "false" quando Piano.variaveis.getNomeProduto é "pegn"', function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('pegn');
 
-                expect(Piano.util.isRevista()).toEqual(true);
+                expect(Piano.util.isRevista()).toEqual(false);
             });
 
             it('deve retornar "true" quando Piano.variaveis.getNomeProduto é "vogue"', function(){
@@ -1017,9 +1017,9 @@ describe('Tiny JS', function () {
                 expect(Piano.variaveis.getCodigoProduto()).toEqual('epoca');
             });
 
-            xit('deve retornar revistas quando nomeProduto igual a epoca-negocios',function(){
+            it('deve retornar revistas quando nomeProduto igual a epoca-negocios',function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('epoca-negocios');
-
+                
                 expect(Piano.variaveis.getCodigoProduto()).toEqual('epoca-negocios');
             });            
 
@@ -1029,9 +1029,9 @@ describe('Tiny JS', function () {
                 expect(Piano.variaveis.getCodigoProduto()).toEqual('globo-rural');
             });            
 
-            xit('deve retornar revistas quando nomeProduto igual a pegn',function(){
+            it('deve retornar revistas quando nomeProduto igual a pegn',function(){
                 spyOn(Piano.variaveis, 'getNomeProduto').and.returnValue('pegn');
-
+                
                 expect(Piano.variaveis.getCodigoProduto()).toEqual('pequenas-empresas');
             });            
 
