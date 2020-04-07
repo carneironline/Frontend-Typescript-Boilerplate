@@ -1047,7 +1047,6 @@ Piano.configuracao = {
 
 Piano.construtor = {
 	initTp: function() {
-		GA.setEvents("Carregamento Piano", "Inicio InitTp");
 		tp = window["tp"] || [];
 		tp.push(["setTags", [Piano.variaveis.getTipoConteudoPiano()]]);
 		if (Piano.util.isRevista() || Piano.util.isValor()) {
@@ -1084,7 +1083,6 @@ Piano.construtor = {
 		Piano.util.isOrigemBuscador() || Piano.util.extraiParametrosCampanhaDaUrl();
 		tp.push(["addHandler", "meterActive", Piano.util.callbackMeter]);
 		tp.push(["addHandler", "meterExpired", Piano.util.callbackMeterExpired]);
-		GA.setEvents("Carregamento Piano", "Fim InitTp");
 	}
 };
 
@@ -1101,7 +1099,6 @@ function loadPianoExperiences(){
 	var b = document.getElementsByTagName("script")[0];
 
 	b.parentNode.insertBefore(a, b);
-	GA.setEvents("Carregamento Piano", "Script adicionado");
 }
 
 function pianoInit() {
@@ -1120,8 +1117,6 @@ function pianoInit() {
 			subscriptions.setOnEntitlementsResponse(entitlementsPromise => {
 				entitlementsPromise.then(entitlements => {
 					window.swgEntitlements = entitlements;
-
-					GA.setEvents("Carregamento SWG", "Entitlements recebidos");
 
 					if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
 						try{
