@@ -1352,7 +1352,7 @@ function () {
         var topWithFullElement = elBodyHeight - elCptWrapHeight;
         _this3.elCpt.style.top = "".concat(currentTop, "px");
         _this3.elCpt.style.opacity = 1;
-        _this3.elCpt.style.zIndex = 9999999999;
+        _this3.elCpt.style.zIndex = 20;
 
         _this3.evtWheel(currentTop, topWithFullElement);
 

@@ -134,7 +134,7 @@ export default class PaywallCpt  {
 
 		this.elCpt.style.top = `${currentTop}px`;
 		this.elCpt.style.opacity = 1;
-		this.elCpt.style.zIndex = 9999999999;
+		this.elCpt.style.zIndex = 20;
 
 		this.evtWheel(currentTop, topWithFullElement);
 		this.evtTouch(currentTop, topWithFullElement);
