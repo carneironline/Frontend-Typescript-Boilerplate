@@ -24,7 +24,7 @@ export default {
         'cod_prod': 'OG01'
     },
     'monet': {
-        'id': '6697',
+        'id': '6618',
         'cod_prod': 'monet'
     },
     'auto-esporte': {
