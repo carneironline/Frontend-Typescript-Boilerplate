@@ -24,47 +24,47 @@ export default {
         'cod_prod': 'OG01'
     },
     'monet': {
-        'id': '6618',
+        'id': '6697',
         'cod_prod': 'monet'
     },
     'auto-esporte': {
-        'id': '6613',
+        'id': '6697',
         'cod_prod': 'auto-esporte'
     },
     'epoca': {
-        'id': '6612',
+        'id': '6697',
         'cod_prod': 'epoca'
     },
     'vogue': {
-        'id': '6614',
+        'id': '6697',
         'cod_prod': 'vogue'
     },
     'glamour': {
-        'id': '6616',
+        'id': '6697',
         'cod_prod': 'glamour'
     },
     'casa-vogue': {
-        'id': '6610',
+        'id': '6697',
         'cod_prod': 'casa-vogue'
     },
     'marie-claire': {
-        'id': '6609',
+        'id': '6697',
         'cod_prod': 'marie-claire'
     },
     'globo-rural': {
-        'id': '6621',
+        'id': '6697',
         'cod_prod': 'globo-rural'
     },
     'gq': {
-        'id': '6622',
+        'id': '6697',
         'cod_prod': 'gq'
     },
     'crescer': {
-        'id': '6620',
+        'id': '6697',
         'cod_prod': 'crescer'
     },
     'galileu': {
-        'id': '6617',
+        'id': '6697',
         'cod_prod': 'galileu'
     },
     'epoca-negocios': {
@@ -72,11 +72,11 @@ export default {
         'cod_prod': 'epoca-negocios'
     },
     'casa-e-jardim': {
-        'id': '6619',
+        'id': '6697',
         'cod_prod': 'casa-jardim'
     },
     'quem-acontece': {
-        'id': '6608',
+        'id': '6697',
         'cod_prod': 'quem'
     },
     'pegn': {
