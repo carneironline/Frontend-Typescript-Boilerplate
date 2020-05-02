@@ -4,11 +4,21 @@ import GAModule from './GA';
 import SwgModule from './Swg';
 import PaywallCpt from './cpnt-paywall/Paywall';
 import PaywallCptInline from './cpnt-paywall-inline/Paywall';
+import getProductsObject from './ProductsRequester';
 
 const Tiny = new TinyModule();
 const GA = new GAModule();
+const productsObject = {};
 
 GA.setGlobalVars();
+
+getProductsObject('int', function(productsJson){
+
+	if (productsJson)
+		productsObject = JSON.parse(productsJson);
+
+	productsObject = {};
+});
 
 Piano.typePaywall = null;
 Piano.variaveis = {
@@ -70,8 +80,6 @@ Piano.variaveis = {
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
-		var productsObject = Piano.variaveis.getProductsObject();
-
 		var id = productsObject[Piano.variaveis.getNomeProduto()]['id'];
 
 		if (!id){
@@ -86,8 +94,6 @@ Piano.variaveis = {
 	getCodigoProduto: function(){
 		var nomeProduto = Piano.variaveis.getNomeProduto();
 
-		var productsObject = Piano.variaveis.getProductsObject();
-
 		var codProd = productsObject[Piano.variaveis.getNomeProduto()]['cod_prod'];
 
 		if (!codProd){
@@ -97,98 +103,6 @@ Piano.variaveis = {
 		}
 	
 		return codProd;
-	},
-	getProductsObject: function() {
-		return {
-			'oglobo': {
-				'id': '3981',
-				'cod_prod': 'OG03'
-			},
-			'blogs': {
-				'id': '3981',
-				'cod_prod': 'OG03'
-			},
-			'kogut': {
-				'id': '3981',
-				'cod_prod': 'OG03'
-			},
-			'blogAnalitico': {
-				'id': '3981',
-				'cod_prod': 'OG04'
-			},
-			'acervo': {
-				'id': '3981',
-				'cod_prod': 'OG04'
-			},
-			'jornaldigital': {
-				'id': '3981',
-				'cod_prod': 'OG01'
-			},
-			'monet': {
-				'id': '6618',
-				'cod_prod': 'monet'
-			},
-			'auto-esporte': {
-				'id': '6697',
-				'cod_prod': 'auto-esporte'
-			},
-			'epoca': {
-				'id': '6697',
-				'cod_prod': 'epoca'
-			},
-			'vogue': {
-				'id': '6697',
-				'cod_prod': 'vogue'
-			},
-			'glamour': {
-				'id': '6697',
-				'cod_prod': 'glamour'
-			},
-			'casa-vogue': {
-				'id': '6697',
-				'cod_prod': 'casa-vogue'
-			},
-			'marie-claire': {
-				'id': '6697',
-				'cod_prod': 'marie-claire'
-			},
-			'globo-rural': {
-				'id': '6697',
-				'cod_prod': 'globo-rural'
-			},
-			'gq': {
-				'id': '6697',
-				'cod_prod': 'gq'
-			},
-			'crescer': {
-				'id': '6697',
-				'cod_prod': 'crescer'
-			},
-			'galileu': {
-				'id': '6697',
-				'cod_prod': 'galileu'
-			},
-			'epoca-negocios': {
-				'id': '6611',
-				'cod_prod': 'epoca-negocios'
-			},
-			'casa-e-jardim': {
-				'id': '6697',
-				'cod_prod': 'casa-jardim'
-			},
-			'quem-acontece': {
-				'id': '6697',
-				'cod_prod': 'quem'
-			},
-			'pegn': {
-				'id': '6615',
-				'cod_prod': 'pequenas-empresas'
-			},
-			'valor': {
-				'id': '6668',
-				'cod_prod': 'valordigital'
-			}
-		}
 	}
 };
 
