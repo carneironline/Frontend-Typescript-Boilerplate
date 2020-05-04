@@ -12,11 +12,7 @@ const GA = new GAModule();
 GA.setGlobalVars();
 
 getProductsObject('int', function(productsJson){
-
-	if (productsJson)
-		window.productsObject = JSON.parse(productsJson);
-
-	window.productsObject = {};
+	window.productsObject = JSON.parse(productsJson);
 });
 
 Piano.typePaywall = null;
