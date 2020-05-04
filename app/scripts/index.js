@@ -8,16 +8,15 @@ import getProductsObject from './ProductsRequester';
 
 const Tiny = new TinyModule();
 const GA = new GAModule();
-const productsObject = {};
 
 GA.setGlobalVars();
 
 getProductsObject('int', function(productsJson){
 
 	if (productsJson)
-		productsObject = JSON.parse(productsJson);
+		window.productsObject = JSON.parse(productsJson);
 
-	productsObject = {};
+	window.productsObject = {};
 });
 
 Piano.typePaywall = null;
@@ -80,7 +79,7 @@ Piano.variaveis = {
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
-		var id = productsObject[Piano.variaveis.getNomeProduto()]['id'];
+		var id = window.productsObject[Piano.variaveis.getNomeProduto()]['id'];
 
 		if (!id){
 			GA.setEventsError('ServiceID não definido.', document.location.href +
@@ -92,9 +91,7 @@ Piano.variaveis = {
 		return id;
 	},
 	getCodigoProduto: function(){
-		var nomeProduto = Piano.variaveis.getNomeProduto();
-
-		var codProd = productsObject[Piano.variaveis.getNomeProduto()]['cod_prod'];
+		var codProd = window.productsObject[Piano.variaveis.getNomeProduto()]['cod_prod'];
 
 		if (!codProd){
 			GA.setEventsError("Ao obter código do produto", nomeProduto + " - " + document.location.href);
@@ -103,7 +100,8 @@ Piano.variaveis = {
 		}
 	
 		return codProd;
-	}
+	},
+
 };
 
 Piano.janelaAnonima = {
