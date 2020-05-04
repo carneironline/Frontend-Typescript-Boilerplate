@@ -11,8 +11,11 @@ const GA = new GAModule();
 
 GA.setGlobalVars();
 
+window.gotProducts = false;
+
 getProductsObject('int', function(productsJson){
 	window.productsObject = JSON.parse(productsJson);
+	window.gotProducts = true;
 });
 
 Piano.typePaywall = null;
@@ -75,6 +78,9 @@ Piano.variaveis = {
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
+		while(window.gotProducts)
+			console.log("Getting products");
+
 		var id = window.productsObject[Piano.variaveis.getNomeProduto()]['id'];
 
 		if (!id){
@@ -87,6 +93,9 @@ Piano.variaveis = {
 		return id;
 	},
 	getCodigoProduto: function(){
+		while(window.gotProducts)
+			console.log("Getting products");
+
 		var codProd = window.productsObject[Piano.variaveis.getNomeProduto()]['cod_prod'];
 
 		if (!codProd){
