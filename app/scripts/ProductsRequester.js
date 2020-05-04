@@ -2,11 +2,8 @@ export default function getProductsObject(environment, callback) {
     var productsJson = {};
 
     var httpMethod = 'GET';
-    var qaJson = 'https://s3.glbimg.com/v1/AUTH_3426e47ed6784b729ddc152696060e4c/Barreiras/products.json';
+    var qaJson = 'https://s3.glbimg.com/v1/AUTH_a00f952f76904b5ca11e8426a3b0c8f8/tiny/products.json';
     var asyncRequest = true;
-    var allowCrossOrigin = 'Access-Control-Allow-Origin';
-    var allOrigin = '*';
-    var responseType = 'json';
 
     var requester = new XMLHttpRequest();
 
@@ -17,7 +14,5 @@ export default function getProductsObject(environment, callback) {
     };
 
     requester.open(httpMethod, qaJson, asyncRequest);
-    requester.setRequestHeader(allowCrossOrigin, allOrigin);
-    requester.responseType = responseType;
     requester.send();
 }
