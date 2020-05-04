@@ -3,7 +3,7 @@ export default function getProductsObject(environment, callback) {
 
     var httpMethod = 'GET';
     var qaJson = 'https://s3.glbimg.com/v1/AUTH_a00f952f76904b5ca11e8426a3b0c8f8/tiny/products.json';
-    var asyncRequest = true;
+    var asyncRequest = false;
 
     var requester = new XMLHttpRequest();
 
