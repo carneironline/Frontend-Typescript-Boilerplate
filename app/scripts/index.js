@@ -11,7 +11,7 @@ const GA = new GAModule();
 
 GA.setGlobalVars();
 
-getProductsObject('int', function(productsJson){
+getProductsObject(Piano.variaveis.getAmbientePiano(), function(productsJson){
 	window.productsObject = JSON.parse(productsJson);
 });
 
