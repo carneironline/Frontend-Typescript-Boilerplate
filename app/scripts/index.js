@@ -11,6 +11,8 @@ const GA = new GAModule();
 
 GA.setGlobalVars();
 
+window.productsObject = {};
+
 Piano.typePaywall = null;
 Piano.variaveis = {
 	ambientesAceitos: "int,qlt,prd",
@@ -71,6 +73,11 @@ Piano.variaveis = {
 		return window.nomeProdutoPiano;
 	},
 	getServicoId: function() {
+		if (window.productsObject === {})
+			getProductsObject(Piano.variaveis.getAmbientePiano(), function(productsJson){
+				window.productsObject = JSON.parse(productsJson);
+			});
+
 		var id = window.productsObject[Piano.variaveis.getNomeProduto()]['id'];
 
 		if (!id){
@@ -83,6 +90,11 @@ Piano.variaveis = {
 		return id;
 	},
 	getCodigoProduto: function(){
+		if (window.productsObject === {})
+			getProductsObject(Piano.variaveis.getAmbientePiano(), function(productsJson){
+				window.productsObject = JSON.parse(productsJson);
+			});
+
 		var codProd = window.productsObject[Piano.variaveis.getNomeProduto()]['cod_prod'];
 
 		if (!codProd){
@@ -1042,10 +1054,6 @@ function pianoInit() {
         }
     }
 }
-
-getProductsObject(Piano.variaveis.getAmbientePiano(), function(productsJson){
-	window.productsObject = JSON.parse(productsJson);
-});
 
 async function tinyInit() {
 	Tiny.setPiano(Piano);
