@@ -11,10 +11,6 @@ const GA = new GAModule();
 
 GA.setGlobalVars();
 
-getProductsObject(Piano.variaveis.getAmbientePiano(), function(productsJson){
-	window.productsObject = JSON.parse(productsJson);
-});
-
 Piano.typePaywall = null;
 Piano.variaveis = {
 	ambientesAceitos: "int,qlt,prd",
@@ -1046,6 +1042,10 @@ function pianoInit() {
         }
     }
 }
+
+getProductsObject(Piano.variaveis.getAmbientePiano(), function(productsJson){
+	window.productsObject = JSON.parse(productsJson);
+});
 
 async function tinyInit() {
 	Tiny.setPiano(Piano);
