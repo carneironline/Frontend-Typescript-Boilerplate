@@ -337,7 +337,7 @@ Piano.banner = {
 Piano.register = {
 	mostrarBarreira: function(versao) {
 		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/styles/styles.css'>");
-		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/register-piano/"+versao+"/scripts/nova-tela-register.js");
+		Piano.xmlHttpRequest.geraScriptNaPagina("../register-piano/"+versao+"/scripts/nova-tela-register.js");
 		Helpers.setCookie(Piano.variaveis.constante.cookie.UTP, "", -1);
 		GA.setEvents("Exibicao Register", Piano.metricas.montaRotuloGA());
 		Helpers.setCookie(Piano.variaveis.constante.cookie.RTIEX, true, 1);
