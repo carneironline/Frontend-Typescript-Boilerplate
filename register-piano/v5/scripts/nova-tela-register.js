@@ -1,6 +1,7 @@
 (function(){
     const isProduction = window.ambienteUtilizadoPiano === 'prd'
-    const protectedContentElToSearch = isProduction ? ".protected-content" : ".inline-content"
+    const isQA = window.ambienteUtilizadoPiano === 'int'
+    const protectedContentElToSearch = (isProduction || isQA) ? ".protected-content" : ".inline-content"
     const protectedContentEl = document.querySelector(protectedContentElToSearch);
 
     if (protectedContentEl) {
