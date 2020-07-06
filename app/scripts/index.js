@@ -638,7 +638,7 @@ Piano.xmlHttpRequest = {
 			if (xhr.status === 200){
 				var resposta = xhr.responseText;
 				var respJson = JSON.parse(resposta);
-				var respostaDeTermoDeUso = false, respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
+				var respostaDeTermoDeUso = '', respostaDeMotivo = '', hrefAssinaturaInadimplente = '';
 				if (typeof respJson.motivo != "undefined") {
 					respostaDeMotivo = respJson.motivo.toLowerCase();
 				}
@@ -762,7 +762,7 @@ Piano.autenticacao = {
 		tp.push(["setCustomVariable", "autorizado", autorizado]);
 		tp.push(["setCustomVariable", "motivo", motivo]);
 		tp.push(["setCustomVariable", "logado", logado]);
-		if(temTermoDeUso != " ")
+		if(temTermoDeUso !== '')
 			tp.push(["setCustomVariable", "temTermo", temTermoDeUso]);
 	}
 };
