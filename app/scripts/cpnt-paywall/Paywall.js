@@ -226,19 +226,20 @@ export default class PaywallCpt  {
 	}.bind(this));
   }
 
+  montaUrlRetorno() {
+    return encodeURIComponent(document.location.href);
+  }
+
   getUrlLoginRegister(type = '') {
-	const uri = location.href;
 	const serviceId = window.tinyCpt.Piano.variaveis.getServicoId() || null;
 	let str = '';
-	let urlReturn = '';
 
 	if(!this.debug && this.Piano.isDefined) {
-		urlReturn = encodeURIComponent(uri);
-
+        let urlRetorno = this.montaUrlRetorno();
 		if(type === 'register') {
-			str = `${this.domain}cadastro/${serviceId}?url=${urlReturn}`;
+			str = `${this.domain}cadastro/${serviceId}?url=${urlRetorno}`;
 		} else {
-			str = `${this.domain}login/${serviceId}?url=${urlReturn}`;
+			str = `${this.domain}login/${serviceId}?url=${urlRetorno}`;
 		}
 	}
 

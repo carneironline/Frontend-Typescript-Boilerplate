@@ -2,7 +2,6 @@ let paywallSiteContainer = document.querySelector('.paywall__site-container');
 let larguraTela = window.innerWidth;
 let alturaTela = window.innerHeight;
 let metadeTela = alturaTela / 2;
-let uri = document.location.href;
 let url = window.ambienteUtilizadoPiano == 'prd' ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/';
 let protectedContentEl = document.querySelector(".protected-content");
 let eventoLinkUm = null;
@@ -243,9 +242,7 @@ if (paywallSiteContainer) {
     }
 
     function montaUrlRetorno () {
-        let urlRetorno = uri;
-
-        return encodeURIComponent(urlRetorno);
+        return encodeURIComponent(document.location.href);
     }
     
     if(img1lL == 'ofertaSwg') {
