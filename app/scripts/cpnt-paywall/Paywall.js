@@ -226,26 +226,20 @@ export default class PaywallCpt  {
 	}.bind(this));
   }
 
+  montaUrlRetorno() {
+    return encodeURIComponent(document.location.href);
+  }
+
   getUrlLoginRegister(type = '') {
-	const urlValidaUsuarioBarramento = window.ambienteUtilizadoPiano === 'prd' ? 'https://assinatura.oglobo.globo.com/ValidaUsuarioBarramento.html' : 'https://assinatura.globostg.globoi.com/ValidaUsuarioBarramento.html';
-	const uri = location.href;
 	const serviceId = window.tinyCpt.Piano.variaveis.getServicoId() || null;
 	let str = '';
-	let urlReturn = '';
 
 	if(!this.debug && this.Piano.isDefined) {
-		urlReturn = encodeURIComponent(
-			urlValidaUsuarioBarramento + '?codigoProduto=' +  this.Piano.content.variaveis.getCodigoProduto() 
-			+ '&serviceId=' + serviceId
-			+ '&ambienteUtilizado=' + window.ambienteUtilizadoPiano
-			+ '&nomeProduto=' + this.Piano.content.variaveis.getNomeProduto()
-			+ '&urlRetorno=' + uri
-		);
-
+        let urlRetorno = this.montaUrlRetorno();
 		if(type === 'register') {
-			str = `${this.domain}cadastro/${serviceId}?url=${urlReturn}`;
+			str = `${this.domain}cadastro/${serviceId}?url=${urlRetorno}`;
 		} else {
-			str = `${this.domain}login/${serviceId}?url=${urlReturn}`;
+			str = `${this.domain}login/${serviceId}?url=${urlRetorno}`;
 		}
 	}
 

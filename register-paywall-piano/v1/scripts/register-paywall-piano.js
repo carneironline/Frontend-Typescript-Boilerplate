@@ -2,9 +2,7 @@ let paywallSiteContainer = document.querySelector('.paywall__site-container');
 let larguraTela = window.innerWidth;
 let alturaTela = window.innerHeight;
 let metadeTela = alturaTela / 2;
-let uri = document.location.href;
 let url = window.ambienteUtilizadoPiano == 'prd' ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/';
-let urlValidaUsuarioBarramento = window.ambienteUtilizadoPiano == 'prd' ? 'https://assinatura.oglobo.globo.com/ValidaUsuarioBarramento.html' : 'https://assinatura.globostg.globoi.com/ValidaUsuarioBarramento.html';
 let protectedContentEl = document.querySelector(".protected-content");
 let eventoLinkUm = null;
 let PaywallProductClass = typeof nomeProdutoPiano !== 'undefined' ? `paywall-${nomeProdutoPiano}` : 'paywall-oglobo';
@@ -244,13 +242,7 @@ if (paywallSiteContainer) {
     }
 
     function montaUrlRetorno () {
-        let urlRetorno = urlValidaUsuarioBarramento + '?codigoProduto=' +  Piano.variaveis.getCodigoProduto() 
-            + '&serviceId=' + Piano.variaveis.getServicoId()
-            + '&ambienteUtilizado=' + window.ambienteUtilizadoPiano
-	    + '&nomeProduto=' + Piano.variaveis.getNomeProduto()
-            + '&urlRetorno=' + uri;
-
-        return encodeURIComponent(urlRetorno);
+        return encodeURIComponent(document.location.href);
     }
     
     if(img1lL == 'ofertaSwg') {
