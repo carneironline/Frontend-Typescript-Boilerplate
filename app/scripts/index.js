@@ -718,7 +718,7 @@ Piano.google = {
 	},
 
 	showSaveSubscription: function(response){
-		if(!swgEntitlements.enablesThis() && response.motivo ==="AUTORIZADO" && !Helpers.getCookie(Piano.variaveis.constante.SAVE_SUBSCRIPTION)){
+		if(!(swgEntitlements && swgEntitlements.enablesThis()) && response.motivo ==="AUTORIZADO" && !Helpers.getCookie(Piano.variaveis.constante.SAVE_SUBSCRIPTION)){
 			return true;
 		}
 		return false;
