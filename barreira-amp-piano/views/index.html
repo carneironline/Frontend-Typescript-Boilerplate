@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="../assets/css/styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+  <article class="paywall-amp-article">
+    <header class="paywall-amp-article-header">
+      <h1 class="paywall-amp-article-header-title">
+        Conteúdo exclusivo para assinantes o globo
+      </h1>
+      <div class="paywall-amp-article-header-app">
+        <img width="87" height="15"
+          src="https://s3.glbimg.com/v1/AUTH_9119af978ee74bfd9ea6d41ee07bfb7f/amp-paywall/o-globo.png" />
+      </div>
+      <div class="paywall-amp-article-header-cover"></div>
+      <div class="paywall-amp-article-header-img"></div>
+      <a onClick="goTo(event)">
+        <div class="paywall-amp-article-header-bar">
+          <p>
+            Já é assinante?
+            <span class="paywall-amp-article-header-bar-strong">FAÇA LOGIN</span>
+          </p>
+        </div>
+      </a>
+    </header>
+    <a onClick="subscribe()">
+      <section class="paywall-amp-article-main">
+        <div class="paywall-amp-article-main-content">
+          <div class="paywall-amp-article-main-content-title">
+            <p>Ainda não é assinante?</p>
+          </div>
+          <div class="paywall-amp-article-main-content-text">
+            <p class="paywall-amp-article-main-content-text-p">
+              Aproveite
+              <span class="paywall-amp-article-main-content-text-strong"> 2 meses grátis </span>
+              do jornal O GLOBO.
+            </p>
+          </div>
+          <button class="paywall-amp-article-main-content-button">
+            EXPERIMENTE
+          </button>
+        </div>
+      </section>
+    </a>
+  </article>
+</body>
+<script>
+  function goTo(e) {
+    e.preventDefault();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const url = encodeURIComponent(urlParams.get('url'));
+
+    const urlLogin = `https://login.globo.com/login/3981?url=${url}`;
+
+    if(url)
+      window.top.location.href = urlLogin;
+
+  }
+  function subscribe() {
+    window.top.location.href = "https://assinaturaglobo.globo.com/o-globo/oferta/globo-digital-2-meses-gratis?campanha=nao&interno_origem=siteoglobo&interno_midia=barreiramp&interno_campanha=barreiraamp_2meses";
+  }
+</script>
+</html>
