@@ -8,7 +8,7 @@ import getProductsObject from './ProductsRequester';
 
 const Tiny = new TinyModule();
 const GA = new GAModule();
-
+console.log('***** develop-test-new-deploy *****')
 GA.setGlobalVars();
 
 getProductsObject(window.ambienteUtilizadoPiano, function(productsJson){
