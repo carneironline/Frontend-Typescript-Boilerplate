@@ -378,6 +378,10 @@ Piano.paywall = {
 		} catch (err) {
 			console.error('PaywallAnalytic - Error on load', err)
 		}
+	},
+	naoBarreiraGcom: function() {
+		Piano.util.adicionarCss("<link rel='stylesheet' type='text/css' href='https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/barreira/nao-barreira-gcom/styles/styles.css'>");
+		Piano.xmlHttpRequest.geraScriptNaPagina("https://static"+Piano.util.montaUrlStg()+".infoglobo.com.br/paywall/barreira/nao-barreira-gcom/scripts/index.js");
 	}
 };
 
