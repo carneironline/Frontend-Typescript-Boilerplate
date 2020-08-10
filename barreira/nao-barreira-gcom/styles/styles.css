@@ -27,7 +27,10 @@
     position: absolute; 
     top: 0; right: 0; 
     font-size: 25px; 
-    width: 50px; height: 50px; cursor: pointer; background: transparent; 
+    width: 100px; 
+    height: 100px; 
+    cursor: pointer; 
+    background: transparent; 
 }
 .gcom-promo .box-texto-comunicacao h2 {margin: 0; padding: 0 10px 15px 0; font-size: 20px; font-weight: bold;}
 .gcom-promo .box-texto-comunicacao p {margin: 0; padding: 0px; color: #000; font-size: 16px;}
