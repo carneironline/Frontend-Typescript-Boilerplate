@@ -1,6 +1,16 @@
 .gcom-promo {font-family: 'Lato',sans-serif;line-height: 1.2; }
 .gcom-promo * {-webkit-transition: all .3s ease-in-out;transition: all .3s ease-in-out; }
-.gcom-promo .back-drop {background: rgba(0, 0, 0, 0.9); position: fixed; z-index: 99999998; width: 100%; height: 100%; top: 0px; left: 0px; }
+
+.gcom-promo .back-drop {
+    background: rgba(0, 0, 0, 0.7); 
+    position: fixed; 
+    z-index: 99999998; 
+    width: 100%; 
+    height: 100%; 
+    top: 0px; 
+    left: 0px; 
+}
+
 .gcom-promo .box-texto-comunicacao {
     width: 100%; 
     max-width: 300px; 
@@ -25,13 +35,24 @@
 }
 .gcom-promo .box-texto-comunicacao .fechar-modal { 
     position: absolute; 
-    top: 0; right: 0; 
-    font-size: 25px; 
+    top: -10px; 
+    right: -10px; 
     width: 100px; 
     height: 100px; 
-    cursor: pointer; 
-    background: transparent; 
+    background: transparent;
 }
-.gcom-promo .box-texto-comunicacao h2 {margin: 0; padding: 0 10px 15px 0; font-size: 20px; font-weight: bold;}
-.gcom-promo .box-texto-comunicacao p {margin: 0; padding: 0px; color: #000; font-size: 16px;}
-.gcom-promo .box-texto-comunicacao p a {text-decoration: underline; color:#00aeef; }
+.gcom-promo .box-texto-comunicacao .fechar-modal .fechar-modal-icone{ 
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px; 
+    height: 30px; 
+    font-size: 20px;
+    cursor: pointer; 
+    background: white; 
+    color: black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
