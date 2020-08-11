@@ -6,7 +6,7 @@ import PaywallCpt from './cpnt-paywall/Paywall';
 import PaywallCptInline from './cpnt-paywall-inline/Paywall';
 import getProductsObject from './ProductsRequester';
 
-console.log('*** TINY JS ***')
+console.log('*** TINY JS PROD ***')
 
 const Tiny = new TinyModule();
 const GA = new GAModule();
