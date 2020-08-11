@@ -4,10 +4,14 @@ yarn.lock
 # dependencies
 node_modules
 bower_components
+package-lock.json
+yarn.lock
 
 # compiled output
 /dist
 /js
+/coverage
+/.vscode
 
 # System Files
 .DS_Store
