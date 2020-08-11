@@ -71,7 +71,7 @@ window.Piano.variaveis = {
         if (
             window.Piano.util.getValorParametroNaUrl(
                 window.Piano.variaveis.constante.util.AMBIENTE
-            ) == 'false'
+            ) === 'false'
         ) {
             Helpers.setCookie(
                 window.Piano.variaveis.constante.cookie.AMBIENTE,
@@ -265,15 +265,15 @@ window.Piano.krux = {
             parametro
         )
         if (
-            valorParametro == 'false' &&
-            window.ambienteUtilizadoPiano != 'prd'
+            valorParametro === 'false' &&
+            window.ambienteUtilizadoPiano !== 'prd'
         ) {
             Helpers.setCookie(parametro, valorParametro, 1)
             return false
         }
         if (
-            valorParametro == 'true' ||
-            window.ambienteUtilizadoPiano == 'prd'
+            valorParametro === 'true' ||
+            window.ambienteUtilizadoPiano === 'prd'
         ) {
             Helpers.setCookie(parametro, '', -1)
             return true
@@ -281,7 +281,7 @@ window.Piano.krux = {
         if (
             Helpers.getCookie(
                 window.Piano.variaveis.constante.krux.KRUXLIGADO
-            ) == 'false'
+            ) === 'false'
         ) {
             return false
         }
@@ -293,7 +293,11 @@ window.Piano.krux = {
                 .getItem(window.Piano.variaveis.constante.krux.SEGMENTACOES)
                 .split(',')
             for (let i = 0; i < segmentacoes.length; i++) {
-                tp.push(['setCustomVariable', segmentacoes[i], segmentacoes[i]])
+                window.tp.push([
+                    'setCustomVariable',
+                    segmentacoes[i],
+                    segmentacoes[i],
+                ])
             }
         }
     },
@@ -308,7 +312,7 @@ window.Piano.regionalizacao = {
                 const key = data[0]
                 const value = data[1]
                 if (key === 'region') {
-                    tp.push(['setCustomVariable', 'region', value])
+                    window.tp.push(['setCustomVariable', 'region', value])
                 }
             })
         }
@@ -392,7 +396,7 @@ window.Piano.metricas = {
                 ? window.nomeExperiencia
                 : ''
             window.Piano.metricas.setLimiteContagem(window.regrasTiny)
-            if (expirou == false)
+            if (expirou === false)
                 GA.setEvents(
                     window.Piano.metricas.identificarPassagemRegister(
                         window.regrasTiny
@@ -403,9 +407,9 @@ window.Piano.metricas = {
         }
     },
     setaVariaveis(idLogin, tipoLogin, assinaturaLogada) {
-        PaywallAnalytics.idLoginAssinante = idLogin
-        PaywallAnalytics.tipoLoginAssinante = tipoLogin
-        PaywallAnalytics.assinaturaLogada = assinaturaLogada
+        window.PaywallAnalytics.idLoginAssinante = idLogin
+        window.PaywallAnalytics.tipoLoginAssinante = tipoLogin
+        window.PaywallAnalytics.assinaturaLogada = assinaturaLogada
     },
 }
 
