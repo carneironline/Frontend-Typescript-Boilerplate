@@ -7,8 +7,8 @@
     "test": "jest --bail --colors",
     "test:watch": "npm run test -- --watch",
     "coverage": "jest --colors --coverage",
-    "build:prod": "webpack --colors --progress --mode production",
-    "build:dev": "webpack --colors --progress --mode development",
+    "build:prd": "webpack --colors --progress --mode production",
+    "build:qa": "webpack --colors --progress --mode development",
     "watch": "npm run build:dev -- --watch",
     "start": "webpack-dev-server --open --colors --progress"
   },
