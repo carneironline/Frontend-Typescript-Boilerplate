@@ -6,9 +6,11 @@ import PaywallCpt from './cpnt-paywall/Paywall';
 import PaywallCptInline from './cpnt-paywall-inline/Paywall';
 import getProductsObject from './ProductsRequester';
 
+console.log('*** TINY JS ***')
+
 const Tiny = new TinyModule();
 const GA = new GAModule();
-console.log('***** develop-1 *****')
+
 GA.setGlobalVars();
 
 getProductsObject(window.ambienteUtilizadoPiano, function(productsJson){
