@@ -427,7 +427,7 @@ window.Piano.banner = {
             `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/banner-header-footer-piano/${versao}/styles/styles.css'>`
         )
         window.Piano.xmlHttpRequest.geraScriptNaPagina(
-            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/banner-header-footer-piano/${versao}/scripts/banner-header-footer-window.piano.js`
+            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/banner-header-footer-piano/${versao}/scripts/banner-header-footer-piano.js`
         )
     },
     mostrarAvatarHeader(versao) {
@@ -435,7 +435,7 @@ window.Piano.banner = {
             `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/avatar-header-piano/${versao}/styles/styles.css'>`
         )
         window.Piano.xmlHttpRequest.geraScriptNaPagina(
-            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/avatar-header-piano/${versao}/scripts/avatar-header-window.piano.js`
+            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/avatar-header-piano/${versao}/scripts/avatar-header-piano.js`
         )
     },
     bottomFixed(params = {}) {
@@ -680,7 +680,7 @@ window.Piano.registerPaywall = {
                 `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/register-paywall-piano/${versao}/styles/styles.css'>`
             )
             window.Piano.xmlHttpRequest.geraScriptNaPagina(
-                `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/register-paywall-piano/${versao}/scripts/register-paywall-window.piano.js`,
+                `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/register-paywall-piano/${versao}/scripts/register-paywall-piano.js`,
                 (data) => {
                     if (data.status !== 200) {
                         window.Piano.triggerAdvertising()
@@ -716,7 +716,7 @@ window.Piano.comunicado = {
             `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/comunicacao-piano/${versao}/styles/styles.css'>`
         )
         window.Piano.xmlHttpRequest.geraScriptNaPagina(
-            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/comunicacao-piano/${versao}/scripts/comunicacao-window.piano.js`
+            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/comunicacao-piano/${versao}/scripts/comunicacao-piano.js`
         )
     },
 }
@@ -731,7 +731,7 @@ window.Piano.adblock = {
             `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/adblock-piano/v4/styles/styles.css'>`
         )
         window.Piano.xmlHttpRequest.geraScriptNaPagina(
-            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/adblock-piano/v4/scripts/adblock-window.piano.js`
+            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/adblock-piano/v4/scripts/adblock-piano.js`
         )
     },
 }
@@ -755,7 +755,7 @@ window.Piano.parceiro = {
             `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/footer-parceiros-piano/${versao}/styles/styles.css'>`
         )
         window.Piano.xmlHttpRequest.geraScriptNaPagina(
-            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/footer-parceiros-piano/${versao}/scripts/footer-parceiros-window.piano.js`
+            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/footer-parceiros-piano/${versao}/scripts/footer-parceiros-piano.js`
         )
     },
 }
