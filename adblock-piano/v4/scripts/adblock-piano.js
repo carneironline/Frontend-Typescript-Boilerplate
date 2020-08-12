@@ -1,56 +1,65 @@
-(function() {
-    const bodyEl = document.querySelector('body');
-    window['dataLayer'] = window['dataLayer'] || [];
+;(function () {
+    const bodyEl = document.querySelector('body')
+    window.dataLayer = window.dataLayer || []
 
     let templateSettings = {
         template: 'default',
         assetsPath: '',
         display: true,
-        description: 'Para ter acesso ilimitado ao nosso conteúdo, basta assinar um dos nossos planos. Aproveite para conhecer todos os benefícios da assinatura O Globo.',
+        description:
+            'Para ter acesso ilimitado ao nosso conteúdo, basta assinar um dos nossos planos. Aproveite para conhecer todos os benefícios da assinatura O Globo.',
         textSignup: 'Quero assinar',
-        urlSignup: 'https://login.qa.globoi.com/cadastro/4975?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23https%3A%2F%2Fm.globostg.globoi.com%2F',
-        urlSignin: 'https://login.qa.globoi.com/login/4975?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23https%3A%2F%2Fm.globostg.globoi.com%2F',
+        urlSignup:
+            'https://login.qa.globoi.com/cadastro/4975?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23https%3A%2F%2Fm.globostg.globoi.com%2F',
+        urlSignin:
+            'https://login.qa.globoi.com/login/4975?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23https%3A%2F%2Fm.globostg.globoi.com%2F',
         footerTitle: 'Ainda não está pronto para assinar?',
-        footerDescription: 'Nos adicione em sua lista de permissões ou desabilite seu bloqueador de pop-ups.',
-        footerTextBtn: 'Saiba mais'
-    };
-    
-    function setTemplateSettings() {
-        if(window.glbAdblock) {
-            templateSettings = Object.assign({}, templateSettings, window.glbAdblock);
-            window.glbAdblock = templateSettings;
-        } 
+        footerDescription:
+            'Nos adicione em sua lista de permissões ou desabilite seu bloqueador de pop-ups.',
+        footerTextBtn: 'Saiba mais',
     }
 
-    function createWall() {  
-        const adblockEl = document.createElement('div');
-        adblockEl.id = 'detecta-adblock';
-        adblockEl.innerHTML = template();
-        bodyEl.appendChild(adblockEl);
+    function setTemplateSettings() {
+        if (window.glbAdblock) {
+            templateSettings = { ...templateSettings, ...window.glbAdblock }
+            window.glbAdblock = templateSettings
+        }
+    }
+
+    function createWall() {
+        const adblockEl = document.createElement('div')
+        adblockEl.id = 'detecta-adblock'
+        adblockEl.innerHTML = template()
+        bodyEl.appendChild(adblockEl)
     }
 
     function template() {
-        switch(templateSettings.template) {
-            default: return templateDefault();
+        switch (templateSettings.template) {
+            default:
+                return templateDefault()
         }
     }
 
     function activeWallRequirements() {
-        const showRequirements = document.getElementById('showRequirements');
+        const showRequirements = document.getElementById('showRequirements')
 
         if (showRequirements) {
-            let requirementEl = document.querySelector('.adblock-cpt__requisitos');
-            let btnVoltar = document.querySelector('.adblock-cpt__requisitos-voltar');
+            const requirementEl = document.querySelector(
+                '.adblock-cpt__requisitos'
+            )
+            const btnVoltar = document.querySelector(
+                '.adblock-cpt__requisitos-voltar'
+            )
 
-            bodyEl.setAttribute('style','overflow: hidden;');
+            bodyEl.setAttribute('style', 'overflow: hidden;')
 
-            showRequirements.addEventListener('click', function() {
+            showRequirements.addEventListener('click', function () {
                 requirementEl.classList.add('is-show')
-            });
+            })
 
-            btnVoltar.addEventListener('click', function() {
+            btnVoltar.addEventListener('click', function () {
                 requirementEl.classList.remove('is-show')
-            });
+            })
         }
     }
 
@@ -116,98 +125,97 @@
                     </div>
                 </div>
                 <div class='backdrop-adblock'> </div>
-            `;
+            `
     }
 
-    function ga() {        
-        let elements = document.querySelectorAll('.adblock-cpt [data-ga]');
+    function ga() {
+        const elements = document.querySelectorAll('.adblock-cpt [data-ga]')
 
-        setLoadGa();
+        setLoadGa()
 
-        elements.forEach(el => {
-
-            el.addEventListener(
-                'click', setDataGa, false
-            );
+        elements.forEach((el) => {
+            el.addEventListener('click', setDataGa, false)
         })
     }
 
-    function setLoadGa() {          
-        let evtAction = 'Adblock ativado';
-        let evtName = 'EventoGAPiano';
-        let evtLabel = window.Piano ? Piano.metricas.montaRotuloGA() : '';
+    function setLoadGa() {
+        const evtAction = 'Adblock ativado'
+        const evtName = 'EventoGAPiano'
+        const evtLabel = window.Piano ? Piano.metricas.montaRotuloGA() : ''
 
-        setGa(evtName, 'Piano', evtAction, evtLabel );
+        setGa(evtName, 'Piano', evtAction, evtLabel)
     }
 
     function setDataGa(evt) {
-        evt.preventDefault();
+        evt.preventDefault()
 
-        if(!evt.target.dataset.ga)
-            return;
+        if (!evt.target.dataset.ga) return
 
-        const evtData = evt.target.dataset.ga.split('|');
-        const evtName = evtData[0].trim();
-        const evtCategory = evtData[1].trim();
-        const evtAction = evtData[2].trim();
-        const evtLabel = evtData[3].trim();
+        const evtData = evt.target.dataset.ga.split('|')
+        const evtName = evtData[0].trim()
+        const evtCategory = evtData[1].trim()
+        const evtAction = evtData[2].trim()
+        const evtLabel = evtData[3].trim()
 
-        setGa(evtName, evtCategory, evtAction, evtLabel);
+        setGa(evtName, evtCategory, evtAction, evtLabel)
 
-        if(evt.target.href) {   
-            setTimeout(() => { location.href = evt.target.href; }, 500);
+        if (evt.target.href) {
+            setTimeout(() => {
+                location.href = evt.target.href
+            }, 500)
         }
     }
 
-    function setGa(evtName, evtCategory, evtAction, evtLabel) { 
-        dataLayer.push({'event': evtName, 'eventoGACategoria': evtCategory, 'eventoGAAcao': evtAction, 'eventoGARotulo':evtLabel});
+    function setGa(evtName, evtCategory, evtAction, evtLabel) {
+        dataLayer.push({
+            event: evtName,
+            eventoGACategoria: evtCategory,
+            eventoGAAcao: evtAction,
+            eventoGARotulo: evtLabel,
+        })
     }
 
     function getGLBID() {
-        return getCookie('GLBID');
+        return getCookie('GLBID')
     }
 
     function getUtp() {
-        const utp = getCookie('_utp');
+        const utp = getCookie('_utp')
 
-        if(utp)
-            return JSON.parse(decodeURI(atob(unescape(utp))));
+        if (utp) return JSON.parse(decodeURI(atob(unescape(utp))))
 
-        return false;
+        return false
     }
 
     function isUserAuthorized() {
-        const glbid = getGLBID();
-        const utp = getUtp();
+        const glbid = getGLBID()
+        const utp = getUtp()
 
-        let isAuthorized = false;
+        let isAuthorized = false
 
-        if(glbid && utp)
-            isAuthorized = Boolean(utp.autorizado);
+        if (glbid && utp) isAuthorized = Boolean(utp.autorizado)
 
-        return isAuthorized;
+        return isAuthorized
     }
 
     function getCookie(name) {
-        const value = "; " + document.cookie;
-        const parts = value.split("; " + name + "=");
-        if (parts.length == 2) 
-            return parts.pop().split(";").shift();
+        const value = `; ${document.cookie}`
+        const parts = value.split(`; ${name}=`)
+        if (parts.length == 2) return parts.pop().split(';').shift()
     }
 
-    function init() { 
-        setTemplateSettings();
+    function init() {
+        setTemplateSettings()
 
-        if( templateSettings.display && templateSettings.display !== false ) {
+        if (templateSettings.display && templateSettings.display !== false) {
             setTimeout(() => {
-                createWall();
-                activeWallRequirements();
+                createWall()
+                activeWallRequirements()
             }, 500)
         }
 
-        ga();
+        ga()
     }
 
-    init();
-
-})();
+    init()
+})()
