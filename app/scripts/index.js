@@ -722,7 +722,7 @@ window.Piano.comunicado = {
 }
 
 window.Piano.adblock = {
-    detectaAdBlock() {
+    detecta() {
         document.cookie =
             '__adblocker=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
         const setNptTechAdblockerCookie = function (adblocker) {
@@ -1473,7 +1473,7 @@ function pianoInit() {
 }
 
 async function tinyInit() {
-    window.Piano.adblock.detectaAdBlock()
+    window.Piano.adblock.detecta()
 
     Tiny.setPiano(window.Piano)
     const Swg = new SwgModule()
