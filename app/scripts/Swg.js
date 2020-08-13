@@ -10,7 +10,9 @@ export default class Swg {
         this.disabled = false
         this.content = null
         this.localProductPiano =
-            typeof nomeProdutoPiano !== 'undefined' ? nomeProdutoPiano : null
+            typeof window.nomeProdutoPiano !== 'undefined'
+                ? window.nomeProdutoPiano
+                : null
         this.hasProductJSON = false
         this.productJSON = null
         this.elHead = document.head
@@ -123,12 +125,9 @@ export default class Swg {
 
     setAldebaranScript() {
         const element = document.createElement('script')
-        const urlProd =
-            'https://s3.glbimg.com/v1/AUTH_c10ae819c568460bb4ec17c0a8ec5267/aldebaran/js/bundle.js'
-        const urlStg =
-            'https://s3.glbimg.com/v1/AUTH_addc5e8f316f48ea9181af37160b22b4/aldebaran/js/bundle.js'
+        const url = process.env.ALDEBARAN_URL
 
-        element.src = window.tinyCpt.isProduction ? urlProd : urlStg
+        element.src = url
         this.elHead.insertAdjacentElement('beforeend', element)
     }
 
