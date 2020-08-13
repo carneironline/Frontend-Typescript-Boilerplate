@@ -83,6 +83,11 @@ export default class PaywallGAModule {
                 this.metrics.paywall.label = 'Assine agora'
                 this.metrics.fb.pixel.name = 'ViewPaywallExclusivo'
                 break
+            default:
+                this.metrics.paywall.viewName = 'Exibicao Register'
+                this.metrics.paywall.name = 'Register comum'
+                this.metrics.paywall.label = 'Cadastre-se'
+                this.metrics.fb.pixel.name = 'ViewRegisterWall'
         }
     }
 
