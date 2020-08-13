@@ -14,6 +14,8 @@ export default class Tiny {
     }
 
     setGlobalTiny() {
+        const isProduction = window.ambienteUtilizadoPiano === 'prd'
+
         const defaultSettings = {
             debug: {
                 tiny: false,
@@ -21,7 +23,10 @@ export default class Tiny {
                 swg: false,
                 ga: false,
             },
-            isProduction: window.ambienteUtilizadoPiano === 'prd',
+            isProduction,
+            assetsPath: isProduction
+                ? 'https://static.infoglobo.com.br'
+                : 'https://static-stg.infoglobo.com.br',
         }
 
         window.tinyCpt = window.tinyCpt
