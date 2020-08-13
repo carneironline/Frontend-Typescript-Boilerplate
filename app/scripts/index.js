@@ -6,6 +6,8 @@ import PaywallCpt from './cpnt-paywall/Paywall'
 import PaywallCptInline from './cpnt-paywall-inline/Paywall'
 import getProductsObject from './ProductsRequester'
 
+console.table(process.env)
+
 const Tiny = new TinyModule()
 const GA = new GAModule()
 
@@ -723,15 +725,15 @@ window.Piano.comunicado = {
 
 window.Piano.adblock = {
     mostrarAdBlock(params = {}) {
-        params.assetsPath = `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/adblock-piano/v4/`
+        params.assetsPath = `${process.env.ASSETS_URL}/adblock-piano/v4/`
 
         window.glbAdblock = params
 
         window.Piano.util.adicionarCss(
-            `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/adblock-piano/v4/styles/styles.css'>`
+            `<link rel='stylesheet' type='text/css' href='${process.env.ASSETS_URL}/adblock-piano/v4/styles/styles.css'>`
         )
         window.Piano.xmlHttpRequest.geraScriptNaPagina(
-            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/adblock-piano/v4/scripts/adblock-piano.js`
+            `${process.env.ASSETS_URL}/adblock-piano/v4/scripts/adblock-piano.js`
         )
     },
 }

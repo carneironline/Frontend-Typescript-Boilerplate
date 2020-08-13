@@ -3,7 +3,7 @@ export default class Helpers {
         return typeof prop !== 'undefined'
     }
 
-    static setCookie(c_name, value, expiredays = null) {
+    static setCookie(cName, value, expiredays = null) {
         const exdate = new Date()
         const hostname = location.hostname ? location.hostname : null
 
@@ -11,7 +11,7 @@ export default class Helpers {
 
         exdate.setDate(exdate.getDate() + expiredays)
         document.cookie =
-            `${c_name}=${escape(value)}${
+            `${cName}=${escape(value)}${
                 expiredays ? '' : `;expires=${exdate.toUTCString()}`
             }; path=/;` +
             `domain=.${hostname.split('.').reverse()[1]}.${
