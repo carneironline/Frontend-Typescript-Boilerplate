@@ -1,43 +1,70 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const path = require('path')
+const fs = require('fs')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const dotenv = require('dotenv')
 
-module.exports = {
-    entry: './app/scripts/index.js',
+module.exports = (env, args) => {
+    const localhostDomain = 'localhost'
+    let currentEnv = args.qa ? 'qa' : args.mode
 
-    output: {
-        filename: 'tiny.js',
-        path: path.resolve(__dirname, 'js')
-    },
+    currentEnv = args.staging ? 'staging' : currentEnv
 
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: ['babel-loader']
-            }
-        ]
-    },
+    const dotEnvConfig = dotenv.config()
 
-    devtool: 'inline-source-map',
+    const dotEnvParse = dotenv.parse(
+        fs.readFileSync(`${__dirname}/.env.${currentEnv}`)
+    )
 
-    devServer: {
-        // index: path.resolve(__dirname, 'index.html'),
-        // contentBase: './js'
-    },
+    const dotEnvVars = Object.assign(dotEnvConfig.parsed, dotEnvParse)
 
-    optimization: {
-        minimizer: [new UglifyJsPlugin({
-            // sourceMap: true
-        })]
-    },
-    
-    plugins: [
-        new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, 'app/index.html')
-        })
-      ]
-};
+    return {
+        entry: './app/scripts/index.js',
+
+        output: {
+            filename: 'tiny.js',
+            path: path.resolve(__dirname, 'js'),
+        },
+
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    use: ['babel-loader'],
+                },
+            ],
+        },
+
+        devtool: 'inline-source-map',
+
+        devServer: {
+            host: localhostDomain,
+        },
+
+        optimization: {
+            minimizer: [
+                new UglifyJsPlugin({
+                    uglifyOptions: {
+                        compress: {
+                            drop_console: true,
+                        },
+                    },
+                    // sourceMap: true
+                }),
+            ],
+        },
+
+        plugins: [
+            new CleanWebpackPlugin(),
+            new HtmlWebpackPlugin({
+                template: path.resolve(__dirname, 'app/index.html'),
+            }),
+            new webpack.DefinePlugin({
+                'process.env': JSON.stringify(dotEnvVars),
+            }),
+        ],
+    }
+}
