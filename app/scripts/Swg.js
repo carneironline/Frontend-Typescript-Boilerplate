@@ -16,6 +16,10 @@ export default class Swg {
         this.hasProductJSON = false
         this.productJSON = null
         this.elHead = document.head
+        this.isValor =
+            window.location.host.includes('valor.qa.globoi.com') ||
+            window.location.host.includes('valor.globo.com') ||
+            false
 
         this.setGlobalSWG()
     }
@@ -91,6 +95,11 @@ export default class Swg {
     }
 
     async markupTemplate() {
+        if (this.isValor) {
+            this.hasProductJSON = true
+            return
+        }
+
         const productJSON =
             (await this.removeProperties(await this.getProduct())) || null
         const product = Object.keys(productJSON).length
