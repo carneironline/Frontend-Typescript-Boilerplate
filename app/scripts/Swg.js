@@ -162,13 +162,14 @@ export default class Swg {
     }
 
     async init() {
+        if(window.tinyCpt.isProduction && this.isValor) return
         if (!this.localProductPiano) return
         await this.setMarkup()
 
-        if (!this.hasProductJSON) return
+        if (!this.hasProductJSON) return 
 
         await this.setSwgScript()
-        await this.setAldebaranScript()
+        await this.setAldebaranScript() 
         await this.testSWG()
     }
 }
