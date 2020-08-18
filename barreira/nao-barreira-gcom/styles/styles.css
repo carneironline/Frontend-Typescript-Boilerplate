@@ -17,8 +17,9 @@
     display: flex; 
     justify-content: 
     center; margin: 0 auto; 
-    position: fixed; z-index: 
-    99999999; background: 
+    position: fixed; 
+    z-index: 99999999; 
+    background: 
     transparent; 
     box-sizing: 
     border-box; 
@@ -33,8 +34,10 @@
         max-width: 600px;
     }
 }
+
 .gcom-promo .box-texto-comunicacao .fechar-modal { 
     position: absolute; 
+    z-index: 999999999; 
     top: -10px; 
     right: -10px; 
     width: 100px; 
