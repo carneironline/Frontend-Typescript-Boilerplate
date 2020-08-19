@@ -1335,7 +1335,7 @@ window.Piano.construtor = {
             window.tp.push(['setCustomVariable', 'conteudoExclusivo', true])
         }
 
-        if (window.tinyCpt.isProduction && typeof swg !== 'undefined' && typeof window.swgEntitlements !== 'undefined' && window.swgEntitlements.enablesThis()) {
+        if (typeof swg !== 'undefined' && typeof window.swgEntitlements !== 'undefined' && window.swgEntitlements.enablesThis()) {
             window.Piano.google.isSpecificGoogleUser(window.swgEntitlements)
             window.Piano.autenticacao.defineUsuarioPiano(true, 'AUTORIZADO', true, '')
         } else {
@@ -1390,7 +1390,7 @@ function pianoInit() {
 
     if (window.tinyCpt.debug.tiny) console.log('log-method', 'pianoInit')
 
-    if (window.tinyCpt.isProduction && window.tinyCpt.Swg.global) {
+    if (window.tinyCpt.Swg.global) {
         window.SWG.push((subscriptions) => {
             if (window.tinyCpt.debug.swg)
                 console.log('log-subscriptions', subscriptions)
