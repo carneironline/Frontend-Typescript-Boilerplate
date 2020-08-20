@@ -13,7 +13,7 @@ export default {
     },
     'blogAnalitico': {
         'id': '3981',
-        'cod_prod': 'OG04'
+        'cod_prod': 'OG03'
     },
     'acervo': {
         'id': '3981',
