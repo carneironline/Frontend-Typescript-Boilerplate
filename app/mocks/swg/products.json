@@ -24,6 +24,30 @@
     }
   },
   {
+    "productName": "Valor",
+    "pianoProductName": "valor",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Valor"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "Valor",
+      "productID": "valor.globo.com:basic"
+    }
+  },
+  {
     "productName": "Blogs",
     "pianoProductName": "blogs",
     "@context": "http://schema.org",

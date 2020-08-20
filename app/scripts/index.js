@@ -1397,9 +1397,9 @@ function pianoInit() {
 
             window.swg = subscriptions
 
-            subscriptions.setOnEntitlementsResponse((entitlementsPromise) => {
-                entitlementsPromise.then((entitlements) => {
-                    window.swgEntitlements = entitlements
+            subscriptions.getEntitlements().then(function(entitlements) {
+                window.swgEntitlements = entitlements
+                alert("Entrou = ", entitlements)
 
                     if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
                         try {
@@ -1412,8 +1412,25 @@ function pianoInit() {
                             )
                         }
                     }
-                })
-            })
+              });
+
+            // subscriptions.setOnEntitlementsResponse((entitlementsPromise) => {
+            //     entitlementsPromise.then((entitlements) => {
+            //         window.swgEntitlements = entitlements
+
+            //         if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
+            //             try {
+            //                 window.tinyCpt.Piano.construtor.initTp()
+            //                 loadPianoExperiences()
+            //             } catch (error) {
+            //                 GA.setEventsError(
+            //                     'Piano nao foi carregada corretamente!',
+            //                     document.location.href
+            //                 )
+            //             }
+            //         }
+            //     })
+            // })
         })
     } else {
         GA.setEventsError('Entitlements não carregado', document.location.href)
