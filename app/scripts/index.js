@@ -957,31 +957,14 @@ window.Piano.xmlHttpRequest = {
 
 window.Piano.google = {
     isAuthorized() {
-        if (
-            window.swgEntitlements.getEntitlementForSource('oglobo.globo.com')
-        ) {
-            window.Piano.metricas.setaVariaveis(
-                window.swgEntitlements.getEntitlementForSource(
-                    'oglobo.globo.com'
-                ).subscriptionToken,
-                'Conta Google',
-                'O Globo'
-            )
+        //TODO Criar uma constante para o valor e identificar o produto através do nomeProdutoPiano
+        if (window.swgEntitlements.getEntitlementForSource('oglobo.globo.com')) {
+            window.Piano.metricas.setaVariaveis(window.swgEntitlements.getEntitlementForSource('oglobo.globo.com').subscriptionToken, 'Conta Google', 'O Globo')
             return true
         }
 
-        if (
-            Helpers.getCookie(
-                window.Piano.variaveis.constante.cookie.CREATED_GLOBOID
-            )
-        ) {
-            window.Piano.metricas.setaVariaveis(
-                Helpers.getCookie(
-                    window.Piano.variaveis.constante.cookie.CREATED_GLOBOID
-                ),
-                'Conta Google',
-                'Google'
-            )
+        if (Helpers.getCookie(window.Piano.variaveis.constante.cookie.CREATED_GLOBOID)) {
+            window.Piano.metricas.setaVariaveis(Helpers.getCookie(window.Piano.variaveis.constante.cookie.CREATED_GLOBOID), 'Conta Google', 'Google')
             return true
         }
 
@@ -992,10 +975,9 @@ window.Piano.google = {
         if (window.Piano.google.isAuthorized()) return
 
         try {
+            //TODO identificar o produto através do nomeProdutoPiano
             const oGloboBusiness = new OGloboBusiness()
-            oGloboBusiness.verifyIfUserHasAccessOrDeferred(
-                window.swgEntitlements
-            )
+            oGloboBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements)
         } catch (error) {
             GA.setEventsError(
                 'Erro ao executar o Aldebaran',
@@ -1333,40 +1315,18 @@ window.Piano.configuracao = {
 window.Piano.construtor = {
     initTp() {
         window.tp = window.tp || []
-        window.tp.push([
-            'setTags',
-            [window.Piano.variaveis.getTipoConteudoPiano()],
-        ])
+        window.tp.push(['setTags', [window.Piano.variaveis.getTipoConteudoPiano()],])
         if (window.Piano.util.isRevista() || window.Piano.util.isValor()) {
-            window.tp.push([
-                'setAid',
-                window.Piano.configuracao.jsonConfiguracaoTinyPass[
-                    window.Piano.variaveis.getAmbientePiano()
-                ].idSandboxTinypassRevistas,
-            ])
+            window.tp.push(['setAid', window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].idSandboxTinypassRevistas,])
         } else {
-            window.tp.push([
-                'setAid',
-                window.Piano.configuracao.jsonConfiguracaoTinyPass[
-                    window.Piano.variaveis.getAmbientePiano()
-                ].idSandboxTinypass,
-            ])
+            window.tp.push(['setAid',window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].idSandboxTinypass,])
         }
-        window.tp.push([
-            'setSandbox',
-            window.Piano.configuracao.jsonConfiguracaoTinyPass[
-                window.Piano.variaveis.getAmbientePiano()
-            ].setSandBox,
-        ])
+        window.tp.push(['setSandbox',window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].setSandBox,])
         window.tp.push(['setDebug', window.Piano.util.isDebug()])
         const cleanUrl = window.Piano.util.getWindowLocationHref().split('?')[0]
         window.tp.push(['setPageURL', cleanUrl])
         window.tp.push(['setZone', window.Piano.variaveis.getNomeProduto()])
-        window.tp.push([
-            'setCustomVariable',
-            'nomeProduto',
-            window.Piano.variaveis.getNomeProduto(),
-        ])
+        window.tp.push(['setCustomVariable','nomeProduto',window.Piano.variaveis.getNomeProduto(),])
         window.Piano.janelaAnonima.detectPrivateMode(function (isPrivate) {
             window.tp.push(['setCustomVariable', 'anonimo', isPrivate])
         })
@@ -1375,19 +1335,9 @@ window.Piano.construtor = {
             window.tp.push(['setCustomVariable', 'conteudoExclusivo', true])
         }
 
-        if (
-            window.tinyCpt.isProduction &&
-            typeof swg !== 'undefined' &&
-            typeof window.swgEntitlements !== 'undefined' &&
-            window.swgEntitlements.enablesThis()
-        ) {
+        if (typeof swg !== 'undefined' && typeof window.swgEntitlements !== 'undefined' && window.swgEntitlements.enablesThis()) {
             window.Piano.google.isSpecificGoogleUser(window.swgEntitlements)
-            window.Piano.autenticacao.defineUsuarioPiano(
-                true,
-                'AUTORIZADO',
-                true,
-                ''
-            )
+            window.Piano.autenticacao.defineUsuarioPiano(true, 'AUTORIZADO', true, '')
         } else {
             window.Piano.autenticacao.verificaUsuarioLogadoNoBarramento(
                 Helpers.getCookie(window.Piano.variaveis.constante.cookie.GCOM),
@@ -1440,17 +1390,15 @@ function pianoInit() {
 
     if (window.tinyCpt.debug.tiny) console.log('log-method', 'pianoInit')
 
-    if (window.tinyCpt.isProduction && window.tinyCpt.Swg.global) {
+    if (window.tinyCpt.Swg.global) {
         window.SWG.push((subscriptions) => {
             if (window.tinyCpt.debug.swg)
                 console.log('log-subscriptions', subscriptions)
 
             window.swg = subscriptions
 
-            subscriptions.setOnEntitlementsResponse((entitlementsPromise) => {
-                entitlementsPromise.then((entitlements) => {
-                    window.swgEntitlements = entitlements
-
+            subscriptions.getEntitlements().then(function(entitlements) {
+                window.swgEntitlements = entitlements
                     if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
                         try {
                             window.tinyCpt.Piano.construtor.initTp()
@@ -1462,8 +1410,25 @@ function pianoInit() {
                             )
                         }
                     }
-                })
-            })
+              });
+
+            // subscriptions.setOnEntitlementsResponse((entitlementsPromise) => {
+            //     entitlementsPromise.then((entitlements) => {
+            //         window.swgEntitlements = entitlements
+
+            //         if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
+            //             try {
+            //                 window.tinyCpt.Piano.construtor.initTp()
+            //                 loadPianoExperiences()
+            //             } catch (error) {
+            //                 GA.setEventsError(
+            //                     'Piano nao foi carregada corretamente!',
+            //                     document.location.href
+            //                 )
+            //             }
+            //         }
+            //     })
+            // })
         })
     } else {
         GA.setEventsError('Entitlements não carregado', document.location.href)
