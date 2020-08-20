@@ -1399,8 +1399,6 @@ function pianoInit() {
 
             subscriptions.getEntitlements().then(function(entitlements) {
                 window.swgEntitlements = entitlements
-                alert("Entrou = ", entitlements)
-
                     if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
                         try {
                             window.tinyCpt.Piano.construtor.initTp()
