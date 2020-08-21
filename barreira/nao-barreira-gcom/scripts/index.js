@@ -54,7 +54,7 @@
     }
 
     function setLoadGa() {
-        const evtAction = 'barreira'
+        const evtAction = 'Barreira'
         const evtName = 'EventoGAPiano'
         const evtLabel = window.Piano
             ? window.Piano.metricas.montaRotuloGA()
