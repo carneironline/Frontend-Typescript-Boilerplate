@@ -46,26 +46,120 @@ export default class PaywallCpt {
             rightMobi: '',
             rightDesk: '',
             rightLink: '',
+            middleText: '',
+            middleTextLink: '',
         }
 
         templateSettings.hideLoginArea = false
         templateSettings.loginText = 'Faça login'
         templateSettings.loginPreText = 'Já possui cadastro?'
 
-        window.glbPaywall = window.glbPaywall
-            ? { ...templateSettings, ...window.glbPaywall }
-            : templateSettings
-        window.glbPaywall.loginTag = `${
-            window.glbPaywall.loginPreText
-        } <a href="${this.getUrlLoginRegister()}" data-is-login="true" data-ga-action="Clique em link" data-ga-label="Link 2 - Faça login" data-ga-resetUtp="false" data-href-target=" ${
-            window.glbPaywall.targetBlank
-        } ">${window.glbPaywall.loginText}</a>`
+        window.glbPaywall = { ...templateSettings, ...window.glbPaywall }
 
         if (window.glbPaywall.hideLoginArea) this.clearLoginArea()
 
-        if (this.debug) this.setDebugTemplateSettings()
+        if (true) this.setDebugTemplateSettings()
+
+        this.tagTitle()
+        this.tagLogin()
+        this.tagBannerTop()
+        this.tagBannerLeft()
+        this.tagBannerRight()
+        this.tagMiddleText()
 
         callback()
+    }
+
+    tagTitle() {
+        if (!window.glbPaywall.title) {
+            window.glbPaywall.TagTitle = ''
+            return
+        }
+
+        window.glbPaywall.TagTitle = `
+            <div class="paywall-cpt-wrap__text-head">
+                ${window.glbPaywall.title}
+            </div>
+        `
+    }
+
+    tagLogin() {
+        if (!window.glbPaywall.loginText && !this.getUrlLoginRegister()) {
+            window.glbPaywall.TagMiddleText = ''
+            return
+        }
+
+        const hideLogin = window.glbPaywall.hideLoginArea ? 'is-hide' : ''
+
+        window.glbPaywall.TagLogin = `
+        <div class="paywall-cpt-wrap__text-center ${hideLogin}">
+            ${
+            window.glbPaywall.loginPreText
+            } <a href="${this.getUrlLoginRegister()}" data-is-login="true" data-ga-action="Clique em link" data-ga-label="Link 2 - Faça login" data-ga-resetUtp="false" data-href-target=" ${
+            window.glbPaywall.targetBlank
+            } ">${window.glbPaywall.loginText}</a>
+        </div>
+        `
+    }
+
+    tagBannerTop() {
+        window.glbPaywall.TagBannerTop = `
+            <div class="paywall-cpt-wrap__top">
+                <a href="${window.glbPaywall.topLink}" data-ga-image-position="top" data-ga-action="Clique em link" data-ga-label="Link 1 -" data-ga-resetUtp="true" data-href-target="${window.glbPaywall.targetBlank}">
+                    <picture>
+                        <source srcset="${window.glbPaywall.topMobi}" media="(max-width: 1023px)">
+                        <source srcset="${window.glbPaywall.topDesk}" media="(min-width: 1024px)">
+                        <img src="${window.glbPaywall.topMobi}" />
+                    </picture>
+                </a>
+            </div>
+        `
+    }
+
+    tagBannerLeft() {
+        window.glbPaywall.TagBannerLeft = `
+            <div class="paywall-cpt-wrap__left">
+                <a href="${window.glbPaywall.leftLink}" data-ga-action="Clique em link" data-ga-label="Link 4 - Banner oferta esquerda" data-ga-resetUtp="true" data-href-target="${window.glbPaywall.targetBlank}">
+                    <picture>
+                        <source srcset="${window.glbPaywall.leftMobi}" media="(max-width: 1023px)">
+                        <source srcset="${window.glbPaywall.leftDesk}" media="(min-width: 1024px)">
+                        <img src="${window.glbPaywall.leftMobi}" />
+                    </picture>
+                </a>
+            </div>
+        `
+    }
+
+    tagBannerRight() {
+        window.glbPaywall.TagBannerRight = `
+            <div class="paywall-cpt-wrap__right">
+                <a href="${window.glbPaywall.rightLink}"  data-ga-action="Clique em link" data-ga-label="Link 5 - Banner oferta direita" data-ga-resetUtp="true" data-href-target="${window.glbPaywall.targetBlank}">
+                    <picture>
+                        <source srcset="${window.glbPaywall.rightMobi}" media="(max-width: 1023px)">
+                        <source srcset="${window.glbPaywall.rightDesk}" media="(min-width: 1024px)">
+                        <img src="${window.glbPaywall.rightMobi}" />
+                    </picture>
+                </a>
+            </div>
+        `
+    }
+
+    tagMiddleText() {
+        if (
+            !window.glbPaywall.middleText &&
+            !window.glbPaywall.middleTextLink
+        ) {
+            window.glbPaywall.TagMiddleText = ''
+            return
+        }
+
+        window.glbPaywall.TagMiddleText = `
+        <div class="paywall-cpt-wrap__text-center">
+            <a href="${window.glbPaywall.middleTextLink}">
+                ${window.glbPaywall.middleText}
+            </a>
+        </div>
+        `
     }
 
     clearLoginArea() {
@@ -85,6 +179,8 @@ export default class PaywallCpt {
         obj.rightMobi = 'https://via.placeholder.com/300x500'
         obj.rightDesk = 'https://via.placeholder.com/402x515'
         obj.rightLink = 'https://google.com?l3'
+        obj.middleText = 'Lorem ipsum dollor si amet'
+        obj.middleTextLink = '//google.com'
 
         window.glbPaywall = { ...window.glbPaywall, ...obj }
     }
@@ -274,54 +370,18 @@ export default class PaywallCpt {
     get template() {
         const template = `
 	  <div class="paywall-cpt ${this.templateVars.productClass}"> 
-		<div class="paywall-cpt-wrap">
-		<div class="paywall-cpt-wrap__text-head">
-			${this.templateVars.title}
-		</div>
-		  <div class="paywall-cpt-wrap__top">
-		  	<a href="${
-                this.templateVars.topLink
-            }" data-ga-image-position="top" data-ga-action="Clique em link" data-ga-label="Link 1 -" data-ga-resetUtp="true" data-href-target="${
-            this.templateVars.targetBlank
-        }">
-				<picture>
-					<source srcset="${this.templateVars.topMobi}" media="(max-width: 1023px)">
-					<source srcset="${this.templateVars.topDesk}" media="(min-width: 1024px)">
-					<img src="${this.templateVars.topMobi}" />
-				</picture>
-			</a>
-		  </div>
-		  <div class="paywall-cpt-wrap__text-center ${
-              window.glbPaywall.hideLoginArea ? 'is-hide' : ''
-          }">
-		  	${this.templateVars.loginTag}
-		  </div>
-		  <div class="paywall-cpt-wrap__left">
-		  	<a href="${
-                this.templateVars.leftLink
-            }" data-ga-action="Clique em link" data-ga-label="Link 4 - Banner oferta esquerda" data-ga-resetUtp="true" data-href-target="${
-            this.templateVars.targetBlank
-        }">
-				<picture>
-					<source srcset="${this.templateVars.leftMobi}" media="(max-width: 1023px)">
-					<source srcset="${this.templateVars.leftDesk}" media="(min-width: 1024px)">
-					<img src="${this.templateVars.leftMobi}" />
-				</picture>
-			</a>
-		  </div>
-		  <div class="paywall-cpt-wrap__right">
-		  	<a href="${
-                this.templateVars.rightLink
-            }"  data-ga-action="Clique em link" data-ga-label="Link 5 - Banner oferta direita" data-ga-resetUtp="true" data-href-target="${
-            this.templateVars.targetBlank
-        }">
-				<picture>
-					<source srcset="${this.templateVars.rightMobi}" media="(max-width: 1023px)">
-					<source srcset="${this.templateVars.rightDesk}" media="(min-width: 1024px)">
-					<img src="${this.templateVars.rightMobi}" />
-				</picture>
-			</a>
-		  </div>
+        <div class="paywall-cpt-wrap">
+            ${this.templateVars.TagTitle}
+            
+            ${this.templateVars.TagLogin}
+
+            ${this.templateVars.TagBannerTop}
+
+            ${this.templateVars.TagMiddleText}
+
+            ${this.templateVars.TagBannerLeft}
+
+            ${this.templateVars.TagBannerRight}
 		</div>
 	  </div>
 	  `
