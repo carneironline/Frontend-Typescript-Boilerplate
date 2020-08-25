@@ -48,17 +48,14 @@ export default class PaywallCpt {
             rightLink: '',
             middleText: '',
             middleTextLink: '',
+            hideLoginArea: false,
+            loginText: 'Faça login',
+            loginPreText: 'Já possui cadastro?',
         }
-
-        templateSettings.hideLoginArea = false
-        templateSettings.loginText = 'Faça login'
-        templateSettings.loginPreText = 'Já possui cadastro?'
 
         window.glbPaywall = { ...templateSettings, ...window.glbPaywall }
 
-        if (window.glbPaywall.hideLoginArea) this.clearLoginArea()
-
-        if (true) this.setDebugTemplateSettings()
+        if (this.debug) this.setDebugTemplateSettings()
 
         this.tagTitle()
         this.tagLogin()
@@ -84,12 +81,13 @@ export default class PaywallCpt {
     }
 
     tagLogin() {
-        if (!window.glbPaywall.loginText && !this.getUrlLoginRegister()) {
+        if (
+            (!window.glbPaywall.loginText && !this.getUrlLoginRegister()) ||
+            window.glbPaywall.hideLoginArea
+        ) {
             window.glbPaywall.TagMiddleText = ''
             return
         }
-
-        const hideLogin = window.glbPaywall.hideLoginArea ? 'is-hide' : ''
 
         window.glbPaywall.TagLogin = `
         <div class="paywall-cpt-wrap__text-center ${hideLogin}">
@@ -160,12 +158,6 @@ export default class PaywallCpt {
             </a>
         </div>
         `
-    }
-
-    clearLoginArea() {
-        if (window.glbPaywall) {
-            window.glbPaywall.loginTag = ''
-        }
     }
 
     setDebugTemplateSettings() {
