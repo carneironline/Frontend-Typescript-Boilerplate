@@ -930,7 +930,11 @@ window.Piano.xmlHttpRequest = {
                     if (window.Piano.google.showSaveSubscription(respJson)) {
                         try {
                             const swgService = new SwgService()
-                            swgService.saveGloboSubscription(glbid)
+                            if(window.Piano.util.isValor()){
+                                swgService.saveValorSubscription(glbid)
+                            } else {
+                                swgService.saveGloboSubscription(glbid)
+                            }
                         } catch (error) {
                             GA.setEventsError(
                                 'Erro ao chamar a função showSaveSubscription do Aldebaran.',
