@@ -829,11 +829,15 @@ window.Piano.xmlHttpRequest = {
                     'situacaoPagamento',
                     situacaoPagamento,
                 ])
-                let _jsonLeitor = { statusAdimplencia: situacaoPagamento }
-                console.log("PINNA _Leitor => ", _jsonLeitor)
-                _jsonLeitorEncoded = btoa(encodeURI(JSON.stringify(_jsonLeitor)))
-                console.log("PINNA _jsonLeitorEncoded => ", _jsonLeitorEncoded)
-                Helpers.setCookie(window.Piano.variaveis.constante.cookie.UTP, _jsonLeitorEncoded, 1)
+                const _jsonLeitor = { situacaoPagamento }
+                const _jsonLeitorEncoded = btoa(
+                    encodeURI(JSON.stringify(_jsonLeitor))
+                )
+                Helpers.setCookie(
+                    window.Piano.variaveis.constante.cookie.UTP,
+                    _jsonLeitorEncoded,
+                    1
+                )
             } else if (
                 xhr.status !== 0 &&
                 window.Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(
@@ -907,8 +911,14 @@ window.Piano.xmlHttpRequest = {
                     respostaDeTermoDeUso
                 )
 
-                let cookieUTP = Helpers.getCookie(window.Piano.variaveis.constante.cookie.UTP)
-                let _jsonLeitorAux = JSON.parse(decodeURI(atob(cookieUTP)))
+                const cookieUTP = Helpers.getCookie(
+                    window.Piano.variaveis.constante.cookie.UTP
+                )
+
+                let _jsonLeitorAux = {}
+                if (cookieUTP !== '') {
+                    _jsonLeitorAux = JSON.parse(decodeURI(atob(cookieUTP)))
+                }
 
                 let _jsonLeitor = {
                     ..._jsonLeitorAux,
@@ -919,7 +929,7 @@ window.Piano.xmlHttpRequest = {
                     glbid,
                     produto: window.Piano.variaveis.getNomeProduto(),
                     codProduto: codigoProduto,
-                    uuid: respJson.usuarioId
+                    uuid: respJson.usuarioId,
                 }
                 _jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)))
                 Helpers.setCookie(
@@ -1054,9 +1064,18 @@ window.Piano.autenticacao = {
                 const _leitor = JSON.parse(decodeURI(atob(utp)))
                 if (
                     glbid === _leitor.glbid &&
-                    (typeof _leitor.produto === 'undefined' || _leitor.produto === window.Piano.variaveis.getNomeProduto()) &&
-                    _leitor.statusAdimplencia === 'A faturar'
+                    (typeof _leitor.produto === 'undefined' ||
+                        _leitor.produto ===
+                            window.Piano.variaveis.getNomeProduto())
                 ) {
+                    if (_leitor.situacaoPagamento) {
+                        window.tp.push([
+                            'setCustomVariable',
+                            'situacaoPagamento',
+                            _leitor.situacaoPagamento,
+                        ])
+                    }
+
                     window.Piano.autenticacao.defineUsuarioPiano(
                         _leitor.autorizado,
                         _leitor.motivo,
