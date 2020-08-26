@@ -829,6 +829,15 @@ window.Piano.xmlHttpRequest = {
                     'situacaoPagamento',
                     situacaoPagamento,
                 ])
+                const _jsonLeitor = { situacaoPagamento }
+                const _jsonLeitorEncoded = btoa(
+                    encodeURI(JSON.stringify(_jsonLeitor))
+                )
+                Helpers.setCookie(
+                    window.Piano.variaveis.constante.cookie.UTP,
+                    _jsonLeitorEncoded,
+                    1
+                )
             } else if (
                 xhr.status !== 0 &&
                 window.Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(
@@ -901,7 +910,18 @@ window.Piano.xmlHttpRequest = {
                     isAutorizado,
                     respostaDeTermoDeUso
                 )
+
+                const cookieUTP = Helpers.getCookie(
+                    window.Piano.variaveis.constante.cookie.UTP
+                )
+
+                let _jsonLeitorAux = {}
+                if (cookieUTP !== '') {
+                    _jsonLeitorAux = JSON.parse(decodeURI(atob(cookieUTP)))
+                }
+
                 let _jsonLeitor = {
+                    ..._jsonLeitorAux,
                     autorizado: respJson.autorizado,
                     motivo: respostaDeMotivo,
                     logado: isAutorizado,
@@ -1048,6 +1068,14 @@ window.Piano.autenticacao = {
                         _leitor.produto ===
                             window.Piano.variaveis.getNomeProduto())
                 ) {
+                    if (_leitor.situacaoPagamento) {
+                        window.tp.push([
+                            'setCustomVariable',
+                            'situacaoPagamento',
+                            _leitor.situacaoPagamento,
+                        ])
+                    }
+
                     window.Piano.autenticacao.defineUsuarioPiano(
                         _leitor.autorizado,
                         _leitor.motivo,
