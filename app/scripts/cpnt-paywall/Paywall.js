@@ -55,7 +55,7 @@ export default class PaywallCpt {
 
         window.glbPaywall = { ...templateSettings, ...window.glbPaywall }
 
-        if (this.debug) this.setDebugTemplateSettings()
+        if (true) this.setDebugTemplateSettings()
 
         this.tagTitle()
         this.tagLogin()
@@ -90,7 +90,7 @@ export default class PaywallCpt {
         }
 
         window.glbPaywall.TagLogin = `
-        <div class="paywall-cpt-wrap__text-center ${hideLogin}">
+        <div class="paywall-cpt-wrap__text-center">
             ${
             window.glbPaywall.loginPreText
             } <a href="${this.getUrlLoginRegister()}" data-is-login="true" data-ga-action="Clique em link" data-ga-label="Link 2 - Faça login" data-ga-resetUtp="false" data-href-target=" ${
