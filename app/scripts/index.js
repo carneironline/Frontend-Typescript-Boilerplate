@@ -47,6 +47,14 @@ window.Piano.variaveis = {
             AMBIENTE: 'ambiente-desejado',
             DEBUG: 'debug-piano',
         },
+        swgProducts: {
+            VALOR : 'Valor',
+            OGLOBO: 'O Globo'
+        },
+        swgProductIds: {
+            VALOR: 'valor.globo.com',
+            OGLOBO: 'oglobo.globo.com'
+        }
     },
     isConteudoExclusivo() {
         return !!window.conteudoExclusivo
@@ -942,7 +950,11 @@ window.Piano.xmlHttpRequest = {
                     if (window.Piano.google.showSaveSubscription(respJson)) {
                         try {
                             const swgService = new SwgService()
-                            swgService.saveGloboSubscription(glbid)
+                            if(window.Piano.util.isValor()){
+                                swgService.saveValorSubscription(glbid)
+                            } else {
+                                swgService.saveGloboSubscription(glbid)
+                            }
                         } catch (error) {
                             GA.setEventsError(
                                 'Erro ao chamar a função showSaveSubscription do Aldebaran.',
@@ -977,9 +989,11 @@ window.Piano.xmlHttpRequest = {
 
 window.Piano.google = {
     isAuthorized() {
-        //TODO Criar uma constante para o valor e identificar o produto através do nomeProdutoPiano
-        if (window.swgEntitlements.getEntitlementForSource('oglobo.globo.com')) {
-            window.Piano.metricas.setaVariaveis(window.swgEntitlements.getEntitlementForSource('oglobo.globo.com').subscriptionToken, 'Conta Google', 'O Globo')
+        const swgProductId = window.Piano.util.isValor() ? window.Piano.variaveis.constante.swgProductIds.VALOR : window.Piano.variaveis.constante.swgProductIds.OGLOBO
+        const currentProduct = window.Piano.util.isValor() ? window.Piano.variaveis.constante.swgProducts.VALOR : window.Piano.variaveis.constante.swgProducts.OGLOBO
+        
+        if (window.swgEntitlements.getEntitlementForSource(swgProductId)) {
+            window.Piano.metricas.setaVariaveis(window.swgEntitlements.getEntitlementForSource(swgProductId).subscriptionToken, 'Conta Google', currentProduct)
             return true
         }
 
@@ -995,9 +1009,13 @@ window.Piano.google = {
         if (window.Piano.google.isAuthorized()) return
 
         try {
-            //TODO identificar o produto através do nomeProdutoPiano
-            const oGloboBusiness = new OGloboBusiness()
-            oGloboBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements)
+            if (window.Piano.util.isValor()) {
+                const valorBusiness = new ValorBusiness()
+                valorBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements)
+            } else {
+                const oGloboBusiness = new OGloboBusiness()
+                oGloboBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements)
+            }
         } catch (error) {
             GA.setEventsError(
                 'Erro ao executar o Aldebaran',
@@ -1007,13 +1025,9 @@ window.Piano.google = {
     },
 
     showSaveSubscription(response) {
-        if (
-            !(window.swgEntitlements && window.swgEntitlements.enablesThis()) &&
+        if (!(window.swgEntitlements && window.swgEntitlements.enablesThis()) &&
             response.motivo === 'AUTORIZADO' &&
-            !Helpers.getCookie(
-                window.Piano.variaveis.constante.SAVE_SUBSCRIPTION
-            )
-        ) {
+            !Helpers.getCookie(window.Piano.variaveis.constante.SAVE_SUBSCRIPTION)) {
             return true
         }
         return false
