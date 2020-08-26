@@ -370,10 +370,12 @@ export default class PaywallCpt {
             ${this.templateVars.TagBannerTop}
 
             ${this.templateVars.TagMiddleText}
-
+            
+            <div class="paywall-cpt-wrap__banners-bottom">
             ${this.templateVars.TagBannerLeft}
 
             ${this.templateVars.TagBannerRight}
+            </div>
 		</div>
 	  </div>
 	  `
@@ -383,7 +385,7 @@ export default class PaywallCpt {
 
     get cssMinified() {
         return `<style>
-        .paywall-cpt{opacity:0;position:fixed;bottom:0;left:0;width:100vw;overflow:hidden;background:#fff;-webkit-box-shadow:0 0 70px 0 rgba(0,0,0,.5);box-shadow:0 0 70px 0 rgba(0,0,0,.5);font-family:Arial,Helvetica,sans-serif}.paywall-cpt,.paywall-cpt *{-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-transition:all .2s ease;transition:all .2s ease}.paywall-cpt a{font-weight:700;text-decoration:none}.paywall-cpt a:hover{text-decoration:underline}.paywall-cpt .paywall-cpt-wrap__text-head,.paywall-cpt a{color:#000}.paywall-cpt-oglobo .paywall-cpt-wrap__text-head,.paywall-cpt-oglobo a{color:#325e94}.paywall-cpt-wrap{position:relative;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding-bottom:20px}.paywall-cpt-wrap img{display:block;max-width:100%;height:auto}.paywall-cpt-wrap__top{padding-top:20px;padding-bottom:20px}.paywall-cpt-wrap__middle-text{padding-top:0 !important}.paywall-cpt-wrap__text-head{width:100%;text-align:center;font-size:20px;font-weight:700;padding:20px 0 0}.paywall-cpt-wrap__text-center{width:100%;text-align:center;color:#767676;font-size:16px;padding:20px 0}.paywall-cpt-wrap__text-center.is-hide{padding-bottom:0}@media screen and min-width1024px{.paywall-cpt-wrap{-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}}
+        .paywall-cpt{opacity:0;position:fixed;bottom:0;left:0;width:100vw;overflow:hidden;background:#fff;-webkit-box-shadow:0 0 70px 0 rgba(0,0,0,.5);box-shadow:0 0 70px 0 rgba(0,0,0,.5);font-family:Arial,Helvetica,sans-serif}.paywall-cpt,.paywall-cpt *{-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-transition:all .2s ease;transition:all .2s ease}.paywall-cpt a{font-weight:700;text-decoration:none}.paywall-cpt a:hover{text-decoration:underline}.paywall-cpt .paywall-cpt-wrap__text-head,.paywall-cpt a{color:#000}.paywall-cpt-oglobo .paywall-cpt-wrap__text-head,.paywall-cpt-oglobo a{color:#325e94}.paywall-cpt-wrap{position:relative;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding-bottom:20px}.paywall-cpt-wrap img{display:block;max-width:100%;height:auto}.paywall-cpt-wrap__top{padding-top:20px;padding-bottom:20px}.paywall-cpt-wrap__middle-text{padding-top:0!important}.paywall-cpt-wrap__text-head{width:100%;text-align:center;font-size:20px;font-weight:700;padding:20px 0 0}.paywall-cpt-wrap__text-center{width:100%;text-align:center;color:#767676;font-size:16px;padding:20px 0}.paywall-cpt-wrap__text-center.is-hide{padding-bottom:0}.paywall-cpt-wrap__banners-bottom{display:flex}@media screen and min-width1024px{.paywall-cpt-wrap{-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}}@media screen and max-width1023px{.paywall-cpt-wrap__banners-bottom{flex-direction:column}}
 	  </style>`
     }
 
