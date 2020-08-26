@@ -55,7 +55,7 @@ export default class PaywallCpt {
 
         window.glbPaywall = { ...templateSettings, ...window.glbPaywall }
 
-        if (true) this.setDebugTemplateSettings()
+        if (this.debug) this.setDebugTemplateSettings()
 
         this.tagTitle()
         this.tagLogin()
