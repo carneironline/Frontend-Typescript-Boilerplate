@@ -41,7 +41,13 @@ module.exports = (env, args) => {
         devtool: 'inline-source-map',
 
         devServer: {
+            historyApiFallback: false,
             host: localhostDomain,
+            http2: true,
+            https: {
+                key: fs.readFileSync('server.key'),
+                cert: fs.readFileSync('server.crt'),
+            },
         },
 
         optimization: {
