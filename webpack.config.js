@@ -7,7 +7,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const dotenv = require('dotenv')
 
 module.exports = (env, args) => {
-    const localhostDomain = 'localhost'
+    const localhostDomain = 'tinyjs.globoi.com'
     let currentEnv = args.qa ? 'qa' : args.mode
 
     currentEnv = args.staging ? 'staging' : currentEnv
