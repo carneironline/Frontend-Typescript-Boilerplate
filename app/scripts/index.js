@@ -1059,7 +1059,7 @@ window.Piano.google = {
     showSaveSubscription(response) {
         if (
             !(window.swgEntitlements && window.swgEntitlements.enablesThis()) &&
-            response.motivo === 'AUTORIZADO' &&
+            response.motivo === 'autorizado' &&
             !Helpers.getCookie(
                 window.Piano.variaveis.constante.SAVE_SUBSCRIPTION
             )
@@ -1467,7 +1467,7 @@ window.Piano.construtor = {
             console.log('***initTp -> defineUsuarioPiano')
             window.Piano.autenticacao.defineUsuarioPiano(
                 true,
-                'AUTORIZADO',
+                'autorizado',
                 true,
                 ''
             )
