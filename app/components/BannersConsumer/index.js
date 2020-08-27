@@ -9,8 +9,8 @@ export default class Banners {
         window.glbBannersConsumer = [
             {
                 selector: 'banner-subscribe',
-                imageDesk: '',
-                imageMobi: '',
+                imageDesk: 'https://via.placeholder.com/804x128',
+                imageMobi: 'https://via.placeholder.com/300x150',
                 url: '',
             },
         ]
@@ -18,18 +18,39 @@ export default class Banners {
         this.init()
     }
 
-    init() { }
+    init() {
+        if (!this.bannersFound || !window.glbBannersConsumer) return null
 
-    render() {
+        this.addStyle()
+
+        this.bannersFound.forEach((element) => {
+            window.glbBannersConsumer.forEach((config) => {
+                if (config.selector === element.dataset.name)
+                    this.addBanner(element, config)
+            })
+        })
+    }
+
+    addBanner(element, config) {
+        element.insertAdjacentHTML('beforeend', this.render(config))
+    }
+
+    addStyle() {
+        const elBody = document.body
+        elBody.insertAdjacentHTML('beforeend', this.style())
+    }
+
+    render(config) {
         return `
             <div class="${this.classMain}"
         >
             <a href={url || '#'} target={target || ''} rel='noreferrer'>
                 <picture>
-                    <source srcSet={imageDesk} media='(min-width: 600px)' />
+                    <source srcset="${config.imageDesk}" media='(min-width: 600px)' />
+                    <source srcset="${config.imageMobi}" />
                     <img
                         className="${this.classMain}-image"
-                        src={imageMobi || imageDesk}
+                        src="${config.imageMobi}"
                         alt='MDN'
                     />
                 </picture>
