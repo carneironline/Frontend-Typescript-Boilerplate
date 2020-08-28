@@ -540,6 +540,14 @@ window.Piano.paywall = {
             `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/nao-barreira-gcom/scripts/index.js`
         )
     },
+    barreiraMobile() {
+        window.Piano.util.adicionarCss(
+            `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/barreira-mobi/styles/styles.css'>`
+        )
+        window.Piano.xmlHttpRequest.geraScriptNaPagina(
+            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/barreira-mobi/scripts/index.js`
+        ) 
+    }
 }
 
 function analyticalUnblockedForPiano() {
