@@ -24,6 +24,30 @@
     }
   },
   {
+    "productName": "Blog Analitico",
+    "pianoProductName": "blogAnalitico",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Blog Analitico"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "Blog Analitico",
+      "productID": "oglobo.globo.com:br.com.infoglobo.oglobo.site.google"
+    }
+  },
+  {
     "productName": "Blogs",
     "pianoProductName": "blogs",
     "@context": "http://schema.org",
