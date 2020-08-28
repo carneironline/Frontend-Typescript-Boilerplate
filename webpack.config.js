@@ -7,7 +7,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const dotenv = require('dotenv')
 
 module.exports = (env, args) => {
-    const localhostDomain = 'localhost'
+    const localhostDomain = 'tinyjs.globoi.com'
     let currentEnv = args.qa ? 'qa' : args.mode
 
     currentEnv = args.staging ? 'staging' : currentEnv
@@ -41,7 +41,13 @@ module.exports = (env, args) => {
         devtool: 'inline-source-map',
 
         devServer: {
+            historyApiFallback: false,
             host: localhostDomain,
+            http2: true,
+            https: {
+                key: fs.readFileSync('server.key'),
+                cert: fs.readFileSync('server.crt'),
+            },
         },
 
         optimization: {
