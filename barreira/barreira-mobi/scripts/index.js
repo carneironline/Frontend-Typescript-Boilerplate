@@ -1,10 +1,11 @@
 ; (function () {
     const mobiTopImg = window.mobiTopImg ? window.mobiTopImg : null
+    const mobiMiddleImg = window.mobiMiddleImg ? window.mobiMiddleImg : null
     const mobiBottomImg = window.mobiBottomImg ? window.mobiBottomImg : null
     const loginUrl = window.mobiLoginUrl ? window.mobiLoginUrl : null
     const promoURL = window.gcomPromoUrl ? window.gcomPromoUrl : null
 
-    if (!mobiTopImg || !mobiBottomImg || !loginUrl || !promoURL) return null
+    if (!mobiTopImg || !mobiBottomImg || !loginUrl || !promoURL || !mobiMiddleImg) return null
 
     const gcomPromo = document.createElement('div')
     gcomPromo.id = 'piano-mobi-paywall'
@@ -13,6 +14,7 @@
         <div class="box-paywall-image">
           <a class="box-paywall-login-url" href="${loginUrl}">
             <img class="box-paywall-top" src="${mobiTopImg}" alt="">
+            <img class="box-paywall-top" src="${mobiMiddleImg}" alt="">
           </a>
           <a class="box-paywall-promo-url" href="${promoURL}">
             <img class="box-paywall-bottom" src="${mobiBottomImg}" alt="">

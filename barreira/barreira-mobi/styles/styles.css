@@ -30,6 +30,9 @@
 }
 
 .piano-mobi-paywall .box-paywall-login-url {
+  display: flex;
+  flex-direction: column;
+  
   background-color: white;
 }
 
