@@ -1,66 +1,104 @@
-# Paywall
+# README
 
-  
+# TinyJS
 
-Repositório criado para salvar estáticos usados para a Piano e suas [experiências](https://github.com/Infoglobo/barreiras-mecanica-piano/wiki).
+Biblioteca utilizada para salvar componentes usados pela Piano e suas [experiências](https://github.com/Infoglobo/barreiras-mecanica-piano/wiki).
 
-  
+## Instalação
 
-## Botão [Header e Footer]
+1. Baixe e instale o [NodeJs](https://nodejs.org/en/) na versão recomendada
+2. Faça o download ou clone do projeto
+3. Rode o comando `npm install` na raíz do projeto
+4. Adicione no arquivo hosts a linha abaixo
 
--  [v1 Home](https://static-stg.infoglobo.com.br/paywall/banner-header-footer-piano/v1/botao-piano.html)
+```bash
+127.0.0.1       tinyjs.globoi.com
+```
 
--  [v1 Blog](https://static-stg.infoglobo.com.br/paywall/banner-header-footer-piano/v1/botao-piano-blog.html)
+## Componentes
 
--  [v1 Interna](https://static-stg.infoglobo.com.br/paywall/banner-header-footer-piano/v1/botao-piano-interna.html)
+- [Adblocks](#Adblocks)
+- [Banner Bottom Fixed](#BannerBottomFixed)
+- [Paywall](#Paywall)
 
-  
-  
+## <a name="Adblocks"></a>Adblocks
 
-## Banner Footer
+### Propriedades do template
 
--  [v3 Editavel](https://static-stg.infoglobo.com.br/paywall/footer-piano/v3/footer-piano.html)
+```jsx
+template: 'default',
+assetsPath: '',
+description: 'Para ter acesso ilimitado ao nosso conteúdo, basta assinar um dos nossos planos. Aproveite para conhecer todos os benefícios da assinatura O Globo.',
+textSignup: 'Quero assinar',
+urlSignup: '[https://login.qa.globoi.com/cadastro/4975?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23https%3A%2F%2Fm.globostg.globoi.com%2F](https://login.qa.globoi.com/cadastro/4975?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23https%3A%2F%2Fm.globostg.globoi.com%2F)',
+urlSignin: '[https://login.qa.globoi.com/login/4975?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23https%3A%2F%2Fm.globostg.globoi.com%2F](https://login.qa.globoi.com/login/4975?url=https%3A%2F%2Fs3.glbimg.com%2Fv1%2FAUTH_65d1930a0bda476ba8d3c25c5371ec3f%2Fpiano%2Fhelper%2Fredirect.html%23https%3A%2F%2Fm.globostg.globoi.com%2F)',
+footerTitle: 'Ainda não está pronto para assinar?',
+footerDescription: 'Nos adicione em sua lista de permissões ou desabilite seu bloqueador de pop-ups.',
+footerTextBtn: 'Saiba mais'
+```
 
--  [Wiki](https://github.com/Infoglobo/barreiras-mecanica-piano/wiki/Edi%C3%A7%C3%A3o-do-Footer)
+### Exemplo de uso na Piano
 
-  
+```jsx
+const AdBlockSettings = {
+	description: 'Gosta do nosso conteúdo? Você pode contribuir com nosso jornalismo fazendo uma assinatura e aproveitar o jornal O Globo utilizando seu bloqueador.',
+	urlSignup: '[http://oglobo.com.br](http://oglobo.com.br/)',
+	urlSignin: '[http://google.com.br](http://google.com.br/)'
+}
 
-## Comunicacao
+Piano.adblock.mostrarAdBlock(AdBlockSettings);
+```
 
--  [v1](https://static-stg.infoglobo.com.br/paywall/comunicacao-piano/v1/comunicacao-piano.html)
+## <a name="BannerBottomFixed"></a>Banner Bottom Fixed
 
--  [v2 Fechar](https://static-stg.infoglobo.com.br/paywall/comunicacao-piano/v2/comunicacao-piano.html)
+### Propriedades do template
 
--  [Wiki](https://github.com/Infoglobo/barreiras-mecanica-piano/wiki/Modal-Piano-(-V1-e-V2))
+```jsx
+imagePiano: false,
+colorBgPiano: '',
+linkPiano: ''
+```
 
-  
+## Exemplo de uso na Piano
 
-## Register
+O banner só irá ser exibido se pelo menos a url da imagem for definida
 
--  [v1](https://static-stg.infoglobo.com.br/paywall/register-piano/v1/barreira-login.html)
+```jsx
+const bannerBottomSettings = {
+     imagePiano: '//url-completa-da-imagem.com.br'
+}
 
--  [v2 Exclusivo](https://static-stg.infoglobo.com.br/paywall/register-piano/v2/barreira-login.html)
+Piano.banner.bottomFixed(bannerBottomSettings);
+```
 
-  
-  
+## <a name="Paywall"></a>Paywall
 
-## Testes unitários
+### Exemplo de uso na Piano
 
--  [Wiki](https://github.com/Infoglobo/paywall/wiki/Testes-Unit%C3%A1rios)
+```jsx
+window.glbPaywall = {
+    title: 'Quer ler essa matéria? <br> Cadastre-se agora.',
+    loginPreText: 'Já é assinante?',
+    loginText: 'Faça seu login',
+		middleText: 'Lorem ipsum dollor si amet',
+    middleTextLink: '//google.com',
+    topMobi: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/banner_jornalismoSWG_mob.png',
+    topDesk: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/banner_jornalismoSWG_desk.png',
+    topLink: encodeURIComponent(window.location.origin + window.location.pathname + '?ofertaSwg=sim'),
+    leftMobi: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/register_jornalismoSWG_mob_01.png',
+    leftDesk: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/register_jornalismoSWG_desk_01.png',
+    leftLink: encodeURIComponent(window.location.origin + window.location.pathname + '?ofertaSwg=sim'),
+    rightMobi: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/register_jornalismoSWG_mob_02.png',
+    rightDesk: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/register_jornalismoSWG_desk_02.png',
+    rightLink: 'https://assinatura.oglobo.globo.com/Default.aspx?id_parc=6236&cod_prod=3140&funcionalidade_id=3981&cod_produto=OG03&tipo_cliente_id=1&campanha=nao&semtelaoferta=sim&utm_origem=siteoglobo&utm_midia=barreiraPaywall&utm_campanha=register_swg&url_retorno=' + encodeURIComponent(window.location.origin + window.location.pathname),
+    swg: {
+        utms: [
+            { name: 'Campanha', value: 'register_swg' },
+            { name: 'Midia', value: 'barreiraPaywall' },
+            { name: 'Origem', value: 'siteoglobo' }
+        ]
+    }
+};
 
--  [Spec Jasmine.js](https://static-stg.infoglobo.com.br/paywall/testes-unitarios/SpecRunner.html)
-
-  
-
-## Adblocks
-
--  [Documentação](https://github.com/Infoglobo/paywall/wiki/Adblock)
-
--  [Modal](https://static-stg.infoglobo.com.br/paywall/adblock-piano/v4/index.html)
-
-
-## Servidor STG
-
-- Path: /mnt/multimedia/static/paywall/
-
-- Servidor: infoccistg5
+Piano.paywall.show('register');
+```

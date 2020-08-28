@@ -5,6 +5,7 @@ import SwgModule from './Swg'
 import PaywallCpt from './cpnt-paywall/Paywall'
 import PaywallCptInline from './cpnt-paywall-inline/Paywall'
 import getProductsObject from './ProductsRequester'
+import BannersConsumer from '../components/BannersConsumer'
 
 console.table(process.env)
 
@@ -479,6 +480,14 @@ window.Piano.banner = {
             `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/valor-subscribe-button/${versao}/scripts/subscribe-button.js`
         )
     },
+    consumer() {
+        try {
+            new BannersConsumer()
+        } catch (error) {
+            console.error('BannersConsumer Component - ', error)
+            window.Piano.triggerAdvertising()
+        }
+    },
 }
 
 window.Piano.register = {
@@ -528,8 +537,8 @@ window.Piano.paywall = {
         try {
             new PaywallCpt()
             window.hasPaywall = true
-        } catch (e) {
-            console.error('Paywall - Error on load')
+        } catch (error) {
+            console.error('PaywallCpt - ', error)
             window.Piano.triggerAdvertising()
         }
     },
