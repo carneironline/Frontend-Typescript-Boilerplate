@@ -139,7 +139,6 @@ window.Piano.variaveis = {
                 `${nomeProduto} - ${document.location.href}`
             )
 
-            console.log('***getCodigoProduto -> defineUsuarioPiano')
             window.Piano.autenticacao.defineUsuarioPiano(
                 true,
                 'erro',
@@ -859,7 +858,6 @@ window.Piano.xmlHttpRequest = {
         }
     },
     async fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid) {
-        console.log('***fazRequisicaoBarramentoApiAutorizacaoAcesso')
         const codigoProduto = window.Piano.variaveis.getCodigoProduto()
 
         if (codigoProduto === 'error') {
@@ -890,120 +888,112 @@ window.Piano.xmlHttpRequest = {
                 window.Piano.variaveis.getAmbientePiano()
             ].urlVerificaLeitor
 
-         await fetch(url, {
+        await fetch(url, {
             method: 'post',
             body: data,
-            headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
         })
-        .then((response) => {
-            console.log(response)
-            return response.json()
-        })
-        .then((respJson) => {
-            let respostaDeTermoDeUso = ''
-            let respostaDeMotivo = ''
-            let hrefAssinaturaInadimplente = ''
-            let _jsonLeitorAux = {}
+            .then((response) => response.json())
+            .then((respJson) => {
+                let respostaDeTermoDeUso = ''
+                let respostaDeMotivo = ''
+                let hrefAssinaturaInadimplente = ''
+                let _jsonLeitorAux = {}
 
-            if (typeof respJson.motivo !== 'undefined') {
-                respostaDeMotivo = respJson.motivo.toLowerCase()
-            }
+                if (typeof respJson.motivo !== 'undefined') {
+                    respostaDeMotivo = respJson.motivo.toLowerCase()
+                }
 
-            if (typeof respJson.temTermoDeUso !== 'undefined') {
-                respostaDeTermoDeUso = respJson.temTermoDeUso
-            }
+                if (typeof respJson.temTermoDeUso !== 'undefined') {
+                    respostaDeTermoDeUso = respJson.temTermoDeUso
+                }
 
-            if (typeof respJson.link !== 'undefined') {
-                hrefAssinaturaInadimplente = window.Piano.inadimplente.getLinkAssinatura(
-                    respJson.link
+                if (typeof respJson.link !== 'undefined') {
+                    hrefAssinaturaInadimplente = window.Piano.inadimplente.getLinkAssinatura(
+                        respJson.link
+                    )
+                }
+
+                const isAutorizado = window.Piano.autenticacao.isAutorizado(
+                    respostaDeTermoDeUso,
+                    respostaDeMotivo,
+                    respJson.autorizado,
+                    hrefAssinaturaInadimplente
                 )
-            }
 
-            const isAutorizado = window.Piano.autenticacao.isAutorizado(
-                respostaDeTermoDeUso,
-                respostaDeMotivo,
-                respJson.autorizado,
-                hrefAssinaturaInadimplente
-            )
+                window.Piano.autenticacao.defineUsuarioPiano(
+                    respJson.autorizado,
+                    respostaDeMotivo,
+                    isAutorizado,
+                    respostaDeTermoDeUso
+                )
 
-            console.log(
-                '***defineUsuarioPiano',
-                respJson.autorizado,
-                respostaDeMotivo,
-                isAutorizado,
-                respostaDeTermoDeUso
-            )
+                const cookieUTP = Helpers.getCookie(
+                    window.Piano.variaveis.constante.cookie.UTP
+                )
 
-            window.Piano.autenticacao.defineUsuarioPiano(
-                respJson.autorizado,
-                respostaDeMotivo,
-                isAutorizado,
-                respostaDeTermoDeUso
-            )
+                if (cookieUTP !== '') {
+                    _jsonLeitorAux = JSON.parse(decodeURI(atob(cookieUTP)))
+                }
 
-            const cookieUTP = Helpers.getCookie(
-                window.Piano.variaveis.constante.cookie.UTP
-            )
+                let _jsonLeitor = {
+                    ..._jsonLeitorAux,
+                    autorizado: respJson.autorizado,
+                    motivo: respostaDeMotivo,
+                    logado: isAutorizado,
+                    temTermoDeUso: respostaDeTermoDeUso,
+                    glbid,
+                    produto: window.Piano.variaveis.getNomeProduto(),
+                    codProduto: codigoProduto,
+                    uuid: respJson.usuarioId,
+                }
 
-            if (cookieUTP !== '') {
-                _jsonLeitorAux = JSON.parse(decodeURI(atob(cookieUTP)))
-            }
+                _jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)))
 
-            let _jsonLeitor = {
-                ..._jsonLeitorAux,
-                autorizado: respJson.autorizado,
-                motivo: respostaDeMotivo,
-                logado: isAutorizado,
-                temTermoDeUso: respostaDeTermoDeUso,
-                glbid,
-                produto: window.Piano.variaveis.getNomeProduto(),
-                codProduto: codigoProduto,
-                uuid: respJson.usuarioId,
-            }
+                Helpers.setCookie(
+                    window.Piano.variaveis.constante.cookie.UTP,
+                    _jsonLeitor,
+                    1
+                )
 
-            _jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)))
-
-            Helpers.setCookie(
-                window.Piano.variaveis.constante.cookie.UTP,
-                _jsonLeitor,
-                1
-            )
-
-            if (typeof swg !== 'undefined') {
-                if (window.Piano.google.showSaveSubscription(respJson)) {
-                    try {
-                        const swgService = new SwgService()
-                        swgService.saveGloboSubscription(glbid)
-                    } catch (error) {
-                        GA.setEventsError(
-                            'Erro ao chamar a função showSaveSubscription do Aldebaran.',
-                            `URL: ${document.location.href} GLBID: ${glbid} Erro: ${error}`
-                        )
+                if (typeof swg !== 'undefined') {
+                    if (window.Piano.google.showSaveSubscription(respJson)) {
+                        try {
+                            const swgService = new SwgService()
+                            swgService.saveGloboSubscription(glbid)
+                        } catch (error) {
+                            GA.setEventsError(
+                                'Erro ao chamar a função showSaveSubscription do Aldebaran.',
+                                `URL: ${document.location.href} GLBID: ${glbid} Erro: ${error}`
+                            )
+                        }
                     }
                 }
-            }
 
-            if (respJson.autorizado === true) {
-                window.Piano.metricas.setaVariaveis(
-                    respJson.usuarioId,
-                    'Globo ID',
-                    'O Globo'
+                if (respJson.autorizado === true) {
+                    window.Piano.metricas.setaVariaveis(
+                        respJson.usuarioId,
+                        'Globo ID',
+                        'O Globo'
+                    )
+                }
+            })
+            .catch(() => {
+                GA.setEventsError(
+                    'API de autorizacao de acesso',
+                    `${xhr.status} - ${glbid}`
                 )
-            }
-        }).catch(() => {
-            GA.setEventsError(
-                'API de autorizacao de acesso',
-                `${xhr.status} - ${glbid}`
-            )
 
-            console.log('***ERROR FETCH -> defineUsuarioPiano')
-            window.Piano.autenticacao.defineUsuarioPiano(
-                true,
-                'erro',
-                true,
-                ' '
-            )
-        })
+                window.Piano.autenticacao.defineUsuarioPiano(
+                    true,
+                    'erro',
+                    true,
+                    ' '
+                )
+            })
     },
 }
 
@@ -1091,10 +1081,7 @@ window.Piano.autenticacao = {
         return glbid !== ''
     },
     async verificaUsuarioLogadoNoBarramento(glbid, utp) {
-        console.table('***verificaUsuarioLogadoNoBarramento')
-        console.table(`***glbid e utp`, glbid, utp)
         if (window.Piano.autenticacao.isLogadoCadun(glbid, utp)) {
-            console.log(`***utp`, utp)
             if (utp) {
                 const _leitor = JSON.parse(decodeURI(atob(utp)))
 
@@ -1111,13 +1098,7 @@ window.Piano.autenticacao = {
                             _leitor.situacaoPagamento,
                         ])
                     }
-                    console.table(
-                        '***tem utp - defineUsuarioPiano',
-                        _leitor.autorizado,
-                        _leitor.motivo,
-                        _leitor.logado,
-                        _leitor.temTermoDeUso
-                    )
+
                     window.Piano.autenticacao.defineUsuarioPiano(
                         _leitor.autorizado,
                         _leitor.motivo,
@@ -1143,14 +1124,9 @@ window.Piano.autenticacao = {
                 )
             }
 
-            console.log(
-                `***xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso`
-            )
             await window.Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(
                 glbid
             )
-
-            console.log('END FAZREQ')
         }
     },
     isAutorizado(termoDeUso, motivo, autorizado, hrefAssinaturaInadimplente) {
@@ -1360,7 +1336,6 @@ window.Piano.util = {
                         }
                     })
                 })
-                
             }
         }
     },
@@ -1464,7 +1439,6 @@ window.Piano.construtor = {
         ) {
             window.Piano.google.isSpecificGoogleUser(window.swgEntitlements)
 
-            console.log('***initTp -> defineUsuarioPiano')
             window.Piano.autenticacao.defineUsuarioPiano(
                 true,
                 'autorizado',
@@ -1472,13 +1446,10 @@ window.Piano.construtor = {
                 ''
             )
         } else {
-            console.log('***initTp -> verificaUsuarioLogadoNoBarramento')
             await window.Piano.autenticacao.verificaUsuarioLogadoNoBarramento(
                 Helpers.getCookie(window.Piano.variaveis.constante.cookie.GCOM),
                 Helpers.getCookie(window.Piano.variaveis.constante.cookie.UTP)
             )
-
-            console.log('***ENNDDD -> verificaUsuarioLogadoNoBarramento')
         }
 
         window.Piano.regionalizacao.getRegion()
@@ -1499,8 +1470,7 @@ window.Piano.construtor = {
             window.Piano.util.callbackMeterExpired,
         ])
 
-        if(callback)
-            callback()
+        if (callback) callback()
     },
 }
 
@@ -1543,8 +1513,9 @@ function pianoInit() {
 
                     if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
                         try {
-                            window.tinyCpt.Piano.construtor.initTp(() => loadPianoExperiences())
-                            
+                            window.tinyCpt.Piano.construtor.initTp(() =>
+                                loadPianoExperiences()
+                            )
                         } catch (error) {
                             GA.setEventsError(
                                 'Piano nao foi carregada corretamente!',
@@ -1559,7 +1530,6 @@ function pianoInit() {
         GA.setEventsError('Entitlements não carregado', document.location.href)
         if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
             window.tinyCpt.Piano.construtor.initTp(() => loadPianoExperiences())
-            
         }
     }
 }
