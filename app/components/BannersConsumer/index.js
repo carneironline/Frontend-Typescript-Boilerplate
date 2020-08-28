@@ -5,21 +5,6 @@ export default class BannersConsumer {
         this.styleClassMain = `.${this.classMain}`
         this.bannersFound = document.querySelectorAll(this.styleClassMain)
 
-        window.glbBannersConsumer = [
-            {
-                selector: 'banner-subscribe',
-                imageDesk: 'https://via.placeholder.com/680x59',
-                imageMobi: 'https://via.placeholder.com/320x59',
-            },
-            {
-                selector: 'banner-whatever',
-                imageDesk: 'https://via.placeholder.com/582x473',
-                imageMobi: 'https://via.placeholder.com/banner-globomais',
-                url: '//google.com',
-                target: '_blank',
-            },
-        ]
-
         this.init()
     }
 
@@ -27,9 +12,10 @@ export default class BannersConsumer {
         return {
             selector: 'banner-test',
             imageDesk: 'https://via.placeholder.com/804x128',
-            imageMobi: 'https://via.placeholder.com/300x150',
+            imageMobi: '',
             url: '#',
             target: '_self',
+            magazineSubscribeBackground: '#000',
         }
     }
 
@@ -46,8 +32,7 @@ export default class BannersConsumer {
                         ...config,
                     }
 
-                    if (config.selector === 'banner-subscribe')
-                        console.log(element.parentElement)
+                    this.magazineSubscribeParentBackground(element, finalConfig)
 
                     this.addBanner(element, finalConfig)
                 }
@@ -78,6 +63,15 @@ export default class BannersConsumer {
     addStyle() {
         const elBody = document.body
         elBody.insertAdjacentHTML('beforeend', this.style())
+    }
+
+    magazineSubscribeParentBackground(element, finalConfig) {
+        if (
+            element.dataset.name === 'banner-subscribe' &&
+            finalConfig.magazineSubscribeBackground
+        )
+            element.parentElement.style.background =
+                finalConfig.magazineSubscribeBackground
     }
 
     render(config) {

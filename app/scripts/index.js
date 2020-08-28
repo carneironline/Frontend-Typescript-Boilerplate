@@ -8,7 +8,7 @@ import getProductsObject from './ProductsRequester'
 import BannersConsumer from '../components/BannersConsumer'
 
 console.table(process.env)
-new BannersConsumer()
+
 const Tiny = new TinyModule()
 const GA = new GAModule()
 
@@ -472,6 +472,14 @@ window.Piano.banner = {
             `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/valor-subscribe-button/${versao}/scripts/subscribe-button.js`
         )
     },
+    consumer() {
+        try {
+            new BannersConsumer()
+        } catch (error) {
+            console.error('BannersConsumer Component - ', error)
+            window.Piano.triggerAdvertising()
+        }
+    },
 }
 
 window.Piano.register = {
@@ -519,10 +527,10 @@ window.Piano.paywall = {
         window.Piano.typePaywall = typePaywall
 
         try {
-            // new PaywallCpt()
+            new PaywallCpt()
             window.hasPaywall = true
-        } catch (e) {
-            console.error('Paywall - Error on load')
+        } catch (error) {
+            console.error('PaywallCpt - ', error)
             window.Piano.triggerAdvertising()
         }
     },
