@@ -147,7 +147,6 @@ window.Piano.variaveis = {
                 `${nomeProduto} - ${document.location.href}`
             )
 
-            console.log('***getCodigoProduto -> defineUsuarioPiano')
             window.Piano.autenticacao.defineUsuarioPiano(
                 true,
                 'erro',
@@ -867,7 +866,6 @@ window.Piano.xmlHttpRequest = {
         }
     },
     async fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid) {
-        console.log('***fazRequisicaoBarramentoApiAutorizacaoAcesso')
         const codigoProduto = window.Piano.variaveis.getCodigoProduto()
 
         if (codigoProduto === 'error') {
@@ -906,10 +904,7 @@ window.Piano.xmlHttpRequest = {
                 Accept: 'application/json',
             },
         })
-            .then((response) => {
-                console.log(response)
-                return response.json()
-            })
+            .then((response) => response.json())
             .then((respJson) => {
                 let respostaDeTermoDeUso = ''
                 let respostaDeMotivo = ''
@@ -935,14 +930,6 @@ window.Piano.xmlHttpRequest = {
                     respostaDeMotivo,
                     respJson.autorizado,
                     hrefAssinaturaInadimplente
-                )
-
-                console.log(
-                    '***defineUsuarioPiano',
-                    respJson.autorizado,
-                    respostaDeMotivo,
-                    isAutorizado,
-                    respostaDeTermoDeUso
                 )
 
                 window.Piano.autenticacao.defineUsuarioPiano(
@@ -1008,7 +995,6 @@ window.Piano.xmlHttpRequest = {
                     `${xhr.status} - ${glbid}`
                 )
 
-                console.log('***ERROR FETCH -> defineUsuarioPiano')
                 window.Piano.autenticacao.defineUsuarioPiano(
                     true,
                     'erro',
@@ -1114,10 +1100,7 @@ window.Piano.autenticacao = {
         return glbid !== ''
     },
     async verificaUsuarioLogadoNoBarramento(glbid, utp) {
-        console.table('***verificaUsuarioLogadoNoBarramento')
-        console.table(`***glbid e utp`, glbid, utp)
         if (window.Piano.autenticacao.isLogadoCadun(glbid, utp)) {
-            console.log(`***utp`, utp)
             if (utp) {
                 const _leitor = JSON.parse(decodeURI(atob(utp)))
 
@@ -1134,13 +1117,7 @@ window.Piano.autenticacao = {
                             _leitor.situacaoPagamento,
                         ])
                     }
-                    console.table(
-                        '***tem utp - defineUsuarioPiano',
-                        _leitor.autorizado,
-                        _leitor.motivo,
-                        _leitor.logado,
-                        _leitor.temTermoDeUso
-                    )
+
                     window.Piano.autenticacao.defineUsuarioPiano(
                         _leitor.autorizado,
                         _leitor.motivo,
@@ -1166,14 +1143,9 @@ window.Piano.autenticacao = {
                 )
             }
 
-            console.log(
-                `***xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso`
-            )
             await window.Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(
                 glbid
             )
-
-            console.log('END FAZREQ')
         }
     },
     isAutorizado(termoDeUso, motivo, autorizado, hrefAssinaturaInadimplente) {
@@ -1485,7 +1457,6 @@ window.Piano.construtor = {
         ) {
             window.Piano.google.isSpecificGoogleUser(window.swgEntitlements)
 
-            console.log('***initTp -> defineUsuarioPiano')
             window.Piano.autenticacao.defineUsuarioPiano(
                 true,
                 'autorizado',
@@ -1493,13 +1464,10 @@ window.Piano.construtor = {
                 ''
             )
         } else {
-            console.log('***initTp -> verificaUsuarioLogadoNoBarramento')
             await window.Piano.autenticacao.verificaUsuarioLogadoNoBarramento(
                 Helpers.getCookie(window.Piano.variaveis.constante.cookie.GCOM),
                 Helpers.getCookie(window.Piano.variaveis.constante.cookie.UTP)
             )
-
-            console.log('***ENNDDD -> verificaUsuarioLogadoNoBarramento')
         }
 
         window.Piano.regionalizacao.getRegion()
@@ -1557,18 +1525,21 @@ function pianoInit() {
 
             window.swg = subscriptions
 
-            subscriptions.getEntitlements().then(function (entitlements) {
-                window.swgEntitlements = entitlements
-                if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
-                    try {
-                        window.tinyCpt.Piano.construtor.initTp(() =>
-                            loadPianoExperiences()
-                        )
-                    } catch (error) {
-                        GA.setEventsError(
-                            'Piano nao foi carregada corretamente!',
-                            document.location.href
-                        )
+            subscriptions.setOnEntitlementsResponse((entitlementsPromise) => {
+                entitlementsPromise.then((entitlements) => {
+                    window.swgEntitlements = entitlements
+
+                    if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
+                        try {
+                            window.tinyCpt.Piano.construtor.initTp(() =>
+                                loadPianoExperiences()
+                            )
+                        } catch (error) {
+                            GA.setEventsError(
+                                'Piano nao foi carregada corretamente!',
+                                document.location.href
+                            )
+                        }
                     }
                 }
             })
