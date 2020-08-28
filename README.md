@@ -17,11 +17,11 @@ Biblioteca utilizada para salvar componentes usados pela Piano e suas [experiên
 
 ## Componentes
 
-- [Adblocks](https://www.notion.so/README-d7fa91987acb4fc6b5737faf824efe10#574d97bf50c04a92ae2ebd1b194641eb)
-- [Banner Bottom Fixed](https://www.notion.so/README-d7fa91987acb4fc6b5737faf824efe10#729c0282d3914749bfa091cd3da5786a)
-- [Paywall](https://www.notion.so/README-d7fa91987acb4fc6b5737faf824efe10#c33e8b5af66e4a18b3610ac05c5bb3c5)
+- [Adblocks](#Adblocks)
+- [Banner Bottom Fixed](#BannerBottomFixed)
+- [Paywall](#Paywall)
 
-## Adblocks
+## <a name="Adblocks"></a>Adblocks
 
 ### Propriedades do template
 
@@ -49,7 +49,7 @@ const AdBlockSettings = {
 Piano.adblock.mostrarAdBlock(AdBlockSettings);
 ```
 
-## Banner Bottom Fixed
+## <a name="BannerBottomFixed"></a>Banner Bottom Fixed
 
 ### Propriedades do template
 
@@ -71,7 +71,7 @@ const bannerBottomSettings = {
 Piano.banner.bottomFixed(bannerBottomSettings);
 ```
 
-## Paywall
+## <a name="Paywall"></a>Paywall
 
 ### Exemplo de uso na Piano
 
