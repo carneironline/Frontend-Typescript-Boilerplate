@@ -32,8 +32,6 @@
 .piano-mobi-paywall .box-paywall-login-url {
   display: flex;
   flex-direction: column;
-  
-  background-color: white;
 }
 
 .piano-mobi-paywall .box-paywall-login-url .box-paywall-top { 
@@ -42,4 +40,9 @@
 
 .piano-mobi-paywall .box-paywall-promo-url .box-paywall-bottom { 
   max-width: 300px;
+}
+
+.box-paywall-top, .box-paywall-bottom {
+  display: block;
+  border: none;
 }
