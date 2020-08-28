@@ -10,12 +10,12 @@ export default class BannersConsumer {
 
     bannerSettingsDefault() {
         return {
-            selector: 'banner-test',
-            imageDesk: 'https://via.placeholder.com/804x128',
+            selector: '',
+            imageDesk: '',
             imageMobi: '',
             url: '#',
             target: '_self',
-            magazineSubscribeBackground: '#000',
+            magazineSubscribeBackground: '#fff',
         }
     }
 
