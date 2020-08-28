@@ -1541,7 +1541,7 @@ function pianoInit() {
                             )
                         }
                     }
-                }
+                })
             })
 
             // subscriptions.setOnEntitlementsResponse((entitlementsPromise) => {
