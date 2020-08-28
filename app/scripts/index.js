@@ -5,7 +5,7 @@ import SwgModule from './Swg'
 import PaywallCpt from './cpnt-paywall/Paywall'
 import PaywallCptInline from './cpnt-paywall-inline/Paywall'
 import getProductsObject from './ProductsRequester'
-import BannersConsumer from '../components/BannersConsumer' 
+import BannersConsumer from '../components/BannersConsumer'
 
 console.table(process.env)
 new BannersConsumer()
@@ -519,7 +519,7 @@ window.Piano.paywall = {
         window.Piano.typePaywall = typePaywall
 
         try {
-            new PaywallCpt()
+            // new PaywallCpt()
             window.hasPaywall = true
         } catch (e) {
             console.error('Paywall - Error on load')
