@@ -78,7 +78,7 @@ Propriedades do template padrão
 
 ```jsx
 {
-    selector: 'banner-test',
+    selector: 'banner-test', // Essa prop está relacionada ao data-name que estiver no elemento html
     imageDesk: 'https://via.placeholder.com/804x128',
     imageMobi: 'https://via.placeholder.com/300x150',
     url: '#',
@@ -109,6 +109,8 @@ window.glbBannersConsumer = [
         target: '_blank', 
     },
 ]
+
+window.Piano.banner.consumer()
 ```
 
 É possível ter múltiplos banners, desde que tenha um HTML para cada seletor
