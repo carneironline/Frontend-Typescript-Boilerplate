@@ -84,7 +84,7 @@ export default class BannersConsumer {
                 <picture>
                     <source srcset="${
             config.imageDesk
-            }" media='(min-width: 600px)' />
+            }" media='(min-width: 680px)' />
                     <source srcset="${config.imageMobi}" />
                     <img
                         className="${this.classMain}-image"
