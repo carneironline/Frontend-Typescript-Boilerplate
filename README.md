@@ -19,6 +19,7 @@ Biblioteca utilizada para salvar componentes usados pela Piano e suas [experiên
 
 - [Adblocks](#Adblocks)
 - [Banner Bottom Fixed](#BannerBottomFixed)
+- [BannersConsumer](#BannersConsumer)
 - [Paywall](#Paywall)
 
 ## <a name="Adblocks"></a>Adblocks
@@ -69,6 +70,69 @@ const bannerBottomSettings = {
 }
 
 Piano.banner.bottomFixed(bannerBottomSettings);
+```
+
+## <a name="BannersConsumer"></a>BannersConsumer
+
+Propriedades do template padrão
+
+```jsx
+{
+    selector: 'banner-test',
+    imageDesk: 'https://via.placeholder.com/804x128',
+    imageMobi: 'https://via.placeholder.com/300x150',
+    url: '#',
+    target: '_self', // _self | _blank,
+		magazineSubscribeBackground: '#000', // Essa prop só funciona se o seletor for banner-subscribe
+}
+```
+
+### Exemplo de uso
+
+No HTML é necessário ter um elemento conforme o exemplo abaixo
+
+```jsx
+<div class="banner-consumer" data-name='banner-test'></div>
+```
+
+O componente identifica o valor informado no atributo **data-name**
+
+No runJS da Piano, insira
+
+```jsx
+window.glbBannersConsumer = [
+    {
+        selector: 'banner-test',
+        imageDesk: 'https://via.placeholder.com/804x128',
+        imageMobi: 'https://via.placeholder.com/300x150',
+        url: '//google.com',
+        target: '_blank', 
+    },
+]
+```
+
+É possível ter múltiplos banners, desde que tenha um HTML para cada seletor
+
+```jsx
+window.glbBannersConsumer = [
+    {
+        selector: 'banner-subscribe',
+        imageDesk: 'https://via.placeholder.com/582x473',
+        imageMobi: 'https://via.placeholder.com/263x446px',
+        magazineSubscribeBackground: '#000',
+        url: '//google.com',
+        target: '_blank',
+    },
+    {
+        selector: 'banner-globomais',
+        imageDesk: 'https://via.placeholder.com/680x59',
+        imageMobi: 'https://via.placeholder.com/320x59',
+        url: '//google.com',
+        target: '_blank',
+    },
+]
+
+window.Piano.banner.consumer()
 ```
 
 ## <a name="Paywall"></a>Paywall
