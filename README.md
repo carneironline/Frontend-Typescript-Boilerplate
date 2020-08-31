@@ -24,6 +24,8 @@ Biblioteca utilizada para salvar componentes usados pela Piano e suas [experiên
 
 ## <a name="Adblocks"></a>Adblocks
 
+Componente que adiciona a barreira de adblock caso o mesmo esteja ativado no browser do usuário.
+
 ### Propriedades do template
 
 ```jsx
@@ -52,6 +54,8 @@ Piano.adblock.mostrarAdBlock(AdBlockSettings);
 
 ## <a name="BannerBottomFixed"></a>Banner Bottom Fixed
 
+Componente que adiciona um banner flutuando no rodapé da tela.
+
 ### Propriedades do template
 
 ```jsx
@@ -73,6 +77,8 @@ Piano.banner.bottomFixed(bannerBottomSettings);
 ```
 
 ## <a name="BannersConsumer"></a>BannersConsumer
+
+Componente que adiciona um banner em um elemento predefinido.
 
 Propriedades do template padrão
 
@@ -138,6 +144,8 @@ window.Piano.banner.consumer()
 ```
 
 ## <a name="Paywall"></a>Paywall
+
+Componente que adiciona a barreira de venda nas matérias.
 
 ### Exemplo de uso na Piano
 
