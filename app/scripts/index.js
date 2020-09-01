@@ -49,6 +49,14 @@ window.Piano.variaveis = {
             AMBIENTE: 'ambiente-desejado',
             DEBUG: 'debug-piano',
         },
+        swgProducts: {
+            VALOR: 'Valor',
+            OGLOBO: 'O Globo',
+        },
+        swgProductIds: {
+            VALOR: 'valor.globo.com',
+            OGLOBO: 'oglobo.globo.com',
+        },
     },
     isConteudoExclusivo() {
         return !!window.conteudoExclusivo
@@ -1028,15 +1036,19 @@ window.Piano.xmlHttpRequest = {
 
 window.Piano.google = {
     isAuthorized() {
-        if (
-            window.swgEntitlements.getEntitlementForSource('oglobo.globo.com')
-        ) {
+        const swgProductId = window.Piano.util.isValor()
+            ? window.Piano.variaveis.constante.swgProductIds.VALOR
+            : window.Piano.variaveis.constante.swgProductIds.OGLOBO
+        const currentProduct = window.Piano.util.isValor()
+            ? window.Piano.variaveis.constante.swgProducts.VALOR
+            : window.Piano.variaveis.constante.swgProducts.OGLOBO
+
+        if (window.swgEntitlements.getEntitlementForSource(swgProductId)) {
             window.Piano.metricas.setaVariaveis(
-                window.swgEntitlements.getEntitlementForSource(
-                    'oglobo.globo.com'
-                ).subscriptionToken,
+                window.swgEntitlements.getEntitlementForSource(swgProductId)
+                    .subscriptionToken,
                 'Conta Google',
-                'O Globo'
+                currentProduct
             )
             return true
         }
@@ -1063,10 +1075,17 @@ window.Piano.google = {
         if (window.Piano.google.isAuthorized()) return
 
         try {
-            const oGloboBusiness = new OGloboBusiness()
-            oGloboBusiness.verifyIfUserHasAccessOrDeferred(
-                window.swgEntitlements
-            )
+            if (window.Piano.util.isValor()) {
+                const valorBusiness = new ValorBusiness()
+                valorBusiness.verifyIfUserHasAccessOrDeferred(
+                    window.swgEntitlements
+                )
+            } else {
+                const oGloboBusiness = new OGloboBusiness()
+                oGloboBusiness.verifyIfUserHasAccessOrDeferred(
+                    window.swgEntitlements
+                )
+            }
         } catch (error) {
             GA.setEventsError(
                 'Erro ao executar o Aldebaran',
@@ -1461,7 +1480,6 @@ window.Piano.construtor = {
         }
 
         if (
-            window.tinyCpt.isProduction &&
             typeof swg !== 'undefined' &&
             typeof window.swgEntitlements !== 'undefined' &&
             window.swgEntitlements.enablesThis()
@@ -1529,7 +1547,7 @@ function pianoInit() {
 
     if (window.tinyCpt.debug.tiny) console.log('log-method', 'pianoInit')
 
-    if (window.tinyCpt.isProduction && window.tinyCpt.Swg.global) {
+    if (window.tinyCpt.Swg.global) {
         window.SWG.push((subscriptions) => {
             if (window.tinyCpt.debug.swg)
                 console.log('log-subscriptions', subscriptions)
@@ -1554,6 +1572,24 @@ function pianoInit() {
                     }
                 })
             })
+
+            // subscriptions.setOnEntitlementsResponse((entitlementsPromise) => {
+            //     entitlementsPromise.then((entitlements) => {
+            //         window.swgEntitlements = entitlements
+
+            //         if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
+            //             try {
+            //                 window.tinyCpt.Piano.construtor.initTp()
+            //                 loadPianoExperiences()
+            //             } catch (error) {
+            //                 GA.setEventsError(
+            //                     'Piano nao foi carregada corretamente!',
+            //                     document.location.href
+            //                 )
+            //             }
+            //         }
+            //     })
+            // })
         })
     } else {
         GA.setEventsError('Entitlements não carregado', document.location.href)
