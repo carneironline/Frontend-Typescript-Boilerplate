@@ -26,7 +26,7 @@ export default class BannersConsumer {
 
         this.bannersFound.forEach((element) => {
             window.glbBannersConsumer.forEach((config) => {
-                if (config.selector === element.dataset.name) {
+                if (config.selector === element.dataset.bannerConsumerName) {
                     const finalConfig = {
                         ...this.bannerSettingsDefault(),
                         ...config,
