@@ -1,6 +1,6 @@
 export default class BannersConsumer {
     constructor() {
-        this.classMain = 'banner-consumer'
+        this.classMain = 'banner-consumer-cpnt'
         this.classAuxiliary = 'is-full'
         this.styleClassMain = `.${this.classMain}`
         this.bannersFound = document.querySelectorAll(this.styleClassMain)
