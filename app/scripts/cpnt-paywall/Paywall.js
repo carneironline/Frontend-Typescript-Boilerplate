@@ -29,8 +29,6 @@ export default class PaywallCpt {
     setTemplateSettings(callback) {
         const templateSettings = {
             template: 'default',
-            assetsPath: '',
-            display: null,
             productClass:
                 typeof nomeProdutoPiano !== 'undefined'
                     ? `paywall-cpt-${window.nomeProdutoPiano}`
@@ -46,8 +44,10 @@ export default class PaywallCpt {
             rightMobi: '',
             rightDesk: '',
             rightLink: '',
+            middlePreText: '',
             middleText: '',
             middleTextLink: '',
+            middleTextColor: '#000',
             hideLogin: false,
             loginText: 'Faça seu login',
             loginPreText: 'Já possui cadastro?',
@@ -65,6 +65,28 @@ export default class PaywallCpt {
         this.tagMiddleText()
 
         callback()
+    }
+
+    setDebugTemplateSettings() {
+        const obj = {}
+        obj.topMobi = 'https://via.placeholder.com/300x150'
+        obj.topDesk = 'https://via.placeholder.com/804x128'
+        obj.topLink = 'https://google.com?l1'
+        obj.leftMobi = 'https://via.placeholder.com/300x500'
+        obj.leftDesk = 'https://via.placeholder.com/402x515'
+        obj.leftLink = 'https://google.com?l2'
+        obj.rightMobi = 'https://via.placeholder.com/300x500'
+        obj.rightDesk = 'https://via.placeholder.com/402x515'
+        obj.rightLink = 'https://google.com?l3'
+        obj.middlePreText = 'Voltar para a home da '
+        obj.middleText = 'globo.com'
+        obj.middleTextLink = '//google.com'
+        obj.middleTextColor = '#0669DE'
+        obj.hideLogin = false
+        obj.loginText = 'Faça seu login'
+        obj.loginPreText = 'Já possui cadastro?'
+
+        window.glbPaywall = { ...window.glbPaywall, ...obj }
     }
 
     tagTitle() {
@@ -153,31 +175,12 @@ export default class PaywallCpt {
 
         window.glbPaywall.TagMiddleText = `
         <div class="paywall-cpt-wrap__text-center paywall-cpt-wrap__middle-text">
-            <a href="${window.glbPaywall.middleTextLink}" data-ga-action="Clique em link" data-ga-label="Link 3 - Texto no" data-ga-resetUtp="true">
+        ${window.glbPaywall.middlePreText}
+            <a href="${window.glbPaywall.middleTextLink}" style="color:${window.glbPaywall.middleTextColor}; text-decoration:underline" data-ga-action="Clique em link" data-ga-label="Link 3 - Texto no" data-ga-resetUtp="true">
                 ${window.glbPaywall.middleText}
             </a>
         </div>
         `
-    }
-
-    setDebugTemplateSettings() {
-        const obj = {}
-        obj.topMobi = 'https://via.placeholder.com/300x150'
-        obj.topDesk = 'https://via.placeholder.com/804x128'
-        obj.topLink = 'https://google.com?l1'
-        obj.leftMobi = 'https://via.placeholder.com/300x500'
-        obj.leftDesk = 'https://via.placeholder.com/402x515'
-        obj.leftLink = 'https://google.com?l2'
-        obj.rightMobi = 'https://via.placeholder.com/300x500'
-        obj.rightDesk = 'https://via.placeholder.com/402x515'
-        obj.rightLink = 'https://google.com?l3'
-        obj.middleText = 'Lorem ipsum dollor si amet'
-        obj.middleTextLink = '//google.com'
-        obj.hideLogin = false
-        obj.loginText = 'Faça seu login'
-        obj.loginPreText = 'Já possui cadastro?'
-
-        window.glbPaywall = { ...window.glbPaywall, ...obj }
     }
 
     bodyAdjust() {
