@@ -1,10 +1,10 @@
-export default class SubscribeButton {
+export default class SubscribeButtonOverride {
     constructor() {
         this.classMain = 'subscribe-button-cpnt'
         this.styleClassMain = `.${this.classMain}`
         this.buttonsFound = document.querySelectorAll(this.styleClassMain)
 
-        window.glbSubscribeButton = {
+        window.glbSubscribeButtonOverride = {
             all: {
                 text: 'Assine',
                 url: '//google.com',
@@ -27,13 +27,17 @@ export default class SubscribeButton {
     }
 
     init() {
-        if (!this.buttonsFound || !window.glbSubscribeButton) return null
+        if (!this.buttonsFound || !window.glbSubscribeButtonOverride)
+            return null
 
         this.buttonsFound.forEach((element) => {
-            if (window.glbSubscribeButton.all)
-                this.setAttributes(element, window.glbSubscribeButton.all)
+            if (window.glbSubscribeButtonOverride.all)
+                this.setAttributes(
+                    element,
+                    window.glbSubscribeButtonOverride.all
+                )
 
-            window.glbSubscribeButton.items?.forEach((config) => {
+            window.glbSubscribeButtonOverride.items?.forEach((config) => {
                 if (config.selector === element.dataset.subscribeButtonName) {
                     this.setAttributes(element, config)
                 }
@@ -44,14 +48,14 @@ export default class SubscribeButton {
     }
 
     showConsole() {
-        console.groupCollapsed('SubscribeButton Component')
+        console.groupCollapsed('SubscribeButtonOverride Component')
 
         console.group('Constructor')
         console.table(this)
         console.groupEnd()
 
-        console.group('glbSubscribeButton')
-        console.table(window.glbSubscribeButton)
+        console.group('glbSubscribeButtonOverride')
+        console.table(window.glbSubscribeButtonOverride)
         console.groupEnd()
 
         console.groupEnd()
