@@ -95,10 +95,10 @@ export default class Swg {
     }
 
     async markupTemplate() {
-        if (this.isValor) {
-            this.hasProductJSON = true
-            return
-        }
+        // if (this.isValor) {
+        //     this.hasProductJSON = true
+        //     return
+        // }
 
         const productJSON =
             (await this.removeProperties(await this.getProduct())) || null
