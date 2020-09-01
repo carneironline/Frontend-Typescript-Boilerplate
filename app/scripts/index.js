@@ -9,7 +9,7 @@ import BannersConsumer from '../components/BannersConsumer'
 import SubscribeButton from '../components/SubscribeButton'
 
 console.table(process.env)
-new SubscribeButton()
+
 const Tiny = new TinyModule()
 const GA = new GAModule()
 
@@ -473,11 +473,22 @@ window.Piano.banner = {
             `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/valor-subscribe-button/${versao}/scripts/subscribe-button.js`
         )
     },
-    consumer() {
+}
+
+window.Piano.components = {
+    BannersConsumer() {
         try {
             new BannersConsumer()
         } catch (error) {
             console.error('BannersConsumer Component - ', error)
+            window.Piano.triggerAdvertising()
+        }
+    },
+    SubscribeButton() {
+        try {
+            new SubscribeButton()
+        } catch (error) {
+            console.error('SubscribeButton Component - ', error)
             window.Piano.triggerAdvertising()
         }
     },
