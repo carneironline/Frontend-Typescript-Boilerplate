@@ -48,8 +48,8 @@ export default class PaywallCpt {
             rightLink: '',
             middleText: '',
             middleTextLink: '',
-            hideLoginArea: false,
-            loginText: 'Faça login',
+            hideLogin: false,
+            loginText: 'Faça seu login',
             loginPreText: 'Já possui cadastro?',
         }
 
@@ -83,9 +83,9 @@ export default class PaywallCpt {
     tagLogin() {
         if (
             (!window.glbPaywall.loginText && !this.getUrlLoginRegister()) ||
-            window.glbPaywall.hideLoginArea
+            window.glbPaywall.hideLogin
         ) {
-            window.glbPaywall.TagMiddleText = ''
+            window.glbPaywall.TagLogin = ''
             return
         }
 
@@ -153,7 +153,7 @@ export default class PaywallCpt {
 
         window.glbPaywall.TagMiddleText = `
         <div class="paywall-cpt-wrap__text-center paywall-cpt-wrap__middle-text">
-            <a href="${window.glbPaywall.middleTextLink}">
+            <a href="${window.glbPaywall.middleTextLink}" data-ga-action="Clique em link" data-ga-label="Link 3 - Texto no" data-ga-resetUtp="true">
                 ${window.glbPaywall.middleText}
             </a>
         </div>
@@ -173,6 +173,9 @@ export default class PaywallCpt {
         obj.rightLink = 'https://google.com?l3'
         obj.middleText = 'Lorem ipsum dollor si amet'
         obj.middleTextLink = '//google.com'
+        obj.hideLogin = false
+        obj.loginText = 'Faça seu login'
+        obj.loginPreText = 'Já possui cadastro?'
 
         window.glbPaywall = { ...window.glbPaywall, ...obj }
     }

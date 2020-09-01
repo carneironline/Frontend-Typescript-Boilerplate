@@ -41,11 +41,14 @@ export default class PaywallGAModule {
             imageTop === 'top'
                 ? element.dataset.gaLabel + this.metrics.paywall.label
                 : element.dataset.gaLabel
+        const action = element.dataset.gaAction || null
+
+        if (!action) return null
 
         const data = {
             event: 'EventoGA',
             eventoGACategoria: this.metrics.paywall.name,
-            eventoGAAcao: element.dataset.gaAction || action,
+            eventoGAAcao: action,
             eventoGARotulo: label,
             eventoGAValor: 0,
             eventoGAInteracao: false,
@@ -59,8 +62,8 @@ export default class PaywallGAModule {
     paywallType() {
         const type =
             typeof window.tinyCpt.Piano !== 'undefined' &&
-            typeof window.tinyCpt.Piano.typePaywall !== 'undefined' &&
-            window.tinyCpt.Piano.typePaywall
+                typeof window.tinyCpt.Piano.typePaywall !== 'undefined' &&
+                window.tinyCpt.Piano.typePaywall
                 ? window.tinyCpt.Piano.typePaywall.toLowerCase()
                 : 'paywall'
 
