@@ -6,7 +6,7 @@ import PaywallCpt from './cpnt-paywall/Paywall'
 import PaywallCptInline from './cpnt-paywall-inline/Paywall'
 import getProductsObject from './ProductsRequester'
 import BannersConsumer from '../components/BannersConsumer'
-import SubscribeButton from '../components/SubscribeButton'
+import SubscribeButtonOverride from '../components/SubscribeButtonOverride'
 
 console.table(process.env)
 
@@ -48,14 +48,6 @@ window.Piano.variaveis = {
             IP: '127.0.0.1',
             AMBIENTE: 'ambiente-desejado',
             DEBUG: 'debug-piano',
-        },
-        swgProducts: {
-            VALOR: 'Valor',
-            OGLOBO: 'O Globo',
-        },
-        swgProductIds: {
-            VALOR: 'valor.globo.com',
-            OGLOBO: 'oglobo.globo.com',
         },
     },
     isConteudoExclusivo() {
@@ -489,15 +481,13 @@ window.Piano.components = {
             new BannersConsumer()
         } catch (error) {
             console.error('BannersConsumer Component - ', error)
-            window.Piano.triggerAdvertising()
         }
     },
-    SubscribeButton() {
+    SubscribeButtonOverride() {
         try {
-            new SubscribeButton()
+            new SubscribeButtonOverride()
         } catch (error) {
             console.error('SubscribeButton Component - ', error)
-            window.Piano.triggerAdvertising()
         }
     },
 }
@@ -1036,19 +1026,15 @@ window.Piano.xmlHttpRequest = {
 
 window.Piano.google = {
     isAuthorized() {
-        const swgProductId = window.Piano.util.isValor()
-            ? window.Piano.variaveis.constante.swgProductIds.VALOR
-            : window.Piano.variaveis.constante.swgProductIds.OGLOBO
-        const currentProduct = window.Piano.util.isValor()
-            ? window.Piano.variaveis.constante.swgProducts.VALOR
-            : window.Piano.variaveis.constante.swgProducts.OGLOBO
-
-        if (window.swgEntitlements.getEntitlementForSource(swgProductId)) {
+        if (
+            window.swgEntitlements.getEntitlementForSource('oglobo.globo.com')
+        ) {
             window.Piano.metricas.setaVariaveis(
-                window.swgEntitlements.getEntitlementForSource(swgProductId)
-                    .subscriptionToken,
+                window.swgEntitlements.getEntitlementForSource(
+                    'oglobo.globo.com'
+                ).subscriptionToken,
                 'Conta Google',
-                currentProduct
+                'O Globo'
             )
             return true
         }
@@ -1075,17 +1061,10 @@ window.Piano.google = {
         if (window.Piano.google.isAuthorized()) return
 
         try {
-            if (window.Piano.util.isValor()) {
-                const valorBusiness = new ValorBusiness()
-                valorBusiness.verifyIfUserHasAccessOrDeferred(
-                    window.swgEntitlements
-                )
-            } else {
-                const oGloboBusiness = new OGloboBusiness()
-                oGloboBusiness.verifyIfUserHasAccessOrDeferred(
-                    window.swgEntitlements
-                )
-            }
+            const oGloboBusiness = new OGloboBusiness()
+            oGloboBusiness.verifyIfUserHasAccessOrDeferred(
+                window.swgEntitlements
+            )
         } catch (error) {
             GA.setEventsError(
                 'Erro ao executar o Aldebaran',
@@ -1480,6 +1459,7 @@ window.Piano.construtor = {
         }
 
         if (
+            window.tinyCpt.isProduction &&
             typeof swg !== 'undefined' &&
             typeof window.swgEntitlements !== 'undefined' &&
             window.swgEntitlements.enablesThis()
@@ -1547,7 +1527,7 @@ function pianoInit() {
 
     if (window.tinyCpt.debug.tiny) console.log('log-method', 'pianoInit')
 
-    if (window.tinyCpt.Swg.global) {
+    if (window.tinyCpt.isProduction && window.tinyCpt.Swg.global) {
         window.SWG.push((subscriptions) => {
             if (window.tinyCpt.debug.swg)
                 console.log('log-subscriptions', subscriptions)
@@ -1572,24 +1552,6 @@ function pianoInit() {
                     }
                 })
             })
-
-            // subscriptions.setOnEntitlementsResponse((entitlementsPromise) => {
-            //     entitlementsPromise.then((entitlements) => {
-            //         window.swgEntitlements = entitlements
-
-            //         if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
-            //             try {
-            //                 window.tinyCpt.Piano.construtor.initTp()
-            //                 loadPianoExperiences()
-            //             } catch (error) {
-            //                 GA.setEventsError(
-            //                     'Piano nao foi carregada corretamente!',
-            //                     document.location.href
-            //                 )
-            //             }
-            //         }
-            //     })
-            // })
         })
     } else {
         GA.setEventsError('Entitlements não carregado', document.location.href)
