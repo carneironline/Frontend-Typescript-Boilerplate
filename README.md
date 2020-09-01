@@ -19,9 +19,13 @@ Biblioteca utilizada para salvar componentes usados pela Piano e suas [experiên
 
 - [Adblocks](#Adblocks)
 - [Banner Bottom Fixed](#BannerBottomFixed)
+- [BannersConsumer](#BannersConsumer)
 - [Paywall](#Paywall)
+- [SubscribeButton](#SubscribeButton)
 
 ## <a name="Adblocks"></a>Adblocks
+
+Componente que adiciona a barreira de adblock caso o mesmo esteja ativado no browser do usuário.
 
 ### Propriedades do template
 
@@ -51,6 +55,8 @@ Piano.adblock.mostrarAdBlock(AdBlockSettings);
 
 ## <a name="BannerBottomFixed"></a>Banner Bottom Fixed
 
+Componente que adiciona um banner flutuando no rodapé da tela.
+
 ### Propriedades do template
 
 ```jsx
@@ -71,7 +77,106 @@ const bannerBottomSettings = {
 Piano.banner.bottomFixed(bannerBottomSettings);
 ```
 
+## <a name="BannersConsumer"></a>BannersConsumer
+
+Componente que adiciona um banner em um elemento predefinido.
+
+Propriedades do template padrão
+
+```jsx
+{
+    selector: 'banner-test', // Essa prop está relacionada ao data-name que estiver no elemento html
+    imageDesk: 'https://via.placeholder.com/804x128',
+    imageMobi: 'https://via.placeholder.com/300x150',
+    url: '#',
+    target: '_self', // _self | _blank,
+		magazineSubscribeBackground: '#000', // Essa prop só funciona se o seletor for banner-subscribe
+}
+```
+
+### Exemplo de uso
+
+No HTML é necessário ter um elemento conforme o exemplo abaixo
+
+```jsx
+<div class="banner-consumer-cpnt" data-name='banner-test'></div>
+```
+
+O componente identifica o valor informado no atributo **data-name**
+
+No runJS da Piano, insira
+
+```jsx
+window.glbBannersConsumer = [
+    {
+        selector: 'banner-test',
+        imageDesk: 'https://via.placeholder.com/804x128',
+        imageMobi: 'https://via.placeholder.com/300x150',
+        url: '//google.com',
+        target: '_blank', 
+    },
+]
+
+window.Piano.components.BannersConsumer()
+```
+
+É possível ter múltiplos banners, desde que tenha um HTML para cada seletor
+
+```jsx
+window.glbBannersConsumer = [
+    {
+        selector: 'banner-subscribe',
+        imageDesk: 'https://via.placeholder.com/582x473',
+        imageMobi: 'https://via.placeholder.com/263x446px',
+        magazineSubscribeBackground: '#000',
+        url: '//google.com',
+        target: '_blank',
+    },
+    {
+        selector: 'banner-globomais',
+        imageDesk: 'https://via.placeholder.com/680x59',
+        imageMobi: 'https://via.placeholder.com/320x59',
+        url: '//google.com',
+        target: '_blank',
+    },
+]
+
+window.Piano.components.BannersConsumer()
+```
+
 ## <a name="Paywall"></a>Paywall
+
+Componente que adiciona a barreira de venda nas matérias.
+
+### Propriedades do template padrão
+
+```jsx
+{
+    template: 'default',
+    productClass:
+        typeof nomeProdutoPiano !== 'undefined'
+            ? `paywall-cpt-${window.nomeProdutoPiano}`
+            : 'paywall-cpt-oglobo',
+    title: 'Esse conteúdo é o título.',
+    targetBlank: true,
+    topMobi: '',
+    topDesk: '',
+    topLink: '',
+    leftMobi: '',
+    leftDesk: '',
+    leftLink: '',
+    rightMobi: '',
+    rightDesk: '',
+    rightLink: '',
+    middlePreText: '',
+    middleText: '',
+    middleTextLink: '',
+    middleTextColor: '#000',
+    hideLogin: false,
+    loginText: 'Faça seu login',
+    loginPreText: 'Já possui cadastro?',
+}
+```
 
 ### Exemplo de uso na Piano
 
@@ -80,8 +185,10 @@ window.glbPaywall = {
     title: 'Quer ler essa matéria? <br> Cadastre-se agora.',
     loginPreText: 'Já é assinante?',
     loginText: 'Faça seu login',
-		middleText: 'Lorem ipsum dollor si amet',
-    middleTextLink: '//google.com',
+		middlePreText: 'Voltar para a home da ',
+		middleText: 'globo.com',
+    middleTextLink: '//globo.com',
+		middleTextColor: '#0669DE',
     topMobi: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/banner_jornalismoSWG_mob.png',
     topDesk: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/banner_jornalismoSWG_desk.png',
     topLink: encodeURIComponent(window.location.origin + window.location.pathname + '?ofertaSwg=sim'),
@@ -101,4 +208,90 @@ window.glbPaywall = {
 };
 
 Piano.paywall.show('register');
+```
+
+## <a name="SubscribeButton"></a>SubscribeButton
+
+Este componente específico para **botões assine**, procura elementos com a classe **subscribe-button-cpnt** e altera suas propriedades.
+
+### Exemplo de uso
+
+No HTML é necessário ter um elemento conforme o exemplo abaixo
+
+```jsx
+<a class="subscribe-button-cpnt" data-name='subscribe-button-one' href="//test.com" >Assine</a>
+```
+
+Para a configuração geral (**all**), o componente identifica a classe e para configuração pelo seletor (**items**), é utilizado o informado no atributo **data-name**
+
+### Exemplo de uso na Piano
+
+Propriedades aceitas
+
+```jsx
+{
+    text: 'Assine',
+    url: '//google.com',
+    target: '_blank',
+    rel: 'noopener',
+		style: {
+        backgroundColor: '#fff000',
+        textColor: '#000fff',
+    },
+}
+```
+
+**all**: Define padrões para todos os botões encontrados.
+
+```jsx
+all: {
+    text: 'Assine',
+    url: '//google.com',
+    target: '_blank',
+}
+```
+
+**items**: Define propriedades para determinados botões através do **selector**. Substitui os valores definidos pela propriedade **all**:
+
+```jsx
+items: [
+    {
+        selector: 'subscribe-button-one',
+        text: 'Teste 1',
+    },
+		{
+        selector: 'subscribe-button-two',
+        text: 'Teste 2',
+        style: {
+            backgroundColor: '#fff000',
+            textColor: '#000fff',
+        },
+    },
+],
+
+```
+
+## Exemplo de uso na Piano
+
+```jsx
+window.glbSubscribeButton = {
+    all: {
+        text: 'Assine',
+        url: '//google.com',
+        target: '_blank',
+        rel: 'noopener',
+    },
+    items: [
+        {
+            selector: 'subscribe-button-one',
+            text: 'Teste',
+            style: {
+                backgroundColor: '#fff000',
+                textColor: '#000fff',
+            },
+        },
+    ],
+}
+
+window.Piano.components.SubscribeButton()
 ```

@@ -1,6 +1,6 @@
 export default class BannersConsumer {
     constructor() {
-        this.classMain = 'banner-consumer'
+        this.classMain = 'banner-consumer-cpnt'
         this.classAuxiliary = 'is-full'
         this.styleClassMain = `.${this.classMain}`
         this.bannersFound = document.querySelectorAll(this.styleClassMain)
@@ -78,9 +78,7 @@ export default class BannersConsumer {
         return `
             <div class="${this.classMain} ${this.classAuxiliary}"
         >
-            <a href="${config.url || '#'}" target="${
-            config.target || ''
-            }" rel='noreferrer'>
+            <a href="${config.url || '#'}" target="${config.target || ''}">
                 <picture>
                     <source srcset="${
             config.imageDesk
