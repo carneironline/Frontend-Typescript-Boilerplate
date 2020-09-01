@@ -4,25 +4,6 @@ export default class SubscribeButton {
         this.styleClassMain = `.${this.classMain}`
         this.buttonsFound = document.querySelectorAll(this.styleClassMain)
 
-        window.glbSubscribeButton = {
-            all: {
-                text: 'Assine',
-                url: '//google.com',
-                target: '_blank',
-                rel: 'noopener',
-            },
-            items: [
-                {
-                    selector: 'subscribe-button-one',
-                    text: 'Teste',
-                    style: {
-                        backgroundColor: '#fff000',
-                        textColor: '#000fff',
-                    },
-                },
-            ],
-        }
-
         this.init()
     }
 
