@@ -16,12 +16,18 @@ export default class Swg {
         this.hasProductJSON = false
         this.productJSON = null
         this.elHead = document.head
-        this.isValor =
-            window.location.host.includes('valor.qa.globoi.com') ||
-            window.location.host.includes('valor.globo.com') ||
-            false
 
         this.setGlobalSWG()
+    }
+
+    get valorPageAllowed() {
+        if (
+            window.location.pathname ===
+            '/publicacoes/suplementos/noticia/2020/06/29/hora-de-reforcar-o-caixa.ghtml'
+        )
+            return true
+
+        return false
     }
 
     get isDefined() {
@@ -40,11 +46,9 @@ export default class Swg {
         const urlParams = new URLSearchParams(
             window.location.search.substring(1)
         )
-        const utmsProps =
-            typeof window.glbPaywall.swg !== 'undefined' &&
-            typeof window.glbPaywall.swg.utms !== 'undefined'
-                ? window.glbPaywall.swg.utms
-                : null
+        const utmsProps = window.glbPaywall?.swg?.utms
+            ? window.glbPaywall.swg.utms
+            : null
 
         utmsProps.forEach((item) => {
             const name = item.name.toLowerCase()
@@ -95,7 +99,7 @@ export default class Swg {
     }
 
     async markupTemplate() {
-        if (this.isValor) {
+        if (!this.valorPageAllowed) {
             this.hasProductJSON = true
             return
         }
@@ -162,14 +166,14 @@ export default class Swg {
     }
 
     async init() {
-        if(window.tinyCpt.isProduction && this.isValor) return
-        if (!this.localProductPiano) return
+        if (window.tinyCpt.isProduction && !this.valorPageAllowed) return null
+        if (!this.localProductPiano) return null
         await this.setMarkup()
 
-        if (!this.hasProductJSON) return 
+        if (!this.hasProductJSON) return null
 
         await this.setSwgScript()
-        await this.setAldebaranScript() 
+        await this.setAldebaranScript()
         await this.testSWG()
     }
 }
