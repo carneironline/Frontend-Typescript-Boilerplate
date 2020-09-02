@@ -67,7 +67,7 @@ export default class BannersConsumer {
 
     magazineSubscribeParentBackground(element, finalConfig) {
         if (
-            element.dataset.name === 'banner-subscribe' &&
+            element.dataset.bannerConsumerName === 'banner-subscribe' &&
             finalConfig.magazineSubscribeBackground
         )
             element.parentElement.style.background =

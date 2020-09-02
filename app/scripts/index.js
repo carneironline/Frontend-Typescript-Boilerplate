@@ -6,7 +6,7 @@ import PaywallCpt from './cpnt-paywall/Paywall'
 import PaywallCptInline from './cpnt-paywall-inline/Paywall'
 import getProductsObject from './ProductsRequester'
 import BannersConsumer from '../components/BannersConsumer'
-import SubscribeButton from '../components/SubscribeButton'
+import SubscribeButtonOverride from '../components/SubscribeButtonOverride'
 
 console.table(process.env)
 
@@ -484,11 +484,11 @@ window.Piano.components = {
             window.Piano.triggerAdvertising()
         }
     },
-    SubscribeButton() {
+    SubscribeButtonOverride() {
         try {
-            new SubscribeButton()
+            new SubscribeButtonOverride()
         } catch (error) {
-            console.error('SubscribeButton Component - ', error)
+            console.error('SubscribeButtonOverride Component - ', error)
             window.Piano.triggerAdvertising()
         }
     },
