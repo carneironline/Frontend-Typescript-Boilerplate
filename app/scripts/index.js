@@ -481,7 +481,6 @@ window.Piano.components = {
             new BannersConsumer()
         } catch (error) {
             console.error('BannersConsumer Component - ', error)
-            window.Piano.triggerAdvertising()
         }
     },
     SubscribeButtonOverride() {
@@ -489,7 +488,6 @@ window.Piano.components = {
             new SubscribeButtonOverride()
         } catch (error) {
             console.error('SubscribeButtonOverride Component - ', error)
-            window.Piano.triggerAdvertising()
         }
     },
 }
