@@ -99,10 +99,17 @@ Propriedades do template padrão
 No HTML é necessário ter um elemento conforme o exemplo abaixo
 
 ```jsx
-<div class="banner-consumer-cpnt" data-name='banner-test'></div>
+<div class="banner-consumer-cpnt" data-banner-consumer-name='banner-test'></div>
 ```
 
 O componente identifica o valor informado no atributo **data-name**
+
+### Targets existentes nas revistas
+
+```jsx
+data-banner-consumer-name="banner-subscribe"
+data-banner-consumer-name="banner-globomais"
+```
 
 No runJS da Piano, insira
 
@@ -212,17 +219,25 @@ Piano.paywall.show('register');
 
 ## <a name="SubscribeButton"></a>SubscribeButton
 
-Este componente específico para **botões assine**, procura elementos com a classe **subscribe-button-cpnt** e altera suas propriedades.
+Este componente é específico para **botões assine já existentes na página**. Ele procura elementos com a classe **subscribe-button-cpnt** e altera suas propriedades.
 
 ### Exemplo de uso
 
 No HTML é necessário ter um elemento conforme o exemplo abaixo
 
 ```jsx
-<a class="subscribe-button-cpnt" data-name='subscribe-button-one' href="//test.com" >Assine</a>
+<a class="subscribe-button-cpnt" data-subscribe-button-name='subscribe-button-one' href="//test.com" >Assine</a>
 ```
 
 Para a configuração geral (**all**), o componente identifica a classe e para configuração pelo seletor (**items**), é utilizado o informado no atributo **data-name**
+
+### Targets existentes nas revistas
+
+```jsx
+data-subscribe-button-name="subscribe-button-one"
+data-subscribe-button-name="subscribe-button-two"
+data-subscribe-button-name="subscribe-button-three"
+```
 
 ### Exemplo de uso na Piano
 
@@ -274,7 +289,7 @@ items: [
 ## Exemplo de uso na Piano
 
 ```jsx
-window.glbSubscribeButton = {
+window.glbSubscribeButtonOverride = {
     all: {
         text: 'Assine',
         url: '//google.com',
@@ -293,5 +308,5 @@ window.glbSubscribeButton = {
     ],
 }
 
-window.Piano.components.SubscribeButton()
+window.Piano.components.SubscribeButtonOverride()
 ```
