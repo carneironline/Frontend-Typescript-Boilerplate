@@ -5,6 +5,8 @@ import SwgModule from './Swg'
 import PaywallCpt from './cpnt-paywall/Paywall'
 import PaywallCptInline from './cpnt-paywall-inline/Paywall'
 import getProductsObject from './ProductsRequester'
+import BannersConsumer from '../components/BannersConsumer'
+import SubscribeButtonOverride from '../components/SubscribeButtonOverride'
 
 console.table(process.env)
 
@@ -127,7 +129,7 @@ window.Piano.variaveis = {
             GA.setEventsError(
                 'ServiceID não definido.',
                 `${
-                    document.location.href
+                document.location.href
                 } nomeProduto: ${window.Piano.variaveis.getNomeProduto()}`
             )
 
@@ -146,6 +148,7 @@ window.Piano.variaveis = {
                 'Ao obter código do produto',
                 `${nomeProduto} - ${document.location.href}`
             )
+
             window.Piano.autenticacao.defineUsuarioPiano(
                 true,
                 'erro',
@@ -480,6 +483,23 @@ window.Piano.banner = {
     },
 }
 
+window.Piano.components = {
+    BannersConsumer() {
+        try {
+            new BannersConsumer()
+        } catch (error) {
+            console.error('BannersConsumer Component - ', error)
+        }
+    },
+    SubscribeButtonOverride() {
+        try {
+            new SubscribeButtonOverride()
+        } catch (error) {
+            console.error('SubscribeButtonOverride Component - ', error)
+        }
+    },
+}
+
 window.Piano.register = {
     mostrarBarreira(versao) {
         window.Piano.util.adicionarCss(
@@ -527,8 +547,8 @@ window.Piano.paywall = {
         try {
             new PaywallCpt()
             window.hasPaywall = true
-        } catch (e) {
-            console.error('Paywall - Error on load')
+        } catch (error) {
+            console.error('PaywallCpt - ', error)
             window.Piano.triggerAdvertising()
         }
     },
@@ -546,6 +566,14 @@ window.Piano.paywall = {
         )
         window.Piano.xmlHttpRequest.geraScriptNaPagina(
             `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/nao-barreira-gcom/scripts/index.js`
+        )
+    },
+    barreiraBarbeira() {
+        window.Piano.util.adicionarCss(
+            `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/barreira-barbeira/styles/styles.css'>`
+        )
+        window.Piano.xmlHttpRequest.geraScriptNaPagina(
+            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/barreira-barbeira/scripts/index.js`
         )
     },
 }
@@ -740,7 +768,7 @@ window.Piano.adblock = {
             d.setTime(d.getTime() + 60 * 60 * 24 * 2 * 1000)
             document.cookie = `__adblocker=${
                 adblocker ? 'true' : 'false'
-            }; expires=${d.toUTCString()}; path=/`
+                }; expires=${d.toUTCString()}; path=/`
         }
         const script = document.createElement('script')
         script.setAttribute('async', true)
@@ -837,6 +865,15 @@ window.Piano.xmlHttpRequest = {
                     'situacaoPagamento',
                     situacaoPagamento,
                 ])
+                const _jsonLeitor = { situacaoPagamento }
+                const _jsonLeitorEncoded = btoa(
+                    encodeURI(JSON.stringify(_jsonLeitor))
+                )
+                Helpers.setCookie(
+                    window.Piano.variaveis.constante.cookie.UTP,
+                    _jsonLeitorEncoded,
+                    1
+                )
             } else if (
                 xhr.status !== 0 &&
                 window.Piano.variaveis.statusHttpObterAssinaturaInadimplente.indexOf(
@@ -855,8 +892,9 @@ window.Piano.xmlHttpRequest = {
             }
         }
     },
-    fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid) {
+    async fazRequisicaoBarramentoApiAutorizacaoAcesso(glbid) {
         const codigoProduto = window.Piano.variaveis.getCodigoProduto()
+
         if (codigoProduto === 'error') {
             return
         }
@@ -868,48 +906,76 @@ window.Piano.xmlHttpRequest = {
         })
 
         const xhr = new XMLHttpRequest()
-        xhr.open(
-            'POST',
+
+        // xhr.open(
+        //     'POST',
+        //     window.Piano.configuracao.jsonConfiguracaoTinyPass[
+        //         window.Piano.variaveis.getAmbientePiano()
+        //     ].urlVerificaLeitor,
+        //     false
+        // )
+        // xhr.setRequestHeader('Accept', 'application/json')
+        // xhr.setRequestHeader('Content-Type', 'application/json')
+        // xhr.send(data)
+
+        const url =
             window.Piano.configuracao.jsonConfiguracaoTinyPass[
                 window.Piano.variaveis.getAmbientePiano()
-            ].urlVerificaLeitor,
-            false
-        )
-        xhr.setRequestHeader('Accept', 'application/json')
-        xhr.setRequestHeader('Content-Type', 'application/json')
-        xhr.send(data)
+            ].urlVerificaLeitor
 
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                const resposta = xhr.responseText
-                const respJson = JSON.parse(resposta)
+        await fetch(url, {
+            method: 'post',
+            body: data,
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((respJson) => {
                 let respostaDeTermoDeUso = ''
                 let respostaDeMotivo = ''
                 let hrefAssinaturaInadimplente = ''
+                let _jsonLeitorAux = {}
+
                 if (typeof respJson.motivo !== 'undefined') {
                     respostaDeMotivo = respJson.motivo.toLowerCase()
                 }
+
                 if (typeof respJson.temTermoDeUso !== 'undefined') {
                     respostaDeTermoDeUso = respJson.temTermoDeUso
                 }
+
                 if (typeof respJson.link !== 'undefined') {
                     hrefAssinaturaInadimplente = window.Piano.inadimplente.getLinkAssinatura(
                         respJson.link
                     )
                 }
+
                 const isAutorizado = window.Piano.autenticacao.isAutorizado(
                     respostaDeTermoDeUso,
                     respostaDeMotivo,
                     respJson.autorizado,
                     hrefAssinaturaInadimplente
                 )
+
                 window.Piano.autenticacao.defineUsuarioPiano(
                     respJson.autorizado,
                     respostaDeMotivo,
                     isAutorizado,
                     respostaDeTermoDeUso
                 )
+
+                const cookieUTP = Helpers.getCookie(
+                    window.Piano.variaveis.constante.cookie.UTP
+                )
+
+                if (cookieUTP !== '') {
+                    _jsonLeitorAux = JSON.parse(decodeURI(atob(cookieUTP)))
+                }
+
                 let _jsonLeitor = {
+                    ..._jsonLeitorAux,
                     autorizado: respJson.autorizado,
                     motivo: respostaDeMotivo,
                     logado: isAutorizado,
@@ -919,7 +985,9 @@ window.Piano.xmlHttpRequest = {
                     codProduto: codigoProduto,
                     uuid: respJson.usuarioId,
                 }
+
                 _jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)))
+
                 Helpers.setCookie(
                     window.Piano.variaveis.constante.cookie.UTP,
                     _jsonLeitor,
@@ -947,19 +1015,20 @@ window.Piano.xmlHttpRequest = {
                         'O Globo'
                     )
                 }
-            } else {
+            })
+            .catch(() => {
                 GA.setEventsError(
                     'API de autorizacao de acesso',
                     `${xhr.status} - ${glbid}`
                 )
+
                 window.Piano.autenticacao.defineUsuarioPiano(
                     true,
                     'erro',
                     true,
                     ' '
                 )
-            }
-        }
+            })
     },
 }
 
@@ -1001,9 +1070,13 @@ window.Piano.google = {
     },
 
     showSaveSubscription(response) {
-        if (!(window.swgEntitlements && window.swgEntitlements.enablesThis()) &&
-            response.motivo === 'AUTORIZADO' &&
-            !Helpers.getCookie(window.Piano.variaveis.constante.SAVE_SUBSCRIPTION)) {
+        if (
+            !(window.swgEntitlements && window.swgEntitlements.enablesThis()) &&
+            response.motivo === 'autorizado' &&
+            !Helpers.getCookie(
+                window.Piano.variaveis.constante.SAVE_SUBSCRIPTION
+            )
+        ) {
             return true
         }
         return false
@@ -1030,22 +1103,32 @@ window.Piano.autenticacao = {
         }
         return glbid !== ''
     },
-    verificaUsuarioLogadoNoBarramento(glbid, utp) {
+    async verificaUsuarioLogadoNoBarramento(glbid, utp) {
         if (window.Piano.autenticacao.isLogadoCadun(glbid, utp)) {
             if (utp) {
                 const _leitor = JSON.parse(decodeURI(atob(utp)))
+
                 if (
                     glbid === _leitor.glbid &&
                     (typeof _leitor.produto === 'undefined' ||
                         _leitor.produto ===
-                            window.Piano.variaveis.getNomeProduto())
+                        window.Piano.variaveis.getNomeProduto())
                 ) {
+                    if (_leitor.situacaoPagamento) {
+                        window.tp.push([
+                            'setCustomVariable',
+                            'situacaoPagamento',
+                            _leitor.situacaoPagamento,
+                        ])
+                    }
+
                     window.Piano.autenticacao.defineUsuarioPiano(
                         _leitor.autorizado,
                         _leitor.motivo,
                         _leitor.logado,
                         _leitor.temTermoDeUso
                     )
+
                     if (_leitor.autorizado) {
                         window.Piano.metricas.setaVariaveis(
                             _leitor.uuid,
@@ -1053,15 +1136,18 @@ window.Piano.autenticacao = {
                             'O Globo'
                         )
                     }
+
                     return
                 }
+
                 Helpers.setCookie(
                     window.Piano.variaveis.constante.cookie.UTP,
                     '',
                     -1
                 )
             }
-            window.Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(
+
+            await window.Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(
                 glbid
             )
         }
@@ -1262,15 +1348,16 @@ window.Piano.util = {
             } else {
                 analyticalPostIsLoading()
 
-                window.Piano.construtor.initTp()
-                loadPianoExperiences()
+                window.Piano.construtor.initTp(() => {
+                    loadPianoExperiences()
 
-                checkExperiencesHasChange().then(function (changed) {
-                    if (changed) {
-                        analyticalBlockedForPiano()
-                    } else {
-                        analyticalUnblockedForPiano()
-                    }
+                    checkExperiencesHasChange().then(function (changed) {
+                        if (changed) {
+                            analyticalBlockedForPiano()
+                        } else {
+                            analyticalUnblockedForPiano()
+                        }
+                    })
                 })
             }
         }
@@ -1323,7 +1410,7 @@ window.Piano.configuracao = {
 }
 
 window.Piano.construtor = {
-    initTp() {
+    async initTp(callback = null) {
         window.tp = window.tp || []
         window.tp.push(['setTags', [window.Piano.variaveis.getTipoConteudoPiano()],])
         if (window.Piano.util.isRevista() || window.Piano.util.isValor()) {
@@ -1347,9 +1434,15 @@ window.Piano.construtor = {
 
         if (typeof swg !== 'undefined' && typeof window.swgEntitlements !== 'undefined' && window.swgEntitlements.enablesThis()) {
             window.Piano.google.isSpecificGoogleUser(window.swgEntitlements)
-            window.Piano.autenticacao.defineUsuarioPiano(true, 'AUTORIZADO', true, '')
+
+            window.Piano.autenticacao.defineUsuarioPiano(
+                true,
+                'autorizado',
+                true,
+                ''
+            )
         } else {
-            window.Piano.autenticacao.verificaUsuarioLogadoNoBarramento(
+            await window.Piano.autenticacao.verificaUsuarioLogadoNoBarramento(
                 Helpers.getCookie(window.Piano.variaveis.constante.cookie.GCOM),
                 Helpers.getCookie(window.Piano.variaveis.constante.cookie.UTP)
             )
@@ -1366,11 +1459,14 @@ window.Piano.construtor = {
             'meterActive',
             window.Piano.util.callbackMeter,
         ])
+
         window.tp.push([
             'addHandler',
             'meterExpired',
             window.Piano.util.callbackMeterExpired,
         ])
+
+        if (callback) callback()
     },
 }
 
@@ -1411,8 +1507,9 @@ function pianoInit() {
                 window.swgEntitlements = entitlements
                     if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
                         try {
-                            window.tinyCpt.Piano.construtor.initTp()
-                            loadPianoExperiences()
+                            window.tinyCpt.Piano.construtor.initTp(() =>
+                                loadPianoExperiences()
+                            )
                         } catch (error) {
                             GA.setEventsError(
                                 'Piano nao foi carregada corretamente!',
@@ -1443,8 +1540,7 @@ function pianoInit() {
     } else {
         GA.setEventsError('Entitlements não carregado', document.location.href)
         if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
-            window.tinyCpt.Piano.construtor.initTp()
-            loadPianoExperiences()
+            window.tinyCpt.Piano.construtor.initTp(() => loadPianoExperiences())
         }
     }
 }

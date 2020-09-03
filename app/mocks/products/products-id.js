@@ -13,7 +13,7 @@ export default {
     },
     'blogAnalitico': {
         'id': '3981',
-        'cod_prod': 'OG04'
+        'cod_prod': 'OG03'
     },
     'acervo': {
         'id': '3981',
@@ -28,27 +28,27 @@ export default {
         'cod_prod': 'monet'
     },
     'auto-esporte': {
-        'id': '6697',
+        'id': '6613',
         'cod_prod': 'auto-esporte'
     },
     'epoca': {
-        'id': '6697',
+        'id': '6612',
         'cod_prod': 'epoca'
     },
     'vogue': {
-        'id': '6697',
+        'id': '6614',
         'cod_prod': 'vogue'
     },
     'glamour': {
-        'id': '6697',
+        'id': '6616',
         'cod_prod': 'glamour'
     },
     'casa-vogue': {
-        'id': '6697',
+        'id': '6610',
         'cod_prod': 'casa-vogue'
     },
     'marie-claire': {
-        'id': '6697',
+        'id': '6609',
         'cod_prod': 'marie-claire'
     },
     'globo-rural': {
@@ -72,7 +72,7 @@ export default {
         'cod_prod': 'epoca-negocios'
     },
     'casa-e-jardim': {
-        'id': '6697',
+        'id': '6619',
         'cod_prod': 'casa-jardim'
     },
     'quem-acontece': {

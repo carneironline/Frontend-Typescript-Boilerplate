@@ -16,12 +16,18 @@ export default class Swg {
         this.hasProductJSON = false
         this.productJSON = null
         this.elHead = document.head
-        this.isValor =
-            window.location.host.includes('valor.qa.globoi.com') ||
-            window.location.host.includes('valor.globo.com') ||
-            false
 
         this.setGlobalSWG()
+    }
+
+    get valorPageAllowed() {
+        if (
+            window.location.pathname ===
+            '/publicacoes/suplementos/noticia/2020/06/29/hora-de-reforcar-o-caixa.ghtml'
+        )
+            return true
+
+        return false
     }
 
     get isDefined() {
@@ -40,11 +46,9 @@ export default class Swg {
         const urlParams = new URLSearchParams(
             window.location.search.substring(1)
         )
-        const utmsProps =
-            typeof window.glbPaywall.swg !== 'undefined' &&
-            typeof window.glbPaywall.swg.utms !== 'undefined'
-                ? window.glbPaywall.swg.utms
-                : null
+        const utmsProps = window.glbPaywall?.swg?.utms
+            ? window.glbPaywall.swg.utms
+            : null
 
         utmsProps.forEach((item) => {
             const name = item.name.toLowerCase()
@@ -95,10 +99,10 @@ export default class Swg {
     }
 
     async markupTemplate() {
-        // if (this.isValor) {
-        //     this.hasProductJSON = true
-        //     return
-        // }
+        if (!this.valorPageAllowed) {
+            this.hasProductJSON = true
+            return
+        }
 
         const productJSON =
             (await this.removeProperties(await this.getProduct())) || null
@@ -134,7 +138,9 @@ export default class Swg {
 
     setAldebaranScript() {
         const element = document.createElement('script')
-        const url = process.env.ALDEBARAN_URL
+        const url = this.valorPageAllowed
+            ? 'https://s3.glbimg.com/v1/AUTH_addc5e8f316f48ea9181af37160b22b4/aldebaran/js/bundle.js'
+            : process.env.ALDEBARAN_URL
 
         element.src = url
         this.elHead.insertAdjacentElement('beforeend', element)
@@ -162,14 +168,14 @@ export default class Swg {
     }
 
     async init() {
-        if(window.tinyCpt.isProduction && this.isValor) return
-        if (!this.localProductPiano) return
+        if (window.tinyCpt.isProduction && !this.valorPageAllowed) return null
+        if (!this.localProductPiano) return null
         await this.setMarkup()
 
-        if (!this.hasProductJSON) return 
+        if (!this.hasProductJSON) return null
 
         await this.setSwgScript()
-        await this.setAldebaranScript() 
+        await this.setAldebaranScript()
         await this.testSWG()
     }
 }
