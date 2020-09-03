@@ -62,14 +62,6 @@
             }
         };
 
-        const AdBlockSettings = {
-            description: 'Tenha acesso ilimitado a todo conteúdo da Glamour, assine agora e aproveite todos os nossos benefícios.',
-            urlSignup: 'https://assinaturaglobo.globo.com/glamour/vitrine/assine-glamour?campanha=sim&site_par=1&origem_par=1&formato_par=gl_adblock&versao_par=adblock&utm_source=siteglamour&utm_medium=adblock&utm_campaign=eg_gl_adblock',
-            urlSignin: 'https://login.globo.com/login/6616?url=' + window.document.location
-        };
-
-        Piano.adblock.mostrarAdBlock(AdBlockSettings);
-
     </script>
 </head>
 
@@ -86,6 +78,22 @@
         <div class="post-footer">
             <div class="btn-read-more"></div>
         </div>
+    </div>
+
+    <div id="bannersConsumertests">
+        <div>
+            <div class="banner-consumer-cpnt" data-banner-consumer-name='banner-subscribe'></div>
+        </div>
+        <div class="banner-consumer-cpnt" data-banner-consumer-name='banner-whatever'></div>
+    </div>
+
+    <div>
+        <a class="subscribe-button subscribe-button-cpnt" data-subscribe-button-name='subscribe-button-one'
+            href="https://assinaturaglobo.globo.com/crescer/vitrine/crescer/?campanha=sim&amp;utm_source=sitecrescer&amp;utm_medium=botao&amp;utm_campaign=eg_cf_botao_topo_190-3meses"
+            title="Assine" rel="noopener" target="_blank">Assine</a>
+        <a href="https://assinaturaglobo.globo.com/crescer/vitrine/crescer/?campanha=sim&amp;utm_source=sitecrescer&amp;utm_medium=botao&amp;utm_campaign=eg_cf_botao_rodape_190-3meses"
+            title="Assine a revista" class="subscribe-magazine subscribe-button-cpnt"
+            data-subscribe-button-name='subscribe-button-two' rel="noopener" target="_blank">Assine a revista</a>
     </div>
 
     <script>

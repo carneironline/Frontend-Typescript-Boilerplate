@@ -5,6 +5,8 @@ import SwgModule from './Swg'
 import PaywallCpt from './cpnt-paywall/Paywall'
 import PaywallCptInline from './cpnt-paywall-inline/Paywall'
 import getProductsObject from './ProductsRequester'
+import BannersConsumer from '../components/BannersConsumer'
+import SubscribeButtonOverride from '../components/SubscribeButtonOverride'
 
 console.table(process.env)
 
@@ -473,6 +475,23 @@ window.Piano.banner = {
     },
 }
 
+window.Piano.components = {
+    BannersConsumer() {
+        try {
+            new BannersConsumer()
+        } catch (error) {
+            console.error('BannersConsumer Component - ', error)
+        }
+    },
+    SubscribeButtonOverride() {
+        try {
+            new SubscribeButtonOverride()
+        } catch (error) {
+            console.error('SubscribeButtonOverride Component - ', error)
+        }
+    },
+}
+
 window.Piano.register = {
     mostrarBarreira(versao) {
         window.Piano.util.adicionarCss(
@@ -520,8 +539,8 @@ window.Piano.paywall = {
         try {
             new PaywallCpt()
             window.hasPaywall = true
-        } catch (e) {
-            console.error('Paywall - Error on load')
+        } catch (error) {
+            console.error('PaywallCpt - ', error)
             window.Piano.triggerAdvertising()
         }
     },
