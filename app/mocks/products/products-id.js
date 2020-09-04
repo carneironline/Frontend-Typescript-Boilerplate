@@ -86,5 +86,9 @@ export default {
     'valor': {
         'id': '6668',
         'cod_prod': 'valordigital'
+    },
+    'oglobo-clube': {
+        'id': '5415',
+        'cod_prod': 'oglobo-clube'
     }
 }
