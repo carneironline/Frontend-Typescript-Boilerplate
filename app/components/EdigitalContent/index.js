@@ -118,7 +118,7 @@ export default class EdigitalContent {
         this.setElementData(`${classTarget}-text`, config.text)
         this.setElementData(`${classTarget}-oldValue`, oldValue)
         this.setElementData(`${classTarget}-valuePart1`, valuePart1)
-        this.setElementData(`${classTarget}-valuePart1`, `,${valuePart2}`)
+        this.setElementData(`${classTarget}-valuePart2`, `,${valuePart2}`)
         this.setElementData(`${classTarget}-period`, period)
         this.setElementData(`${classTarget}-info`, info)
         this.setElementData(`${classTarget}-btn`, config.btnText, { href: config.btnUrl, target: '_blank' })
