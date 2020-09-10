@@ -1,8 +1,10 @@
 export default class EdigitalContent {
     constructor() {
         this.classMain = 'edigital-content-cpnt'
-        this.colLeft = document.querySelector(`.${this.classMain} .col-left`)
-        this.colRight = document.querySelector(`.${this.classMain} .col-right`)
+        this.classColLeft = '.col-left'
+        this.classColRight = '.col-right'
+        this.colLeft = document.querySelector(`.${this.classMain} ${this.classColLeft}`)
+        this.colRight = document.querySelector(`.${this.classMain} ${this.colRight}`)
 
         this.init()
     }
@@ -13,9 +15,8 @@ export default class EdigitalContent {
 
         const settings = window.glbEdigitalContent ? { ...this.settings(), ...window.glbEdigitalContent } : this.settings()
 
-        this.addTemplate(this.colLeft, settings.colLeft, this.templateColLeft)
-        this.addTemplate(this.colRight, settings.colRight, this.templateColRight)
-
+        this.templateColLeft(settings.colLeft)
+        this.templateColRight(settings.colRight)
 
         this.showConsole()
     }
@@ -62,41 +63,40 @@ export default class EdigitalContent {
         console.groupEnd()
     }
 
-    addTemplate(element, config, template) {
-        element.insertAdjacentHTML('beforeend', template(config))
+    setElementData(selector, html = null, attr = {}) {
+        const element = document.querySelector(selector)
+
+        if (!element) return null
+
+        if (html)
+            element.insertAdjacentHTML('beforeend', html)
+
+        if (Object.keys(attr).length) {
+            Object.entries(attr).forEach(([key, value]) => {
+                element.setAttribute(key, value)
+            });
+        }
     }
 
     templateColLeft(config) {
+        const classTarget = this.classColLeft
 
-        return `
-        <div class="capa-hoje">
-            <img src="${config.image}" alt="${config.title}">
-        </div>
-        <div class="links-apps">
-            <h1><span>${config.product} </span>${config.title}</h1>
-            <p>${config.text}</p>
-            <a target="_blank" class="apple sm-hidden"
-                href="${config.urlApple}">Baixar na App Store</a>
-            <a target="_blank" class="android sm-hidden"
-                href="${config.urlGoogle}">Disponível no
-                Google Play</a>
-        </div>
-        `
+        this.setElementData(`${classTarget}-image`, null, { src: config.image, alt: config.title })
+        this.setElementData(`${classTarget}-product`, config.product)
+        this.setElementData(`${classTarget}-title`, config.title)
+        this.setElementData(`${classTarget}-text`, config.text)
+        this.setElementData(`${classTarget}-urlApple`, null, { href: config.urlApple, target: '_blank', })
+        this.setElementData(`${classTarget}-urlGoogle`, null, { href: config.urlGoogle, target: '_blank' })
     }
 
     templateColRight(config) {
-        const topText = config?.topText ? config?.topText : ''
-        const image = config?.image ? config?.image : ''
-        const title = config?.title ? config?.title : ''
-        const text = config?.text ? config?.text : ''
+        const classTarget = this.classColRight
         const oldValue = config?.price?.oldValue ? toCurrency(config.price.oldValue, true) : ''
         const value = config?.price?.value ? toCurrency(config.price.value).toString().split(',') : ''
         const valuePart1 = value[0] ? value[0] : ''
         const valuePart2 = value[1] ? value[1] : ''
         const period = config?.price?.period ? config?.price?.period : ''
         const info = config?.price?.info ? config?.price?.info : ''
-        const btnText = config?.btnText ? config?.btnText : ''
-        const btnUrl = config?.btnUrl ? config?.btnUrl : ''
 
         function toCurrency(valueData = null, showCurrency = false) {
             const currencyFormat = {
@@ -112,35 +112,15 @@ export default class EdigitalContent {
                 return valueData.toLocaleString('pt-BR', currencyFormat)
         }
 
-        return `
-        <div class="promocao-wrap">
-            <div class="promocao-text">${topText}</div>
-            <div class="promocao-content">
-                <img src="${image}">
-                <div class="promocao-text-mob">${topText}</div>
-                <h2>${title}</h2>
-                <p>${text}</p>
-                <div class="mais-informacoes globo-somente">
-                    <div class="preco">
-                        <del>${oldValue}</del>
-                        <span class="preco-final">
-                            <span class="valor-rs">${valuePart1 ? `R$ ${valuePart1}` : ''}</span>
-                            <span class="primeiro-valor">${valuePart1}</span>
-                            <span class="holder-valor-tempo">
-                                <span class="segundo-valor">,${valuePart2}</span>
-                                <span class="tempo">${period}</span>
-                            </span>
-                            <small>${info}</small>
-                        </span>
-                    </div>
-                    <div class="link-assine">
-                        <a id="assine-agora"
-                            href="${btnUrl}"
-                            target="_blank">${btnText}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        `
+        this.setElementData(`${classTarget}-topText`, config.topText)
+        this.setElementData(`${classTarget}-image`, null, { src: config.image, alt: config.title })
+        this.setElementData(`${classTarget}-title`, config.title)
+        this.setElementData(`${classTarget}-text`, config.text)
+        this.setElementData(`${classTarget}-oldValue`, oldValue)
+        this.setElementData(`${classTarget}-valuePart1`, valuePart1)
+        this.setElementData(`${classTarget}-valuePart1`, `,${valuePart2}`)
+        this.setElementData(`${classTarget}-period`, period)
+        this.setElementData(`${classTarget}-info`, info)
+        this.setElementData(`${classTarget}-btn`, config.btnText, { href: config.btnUrl, target: '_blank' })
     }
 }

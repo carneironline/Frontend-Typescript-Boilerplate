@@ -9,6 +9,7 @@ import BannersConsumer from '../components/BannersConsumer'
 import SubscribeButtonOverride from '../components/SubscribeButtonOverride'
 import EdigitalContent from '../components/EdigitalContent'
 
+new EdigitalContent()
 console.table(process.env)
 
 const Tiny = new TinyModule()
