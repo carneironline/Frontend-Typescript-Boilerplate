@@ -19,9 +19,10 @@ Biblioteca utilizada para salvar componentes usados pela Piano e suas [experiên
 
 - [Adblocks](#Adblocks)
 - [Banner Bottom Fixed](#BannerBottomFixed)
-- [BannersConsumer](#BannersConsumer)
+- [Banners Consumer](#BannersConsumer)
+- [Edigital Content](#EdigitalContent)
 - [Paywall](#Paywall)
-- [SubscribeButton](#SubscribeButton)
+- [Subscribe Button](#SubscribeButton)
 
 ## <a name="Adblocks"></a>Adblocks
 
@@ -149,6 +150,40 @@ window.glbBannersConsumer = [
 ]
 
 window.Piano.components.BannersConsumer()
+```
+
+## <a name="EdigitalContent"></a>Edigital Content
+
+Componente que adiciona um conteúdo html no Edigital.
+
+### Exemplo de uso na Piano
+
+```jsx
+{
+    colLeft: {
+        image: 'https://jornaldigital.oglobo.globo.com/globo/images/capa.jpg',
+        product: 'O Globo',
+        title: 'Jornal Digital',
+        text: 'Acesso exclusivo para assinantes do Globo. Para ler, faça sua assinatura.',
+        urlApple: 'https://itunes.apple.com/br/app/o-globo/id390832733?mt=8',
+        urlGoogle: 'https://play.google.com/store/apps/details?id=br.com.infoglobo.oglobo',
+    },
+    colRight: {
+        topText: 'AINDA NÃO É ASSINANTE?',
+        image: 'https://jornaldigital.oglobo.globo.com/globo/images/oglobo-digital.png',
+        title: 'GLOBO DIGITAL',
+        text: 'Réplica do jornal em versão digital, acesso ilimitado ao site e aplicativo do Globo, Acervo e descontos em centenas de parceiros com o Clube O Globo.',
+        price: {
+            oldValue: 19.90,
+            value: 2.90,
+            period: '/MÊS',
+            info: 'no 1° mês'
+        },
+        btnText: 'Assine Já',
+        btnUrl: 'https://assinaturaglobo.globo.com/o-globo/vitrine/globo?interno_origem=siteoglobo&amp;interno_midia=display&amp;interno_campanha=og_jornaldigital'
+
+    }
+}
 ```
 
 ## <a name="Paywall"></a>Paywall
