@@ -7,6 +7,7 @@ import PaywallCptInline from './cpnt-paywall-inline/Paywall'
 import getProductsObject from './ProductsRequester'
 import BannersConsumer from '../components/BannersConsumer'
 import SubscribeButtonOverride from '../components/SubscribeButtonOverride'
+import EdigitalContent from '../components/EdigitalContent'
 
 console.table(process.env)
 
@@ -490,6 +491,13 @@ window.Piano.components = {
             console.error('SubscribeButtonOverride Component - ', error)
         }
     },
+    EdigitalContent() {
+        try {
+            new EdigitalContent()
+        } catch (error) {
+            console.error('EdigitalContent Component - ', error)
+        }
+    }
 }
 
 window.Piano.register = {
