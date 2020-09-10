@@ -8,7 +8,6 @@ export default class EdigitalContent {
     }
 
     init() {
-        console.log(this.colLeft, this.colRight)
         if ((!this.colLeft && !this.colRight) || !window.glbEdigitalContent)
             return null
 
