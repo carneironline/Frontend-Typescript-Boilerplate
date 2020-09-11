@@ -675,6 +675,8 @@ window.Piano.checkPaywall = function (PianoResultEvents = null) {
                     item.eventParams.snippet !== 'undefined' &&
                     (item.eventParams.snippet.includes('paywall.show') ||
                         item.eventParams.snippet.includes('paywall.analytic') ||
+                        item.eventParams.snippet.includes('paywall.naoBarreiraGcom') ||
+                        item.eventParams.snippet.includes('paywall.barreiraBarbeira') ||
                         item.eventParams.snippet.includes('mostrarBarreira'))
                 ) {
                     window.hasPaywall = true
@@ -690,11 +692,13 @@ window.Piano.checkPaywall = function (PianoResultEvents = null) {
 
 window.Piano.triggerAdvertising = function () {
     window.hasPaywall = false
+    console.log('event clearForAds')
     const event = new CustomEvent('clearForAds')
     document.dispatchEvent(event)
 }
 
 window.Piano.triggerPaywallOpened = function () {
+    console.log('event blockForAds')
     const event = new CustomEvent('blockForAds')
     document.dispatchEvent(event)
 }
