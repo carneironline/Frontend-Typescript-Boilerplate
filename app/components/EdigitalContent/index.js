@@ -1,4 +1,4 @@
-export default class EdigitalContent {
+class EdigitalContent {
     constructor() {
         this.classMain = 'edigital-content-cpnt'
         this.classColLeft = '.col-left'
@@ -17,8 +17,28 @@ export default class EdigitalContent {
 
         this.templateColLeft(settings.colLeft)
         this.templateColRight(settings.colRight)
+        this.removeLoaders()
 
         this.showConsole()
+    }
+
+    removeLoaders() {
+        const classLoader = 'loader'
+        const classShow = 'u-show'
+        const elementsLoader = document.querySelectorAll(`.${classLoader}`)
+        const elementsShow = document.querySelectorAll(`.${classShow}`)
+
+        if (elementsShow) {
+            elementsShow.forEach(element => {
+                element.classList.add('is-show')
+            })
+        }
+
+        if (elementsLoader) {
+            elementsLoader.forEach(element => {
+                element.classList.add('is-hide')
+            })
+        }
     }
 
     settings() {
@@ -64,18 +84,22 @@ export default class EdigitalContent {
     }
 
     setElementData(selector, html = null, attr = {}) {
-        const element = document.querySelector(selector)
+        const elements = document.querySelectorAll(selector)
 
-        if (!element) return null
+        if (!elements) return null
 
-        if (html)
-            element.insertAdjacentHTML('beforeend', html)
+        elements.forEach(element => {
 
-        if (Object.keys(attr).length) {
-            Object.entries(attr).forEach(([key, value]) => {
-                element.setAttribute(key, value)
-            });
-        }
+            if (html)
+                element.innerHTML = html
+
+            if (Object.keys(attr).length) {
+                Object.entries(attr).forEach(([key, value]) => {
+                    element.setAttribute(key, value)
+                });
+            }
+
+        })
     }
 
     templateColLeft(config) {
@@ -97,6 +121,8 @@ export default class EdigitalContent {
         const valuePart2 = value[1] ? value[1] : ''
         const period = config?.price?.period ? config?.price?.period : ''
         const info = config?.price?.info ? config?.price?.info : ''
+        const btnStyle = config?.btnStyle ? config?.btnStyle : ''
+
 
         function toCurrency(valueData = null, showCurrency = false) {
             const currencyFormat = {
@@ -121,6 +147,8 @@ export default class EdigitalContent {
         this.setElementData(`${classTarget}-valuePart2`, `,${valuePart2}`)
         this.setElementData(`${classTarget}-period`, period)
         this.setElementData(`${classTarget}-info`, info)
-        this.setElementData(`${classTarget}-btn`, config.btnText, { href: config.btnUrl, target: '_blank' })
+        this.setElementData(`${classTarget}-btn`, config.btnText, { href: config.btnUrl, target: '_blank', style: btnStyle })
     }
 }
+
+export default EdigitalContent
