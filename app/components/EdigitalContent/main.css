@@ -440,14 +440,34 @@ header.cabecalho {
 	height: 48px
 }
 
+header.cabecalho .wrapper {
+	height: inherit;
+	display: flex;
+	align-items: center;
+}
+
+@media screen and (max-width:1023px) {
+	header.cabecalho .wrapper {
+		justify-content: center;
+	}
+}
+
 header.cabecalho a {
 	color: transparent;
-	display: block;
-	background: url(https://revistagalileu.revistadigital.globo.com/images/galileu-logo-crapped.png) 50% 50% no-repeat;
+	display: inline-block;
 	text-align: center;
-	margin: 5px;
-	height: 38px;
-	background-size: contain;
+}
+
+header.cabecalho .logo {
+	display: inline-block;
+	padding-left: 21px;
+	height: 20px;
+}
+
+@media screen and (max-width:1023px) {
+	header.cabecalho .logo {
+		padding-left: unset;
+	}
 }
 
 section.digital .informacao {
@@ -984,13 +1004,17 @@ section.digital .promocao.ativa .promocao-content {
 	}
 }
 
-/* COLORS */
+/* TEMPLATE PRODUCT CHANGES */
 .page-oglobo .cabecalho {
 	background: #004F9A;
 }
 
 .page-valor .cabecalho {
 	background: #006767;
+}
+
+.page-galileu .cabecalho .logo {
+	height: 30px;
 }
 
 @media screen and (max-width:1023px) {
