@@ -825,7 +825,7 @@ section.digital .promocao.ativa .promocao-content {
 
 @media screen and (min-width:1024px) {
 	body {
-		background: url(https://revistagalileu.revistadigital.globo.com/images/tumbnew-gray.png) 50% 0 no-repeat fixed;
+		background: url(https://revistagalileu.revistadigital.globo.com/images/bg.jpg) 50% 0 no-repeat fixed;
 		background-size: cover;
 		overflow-x: hidden;
 		position: relative
