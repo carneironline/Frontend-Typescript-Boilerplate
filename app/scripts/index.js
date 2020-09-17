@@ -1050,22 +1050,27 @@ window.Piano.google = {
         return false
     },
 
-    isSpecificGoogleUser() {
-        if (window.Piano.google.isAuthorized()) return
+    async isSpecificGoogleUser() {
+        if (window.Piano.google.isAuthorized()) return true;
 
+        console.log('ISAUTHORIZED FALSE');
         try {
             if (window.Piano.util.isValor()) {
-                const valorBusiness = new ValorBusiness()
-                valorBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements)
+                const valorBusiness = new ValorBusiness();
+                const hasAccessOrDeferred = await valorBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements);
+                console.log('VERIFICOU SE USUÁRIO TEM ACESSO OU DEFERRED NO VALOR');
+                return hasAccessOrDeferred;
             } else {
                 const oGloboBusiness = new OGloboBusiness()
                 oGloboBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements)
+                console.log('VERIFICOU SE USUÁRIO TEM ACESSO OU DEFERRED NO GLOBO');
             }
         } catch (error) {
             GA.setEventsError(
                 'Erro ao executar o Aldebaran',
                 `Error: ${error} - Entitlements: ${window.swgEntitlements.entitlements[0].subscriptionToken}`
             )
+            return false;
         }
     },
 
@@ -1433,14 +1438,25 @@ window.Piano.construtor = {
         }
 
         if (typeof swg !== 'undefined' && typeof window.swgEntitlements !== 'undefined' && window.swgEntitlements.enablesThis()) {
-            window.Piano.google.isSpecificGoogleUser(window.swgEntitlements)
+            const isGoogleUserOrLinkAccount = await window.Piano.google.isSpecificGoogleUser(window.swgEntitlements);
+            if (isGoogleUserOrLinkAccount) {
+                console.log('AUTENTICADO');
+                window.Piano.autenticacao.defineUsuarioPiano(
+                    true,
+                    'autorizado',
+                    true,
+                    ''
+                )
+            } else {
+                console.log('GOOGLE ACCOUNT LINK');
+                window.Piano.autenticacao.defineUsuarioPiano(
+                   false,
+                   'google_account_link',
+                   true,
+                   ''
+                )
+            }
 
-            window.Piano.autenticacao.defineUsuarioPiano(
-                true,
-                'autorizado',
-                true,
-                ''
-            )
         } else {
             await window.Piano.autenticacao.verificaUsuarioLogadoNoBarramento(
                 Helpers.getCookie(window.Piano.variaveis.constante.cookie.GCOM),
@@ -1503,13 +1519,14 @@ function pianoInit() {
 
             window.swg = subscriptions
 
-            subscriptions.getEntitlements().then(function(entitlements) {
-                window.swgEntitlements = entitlements
+            subscriptions.setOnEntitlementsResponse((entitlementsPromise) => {
+                entitlementsPromise.then((entitlements) => {
+                    window.swgEntitlements = entitlements
+
                     if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
                         try {
-                            window.tinyCpt.Piano.construtor.initTp(() =>
-                                loadPianoExperiences()
-                            )
+                            window.tinyCpt.Piano.construtor.initTp()
+                            loadPianoExperiences()
                         } catch (error) {
                             GA.setEventsError(
                                 'Piano nao foi carregada corretamente!',
@@ -1517,25 +1534,8 @@ function pianoInit() {
                             )
                         }
                     }
-              });
-
-            // subscriptions.setOnEntitlementsResponse((entitlementsPromise) => {
-            //     entitlementsPromise.then((entitlements) => {
-            //         window.swgEntitlements = entitlements
-
-            //         if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
-            //             try {
-            //                 window.tinyCpt.Piano.construtor.initTp()
-            //                 loadPianoExperiences()
-            //             } catch (error) {
-            //                 GA.setEventsError(
-            //                     'Piano nao foi carregada corretamente!',
-            //                     document.location.href
-            //                 )
-            //             }
-            //         }
-            //     })
-            // })
+                })
+            })
         })
     } else {
         GA.setEventsError('Entitlements não carregado', document.location.href)
