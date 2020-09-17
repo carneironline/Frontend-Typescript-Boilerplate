@@ -114,15 +114,15 @@ class EdigitalContent {
     }
 
     templateColRight(config) {
+
         const classTarget = this.classColRight
         const priceText = config?.price?.text ? config?.price?.text : ''
-        const value = config?.price?.value ? toCurrency(config.price.value).toString().split(',') : ''
-        const valuePart1 = value[0] ? value[0] : ''
-        const valuePart2 = value[1] ? value[1] : ''
+        const value = toCurrency(config.price.value).toString().split(',')
+        const valuePart1 = value[0]
+        const valuePart2 = value[1]
         const period = config?.price?.period ? config?.price?.period : ''
         const info = config?.price?.info ? config?.price?.info : ''
         const btnStyle = config?.btnStyle ? config?.btnStyle : ''
-
 
         function toCurrency(valueData = null, showCurrency = false) {
             const currencyFormat = {
@@ -134,7 +134,7 @@ class EdigitalContent {
                 currencyFormat.currency = 'BRL'
             }
 
-            if (valueData)
+            if (typeof valueData === 'number')
                 return valueData.toLocaleString('pt-BR', currencyFormat)
         }
 
@@ -151,4 +151,4 @@ class EdigitalContent {
     }
 }
 
-export default EdigitalContent
+// export default EdigitalContent
