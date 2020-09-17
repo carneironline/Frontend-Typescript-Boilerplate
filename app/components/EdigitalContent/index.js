@@ -151,4 +151,4 @@ class EdigitalContent {
     }
 }
 
-// export default EdigitalContent
+export default EdigitalContent
