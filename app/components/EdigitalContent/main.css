@@ -635,7 +635,6 @@ section.digital .promocao .promocao-wrap .promocao-text {
 section.digital .promocao .promocao-wrap .promocao-text-mob {
 	display: block;
 	color: #fff;
-	text-align: left;
 	line-height: 1;
 	font-size: 23px;
 	margin: 10px 0px 10px 0px;
@@ -661,6 +660,12 @@ section.digital .promocao .promocao-wrap .promocao-content h2 {
 	text-transform: uppercase;
 }
 
+@media screen and (max-width:1023px) {
+	section.digital .promocao .promocao-wrap .promocao-content h2 {
+		text-align: unset;
+	}
+}
+
 section.digital .promocao .promocao-wrap .promocao-content p {
 	font-size: 25px;
 	line-height: 1.17;
@@ -684,6 +689,7 @@ section.digital .promocao .promocao-wrap .promocao-content p strong {
 
 section.digital .promocao .promocao-wrap .promocao-content .mais-informacoes {
 	display: flex;
+	flex-direction: column;
 }
 
 @media screen and (max-width:1023px) {
@@ -712,6 +718,14 @@ section.digital .promocao .promocao-wrap .promocao-content .mais-informacoes .pr
 	"firstValue holderValue"
 	"firstValue holderValue"
 	"info info";
+	justify-content: start;
+	letter-spacing: 4px;
+}
+
+@media screen and (max-width:1023px) {
+	section.digital .promocao .promocao-wrap .promocao-content .mais-informacoes .preco .preco-final {
+		justify-content: center;
+	}
 }
 
 section.digital .promocao .promocao-wrap .promocao-content .mais-informacoes .preco .preco-final .valor-rs {
@@ -777,7 +791,6 @@ section.digital .promocao .promocao-wrap .promocao-content .mais-informacoes.glo
 
 section.digital .promocao .promocao-wrap .promocao-content .link-assine {
 	display: block;
-	margin-left: 8px;
 	width: 100%;
 }
 
@@ -1026,3 +1039,10 @@ section.digital .promocao.ativa .promocao-content {
 		background: #006767;
 	}
 }
+
+@media screen and (max-width:1023px) {
+	.col-right {
+		text-align: center;
+	}
+}
+
