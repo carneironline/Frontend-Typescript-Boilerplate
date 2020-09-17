@@ -1343,6 +1343,21 @@ window.Piano.util = {
             'galileu',
             'epoca-negocios',
             'pegn',
+            'edigital-epoca',
+            'edigital-auto-esporte',
+            'edigital-vogue',
+            'edigital-glamour',
+            'edigital-casa-vogue',
+            'edigital-marie-claire',
+            'edigital-casa-e-jardim',
+            'edigital-quem-acontece',
+            'edigital-globo-rural',
+            'edigital-gq',
+            'edigital-monet',
+            'edigital-crescer',
+            'edigital-galileu',
+            'edigital-epoca-negocios',
+            'edigital-pegn',
         ]
         if (revistas.indexOf(window.Piano.variaveis.getNomeProduto()) > -1)
             return true
