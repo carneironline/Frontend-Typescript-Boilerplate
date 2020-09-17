@@ -57,7 +57,7 @@ class EdigitalContent {
                 title: 'GLOBO DIGITAL',
                 text: 'Réplica do jornal em versão digital, acesso ilimitado ao site e aplicativo do Globo, Acervo e descontos em centenas de parceiros com o Clube O Globo.',
                 price: {
-                    oldValue: 19.90,
+                    text: 'A partir de',
                     value: 2.90,
                     period: '/MÊS',
                     info: 'no 1° mês'
@@ -115,7 +115,7 @@ class EdigitalContent {
 
     templateColRight(config) {
         const classTarget = this.classColRight
-        const oldValue = config?.price?.oldValue ? toCurrency(config.price.oldValue, true) : ''
+        const priceText = config?.price?.text ? config?.price?.text : ''
         const value = config?.price?.value ? toCurrency(config.price.value).toString().split(',') : ''
         const valuePart1 = value[0] ? value[0] : ''
         const valuePart2 = value[1] ? value[1] : ''
@@ -142,7 +142,7 @@ class EdigitalContent {
         this.setElementData(`${classTarget}-image`, null, { src: config.image, alt: config.title })
         this.setElementData(`${classTarget}-title`, config.title)
         this.setElementData(`${classTarget}-text`, config.text)
-        this.setElementData(`${classTarget}-oldValue`, oldValue)
+        this.setElementData(`${classTarget} .preco .text`, priceText)
         this.setElementData(`${classTarget}-valuePart1`, valuePart1)
         this.setElementData(`${classTarget}-valuePart2`, `,${valuePart2}`)
         this.setElementData(`${classTarget}-period`, period)
@@ -151,4 +151,4 @@ class EdigitalContent {
     }
 }
 
-export default EdigitalContent
+// export default EdigitalContent
