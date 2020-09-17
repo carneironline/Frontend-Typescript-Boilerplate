@@ -7,6 +7,7 @@ import PaywallCptInline from './cpnt-paywall-inline/Paywall'
 import getProductsObject from './ProductsRequester'
 import BannersConsumer from '../components/BannersConsumer'
 import SubscribeButtonOverride from '../components/SubscribeButtonOverride'
+import EdigitalContent from '../components/EdigitalContent'
 
 console.table(process.env)
 
@@ -120,8 +121,7 @@ window.Piano.variaveis = {
         if (!id) {
             GA.setEventsError(
                 'ServiceID não definido.',
-                `${
-                document.location.href
+                `${document.location.href
                 } nomeProduto: ${window.Piano.variaveis.getNomeProduto()}`
             )
 
@@ -487,9 +487,16 @@ window.Piano.components = {
         try {
             new SubscribeButtonOverride()
         } catch (error) {
-            console.error('SubscribeButton Component - ', error)
+            console.error('SubscribeButtonOverride Component - ', error)
         }
     },
+    EdigitalContent() {
+        try {
+            new EdigitalContent()
+        } catch (error) {
+            console.error('EdigitalContent Component - ', error)
+        }
+    }
 }
 
 window.Piano.register = {
@@ -675,6 +682,8 @@ window.Piano.checkPaywall = function (PianoResultEvents = null) {
                     item.eventParams.snippet !== 'undefined' &&
                     (item.eventParams.snippet.includes('paywall.show') ||
                         item.eventParams.snippet.includes('paywall.analytic') ||
+                        item.eventParams.snippet.includes('paywall.naoBarreiraGcom') ||
+                        item.eventParams.snippet.includes('paywall.barreiraBarbeira') ||
                         item.eventParams.snippet.includes('mostrarBarreira'))
                 ) {
                     window.hasPaywall = true
@@ -690,11 +699,13 @@ window.Piano.checkPaywall = function (PianoResultEvents = null) {
 
 window.Piano.triggerAdvertising = function () {
     window.hasPaywall = false
+    console.log('event clearForAds')
     const event = new CustomEvent('clearForAds')
     document.dispatchEvent(event)
 }
 
 window.Piano.triggerPaywallOpened = function () {
+    console.log('event blockForAds')
     const event = new CustomEvent('blockForAds')
     document.dispatchEvent(event)
 }
@@ -758,8 +769,7 @@ window.Piano.adblock = {
         const setNptTechAdblockerCookie = function (adblocker) {
             const d = new Date()
             d.setTime(d.getTime() + 60 * 60 * 24 * 2 * 1000)
-            document.cookie = `__adblocker=${
-                adblocker ? 'true' : 'false'
+            document.cookie = `__adblocker=${adblocker ? 'true' : 'false'
                 }; expires=${d.toUTCString()}; path=/`
         }
         const script = document.createElement('script')
@@ -1330,6 +1340,21 @@ window.Piano.util = {
             'galileu',
             'epoca-negocios',
             'pegn',
+            'edigital-epoca',
+            'edigital-auto-esporte',
+            'edigital-vogue',
+            'edigital-glamour',
+            'edigital-casa-vogue',
+            'edigital-marie-claire',
+            'edigital-casa-e-jardim',
+            'edigital-quem-acontece',
+            'edigital-globo-rural',
+            'edigital-gq',
+            'edigital-monet',
+            'edigital-crescer',
+            'edigital-galileu',
+            'edigital-epoca-negocios',
+            'edigital-pegn',
         ]
         if (revistas.indexOf(window.Piano.variaveis.getNomeProduto()) > -1)
             return true

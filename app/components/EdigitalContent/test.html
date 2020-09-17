@@ -1,0 +1,153 @@
+<!doctype html>
+<html class="no-js" lang="pt" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Jornal Digital | O Globo</title>
+    <meta name="description"
+        content="Edição digital do Jornal O Globo para computador, tablet e celular. Notícias do Rio, do Brasil e do Mundo. Disponível para assinantes." />
+    <meta name="keywords"
+        content="jornal digital, edição digital, Ancelmo Gois, Kogut, Noblat, Miriam Leitão, Merval Pereira, Lauro Jardim, Rio Show" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://css.og.infg.com.br/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="120x120"
+        href="http://css.og.infg.com.br/1481821393/img/touch-icon-iphone.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="http://css.og.infg.com.br/1481821393/img/touch-icon-iphone.png" />
+    <link rel="apple-touch-icon" href="http://css.og.infg.com.br/1481821393/img/touch-icon-iphone.png" />
+    <link rel="apple-touch-icon" sizes="114x114"
+        href="http://css.og.infg.com.br/1481821393/img/touch-icon-iphone4.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="http://css.og.infg.com.br/1481821393/img/touch-icon-ipad.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="http://css.og.infg.com.br/1481821393/img/touch-icon-ipad.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="http://css.og.infg.com.br/1481821393/img/touch-icon-ipad.png" />
+    <meta property="og:image" content="http://css.og.infg.com.br/1481821393/img/touch-icon-ipad.png" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,900,italic" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="../../static/globo/favicon.ico" th:href="@{globo/favicon.ico}" />
+    <link rel="stylesheet" type="text/css" href="../../static/globo/styles/styles.css"
+        th:href="@{globo/styles/styles.css}" />
+    <script src="https://www.google-analytics.com/analytics.js" async="async"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var tipoConteudoPiano = 'edigital';
+        var ambienteUtilizadoPiano = /*[[${ambienteUtilizadoPiano}]]*/ 'prd';
+        var conteudoExclusivo = false;
+        var nomeProdutoPiano = /*[[${nomeProdutoPiano}]]*/
+		/*]]>*/
+    </script>
+    <script type="text/javascript" src="https://static.infoglobo.com.br/paywall/js/tiny.js" th:src="${urlTiny}">
+    </script>
+</head>
+
+<body th:class="'page-' + ${nomeProdutoEstatico}">
+    <!-- GTM -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CB7ZCJ" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <script type="text/javascript">
+            // <![CDATA[
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+                var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = (l != 'dataLayer' ? '&l=' + l : '');
+                j.async = true;
+                j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-5CB7ZCJ');
+	// ]]>
+    </script>
+    <header class="cabecalho">
+        <nav class="wrapper">
+            <a class="logo" href="https://oglobo.globo.com/"></a>
+        </nav>
+    </header>
+
+    <section class="digital">
+        <div class="wrapper edigital-content-cpnt">
+            <div class="informacao col-left">
+                <div class="loader"><img src="globo/img/loader.svg" /></div>
+
+                <div class="jornal-digital u-show">
+                    <div class="capa-hoje">
+                        <img alt="" class="col-left-image" />
+                    </div>
+                    <div class="texto-assinatura">
+                        <h1 class="col-left-title"></h1>
+                        <p class="col-left-text"></p>
+                    </div>
+                </div>
+                <div class="links-apps">
+                    <a target="_blank" class="apple sm-hidden col-left-urlApple" href="#">Baixar na App
+                        Store</a>
+                    <a target="_blank" class="android sm-hidden col-left-urlGoogle" href="#">Disponível
+                        no Google Play</a>
+                </div>
+                <div class="caixa-login xl-hidden ">
+                    <div th:unless="${erroAcesso}" class="overflow-caixa xl-hidden ">
+                        <iframe id="iframeCadun" width="320" height="730"
+                            src="redirect.html?newUrl=http://www.google.com.br" th:src="${urlLoginCadun}"></iframe>
+                    </div>
+                    <div th:if="${erroAcesso}" class="caixa-erro xl-hidden">
+                        <div class="login-ativo">
+                            <img src="../../static/globo/images/user-icon.svg"
+                                th:src="@{/{produto}/images/user-icon.svg(produto=${nomeProdutoEstatico})}" />Olá,
+                            <strong th:text="${assinante}">Bruno</strong> <span>|</span> <a th:href="${urlLogoutCadun}"
+                                id="lnkLogout">Sair</a>
+                        </div>
+                        <h2 th:text="${erroAcesso.titulo}">Identificamos que seu CPF possui mais de um e-mail
+                            cadastrado.</h2>
+                        <p th:text="${erroAcesso.corpo}">Por favor, tente o acesso através de outro e-mail. Caso o
+                            problema persista, entre em contato através do Portal do Assinante ou ligue para 4002 5300
+                            (capitais e grandes cidades) ou 0800 021 8433 (demais locais).</p>
+                    </div>
+                </div>
+                <div class="caixa-stores xl-hidden">
+                    <h3>Revista Digital no celular e tablet:</h3>
+                    <a target="_blank" class="apple col-left-urlApple" href="#">Baixar na App Store</a>
+                    <a target="_blank" class="android col-left-urlGoogle" href="#">Disponível no Google
+                        Play</a>
+                </div>
+                <div class="contato">
+                    <h3>Dúvidas?</h3>
+                    <h4><a href="http://www.assineglobo.com.br/sac" target="_blank">Portal do Assinante ›</a></h4>
+                    <p><a href="tel:40039393">4003-9393</a>
+                        <a href="tel:08000218433" class="hide">0800 021 8433</a></p>
+                </div>
+            </div>
+            <div class="promocao inativa col-right">
+                <div class="loader"><img src="../../static/globo/img/loader.svg"
+                        th:src="@{/{produto}/img/loader.svg(produto=${nomeProdutoEstatico})}" /></div>
+                <div class="promocao-wrap u-show">
+                    <div class="promocao-content ">
+                        <div class="promocao-text col-right-topText"></div>
+                        <img class="col-right-image" />
+                        <div class="promocao-text-mob col-right-topText"></div>
+                        <h2 class="col-right-title"></h2>
+                        <p class="col-right-text"></p>
+                        <div class="mais-informacoes globo-somente">
+                            <div class="preco">
+                                <div class="text">A partir de</div>
+                                <span class="preco-final">
+                                    <span class="primeiro-valor col-right-valuePart1"></span>
+                                    <span class="holder-valor-tempo">
+                                        <span class="segundo-valor col-right-valuePart2"></span>
+                                        <span class="tempo col-right-period"></span>
+                                    </span>
+                                    <small class="col-right-info"></small>
+                                </span>
+                            </div>
+                            <div class="link-assine">
+                                <a id="assine-agora" class="col-right-btn" href="#" target="_blank">Assine Já</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript" src="../../static/globo/scripts/vendor/jquery.min.js"
+        th:src="@{globo/scripts/vendor/jquery.min.js}"></script>
+    <script type="text/javascript" src="../../static/globo/scripts/app.js" th:src="@{globo/scripts/app.js}"></script>
+</body>
+
+</html>

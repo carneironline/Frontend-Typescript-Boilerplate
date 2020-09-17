@@ -19,9 +19,10 @@ Biblioteca utilizada para salvar componentes usados pela Piano e suas [experiên
 
 - [Adblocks](#Adblocks)
 - [Banner Bottom Fixed](#BannerBottomFixed)
-- [BannersConsumer](#BannersConsumer)
+- [Banners Consumer](#BannersConsumer)
+- [Edigital Content](#EdigitalContent)
 - [Paywall](#Paywall)
-- [SubscribeButton](#SubscribeButton)
+- [Subscribe Button](#SubscribeButton)
 
 ## <a name="Adblocks"></a>Adblocks
 
@@ -99,10 +100,17 @@ Propriedades do template padrão
 No HTML é necessário ter um elemento conforme o exemplo abaixo
 
 ```jsx
-<div class="banner-consumer-cpnt" data-name='banner-test'></div>
+<div class="banner-consumer-cpnt" data-banner-consumer-name='banner-test'></div>
 ```
 
 O componente identifica o valor informado no atributo **data-name**
+
+### Targets existentes nas revistas
+
+```jsx
+data-banner-consumer-name="banner-subscribe"
+data-banner-consumer-name="banner-globomais"
+```
 
 No runJS da Piano, insira
 
@@ -142,6 +150,40 @@ window.glbBannersConsumer = [
 ]
 
 window.Piano.components.BannersConsumer()
+```
+
+## <a name="EdigitalContent"></a>Edigital Content
+
+Componente que adiciona um conteúdo html no Edigital.
+
+### Exemplo de uso na Piano
+
+```jsx
+{
+    colLeft: {
+        image: 'https://jornaldigital.oglobo.globo.com/globo/images/capa.jpg',
+        product: 'O Globo',
+        title: 'Jornal Digital',
+        text: 'Acesso exclusivo para assinantes do Globo. Para ler, faça sua assinatura.',
+        urlApple: 'https://itunes.apple.com/br/app/o-globo/id390832733?mt=8',
+        urlGoogle: 'https://play.google.com/store/apps/details?id=br.com.infoglobo.oglobo',
+    },
+    colRight: {
+        topText: 'AINDA NÃO É ASSINANTE?',
+        image: 'https://jornaldigital.oglobo.globo.com/globo/images/oglobo-digital.png',
+        title: 'GLOBO DIGITAL',
+        text: 'Réplica do jornal em versão digital, acesso ilimitado ao site e aplicativo do Globo, Acervo e descontos em centenas de parceiros com o Clube O Globo.',
+        price: {
+            oldValue: 19.90,
+            value: 2.90,
+            period: '/MÊS',
+            info: 'no 1° mês'
+        },
+        btnText: 'Assine Já',
+        btnUrl: 'https://assinaturaglobo.globo.com/o-globo/vitrine/globo?interno_origem=siteoglobo&amp;interno_midia=display&amp;interno_campanha=og_jornaldigital'
+
+    }
+}
 ```
 
 ## <a name="Paywall"></a>Paywall
@@ -212,17 +254,25 @@ Piano.paywall.show('register');
 
 ## <a name="SubscribeButton"></a>SubscribeButton
 
-Este componente específico para **botões assine**, procura elementos com a classe **subscribe-button-cpnt** e altera suas propriedades.
+Este componente é específico para **botões assine já existentes na página**. Ele procura elementos com a classe **subscribe-button-cpnt** e altera suas propriedades.
 
 ### Exemplo de uso
 
 No HTML é necessário ter um elemento conforme o exemplo abaixo
 
 ```jsx
-<a class="subscribe-button-cpnt" data-name='subscribe-button-one' href="//test.com" >Assine</a>
+<a class="subscribe-button-cpnt" data-subscribe-button-name='subscribe-button-one' href="//test.com" >Assine</a>
 ```
 
 Para a configuração geral (**all**), o componente identifica a classe e para configuração pelo seletor (**items**), é utilizado o informado no atributo **data-name**
+
+### Targets existentes nas revistas
+
+```jsx
+data-subscribe-button-name="subscribe-button-one"
+data-subscribe-button-name="subscribe-button-two"
+data-subscribe-button-name="subscribe-button-three"
+```
 
 ### Exemplo de uso na Piano
 
@@ -274,7 +324,7 @@ items: [
 ## Exemplo de uso na Piano
 
 ```jsx
-window.glbSubscribeButton = {
+window.glbSubscribeButtonOverride = {
     all: {
         text: 'Assine',
         url: '//google.com',
@@ -293,5 +343,5 @@ window.glbSubscribeButton = {
     ],
 }
 
-window.Piano.components.SubscribeButton()
+window.Piano.components.SubscribeButtonOverride()
 ```

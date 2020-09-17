@@ -138,7 +138,9 @@ export default class Swg {
 
     setAldebaranScript() {
         const element = document.createElement('script')
-        const url = process.env.ALDEBARAN_URL
+        const url = this.valorPageAllowed
+            ? 'https://s3.glbimg.com/v1/AUTH_addc5e8f316f48ea9181af37160b22b4/aldebaran/js/bundle.js'
+            : process.env.ALDEBARAN_URL
 
         element.src = url
         this.elHead.insertAdjacentElement('beforeend', element)
