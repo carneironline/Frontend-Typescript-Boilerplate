@@ -36,6 +36,7 @@ window.Piano.variaveis = {
             SAVE_SUBSCRIPTION: 'saveSubscriptionCookie',
             CREATED_GLOBOID: 'createdGloboId',
             GLOBOID_MESSAGE: 'globoIdMessage',
+            DEFERRED_FLOW_NOT_ACCEPTED_COOKIE: 'deferredFlowNotAccepted'
         },
         metricas: {
             EVENTO_SEM_ACAO: 'sem acao',
@@ -50,6 +51,14 @@ window.Piano.variaveis = {
             AMBIENTE: 'ambiente-desejado',
             DEBUG: 'debug-piano',
         },
+        swgProducts: {
+            VALOR : 'Valor',
+            OGLOBO: 'O Globo'
+        },
+        swgProductIds: {
+            VALOR: 'valor.globo.com',
+            OGLOBO: 'oglobo.globo.com'
+        }
     },
     isConteudoExclusivo() {
         return !!window.conteudoExclusivo
@@ -909,17 +918,6 @@ window.Piano.xmlHttpRequest = {
 
         const xhr = new XMLHttpRequest()
 
-        // xhr.open(
-        //     'POST',
-        //     window.Piano.configuracao.jsonConfiguracaoTinyPass[
-        //         window.Piano.variaveis.getAmbientePiano()
-        //     ].urlVerificaLeitor,
-        //     false
-        // )
-        // xhr.setRequestHeader('Accept', 'application/json')
-        // xhr.setRequestHeader('Content-Type', 'application/json')
-        // xhr.send(data)
-
         const url =
             window.Piano.configuracao.jsonConfiguracaoTinyPass[
                 window.Piano.variaveis.getAmbientePiano()
@@ -1000,7 +998,7 @@ window.Piano.xmlHttpRequest = {
                     if (window.Piano.google.showSaveSubscription(respJson)) {
                         try {
                             const swgService = new SwgService()
-                            swgService.saveGloboSubscription(glbid)
+                            swgService.saveSubscription(glbid)
                         } catch (error) {
                             GA.setEventsError(
                                 'Erro ao chamar a função showSaveSubscription do Aldebaran.',
@@ -1036,31 +1034,16 @@ window.Piano.xmlHttpRequest = {
 
 window.Piano.google = {
     isAuthorized() {
-        if (
-            window.swgEntitlements.getEntitlementForSource('oglobo.globo.com')
-        ) {
-            window.Piano.metricas.setaVariaveis(
-                window.swgEntitlements.getEntitlementForSource(
-                    'oglobo.globo.com'
-                ).subscriptionToken,
-                'Conta Google',
-                'O Globo'
-            )
+        const swgProductId = window.Piano.util.isValor() ? window.Piano.variaveis.constante.swgProductIds.VALOR : window.Piano.variaveis.constante.swgProductIds.OGLOBO
+        const currentProduct = window.Piano.util.isValor() ? window.Piano.variaveis.constante.swgProducts.VALOR : window.Piano.variaveis.constante.swgProducts.OGLOBO
+        
+        if (window.swgEntitlements.getEntitlementForSource(swgProductId)) {
+            window.Piano.metricas.setaVariaveis(window.swgEntitlements.getEntitlementForSource(swgProductId).subscriptionToken, 'Conta Google', currentProduct)
             return true
         }
 
-        if (
-            Helpers.getCookie(
-                window.Piano.variaveis.constante.cookie.CREATED_GLOBOID
-            )
-        ) {
-            window.Piano.metricas.setaVariaveis(
-                Helpers.getCookie(
-                    window.Piano.variaveis.constante.cookie.CREATED_GLOBOID
-                ),
-                'Conta Google',
-                'Google'
-            )
+        if (Helpers.getCookie(window.Piano.variaveis.constante.cookie.CREATED_GLOBOID)) {
+            window.Piano.metricas.setaVariaveis(Helpers.getCookie(window.Piano.variaveis.constante.cookie.CREATED_GLOBOID), 'Conta Google', 'Google')
             return true
         }
 
@@ -1071,10 +1054,15 @@ window.Piano.google = {
         if (window.Piano.google.isAuthorized()) return
 
         try {
-            const oGloboBusiness = new OGloboBusiness()
-            oGloboBusiness.verifyIfUserHasAccessOrDeferred(
-                window.swgEntitlements
-            )
+            if (window.Piano.util.isValor()) {
+                const valorBusiness = new ValorBusiness();
+                valorBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements);
+                
+            } else {
+                const oGloboBusiness = new OGloboBusiness()
+                oGloboBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements)
+                
+            }
         } catch (error) {
             GA.setEventsError(
                 'Erro ao executar o Aldebaran',
@@ -1441,40 +1429,18 @@ window.Piano.configuracao = {
 window.Piano.construtor = {
     async initTp(callback = null) {
         window.tp = window.tp || []
-        window.tp.push([
-            'setTags',
-            [window.Piano.variaveis.getTipoConteudoPiano()],
-        ])
+        window.tp.push(['setTags', [window.Piano.variaveis.getTipoConteudoPiano()],])
         if (window.Piano.util.isRevista() || window.Piano.util.isValor()) {
-            window.tp.push([
-                'setAid',
-                window.Piano.configuracao.jsonConfiguracaoTinyPass[
-                    window.Piano.variaveis.getAmbientePiano()
-                ].idSandboxTinypassRevistas,
-            ])
+            window.tp.push(['setAid', window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].idSandboxTinypassRevistas,])
         } else {
-            window.tp.push([
-                'setAid',
-                window.Piano.configuracao.jsonConfiguracaoTinyPass[
-                    window.Piano.variaveis.getAmbientePiano()
-                ].idSandboxTinypass,
-            ])
+            window.tp.push(['setAid',window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].idSandboxTinypass,])
         }
-        window.tp.push([
-            'setSandbox',
-            window.Piano.configuracao.jsonConfiguracaoTinyPass[
-                window.Piano.variaveis.getAmbientePiano()
-            ].setSandBox,
-        ])
+        window.tp.push(['setSandbox',window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].setSandBox,])
         window.tp.push(['setDebug', window.Piano.util.isDebug()])
         const cleanUrl = window.Piano.util.getWindowLocationHref().split('?')[0]
         window.tp.push(['setPageURL', cleanUrl])
         window.tp.push(['setZone', window.Piano.variaveis.getNomeProduto()])
-        window.tp.push([
-            'setCustomVariable',
-            'nomeProduto',
-            window.Piano.variaveis.getNomeProduto(),
-        ])
+        window.tp.push(['setCustomVariable','nomeProduto',window.Piano.variaveis.getNomeProduto(),])
         window.Piano.janelaAnonima.detectPrivateMode(function (isPrivate) {
             window.tp.push(['setCustomVariable', 'anonimo', isPrivate])
         })
@@ -1483,20 +1449,24 @@ window.Piano.construtor = {
             window.tp.push(['setCustomVariable', 'conteudoExclusivo', true])
         }
 
-        if (
-            window.tinyCpt.isProduction &&
-            typeof swg !== 'undefined' &&
-            typeof window.swgEntitlements !== 'undefined' &&
-            window.swgEntitlements.enablesThis()
-        ) {
-            window.Piano.google.isSpecificGoogleUser(window.swgEntitlements)
-
+        if(Helpers.getCookie(window.Piano.variaveis.constante.cookie.DEFERRED_FLOW_NOT_ACCEPTED_COOKIE) === "true"){
+            Helpers.setCookie(window.Piano.variaveis.constante.cookie.DEFERRED_FLOW_NOT_ACCEPTED_COOKIE, false, -1)
+            
+            window.Piano.autenticacao.defineUsuarioPiano(
+                false,
+                'deferred_flow_nao_aceito',
+                true,
+                ''
+            )
+        } else if (typeof swg !== 'undefined' && typeof window.swgEntitlements !== 'undefined' && window.swgEntitlements.enablesThis()) {
+            window.Piano.google.isSpecificGoogleUser(window.swgEntitlements);
             window.Piano.autenticacao.defineUsuarioPiano(
                 true,
                 'autorizado',
                 true,
                 ''
             )
+
         } else {
             await window.Piano.autenticacao.verificaUsuarioLogadoNoBarramento(
                 Helpers.getCookie(window.Piano.variaveis.constante.cookie.GCOM),
@@ -1552,7 +1522,7 @@ function pianoInit() {
 
     if (window.tinyCpt.debug.tiny) console.log('log-method', 'pianoInit')
 
-    if (window.tinyCpt.isProduction && window.tinyCpt.Swg.global) {
+    if (window.tinyCpt.Swg.global) {
         window.SWG.push((subscriptions) => {
             if (window.tinyCpt.debug.swg)
                 console.log('log-subscriptions', subscriptions)
