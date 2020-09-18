@@ -1510,7 +1510,7 @@ function pianoInit() {
 
                     if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
                         try {
-                            window.tinyCpt.Piano.construtor.initTp(() => 
+                            window.tinyCpt.Piano.construtor.initTp(() =>
                                 loadPianoExperiences()
                             )
                         } catch (error) {
