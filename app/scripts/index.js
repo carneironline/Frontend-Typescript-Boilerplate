@@ -1040,7 +1040,7 @@ window.Piano.google = {
         return false
     },
 
-    async isSpecificGoogleUser() {
+    isSpecificGoogleUser() {
         if (window.Piano.google.isAuthorized()) return
 
         try {
