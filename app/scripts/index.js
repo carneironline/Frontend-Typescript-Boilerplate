@@ -1510,8 +1510,9 @@ function pianoInit() {
 
                     if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
                         try {
-                            window.tinyCpt.Piano.construtor.initTp()
-                            loadPianoExperiences()
+                            window.tinyCpt.Piano.construtor.initTp(() => 
+                                loadPianoExperiences()
+                            )
                         } catch (error) {
                             GA.setEventsError(
                                 'Piano nao foi carregada corretamente!',
