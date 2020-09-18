@@ -35,6 +35,7 @@ window.Piano.variaveis = {
             SAVE_SUBSCRIPTION: 'saveSubscriptionCookie',
             CREATED_GLOBOID: 'createdGloboId',
             GLOBOID_MESSAGE: 'globoIdMessage',
+            DEFERRED_FLOW_NOT_ACCEPTED_COOKIE: 'deferredFlowNotAccepted'
         },
         metricas: {
             EVENTO_SEM_ACAO: 'sem acao',
@@ -907,17 +908,6 @@ window.Piano.xmlHttpRequest = {
 
         const xhr = new XMLHttpRequest()
 
-        // xhr.open(
-        //     'POST',
-        //     window.Piano.configuracao.jsonConfiguracaoTinyPass[
-        //         window.Piano.variaveis.getAmbientePiano()
-        //     ].urlVerificaLeitor,
-        //     false
-        // )
-        // xhr.setRequestHeader('Accept', 'application/json')
-        // xhr.setRequestHeader('Content-Type', 'application/json')
-        // xhr.send(data)
-
         const url =
             window.Piano.configuracao.jsonConfiguracaoTinyPass[
                 window.Piano.variaveis.getAmbientePiano()
@@ -1051,26 +1041,23 @@ window.Piano.google = {
     },
 
     async isSpecificGoogleUser() {
-        if (window.Piano.google.isAuthorized()) return true;
+        if (window.Piano.google.isAuthorized()) return
 
-        console.log('ISAUTHORIZED FALSE');
         try {
             if (window.Piano.util.isValor()) {
                 const valorBusiness = new ValorBusiness();
-                const hasAccessOrDeferred = await valorBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements);
-                console.log('VERIFICOU SE USUÁRIO TEM ACESSO OU DEFERRED NO VALOR');
-                return hasAccessOrDeferred;
+                valorBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements);
+                
             } else {
                 const oGloboBusiness = new OGloboBusiness()
                 oGloboBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements)
-                console.log('VERIFICOU SE USUÁRIO TEM ACESSO OU DEFERRED NO GLOBO');
+                
             }
         } catch (error) {
             GA.setEventsError(
                 'Erro ao executar o Aldebaran',
                 `Error: ${error} - Entitlements: ${window.swgEntitlements.entitlements[0].subscriptionToken}`
             )
-            return false;
         }
     },
 
@@ -1437,25 +1424,23 @@ window.Piano.construtor = {
             window.tp.push(['setCustomVariable', 'conteudoExclusivo', true])
         }
 
-        if (typeof swg !== 'undefined' && typeof window.swgEntitlements !== 'undefined' && window.swgEntitlements.enablesThis()) {
-            const isGoogleUserOrLinkAccount = await window.Piano.google.isSpecificGoogleUser(window.swgEntitlements);
-            if (isGoogleUserOrLinkAccount) {
-                console.log('AUTENTICADO');
-                window.Piano.autenticacao.defineUsuarioPiano(
-                    true,
-                    'autorizado',
-                    true,
-                    ''
-                )
-            } else {
-                console.log('GOOGLE ACCOUNT LINK');
-                window.Piano.autenticacao.defineUsuarioPiano(
-                   false,
-                   'google_account_link',
-                   true,
-                   ''
-                )
-            }
+        if(Helpers.getCookie(window.Piano.variaveis.constante.cookie.DEFERRED_FLOW_NOT_ACCEPTED_COOKIE) === "true"){
+            Helpers.setCookie(window.Piano.variaveis.constante.cookie.DEFERRED_FLOW_NOT_ACCEPTED_COOKIE, false, -1)
+            
+            window.Piano.autenticacao.defineUsuarioPiano(
+                false,
+                'deferred_flow_nao_aceito',
+                true,
+                ''
+            )
+        } else if (typeof swg !== 'undefined' && typeof window.swgEntitlements !== 'undefined' && window.swgEntitlements.enablesThis()) {
+            window.Piano.google.isSpecificGoogleUser(window.swgEntitlements);
+            window.Piano.autenticacao.defineUsuarioPiano(
+                true,
+                'autorizado',
+                true,
+                ''
+            )
 
         } else {
             await window.Piano.autenticacao.verificaUsuarioLogadoNoBarramento(
