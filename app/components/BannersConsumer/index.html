@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="bannersConsumertests">
+        <div>
+            <div class="banner-consumer-cpnt" data-banner-consumer-name='banner-subscribe'></div>
+        </div>
+        <br />
+        <div class="banner-consumer-cpnt" data-banner-consumer-name='banner-globomais'></div>
+    </div>
+
+    <script>
+        window.glbBannersConsumer = [
+            {
+                selector: 'banner-subscribe',
+                imageDesk: 'https://via.placeholder.com/582x473',
+                imageMobi: 'https://via.placeholder.com/263x446px',
+                magazineSubscribeBackground: '#000',
+                url: '//google.com',
+                target: '_blank',
+            },
+            {
+                selector: 'banner-globomais',
+                imageDesk: 'https://via.placeholder.com/680x59',
+                imageMobi: 'https://via.placeholder.com/320x59',
+                url: '//google.com',
+                target: '_blank',
+            },
+        ]
+    </script>
+
+    <script src="index.js"> </script>
+    <script>
+        new BannersConsumer()
+    </script>
+
+</body>
+
+</html>
