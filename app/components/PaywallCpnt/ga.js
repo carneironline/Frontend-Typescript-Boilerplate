@@ -1,6 +1,6 @@
-import Helpers from '../Helpers'
-import PianoModule from '../Piano'
-import GAModule from '../GA'
+import Helpers from '../../scripts/Helpers'
+import PianoModule from '../../scripts/Piano'
+import GAModule from '../../scripts/GA'
 
 export default class PaywallGAModule {
     constructor() {

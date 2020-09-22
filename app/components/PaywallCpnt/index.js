@@ -1,9 +1,9 @@
-import PianoModule from '../Piano'
-import PaywallGAModule from './Paywall-ga'
-import SwgModule from '../Swg'
-import FbModule from '../FB'
+import PianoModule from '../../scripts/Piano'
+import PaywallGAModule from './ga'
+import SwgModule from '../../scripts/Swg'
+import FbModule from '../../scripts/FB'
 
-export default class PaywallCpt {
+class PaywallCpnt {
     constructor() {
         this.Piano = new PianoModule()
         this.GA = new PaywallGAModule()
@@ -113,10 +113,8 @@ export default class PaywallCpt {
 
         window.glbPaywall.TagLogin = `
         <div class="paywall-cpt-wrap__text-center">
-            ${
-            window.glbPaywall.loginPreText
-            } <a href="${this.getUrlLoginRegister()}" data-is-login="true" data-ga-action="Clique em link" data-ga-label="Link 2 - Faça login" data-ga-resetUtp="false" data-href-target=" ${
-            window.glbPaywall.targetBlank
+            ${window.glbPaywall.loginPreText
+            } <a href="${this.getUrlLoginRegister()}" data-is-login="true" data-ga-action="Clique em link" data-ga-label="Link 2 - Faça login" data-ga-resetUtp="false" data-href-target=" ${window.glbPaywall.targetBlank
             } ">${window.glbPaywall.loginText}</a>
         </div>
         `
@@ -406,3 +404,5 @@ export default class PaywallCpt {
         }, delayTimer)
     }
 }
+
+export default PaywallCpnt

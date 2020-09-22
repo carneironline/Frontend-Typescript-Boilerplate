@@ -2,10 +2,10 @@ import Helpers from './Helpers'
 import TinyModule from './Tiny'
 import GAModule from './GA'
 import SwgModule from './Swg'
-import PaywallCpt from './cpnt-paywall/Paywall'
 import PaywallCptInline from './cpnt-paywall-inline/Paywall'
 import getProductsObject from './ProductsRequester'
 import BannersConsumer from '../components/BannersConsumer'
+import PaywallCpt from '../components/PaywallCpnt'
 import SubscribeButtonOverride from '../components/SubscribeButtonOverride'
 import EdigitalContent from '../components/EdigitalContent'
 
@@ -121,8 +121,7 @@ window.Piano.variaveis = {
         if (!id) {
             GA.setEventsError(
                 'ServiceID não definido.',
-                `${
-                document.location.href
+                `${document.location.href
                 } nomeProduto: ${window.Piano.variaveis.getNomeProduto()}`
             )
 
@@ -770,8 +769,7 @@ window.Piano.adblock = {
         const setNptTechAdblockerCookie = function (adblocker) {
             const d = new Date()
             d.setTime(d.getTime() + 60 * 60 * 24 * 2 * 1000)
-            document.cookie = `__adblocker=${
-                adblocker ? 'true' : 'false'
+            document.cookie = `__adblocker=${adblocker ? 'true' : 'false'
                 }; expires=${d.toUTCString()}; path=/`
         }
         const script = document.createElement('script')
