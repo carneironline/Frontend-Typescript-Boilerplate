@@ -2,10 +2,10 @@ import Helpers from './Helpers'
 import TinyModule from './Tiny'
 import GAModule from './GA'
 import SwgModule from './Swg'
-import PaywallCptInline from './cpnt-paywall-inline/Paywall'
 import getProductsObject from './ProductsRequester'
 import BannersConsumer from '../components/BannersConsumer'
-import PaywallCpt from '../components/PaywallCpnt'
+import PaywallCpnt from '../components/PaywallCpnt'
+import PaywallCpntInline from '../components/PaywallCpntInline'
 import SubscribeButtonOverride from '../components/SubscribeButtonOverride'
 import EdigitalContent from '../components/EdigitalContent'
 
@@ -544,16 +544,16 @@ window.Piano.paywall = {
         window.Piano.typePaywall = typePaywall
 
         try {
-            new PaywallCpt()
+            new PaywallCpnt()
             window.hasPaywall = true
         } catch (error) {
-            console.error('PaywallCpt - ', error)
+            console.error('PaywallCpnt - ', error)
             window.Piano.triggerAdvertising()
         }
     },
     analytic() {
         try {
-            new PaywallCptInline()
+            new PaywallCpntInline()
             window.hasPaywall = true
         } catch (err) {
             console.error('PaywallAnalytic - Error on load', err)
