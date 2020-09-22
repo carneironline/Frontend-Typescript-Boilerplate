@@ -1,4 +1,4 @@
-export default class BannersConsumer {
+class BannersConsumer {
     constructor() {
         this.classMain = 'banner-consumer-cpnt'
         this.classAuxiliary = 'is-full'
@@ -76,12 +76,11 @@ export default class BannersConsumer {
 
     render(config) {
         return `
-            <div class="${this.classMain} ${this.classAuxiliary}"
+            <div class="${this.classMain}-wrap ${this.classAuxiliary}"
         >
             <a href="${config.url || '#'}" target="${config.target || ''}">
                 <picture>
-                    <source srcset="${
-            config.imageDesk
+                    <source srcset="${config.imageDesk
             }" media='(min-width: 680px)' />
                     <source srcset="${config.imageMobi}" />
                     <img
@@ -111,15 +110,17 @@ export default class BannersConsumer {
             z-index: 1;
         }
 
-          ${this.styleClassMain}.is-responsive img {
+          ${this.styleClassMain}-wrap.is-responsive img {
             max-width: 100%;
             height: auto; 
           }
         
-          ${this.styleClassMain}.is-full a {
+          ${this.styleClassMain}-wrap.is-full a {
             justify-content: center;
           }
         </style>
         `
     }
 }
+
+export default BannersConsumer
