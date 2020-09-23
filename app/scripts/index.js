@@ -1586,7 +1586,6 @@ function pianoInit() {
 
 async function tinyInit() {
     window.Piano.adblock.detecta()
-    window.Piano.paywall.show('register')
     Tiny.setPiano(window.Piano)
     const Swg = new SwgModule()
 
