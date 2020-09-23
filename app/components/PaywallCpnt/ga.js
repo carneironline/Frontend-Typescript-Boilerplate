@@ -69,6 +69,12 @@ export default class PaywallGAModule {
                 this.metrics.paywall.label = 'Assine agora'
                 this.metrics.fb.pixel.name = 'ViewLoginExclusivo'
                 break
+            case 'suspenso':
+                this.metrics.paywall.viewName = 'Suspenso'
+                this.metrics.paywall.name = 'Suspenso'
+                this.metrics.paywall.label = 'Assine agora'
+                this.metrics.fb.pixel.name = 'ViewPaywallSuspenso'
+                break
             case 'paywall':
                 this.metrics.paywall.viewName = 'Barreira'
                 this.metrics.paywall.name = 'Barreira'
