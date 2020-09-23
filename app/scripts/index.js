@@ -50,7 +50,7 @@ window.Piano.variaveis = {
             DEBUG: 'debug-piano',
         },
         swgProducts: {
-            VALOR : 'Valor',
+            VALOR: 'Valor',
             OGLOBO: 'O Globo'
         },
         swgProductIds: {
@@ -706,13 +706,13 @@ window.Piano.checkPaywall = function (PianoResultEvents = null) {
 
 window.Piano.triggerAdvertising = function () {
     window.hasPaywall = false
-    console.log('event clearForAds')
+    console.log('%c dispatchEvent clearForAds ', Helpers.consoleColor().header)
     const event = new CustomEvent('clearForAds')
     document.dispatchEvent(event)
 }
 
 window.Piano.triggerPaywallOpened = function () {
-    console.log('event blockForAds')
+    console.log('%c dispatchEvent blockForAds ', Helpers.consoleColor().header)
     const event = new CustomEvent('blockForAds')
     document.dispatchEvent(event)
 }
@@ -1034,7 +1034,7 @@ window.Piano.google = {
     isAuthorized() {
         const swgProductId = window.Piano.util.isValor() ? window.Piano.variaveis.constante.swgProductIds.VALOR : window.Piano.variaveis.constante.swgProductIds.OGLOBO
         const currentProduct = window.Piano.util.isValor() ? window.Piano.variaveis.constante.swgProducts.VALOR : window.Piano.variaveis.constante.swgProducts.OGLOBO
-        
+
         if (window.swgEntitlements.getEntitlementForSource(swgProductId)) {
             window.Piano.metricas.setaVariaveis(window.swgEntitlements.getEntitlementForSource(swgProductId).subscriptionToken, 'Conta Google', currentProduct)
             return true
@@ -1055,11 +1055,11 @@ window.Piano.google = {
             if (window.Piano.util.isValor()) {
                 const valorBusiness = new ValorBusiness();
                 valorBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements);
-                
+
             } else {
                 const oGloboBusiness = new OGloboBusiness()
                 oGloboBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements)
-                
+
             }
         } catch (error) {
             GA.setEventsError(
@@ -1431,14 +1431,14 @@ window.Piano.construtor = {
         if (window.Piano.util.isRevista() || window.Piano.util.isValor()) {
             window.tp.push(['setAid', window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].idSandboxTinypassRevistas,])
         } else {
-            window.tp.push(['setAid',window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].idSandboxTinypass,])
+            window.tp.push(['setAid', window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].idSandboxTinypass,])
         }
-        window.tp.push(['setSandbox',window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].setSandBox,])
+        window.tp.push(['setSandbox', window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].setSandBox,])
         window.tp.push(['setDebug', window.Piano.util.isDebug()])
         const cleanUrl = window.Piano.util.getWindowLocationHref().split('?')[0]
         window.tp.push(['setPageURL', cleanUrl])
         window.tp.push(['setZone', window.Piano.variaveis.getNomeProduto()])
-        window.tp.push(['setCustomVariable','nomeProduto',window.Piano.variaveis.getNomeProduto(),])
+        window.tp.push(['setCustomVariable', 'nomeProduto', window.Piano.variaveis.getNomeProduto(),])
         window.Piano.janelaAnonima.detectPrivateMode(function (isPrivate) {
             window.tp.push(['setCustomVariable', 'anonimo', isPrivate])
         })
@@ -1447,9 +1447,9 @@ window.Piano.construtor = {
             window.tp.push(['setCustomVariable', 'conteudoExclusivo', true])
         }
 
-        if(Helpers.getCookie(window.Piano.variaveis.constante.cookie.DEFERRED_FLOW_NOT_ACCEPTED_COOKIE) === "true"){
+        if (Helpers.getCookie(window.Piano.variaveis.constante.cookie.DEFERRED_FLOW_NOT_ACCEPTED_COOKIE) === "true") {
             Helpers.setCookie(window.Piano.variaveis.constante.cookie.DEFERRED_FLOW_NOT_ACCEPTED_COOKIE, false, -1)
-            
+
             window.Piano.autenticacao.defineUsuarioPiano(
                 false,
                 'deferred_flow_nao_aceito',
@@ -1518,13 +1518,8 @@ function loadPianoExperiences() {
 function pianoInit() {
     window.Piano.checkPianoActive()
 
-    if (window.tinyCpt.debug.tiny) console.log('log-method', 'pianoInit')
-
-    if (window.tinyCpt.Swg.global) {
+    if (window.tinyCpt.isProduction && window.tinyCpt.Swg.global) {
         window.SWG.push((subscriptions) => {
-            if (window.tinyCpt.debug.swg)
-                console.log('log-subscriptions', subscriptions)
-
             window.swg = subscriptions
 
             subscriptions.setOnEntitlementsResponse((entitlementsPromise) => {

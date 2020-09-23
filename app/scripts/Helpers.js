@@ -11,11 +11,9 @@ export default class Helpers {
 
         exdate.setDate(exdate.getDate() + expiredays)
         document.cookie =
-            `${cName}=${escape(value)}${
-                expiredays ? '' : `;expires=${exdate.toUTCString()}`
+            `${cName}=${escape(value)}${expiredays ? '' : `;expires=${exdate.toUTCString()}`
             }; path=/;` +
-            `domain=.${hostname.split('.').reverse()[1]}.${
-                hostname.split('.').reverse()[0]
+            `domain=.${hostname.split('.').reverse()[1]}.${hostname.split('.').reverse()[0]
             }`
     }
 
@@ -25,5 +23,11 @@ export default class Helpers {
             : false
         const cookieTiny = match ? unescape(match[1].toString()) : ''
         return cookieTiny
+    }
+
+    static consoleColor() {
+        return {
+            header: 'background: #1e4c9a; color: #fff; font-weight:bold'
+        }
     }
 }
