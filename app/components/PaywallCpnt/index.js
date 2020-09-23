@@ -1,29 +1,26 @@
-import PianoModule from '../../scripts/Piano'
-import PaywallGAModule from './ga'
-import SwgModule from '../../scripts/Swg'
-import FbModule from '../../scripts/FB'
+import PaywallDefaultCpnt from '../PaywallDefaultCpnt'
+import BarberBarrier from '../BarberBarrier'
 
 class PaywallCpnt {
     constructor() {
-        this.Piano = new PianoModule()
-        this.GA = new PaywallGAModule()
-        this.SWG = new SwgModule()
-        this.FB = new FbModule(this.GA.metrics.fb)
-
         this.debug = window.tinyCpt.debug.paywall
-        this.domain = window.tinyCpt.isProduction
-            ? 'https://login.globo.com/'
-            : 'https://login.qa.globoi.com/'
         this.setTemplateSettings(() => {
             this.init()
         })
+    }
 
-        window.PaywallCpt = this
+    showConsole() {
+        console.groupCollapsed('PaywallCpnt Component')
 
-        window.tinyCpt.Paywall = {
-            domain: this.domain,
-            GA: this.GA.metrics,
-        }
+        console.group('Constructor')
+        console.table(this)
+        console.groupEnd()
+
+        console.group('glbPaywall')
+        console.table(window.glbPaywall)
+        console.groupEnd()
+
+        console.groupEnd()
     }
 
     setTemplateSettings(callback) {
@@ -57,14 +54,34 @@ class PaywallCpnt {
 
         if (this.debug) this.setDebugTemplateSettings()
 
-        this.tagTitle()
-        this.tagLogin()
-        this.tagBannerTop()
-        this.tagBannerLeft()
-        this.tagBannerRight()
-        this.tagMiddleText()
-
         callback()
+    }
+
+    getLoginUrl(type = '') {
+        const loginDomain = window.tinyCpt.isProduction
+            ? 'https://login.globo.com/'
+            : 'https://login.qa.globoi.com/'
+        const serviceId = window.tinyCpt.Piano?.variaveis?.getServicoId() || null
+        const urlReturn = encodeURIComponent(document.location.href)
+        let str = ''
+
+        if (serviceId) {
+            if (type === 'register') {
+                str = `${loginDomain}cadastro/${serviceId}?url=${urlReturn}`
+            } else {
+                str = `${loginDomain}login/${serviceId}?url=${urlReturn}`
+            }
+        }
+
+        return str
+    }
+
+    get loginUrl() {
+        return this.getLoginUrl()
+    }
+
+    get registerUrl() {
+        return this.getLoginUrl('register')
     }
 
     setDebugTemplateSettings() {
@@ -89,318 +106,20 @@ class PaywallCpnt {
         window.glbPaywall = { ...window.glbPaywall, ...obj }
     }
 
-    tagTitle() {
-        if (!window.glbPaywall.title) {
-            window.glbPaywall.TagTitle = ''
-            return
-        }
-
-        window.glbPaywall.TagTitle = `
-            <div class="paywall-cpt-wrap__text-head">
-                ${window.glbPaywall.title}
-            </div>
-        `
-    }
-
-    tagLogin() {
-        if (
-            (!window.glbPaywall.loginText && !this.getUrlLoginRegister()) ||
-            window.glbPaywall.hideLogin
-        ) {
-            window.glbPaywall.TagLogin = ''
-            return
-        }
-
-        window.glbPaywall.TagLogin = `
-        <div class="paywall-cpt-wrap__text-center">
-            ${window.glbPaywall.loginPreText
-            } <a href="${this.getUrlLoginRegister()}" data-is-login="true" data-ga-action="Clique em link" data-ga-label="Link 2 - Faça login" data-ga-resetUtp="false" data-href-target=" ${window.glbPaywall.targetBlank
-            } ">${window.glbPaywall.loginText}</a>
-        </div>
-        `
-    }
-
-    tagBannerTop() {
-        window.glbPaywall.TagBannerTop = `
-            <div class="paywall-cpt-wrap__top">
-                <a href="${window.glbPaywall.topLink}" data-ga-image-position="top" data-ga-action="Clique em link" data-ga-label="Link 1 -" data-ga-resetUtp="true" data-href-target="${window.glbPaywall.targetBlank}">
-                    <picture>
-                        <source srcset="${window.glbPaywall.topMobi}" media="(max-width: 1023px)">
-                        <source srcset="${window.glbPaywall.topDesk}" media="(min-width: 1024px)">
-                        <img src="${window.glbPaywall.topMobi}" />
-                    </picture>
-                </a>
-            </div>
-        `
-    }
-
-    tagBannerLeft() {
-        window.glbPaywall.TagBannerLeft = `
-            <div class="paywall-cpt-wrap__left">
-                <a href="${window.glbPaywall.leftLink}" data-ga-action="Clique em link" data-ga-label="Link 4 - Banner oferta esquerda" data-ga-resetUtp="true" data-href-target="${window.glbPaywall.targetBlank}">
-                    <picture>
-                        <source srcset="${window.glbPaywall.leftMobi}" media="(max-width: 1023px)">
-                        <source srcset="${window.glbPaywall.leftDesk}" media="(min-width: 1024px)">
-                        <img src="${window.glbPaywall.leftMobi}" />
-                    </picture>
-                </a>
-            </div>
-        `
-    }
-
-    tagBannerRight() {
-        window.glbPaywall.TagBannerRight = `
-            <div class="paywall-cpt-wrap__right">
-                <a href="${window.glbPaywall.rightLink}"  data-ga-action="Clique em link" data-ga-label="Link 5 - Banner oferta direita" data-ga-resetUtp="true" data-href-target="${window.glbPaywall.targetBlank}">
-                    <picture>
-                        <source srcset="${window.glbPaywall.rightMobi}" media="(max-width: 1023px)">
-                        <source srcset="${window.glbPaywall.rightDesk}" media="(min-width: 1024px)">
-                        <img src="${window.glbPaywall.rightMobi}" />
-                    </picture>
-                </a>
-            </div>
-        `
-    }
-
-    tagMiddleText() {
-        if (
-            !window.glbPaywall.middleText &&
-            !window.glbPaywall.middleTextLink
-        ) {
-            window.glbPaywall.TagMiddleText = ''
-            return
-        }
-
-        window.glbPaywall.TagMiddleText = `
-        <div class="paywall-cpt-wrap__text-center paywall-cpt-wrap__middle-text">
-        ${window.glbPaywall.middlePreText}
-            <a href="${window.glbPaywall.middleTextLink}" style="color:${window.glbPaywall.middleTextColor}; text-decoration:underline" data-ga-action="Clique em link" data-ga-label="Link 3 - Texto no" data-ga-resetUtp="true">
-                ${window.glbPaywall.middleText}
-            </a>
-        </div>
-        `
-    }
-
-    bodyAdjust() {
-        this.elBody.style.setProperty('overflow', 'hidden', 'important')
-        this.elBody.style.setProperty('position', 'fixed', 'important')
-        this.elBody.style.setProperty('width', '100%', 'important')
-    }
-
-    setElWrapper() {
-        this.elCpt = document.querySelector('.paywall-cpt')
-    }
-
-    removeElements() {
-        this.setElWrapper()
-
-        if (this.elCpt) this.elCpt.remove()
-
-        const elToRemove = document.querySelectorAll(
-            '.protected-content, #infoarte-main-content'
-        )
-
-        elToRemove.forEach((element) => {
-            element.remove()
-        })
-    }
-
-    createTemplate() {
-        this.elBody = document.body
-        this.bodyAdjust()
-        this.removeElements()
-        this.elBody.insertAdjacentHTML('beforeend', this.cssMinified)
-        this.elBody.insertAdjacentHTML('beforeend', this.template)
-        this.activeTemplateSettings()
-
-        if (window.matchMedia('(min-width: 1024px)').matches) {
-            window.addEventListener('resize', () => {
-                this.activeTemplateSettings()
-            })
-        }
-
-        this.GA.paywallLoad()
-    }
-
-    activeTemplateSettings() {
-        this.setElWrapper()
-        this.elCptWrap = this.elCpt.querySelector('.paywall-cpt-wrap')
-
-        setTimeout(() => {
-            const elBodyHeight = window.innerHeight + 4
-            const elCptWrapHeight = this.elCptWrap.offsetHeight
-            const currentTop = window.matchMedia('(min-width: 1024px)').matches
-                ? Math.abs(elBodyHeight / 2)
-                : Math.abs(elBodyHeight / 2)
-            const topWithFullElement = elBodyHeight - elCptWrapHeight
-
-            this.elCpt.style.top = `${currentTop}px`
-            this.elCpt.style.opacity = 1
-            this.elCpt.style.zIndex = 20
-
-            this.evtWheel(currentTop, topWithFullElement)
-            this.evtTouch(currentTop, topWithFullElement)
-            this.activeEvents()
-
-            this.FB.setPixelType()
-        }, 1000)
-    }
-
-    activeEvents() {
-        const clickTargets = this.elCptWrap.querySelectorAll('a')
-
-        clickTargets.forEach((element) => {
-            element.addEventListener(
-                'click',
-                function (evt) {
-                    evt.preventDefault()
-                    const isLogin = Boolean(element.dataset.isLogin) || false
-                    const url = element.getAttribute('href') || false
-                    const isUrlSwg = url
-                        ? url.toLowerCase().includes('ofertaswg')
-                        : false
-                    const notBlank = element.dataset.hrefTarget || true
-
-                    this.GA.trigger(element)
-
-                    if (!isLogin && isUrlSwg) this.SWG.setUtms()
-
-                    if (url && !isUrlSwg) {
-                        setTimeout(function () {
-                            notBlank
-                                ? (window.location.href = url)
-                                : window.open(url)
-                        }, 300)
-                    }
-                }.bind(this)
-            )
-        })
-    }
-
-    evtWheel(currentTop, topWithFullElement) {
-        let newtop = currentTop
-
-        window.addEventListener(
-            'wheel',
-            function (evt) {
-                const step = currentTop / 100
-                const multiplier = 20
-
-                if (evt.deltaY >= 1) {
-                    const elTop = newtop - step * multiplier
-                    newtop =
-                        elTop < topWithFullElement ? topWithFullElement : elTop
-
-                    this.elCpt.style.top = `${newtop}px`
-                }
-
-                if (evt.deltaY <= -1) {
-                    const elTop = newtop + step * multiplier
-                    newtop = elTop > currentTop ? currentTop : elTop
-
-                    this.elCpt.style.top = `${newtop}px`
-                }
-            }.bind(this)
-        )
-    }
-
-    evtTouch(currentTop, topWithFullElement) {
-        let newtop = currentTop
-        let touchstartY = 0
-        let touchendY = 0
-
-        window.addEventListener('touchstart', function (evt) {
-            touchstartY = evt.changedTouches[0].screenY
-        })
-
-        window.addEventListener(
-            'touchmove',
-            function (evt) {
-                const multiplier = 20
-                touchendY = evt.changedTouches[0].screenY
-
-                if (touchendY < touchstartY) {
-                    const diff = Math.abs(touchstartY) - Math.abs(touchendY)
-                    const elTop = newtop - diff
-                    newtop =
-                        elTop < topWithFullElement ? topWithFullElement : elTop
-
-                    this.elCpt.style.top = `${newtop}px`
-                }
-
-                if (touchendY > touchstartY) {
-                    const diff = touchendY - touchstartY
-                    const elTop = newtop + diff
-                    newtop = elTop > currentTop ? currentTop : elTop
-
-                    this.elCpt.style.top = `${newtop}px`
-                }
-            }.bind(this)
-        )
-    }
-
-    montaUrlRetorno() {
-        return encodeURIComponent(document.location.href)
-    }
-
-    getUrlLoginRegister(type = '') {
-        const serviceId = window.tinyCpt.Piano.variaveis.getServicoId() || null
-        let str = ''
-
-        if (!this.debug && this.Piano.isDefined) {
-            const urlRetorno = this.montaUrlRetorno()
-            if (type === 'register') {
-                str = `${this.domain}cadastro/${serviceId}?url=${urlRetorno}`
-            } else {
-                str = `${this.domain}login/${serviceId}?url=${urlRetorno}`
-            }
-        }
-
-        return str
-    }
-
-    get templateVars() {
-        return window.glbPaywall
-    }
-
-    get template() {
-        const template = `
-	  <div class="paywall-cpt ${this.templateVars.productClass}"> 
-        <div class="paywall-cpt-wrap">
-            ${this.templateVars.TagTitle}
-            
-            ${this.templateVars.TagLogin}
-
-            ${this.templateVars.TagBannerTop}
-
-            ${this.templateVars.TagMiddleText}
-            
-            <div class="paywall-cpt-wrap__banners-bottom">
-            ${this.templateVars.TagBannerLeft}
-
-            ${this.templateVars.TagBannerRight}
-            </div>
-		</div>
-	  </div>
-	  `
-
-        return template
-    }
-
-    get cssMinified() {
-        return `<style>
-        .paywall-cpt{opacity:0;position:fixed;bottom:0;left:0;width:100vw;overflow:hidden;background:#fff;-webkit-box-shadow:0 0 70px 0 rgba(0,0,0,.5);box-shadow:0 0 70px 0 rgba(0,0,0,.5);font-family:Arial,Helvetica,sans-serif}.paywall-cpt,.paywall-cpt *{-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-transition:all .2s ease;transition:all .2s ease}.paywall-cpt a{font-weight:700;text-decoration:none}.paywall-cpt a:hover{text-decoration:underline}.paywall-cpt .paywall-cpt-wrap__text-head,.paywall-cpt a{color:#000}.paywall-cpt-oglobo .paywall-cpt-wrap__text-head,.paywall-cpt-oglobo a{color:#325e94}.paywall-cpt-wrap{position:relative;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding-bottom:20px}.paywall-cpt-wrap img{display:block;max-width:100%;height:auto}.paywall-cpt-wrap__top{padding-top:20px;padding-bottom:20px}.paywall-cpt-wrap__middle-text{padding-top:0!important}.paywall-cpt-wrap__text-head{width:100%;text-align:center;font-size:20px;font-weight:700;padding:20px 0 0}.paywall-cpt-wrap__text-center{width:100%;text-align:center;color:#767676;font-size:16px;padding:20px 0}.paywall-cpt-wrap__text-center.is-hide{padding-bottom:0}.paywall-cpt-wrap__banners-bottom{display:flex}@media screen and (min-width: 1024px){.paywall-cpt-wrap{-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}}@media screen and (max-width: 1023px){.paywall-cpt-wrap__banners-bottom{flex-direction:column}}
-	  </style>`
-    }
-
     init() {
-        const delayTimer =
-            window.glbPaywall && window.glbPaywall.delayTimer
-                ? window.glbPaywall.delayTimer * 1000
-                : 0
+        const delayTimer = window.glbPaywall?.delayTimer ? window.glbPaywall.delayTimer * 1000 : 0
+        const hasBarberBarrier = Boolean(window.glbPaywall.barberBarrier && Object.keys(window.glbPaywall.barberBarrier)?.length)
 
         setTimeout(() => {
-            this.createTemplate()
+            if (hasBarberBarrier && window.matchMedia("(max-width: 1023px)").matches) {
+                this.componentActive = 'BarberBarrier'
+                new BarberBarrier(this)
+            } else {
+                this.componentActive = 'PaywallDefaultCpnt'
+                new PaywallDefaultCpnt(this)
+            }
+
+            this.showConsole()
         }, delayTimer)
     }
 }

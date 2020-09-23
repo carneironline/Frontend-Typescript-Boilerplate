@@ -4,6 +4,8 @@ export default class GA {
     constructor() {
         this.debug = window.tinyCpt.debug.ga
         this.Products = new ProductsModule()
+
+        this.setGlobalVars()
     }
 
     setGlobalVars() {
@@ -13,28 +15,29 @@ export default class GA {
             window._gaq = window._gaq || []
     }
 
-    setEvents(action, label, category = 'Piano') {
-        if (window.tinyCpt.debug.ga)
-            console.log('log-ga-event', category, action, label)
+    setEvents(action, label, category = 'Piano', eventName = 'EventoGAPiano') {
+        console.log('log-ga-event', `action: ${action}`, `label: ${label}`, `category: ${category}`, `event: ${eventName}`)
 
         if (this.Products.isProductValor)
-            _gaq.push(['_trackEvent', category, action, label, , true])
+            window._gaq.push(['_trackEvent', category, action, label, null, true])
 
-        dataLayer.push({
-            event: 'EventoGAPiano',
+        window.dataLayer.push({
+            event: eventName,
             eventoGACategoria: category,
             eventoGAAcao: action,
             eventoGARotulo: label,
         })
     }
 
-    setEventsError(action, label) {
-        if (this.Products.isProductValor)
-            _gaq.push(['_trackEvent', 'Piano Erro', action, label, , true])
+    setEventsError(action, label, category = 'Piano Erro', eventName = 'EventoGAPiano') {
+        console.log('log-ga-error-event', `action: ${action}`, `label: ${label}`, `category: ${category}`, `event: ${eventName}`)
 
-        dataLayer.push({
-            event: 'EventoGAPiano',
-            eventoGACategoria: 'Piano Erro',
+        if (this.Products.isProductValor)
+            window._gaq.push(['_trackEvent', category, action, label, null, true])
+
+        window.dataLayer.push({
+            event: eventName,
+            eventoGACategoria: category,
             eventoGAAcao: action,
             eventoGARotulo: label,
         })

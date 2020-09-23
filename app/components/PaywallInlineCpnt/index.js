@@ -1,6 +1,6 @@
 import PianoModule from '../../scripts/Piano';
 
-export default class PaywallCpntInline {
+export default class PaywallInlineCpnt {
 	constructor() {
 		this.Piano = new PianoModule();
 

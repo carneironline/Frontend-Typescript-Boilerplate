@@ -5,7 +5,7 @@ import SwgModule from './Swg'
 import getProductsObject from './ProductsRequester'
 import BannersConsumer from '../components/BannersConsumer'
 import PaywallCpnt from '../components/PaywallCpnt'
-import PaywallCpntInline from '../components/PaywallCpntInline'
+import PaywallInlineCpnt from '../components/PaywallInlineCpnt'
 import SubscribeButtonOverride from '../components/SubscribeButtonOverride'
 import EdigitalContent from '../components/EdigitalContent'
 
@@ -13,8 +13,6 @@ console.table(process.env)
 
 const Tiny = new TinyModule()
 const GA = new GAModule()
-
-GA.setGlobalVars()
 
 getProductsObject(window.ambienteUtilizadoPiano, function (productsJson) {
     window.productsObject = JSON.parse(productsJson)
@@ -553,7 +551,7 @@ window.Piano.paywall = {
     },
     analytic() {
         try {
-            new PaywallCpntInline()
+            new PaywallInlineCpnt()
             window.hasPaywall = true
         } catch (err) {
             console.error('PaywallAnalytic - Error on load', err)
@@ -1588,7 +1586,7 @@ function pianoInit() {
 
 async function tinyInit() {
     window.Piano.adblock.detecta()
-
+    window.Piano.paywall.show('register')
     Tiny.setPiano(window.Piano)
     const Swg = new SwgModule()
 
