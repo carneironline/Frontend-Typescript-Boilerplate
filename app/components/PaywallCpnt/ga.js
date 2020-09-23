@@ -1,15 +1,12 @@
-import Helpers from '../Helpers'
-import PianoModule from '../Piano'
-import GAModule from '../GA'
+import Helpers from '../../scripts/Helpers'
+import PianoModule from '../../scripts/Piano'
+import GAModule from '../../scripts/GA'
 
 export default class PaywallGAModule {
     constructor() {
         this.Piano = new PianoModule()
         this.GA = new GAModule()
 
-        window.dataLayer = window.dataLayer || []
-        this.debug = window.tinyCpt.debug.paywall
-        this.disabled = false
         this.metrics = {
             paywall: {},
             fb: {
@@ -21,20 +18,17 @@ export default class PaywallGAModule {
     }
 
     paywallLoad() {
-        if (!this.Piano.isDefined) return
-
-        const _Piano = this.Piano.content
+        if (!window.Piano) return
 
         this.GA.setEvents(
             this.metrics.paywall.viewName,
             window.Piano.experience.name
         )
-        Helpers.setCookie(_Piano.variaveis.constante.cookie.RTIEX, true, 1)
+
+        Helpers.setCookie(window.Piano.variaveis.constante.cookie.RTIEX, true, 1)
     }
 
     trigger(element) {
-        if (this.disabled) return
-
         const resetUtp = element.dataset.gaResetutp || null
         const imageTop = element.dataset.gaImagePosition
         const label =
@@ -60,12 +54,7 @@ export default class PaywallGAModule {
     }
 
     paywallType() {
-        const type =
-            typeof window.tinyCpt.Piano !== 'undefined' &&
-                typeof window.tinyCpt.Piano.typePaywall !== 'undefined' &&
-                window.tinyCpt.Piano.typePaywall
-                ? window.tinyCpt.Piano.typePaywall.toLowerCase()
-                : 'paywall'
+        const type = window.tinyCpt?.Piano?.typePaywall ? window.tinyCpt.Piano.typePaywall.toLowerCase() : 'paywall'
 
         switch (type) {
             case 'register':
@@ -96,7 +85,7 @@ export default class PaywallGAModule {
 
     setDatalayer(data = {}) {
         if (Object.keys(data).length) {
-            dataLayer.push(data)
+            window.dataLayer.push(data)
         }
     }
 }

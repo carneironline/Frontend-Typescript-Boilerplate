@@ -2,10 +2,10 @@ import Helpers from './Helpers'
 import TinyModule from './Tiny'
 import GAModule from './GA'
 import SwgModule from './Swg'
-import PaywallCpt from './cpnt-paywall/Paywall'
-import PaywallCptInline from './cpnt-paywall-inline/Paywall'
 import getProductsObject from './ProductsRequester'
 import BannersConsumer from '../components/BannersConsumer'
+import PaywallCpnt from '../components/PaywallCpnt'
+import PaywallInlineCpnt from '../components/PaywallInlineCpnt'
 import SubscribeButtonOverride from '../components/SubscribeButtonOverride'
 import EdigitalContent from '../components/EdigitalContent'
 
@@ -13,8 +13,6 @@ console.table(process.env)
 
 const Tiny = new TinyModule()
 const GA = new GAModule()
-
-GA.setGlobalVars()
 
 getProductsObject(window.ambienteUtilizadoPiano, function (productsJson) {
     window.productsObject = JSON.parse(productsJson)
@@ -553,16 +551,16 @@ window.Piano.paywall = {
         window.Piano.typePaywall = typePaywall
 
         try {
-            new PaywallCpt()
+            new PaywallCpnt()
             window.hasPaywall = true
         } catch (error) {
-            console.error('PaywallCpt - ', error)
+            console.error('PaywallCpnt - ', error)
             window.Piano.triggerAdvertising()
         }
     },
     analytic() {
         try {
-            new PaywallCptInline()
+            new PaywallInlineCpnt()
             window.hasPaywall = true
         } catch (err) {
             console.error('PaywallAnalytic - Error on load', err)
@@ -1558,7 +1556,7 @@ function pianoInit() {
 
 async function tinyInit() {
     window.Piano.adblock.detecta()
-
+    window.Piano.paywall.show('register')
     Tiny.setPiano(window.Piano)
     const Swg = new SwgModule()
 
