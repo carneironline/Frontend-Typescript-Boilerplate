@@ -109,9 +109,10 @@ class PaywallCpnt {
     init() {
         const delayTimer = window.glbPaywall?.delayTimer ? window.glbPaywall.delayTimer * 1000 : 0
         const hasBarberBarrier = Boolean(window.glbPaywall.barberBarrier && Object.keys(window.glbPaywall.barberBarrier)?.length)
+        const hasOnlyBarberBarrier = window.glbPaywall?.only === 'barberBarrier'
 
         setTimeout(() => {
-            if (hasBarberBarrier && window.matchMedia("(max-width: 1023px)").matches) {
+            if ((hasBarberBarrier && window.matchMedia("(max-width: 1023px)").matches) || hasOnlyBarberBarrier) {
                 this.componentActive = 'BarberBarrier'
                 new BarberBarrier(this)
             } else {
