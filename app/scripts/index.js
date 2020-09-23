@@ -121,8 +121,7 @@ window.Piano.variaveis = {
         if (!id) {
             GA.setEventsError(
                 'ServiceID não definido.',
-                `${
-                document.location.href
+                `${document.location.href
                 } nomeProduto: ${window.Piano.variaveis.getNomeProduto()}`
             )
 
@@ -560,12 +559,12 @@ window.Piano.paywall = {
             console.error('PaywallAnalytic - Error on load', err)
         }
     },
-    naoBarreiraGcom() {
+    naoBarreira() {
         window.Piano.util.adicionarCss(
-            `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/nao-barreira-gcom/styles/styles.css'>`
+            `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/nao-barreira/styles/styles.css'>`
         )
         window.Piano.xmlHttpRequest.geraScriptNaPagina(
-            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/nao-barreira-gcom/scripts/index.js`
+            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/nao-barreira/scripts/index.js`
         )
     },
     barreiraBarbeira() {
@@ -770,8 +769,7 @@ window.Piano.adblock = {
         const setNptTechAdblockerCookie = function (adblocker) {
             const d = new Date()
             d.setTime(d.getTime() + 60 * 60 * 24 * 2 * 1000)
-            document.cookie = `__adblocker=${
-                adblocker ? 'true' : 'false'
+            document.cookie = `__adblocker=${adblocker ? 'true' : 'false'
                 }; expires=${d.toUTCString()}; path=/`
         }
         const script = document.createElement('script')
