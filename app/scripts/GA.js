@@ -1,4 +1,5 @@
 import ProductsModule from './Products'
+import Helper from "./Helpers"
 
 export default class GA {
     constructor() {
@@ -16,7 +17,7 @@ export default class GA {
     }
 
     setEvents(action, label, category = 'Piano', eventName = 'EventoGAPiano') {
-        console.log('log-ga-event', `action: ${action}`, `label: ${label}`, `category: ${category}`, `event: ${eventName}`)
+        console.log('%c log-ga-event ', Helper.consoleColor().header, `action: ${action}`, `label: ${label}`, `category: ${category}`, `event: ${eventName}`)
 
         if (this.Products.isProductValor)
             window._gaq.push(['_trackEvent', category, action, label, null, true])
@@ -30,7 +31,7 @@ export default class GA {
     }
 
     setEventsError(action, label, category = 'Piano Erro', eventName = 'EventoGAPiano') {
-        console.log('log-ga-error-event', `action: ${action}`, `label: ${label}`, `category: ${category}`, `event: ${eventName}`)
+        console.log('%c log-ga-error-event ', Helper.consoleColor().header, `action: ${action}`, `label: ${label}`, `category: ${category}`, `event: ${eventName}`)
 
         if (this.Products.isProductValor)
             window._gaq.push(['_trackEvent', category, action, label, null, true])

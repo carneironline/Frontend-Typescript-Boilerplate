@@ -697,13 +697,13 @@ window.Piano.checkPaywall = function (PianoResultEvents = null) {
 
 window.Piano.triggerAdvertising = function () {
     window.hasPaywall = false
-    console.log('event clearForAds')
+    console.log('%c dispatchEvent clearForAds ', Helpers.consoleColor().header)
     const event = new CustomEvent('clearForAds')
     document.dispatchEvent(event)
 }
 
 window.Piano.triggerPaywallOpened = function () {
-    console.log('event blockForAds')
+    console.log('%c dispatchEvent blockForAds ', Helpers.consoleColor().header)
     const event = new CustomEvent('blockForAds')
     document.dispatchEvent(event)
 }
@@ -1548,13 +1548,8 @@ function loadPianoExperiences() {
 function pianoInit() {
     window.Piano.checkPianoActive()
 
-    if (window.tinyCpt.debug.tiny) console.log('log-method', 'pianoInit')
-
     if (window.tinyCpt.isProduction && window.tinyCpt.Swg.global) {
         window.SWG.push((subscriptions) => {
-            if (window.tinyCpt.debug.swg)
-                console.log('log-subscriptions', subscriptions)
-
             window.swg = subscriptions
 
             subscriptions.setOnEntitlementsResponse((entitlementsPromise) => {
