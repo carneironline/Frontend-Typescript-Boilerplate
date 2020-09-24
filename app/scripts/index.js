@@ -1548,7 +1548,7 @@ function loadPianoExperiences() {
 function pianoInit() {
     window.Piano.checkPianoActive()
 
-    if (window.tinyCpt.Swg.global) {
+    if (window.tinyCpt.isProduction && window.tinyCpt.Swg.global) {
         window.SWG.push((subscriptions) => {
             window.swg = subscriptions
 
