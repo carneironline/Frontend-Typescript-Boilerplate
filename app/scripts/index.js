@@ -1083,7 +1083,7 @@ window.Piano.google = {
 
     showSaveSubscription(response) {
         if (
-            !(window.swgEntitlements && window.swgEntitlements.enablesThis()) &&
+            !(window.swgEntitlements && window.swgEntitlements?.enablesThis()) &&
             response.motivo === 'autorizado' &&
             !Helpers.getCookie(
                 window.Piano.variaveis.constante.SAVE_SUBSCRIPTION
@@ -1485,7 +1485,7 @@ window.Piano.construtor = {
             window.tinyCpt.isProduction &&
             typeof swg !== 'undefined' &&
             typeof window.swgEntitlements !== 'undefined' &&
-            window.swgEntitlements.enablesThis()
+            window.swgEntitlements?.enablesThis()
         ) {
             window.Piano.google.isSpecificGoogleUser(window.swgEntitlements)
 
