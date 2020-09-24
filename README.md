@@ -22,6 +22,7 @@ Biblioteca utilizada para salvar componentes usados pela Piano e suas [experiên
 - [Banners Consumer](#BannersConsumer)
 - [Edigital Content](#EdigitalContent)
 - [Paywall](#Paywall)
+- [Paywall Barber Barrier](#PaywallBarberBarrier)
 - [Subscribe Button](#SubscribeButton)
 
 ## <a name="Adblocks"></a>Adblocks
@@ -250,6 +251,54 @@ window.glbPaywall = {
 };
 
 Piano.paywall.show('register');
+```
+
+## <a name="PaywallBarberBarrier"></a>Paywall Barreira Barbeira
+
+Dentro do Paywall é possível utilizar o componente da barreira barbeira adicionando a propriedade **barberBarrier** ao objeto **window.glbPaywall.** Caso ele exista, quando a resolução for para desktop(min-width: 1024px), será chamada a barreira padrão, se for mobile será chamada a barreira barbeira.
+
+```jsx
+window.glbPaywall = {
+    title: 'Quer ler essa matéria? <br> Cadastre-se agora.',
+    loginPreText: 'Já é assinante?',
+    loginText: 'Faça seu login',
+    topMobi: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/banner_jornalismoSWG_mob.png',
+    topDesk: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/banner_jornalismoSWG_desk.png',
+    topLink: encodeURIComponent(window.location.origin + window.location.pathname + '?ofertaSwg=sim'),
+    leftMobi: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/register_jornalismoSWG_mob_01.png',
+    leftDesk: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/register_jornalismoSWG_desk_01.png',
+    leftLink: encodeURIComponent(window.location.origin + window.location.pathname + '?ofertaSwg=sim'),
+    rightMobi: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/register_jornalismoSWG_mob_02.png',
+    rightDesk: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/register_jornalismoSWG_desk_02.png',
+    rightLink: 'https://assinatura.oglobo.globo.com/Default.aspx?id_parc=6236&cod_prod=3140&funcionalidade_id=3981&cod_produto=OG03&tipo_cliente_id=1&campanha=nao&semtelaoferta=sim&utm_origem=siteoglobo&utm_midia=barreiraPaywall&utm_campanha=register_swg&url_retorno=' + encodeURIComponent(window.location.origin + window.location.pathname),
+    middleText: 'Lorem ipsum dollor si amet',
+    middleTextLink: '//google.com',
+    swg: {
+        utms: [
+            { name: 'Campanha', value: 'register_swg' },
+            { name: 'Midia', value: 'barreiraPaywall' },
+            { name: 'Origem', value: 'siteoglobo' }
+        ]
+    },
+    barberBarrier: {
+        imageTop: 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/mobi/exclusivo-top_01.jpg',
+        imageBottom: 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/mobi/b4_03.png',
+        url: '//google.com.br'
+    },
+};
+```
+
+É possível chamar somente a barreira barbeira utilizando a propriedade **only** passando o valor **barberBarrier**.
+
+```jsx
+window.glbPaywall = {
+    barberBarrier: {
+        imageTop: 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/mobi/exclusivo-top_01.jpg',
+        imageBottom: 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/mobi/b4_03.png',
+        url: '//google.com.br'
+    },
+    only: 'barberBarrier',
+};
 ```
 
 ## <a name="SubscribeButton"></a>SubscribeButton
