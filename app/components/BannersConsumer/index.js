@@ -12,7 +12,9 @@ class BannersConsumer {
         return {
             selector: '',
             imageDesk: '',
+            imageDeskMedia: '(min-width: 680px)',
             imageMobi: '',
+            imageMobiMedia: '',
             url: '#',
             target: '_self',
             magazineSubscribeBackground: '#fff',
@@ -81,8 +83,8 @@ class BannersConsumer {
             <a href="${config.url || '#'}" target="${config.target || ''}">
                 <picture>
                     <source srcset="${config.imageDesk
-            }" media='(min-width: 680px)' />
-                    <source srcset="${config.imageMobi}" />
+            }" media='${config.imageDeskMedia}' />
+                    <source srcset="${config.imageMobi}" media='${config.imageMobiMedia}'  />
                     <img
                         className="${this.classMain}-image"
                         src="${config.imageMobi}"
