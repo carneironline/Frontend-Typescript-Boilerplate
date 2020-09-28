@@ -1,101 +1,29 @@
-import PianoModule from '../Piano'
-import PaywallGAModule from './Paywall-ga'
-import SwgModule from '../Swg'
-import FbModule from '../FB'
+import PaywallGAModule from '../PaywallCpnt/ga'
+import SwgModule from '../../scripts/Swg'
+import FbModule from '../../scripts/FB'
 
-export default class PaywallCpt {
-    constructor() {
-        this.Piano = new PianoModule()
+class PaywallDefaultCpnt {
+    constructor(superClass) {
+        this.super = superClass
         this.GA = new PaywallGAModule()
         this.SWG = new SwgModule()
         this.FB = new FbModule(this.GA.metrics.fb)
 
         this.debug = window.tinyCpt.debug.paywall
-        this.domain = window.tinyCpt.isProduction
-            ? 'https://login.globo.com/'
-            : 'https://login.qa.globoi.com/'
-        this.setTemplateSettings(() => {
-            this.init()
-        })
 
-        window.PaywallCpt = this
-
-        window.tinyCpt.Paywall = {
-            domain: this.domain,
-            GA: this.GA.metrics,
-        }
+        this.init()
     }
 
-    setTemplateSettings(callback) {
-        const templateSettings = {
-            template: 'default',
-            productClass:
-                typeof nomeProdutoPiano !== 'undefined'
-                    ? `paywall-cpt-${window.nomeProdutoPiano}`
-                    : 'paywall-cpt-oglobo',
-            title: 'Esse conteúdo é o título.',
-            targetBlank: true,
-            topMobi: '',
-            topDesk: '',
-            topLink: '',
-            leftMobi: '',
-            leftDesk: '',
-            leftLink: '',
-            rightMobi: '',
-            rightDesk: '',
-            rightLink: '',
-            middlePreText: '',
-            middleText: '',
-            middleTextLink: '',
-            middleTextColor: '#000',
-            hideLogin: false,
-            loginText: 'Faça seu login',
-            loginPreText: 'Já possui cadastro?',
-        }
-
-        window.glbPaywall = { ...templateSettings, ...window.glbPaywall }
-
-        if (this.debug) this.setDebugTemplateSettings()
-
-        this.tagTitle()
-        this.tagLogin()
-        this.tagBannerTop()
-        this.tagBannerLeft()
-        this.tagBannerRight()
-        this.tagMiddleText()
-
-        callback()
-    }
-
-    setDebugTemplateSettings() {
-        const obj = {}
-        obj.topMobi = 'https://via.placeholder.com/300x150'
-        obj.topDesk = 'https://via.placeholder.com/804x128'
-        obj.topLink = 'https://google.com?l1'
-        obj.leftMobi = 'https://via.placeholder.com/300x500'
-        obj.leftDesk = 'https://via.placeholder.com/402x515'
-        obj.leftLink = 'https://google.com?l2'
-        obj.rightMobi = 'https://via.placeholder.com/300x500'
-        obj.rightDesk = 'https://via.placeholder.com/402x515'
-        obj.rightLink = 'https://google.com?l3'
-        obj.middlePreText = 'Voltar para a home da '
-        obj.middleText = 'globo.com'
-        obj.middleTextLink = '//google.com'
-        obj.middleTextColor = '#0669DE'
-        obj.hideLogin = false
-        obj.loginText = 'Faça seu login'
-        obj.loginPreText = 'Já possui cadastro?'
-
-        window.glbPaywall = { ...window.glbPaywall, ...obj }
+    init() {
+        this.createTemplate()
     }
 
     tagTitle() {
         if (!window.glbPaywall.title) {
-            window.glbPaywall.TagTitle = ''
-            return
+            return ''
         }
 
-        window.glbPaywall.TagTitle = `
+        return `
             <div class="paywall-cpt-wrap__text-head">
                 ${window.glbPaywall.title}
             </div>
@@ -104,40 +32,37 @@ export default class PaywallCpt {
 
     tagLogin() {
         if (
-            (!window.glbPaywall.loginText && !this.getUrlLoginRegister()) ||
+            (!window.glbPaywall.loginText && !this.super.loginUrl) ||
             window.glbPaywall.hideLogin
         ) {
-            window.glbPaywall.TagLogin = ''
-            return
+            return ''
         }
 
-        window.glbPaywall.TagLogin = `
+        return `
         <div class="paywall-cpt-wrap__text-center">
-            ${
-            window.glbPaywall.loginPreText
-            } <a href="${this.getUrlLoginRegister()}" data-is-login="true" data-ga-action="Clique em link" data-ga-label="Link 2 - Faça login" data-ga-resetUtp="false" data-href-target=" ${
-            window.glbPaywall.targetBlank
+            ${window.glbPaywall.loginPreText
+            } <a href="${this.super.loginUrl}" data-is-login="true" data-ga-action="Clique em link" data-ga-label="Link 2 - Faça login" data-ga-resetUtp="false" data-href-target=" ${window.glbPaywall.targetBlank
             } ">${window.glbPaywall.loginText}</a>
         </div>
         `
     }
 
     tagBannerTop() {
-        window.glbPaywall.TagBannerTop = `
-            <div class="paywall-cpt-wrap__top">
-                <a href="${window.glbPaywall.topLink}" data-ga-image-position="top" data-ga-action="Clique em link" data-ga-label="Link 1 -" data-ga-resetUtp="true" data-href-target="${window.glbPaywall.targetBlank}">
-                    <picture>
-                        <source srcset="${window.glbPaywall.topMobi}" media="(max-width: 1023px)">
-                        <source srcset="${window.glbPaywall.topDesk}" media="(min-width: 1024px)">
-                        <img src="${window.glbPaywall.topMobi}" />
-                    </picture>
-                </a>
-            </div>
-        `
+        return `
+        <div class="paywall-cpt-wrap__top">
+            <a href="${window.glbPaywall.topLink}" data-ga-image-position="top" data-ga-action="Clique em link" data-ga-label="Link 1 -" data-ga-resetUtp="true" data-href-target="${window.glbPaywall.targetBlank}">
+                <picture>
+                    <source srcset="${window.glbPaywall.topMobi}" media="(max-width: 1023px)">
+                    <source srcset="${window.glbPaywall.topDesk}" media="(min-width: 1024px)">
+                    <img src="${window.glbPaywall.topMobi}" />
+                </picture>
+            </a>
+        </div>
+    `
     }
 
     tagBannerLeft() {
-        window.glbPaywall.TagBannerLeft = `
+        return `
             <div class="paywall-cpt-wrap__left">
                 <a href="${window.glbPaywall.leftLink}" data-ga-action="Clique em link" data-ga-label="Link 4 - Banner oferta esquerda" data-ga-resetUtp="true" data-href-target="${window.glbPaywall.targetBlank}">
                     <picture>
@@ -151,7 +76,7 @@ export default class PaywallCpt {
     }
 
     tagBannerRight() {
-        window.glbPaywall.TagBannerRight = `
+        return `
             <div class="paywall-cpt-wrap__right">
                 <a href="${window.glbPaywall.rightLink}"  data-ga-action="Clique em link" data-ga-label="Link 5 - Banner oferta direita" data-ga-resetUtp="true" data-href-target="${window.glbPaywall.targetBlank}">
                     <picture>
@@ -169,11 +94,10 @@ export default class PaywallCpt {
             !window.glbPaywall.middleText &&
             !window.glbPaywall.middleTextLink
         ) {
-            window.glbPaywall.TagMiddleText = ''
-            return
+            return ''
         }
 
-        window.glbPaywall.TagMiddleText = `
+        return `
         <div class="paywall-cpt-wrap__text-center paywall-cpt-wrap__middle-text">
         ${window.glbPaywall.middlePreText}
             <a href="${window.glbPaywall.middleTextLink}" style="color:${window.glbPaywall.middleTextColor}; text-decoration:underline" data-ga-action="Clique em link" data-ga-label="Link 3 - Texto no" data-ga-resetUtp="true">
@@ -211,7 +135,7 @@ export default class PaywallCpt {
         this.elBody = document.body
         this.bodyAdjust()
         this.removeElements()
-        this.elBody.insertAdjacentHTML('beforeend', this.cssMinified)
+        this.elBody.insertAdjacentHTML('beforeend', this.addStyle)
         this.elBody.insertAdjacentHTML('beforeend', this.template)
         this.activeTemplateSettings()
 
@@ -256,6 +180,7 @@ export default class PaywallCpt {
                 'click',
                 function (evt) {
                     evt.preventDefault()
+
                     const isLogin = Boolean(element.dataset.isLogin) || false
                     const url = element.getAttribute('href') || false
                     const isUrlSwg = url
@@ -341,26 +266,6 @@ export default class PaywallCpt {
         )
     }
 
-    montaUrlRetorno() {
-        return encodeURIComponent(document.location.href)
-    }
-
-    getUrlLoginRegister(type = '') {
-        const serviceId = window.tinyCpt.Piano.variaveis.getServicoId() || null
-        let str = ''
-
-        if (!this.debug && this.Piano.isDefined) {
-            const urlRetorno = this.montaUrlRetorno()
-            if (type === 'register') {
-                str = `${this.domain}cadastro/${serviceId}?url=${urlRetorno}`
-            } else {
-                str = `${this.domain}login/${serviceId}?url=${urlRetorno}`
-            }
-        }
-
-        return str
-    }
-
     get templateVars() {
         return window.glbPaywall
     }
@@ -369,18 +274,18 @@ export default class PaywallCpt {
         const template = `
 	  <div class="paywall-cpt ${this.templateVars.productClass}"> 
         <div class="paywall-cpt-wrap">
-            ${this.templateVars.TagTitle}
+            ${this.tagTitle()}
             
-            ${this.templateVars.TagLogin}
+            ${this.tagLogin()}
 
-            ${this.templateVars.TagBannerTop}
+            ${this.tagBannerTop()}
 
-            ${this.templateVars.TagMiddleText}
+            ${this.tagMiddleText()}
             
             <div class="paywall-cpt-wrap__banners-bottom">
-            ${this.templateVars.TagBannerLeft}
+            ${this.tagBannerLeft()}
 
-            ${this.templateVars.TagBannerRight}
+            ${this.tagBannerRight()}
             </div>
 		</div>
 	  </div>
@@ -389,20 +294,102 @@ export default class PaywallCpt {
         return template
     }
 
-    get cssMinified() {
+    get addStyle() {
         return `<style>
-        .paywall-cpt{opacity:0;position:fixed;bottom:0;left:0;width:100vw;overflow:hidden;background:#fff;-webkit-box-shadow:0 0 70px 0 rgba(0,0,0,.5);box-shadow:0 0 70px 0 rgba(0,0,0,.5);font-family:Arial,Helvetica,sans-serif}.paywall-cpt,.paywall-cpt *{-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-transition:all .2s ease;transition:all .2s ease}.paywall-cpt a{font-weight:700;text-decoration:none}.paywall-cpt a:hover{text-decoration:underline}.paywall-cpt .paywall-cpt-wrap__text-head,.paywall-cpt a{color:#000}.paywall-cpt-oglobo .paywall-cpt-wrap__text-head,.paywall-cpt-oglobo a{color:#325e94}.paywall-cpt-wrap{position:relative;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding-bottom:20px}.paywall-cpt-wrap img{display:block;max-width:100%;height:auto}.paywall-cpt-wrap__top{padding-top:20px;padding-bottom:20px}.paywall-cpt-wrap__middle-text{padding-top:0!important}.paywall-cpt-wrap__text-head{width:100%;text-align:center;font-size:20px;font-weight:700;padding:20px 0 0}.paywall-cpt-wrap__text-center{width:100%;text-align:center;color:#767676;font-size:16px;padding:20px 0}.paywall-cpt-wrap__text-center.is-hide{padding-bottom:0}.paywall-cpt-wrap__banners-bottom{display:flex}@media screen and (min-width: 1024px){.paywall-cpt-wrap{-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}}@media screen and (max-width: 1023px){.paywall-cpt-wrap__banners-bottom{flex-direction:column}}
+        .paywall-cpt{
+            opacity:0;
+            position:fixed;
+            bottom:0;
+            left:0;
+            width:100vw;
+            overflow:hidden;
+            background:#fff;
+            -webkit-box-shadow:0 0 70px 0 rgba(0,0,0,.5);
+            box-shadow:0 0 70px 0 rgba(0,0,0,.5);
+            font-family:Arial,Helvetica,sans-serif
+        }
+        .paywall-cpt,.paywall-cpt *{
+            -webkit-box-sizing:border-box;
+            box-sizing:border-box;
+            -webkit-transition:all .2s ease;
+            transition:all .2s ease
+        }
+        .paywall-cpt a{
+            font-weight:700;
+            text-decoration:none
+        }
+        .paywall-cpt a:hover{
+            text-decoration:underline
+        }
+        .paywall-cpt .paywall-cpt-wrap__text-head,.paywall-cpt a{
+            color:#000
+        }
+        .paywall-cpt-oglobo .paywall-cpt-wrap__text-head,.paywall-cpt-oglobo a{
+            color:#325e94
+        }
+        .paywall-cpt-wrap{
+            position:relative;
+            display:flex;
+            -webkit-box-orient:vertical;
+            -webkit-box-direction:normal;
+            -ms-flex-direction:column;
+            flex-direction:column;
+            -webkit-box-align:center;
+            -ms-flex-align:center;
+            align-items:center;
+            padding-bottom:20px
+        }
+        .paywall-cpt-wrap img{
+            display:block;
+            max-width:100%;
+            height:auto
+        }
+        .paywall-cpt-wrap__top{
+            padding-top:20px;
+            padding-bottom:20px
+        }
+        .paywall-cpt-wrap__middle-text{
+            padding-top:0!important
+        }
+        .paywall-cpt-wrap__text-head{
+            width:100%;
+            text-align:center;
+            font-size:20px;
+            font-weight:700;
+            padding:20px 0 0
+        }
+        .paywall-cpt-wrap__text-center{
+            width:100%;
+            text-align:center;
+            color:#767676;
+            font-size:16px;
+            padding:20px 0
+        }
+        .paywall-cpt-wrap__text-center.is-hide{
+            padding-bottom:0
+        }
+        .paywall-cpt-wrap__banners-bottom{
+            display:flex
+        }
+        @media screen and (min-width: 1024px){
+            .paywall-cpt-wrap{
+                -ms-flex-wrap:wrap;
+                flex-wrap:wrap;
+                -webkit-box-orient:horizontal;
+                -webkit-box-direction:normal;
+                -webkit-box-pack:center;
+                -ms-flex-pack:center;
+                justify-content:center
+            }
+        }
+        @media screen and (max-width: 1023px){
+            .paywall-cpt-wrap__banners-bottom{
+                flex-direction:column
+            }
+        }
+        
 	  </style>`
     }
-
-    init() {
-        const delayTimer =
-            window.glbPaywall && window.glbPaywall.delayTimer
-                ? window.glbPaywall.delayTimer * 1000
-                : 0
-
-        setTimeout(() => {
-            this.createTemplate()
-        }, delayTimer)
-    }
 }
+
+export default PaywallDefaultCpnt

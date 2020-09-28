@@ -2,10 +2,10 @@ import Helpers from './Helpers'
 import TinyModule from './Tiny'
 import GAModule from './GA'
 import SwgModule from './Swg'
-import PaywallCpt from './cpnt-paywall/Paywall'
-import PaywallCptInline from './cpnt-paywall-inline/Paywall'
 import getProductsObject from './ProductsRequester'
 import BannersConsumer from '../components/BannersConsumer'
+import PaywallCpnt from '../components/PaywallCpnt'
+import PaywallInlineCpnt from '../components/PaywallInlineCpnt'
 import SubscribeButtonOverride from '../components/SubscribeButtonOverride'
 import EdigitalContent from '../components/EdigitalContent'
 
@@ -13,8 +13,6 @@ console.table(process.env)
 
 const Tiny = new TinyModule()
 const GA = new GAModule()
-
-GA.setGlobalVars()
 
 getProductsObject(window.ambienteUtilizadoPiano, function (productsJson) {
     window.productsObject = JSON.parse(productsJson)
@@ -121,8 +119,7 @@ window.Piano.variaveis = {
         if (!id) {
             GA.setEventsError(
                 'ServiceID não definido.',
-                `${
-                document.location.href
+                `${document.location.href
                 } nomeProduto: ${window.Piano.variaveis.getNomeProduto()}`
             )
 
@@ -545,16 +542,16 @@ window.Piano.paywall = {
         window.Piano.typePaywall = typePaywall
 
         try {
-            new PaywallCpt()
+            new PaywallCpnt()
             window.hasPaywall = true
         } catch (error) {
-            console.error('PaywallCpt - ', error)
+            console.error('PaywallCpnt - ', error)
             window.Piano.triggerAdvertising()
         }
     },
     analytic() {
         try {
-            new PaywallCptInline()
+            new PaywallInlineCpnt()
             window.hasPaywall = true
         } catch (err) {
             console.error('PaywallAnalytic - Error on load', err)
@@ -700,13 +697,13 @@ window.Piano.checkPaywall = function (PianoResultEvents = null) {
 
 window.Piano.triggerAdvertising = function () {
     window.hasPaywall = false
-    console.log('event clearForAds')
+    console.log('%c dispatchEvent clearForAds ', Helpers.consoleColor().header)
     const event = new CustomEvent('clearForAds')
     document.dispatchEvent(event)
 }
 
 window.Piano.triggerPaywallOpened = function () {
-    console.log('event blockForAds')
+    console.log('%c dispatchEvent blockForAds ', Helpers.consoleColor().header)
     const event = new CustomEvent('blockForAds')
     document.dispatchEvent(event)
 }
@@ -770,8 +767,7 @@ window.Piano.adblock = {
         const setNptTechAdblockerCookie = function (adblocker) {
             const d = new Date()
             d.setTime(d.getTime() + 60 * 60 * 24 * 2 * 1000)
-            document.cookie = `__adblocker=${
-                adblocker ? 'true' : 'false'
+            document.cookie = `__adblocker=${adblocker ? 'true' : 'false'
                 }; expires=${d.toUTCString()}; path=/`
         }
         const script = document.createElement('script')
@@ -1087,7 +1083,7 @@ window.Piano.google = {
 
     showSaveSubscription(response) {
         if (
-            !(window.swgEntitlements && window.swgEntitlements.enablesThis()) &&
+            !(window.swgEntitlements && window.swgEntitlements?.enablesThis()) &&
             response.motivo === 'autorizado' &&
             !Helpers.getCookie(
                 window.Piano.variaveis.constante.SAVE_SUBSCRIPTION
@@ -1489,7 +1485,7 @@ window.Piano.construtor = {
             window.tinyCpt.isProduction &&
             typeof swg !== 'undefined' &&
             typeof window.swgEntitlements !== 'undefined' &&
-            window.swgEntitlements.enablesThis()
+            window.swgEntitlements?.enablesThis()
         ) {
             window.Piano.google.isSpecificGoogleUser(window.swgEntitlements)
 
@@ -1552,13 +1548,8 @@ function loadPianoExperiences() {
 function pianoInit() {
     window.Piano.checkPianoActive()
 
-    if (window.tinyCpt.debug.tiny) console.log('log-method', 'pianoInit')
-
     if (window.tinyCpt.isProduction && window.tinyCpt.Swg.global) {
         window.SWG.push((subscriptions) => {
-            if (window.tinyCpt.debug.swg)
-                console.log('log-subscriptions', subscriptions)
-
             window.swg = subscriptions
 
             subscriptions.setOnEntitlementsResponse((entitlementsPromise) => {
@@ -1590,7 +1581,6 @@ function pianoInit() {
 
 async function tinyInit() {
     window.Piano.adblock.detecta()
-
     Tiny.setPiano(window.Piano)
     const Swg = new SwgModule()
 
