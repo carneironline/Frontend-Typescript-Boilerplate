@@ -1,4 +1,5 @@
 (function () {
+	window.dataLayer = window.dataLayer || []
 	comunicacaoFechada = document.createElement('div');
 	comunicacaoFechada.id = 'comunicacaoFechada';
 	comunicacaoFechada.innerHTML = "" +
@@ -17,6 +18,11 @@
 
 	if (window.textoComunicacao) {
 		document.querySelector(".comunicacao-piano p").innerHTML = textoComunicacao;
+	}
+
+
+	function setGa(evtName, evtCategory, evtAction, evtLabel) {
+		dataLayer.push({ 'event': evtName, 'eventoGACategoria': evtCategory, 'eventoGAAcao': evtAction, 'eventoGARotulo': evtLabel });
 	}
 
 	function setLoadGa() {
