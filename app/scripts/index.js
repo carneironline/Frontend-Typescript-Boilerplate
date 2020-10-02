@@ -557,20 +557,12 @@ window.Piano.paywall = {
             console.error('PaywallAnalytic - Error on load', err)
         }
     },
-    naoBarreiraGcom() {
+    naoBarreira() {
         window.Piano.util.adicionarCss(
-            `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/nao-barreira-gcom/styles/styles.css'>`
+            `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/nao-barreira/styles/styles.css'>`
         )
         window.Piano.xmlHttpRequest.geraScriptNaPagina(
-            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/nao-barreira-gcom/scripts/index.js`
-        )
-    },
-    barreiraBarbeira() {
-        window.Piano.util.adicionarCss(
-            `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/barreira-barbeira/styles/styles.css'>`
-        )
-        window.Piano.xmlHttpRequest.geraScriptNaPagina(
-            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/barreira-barbeira/scripts/index.js`
+            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/nao-barreira/scripts/index.js`
         )
     },
 }
