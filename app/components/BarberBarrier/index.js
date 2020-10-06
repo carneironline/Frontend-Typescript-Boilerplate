@@ -34,10 +34,10 @@ class BarberBarrier {
             <div class="${this.classMain}"
         >
             <div class="box-paywall-image">
-                <a class="box-paywall-login-url" href="${this.super.loginUrl}">
+                <a class="box-paywall-login-url" href="${window.glbPaywall.barberBarrier.urlTop}">
                     <img class="box-paywall-top" src="${window.glbPaywall.barberBarrier.imageTop}" alt="">
                 </a>
-                <a class="box-paywall-promo-url" href="">
+                <a class="box-paywall-promo-url" href="${window.glbPaywall.barberBarrier.urlBottom}">
                     <img class="box-paywall-bottom" src="${window.glbPaywall.barberBarrier.imageBottom}" alt="">
                 </a>
             </div>
