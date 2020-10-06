@@ -11,8 +11,8 @@ import EdigitalContent from '../components/EdigitalContent'
 
 console.table(process.env)
 
-const Tiny = new TinyModule()
-const GA = new GAModule()
+const Tiny = new TinyModule() 
+const GA = new GAModule()  
 
 getProductsObject(window.ambienteUtilizadoPiano, function (productsJson) {
     window.productsObject = JSON.parse(productsJson)
