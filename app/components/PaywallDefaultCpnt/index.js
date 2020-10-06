@@ -8,7 +8,7 @@ class PaywallDefaultCpnt {
         this.GA = new PaywallGAModule()
         this.SWG = new SwgModule()
         this.FB = new FbModule(this.GA.metrics.fb)
-
+        this.elBody = document.body
         this.debug = window.tinyCpt.debug.paywall
 
         this.init()
@@ -132,7 +132,6 @@ class PaywallDefaultCpnt {
     }
 
     createTemplate() {
-        this.elBody = document.body
         this.bodyAdjust()
         this.removeElements()
         this.elBody.insertAdjacentHTML('beforeend', this.addStyle)
@@ -272,16 +271,16 @@ class PaywallDefaultCpnt {
 
     get template() {
         const template = `
-	  <div class="paywall-cpt ${this.templateVars.productClass}"> 
+	  <div class="paywall-cpt ${this.templateVars.productClass}">
         <div class="paywall-cpt-wrap">
             ${this.tagTitle()}
-            
+
             ${this.tagLogin()}
 
             ${this.tagBannerTop()}
 
             ${this.tagMiddleText()}
-            
+
             <div class="paywall-cpt-wrap__banners-bottom">
             ${this.tagBannerLeft()}
 
@@ -387,7 +386,7 @@ class PaywallDefaultCpnt {
                 flex-direction:column
             }
         }
-        
+
 	  </style>`
     }
 }
