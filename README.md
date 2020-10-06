@@ -282,8 +282,9 @@ window.glbPaywall = {
     },
     barberBarrier: {
         imageTop: 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/mobi/exclusivo-top_01.jpg',
+        urlTop: '//facebook.com.br',
         imageBottom: 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/mobi/b4_03.png',
-        url: '//google.com.br'
+        urlBottom: '//google.com.br'
     },
 };
 ```
@@ -294,8 +295,9 @@ window.glbPaywall = {
 window.glbPaywall = {
     barberBarrier: {
         imageTop: 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/mobi/exclusivo-top_01.jpg',
+        urlTop: '//facebook.com.br',
         imageBottom: 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/mobi/b4_03.png',
-        url: '//google.com.br'
+        urlBottom: '//google.com.br'
     },
     only: 'barberBarrier',
 };
