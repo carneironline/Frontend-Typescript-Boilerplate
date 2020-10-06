@@ -9,7 +9,7 @@ export default class GA {
         this.setGlobalVars()
     }
 
-    has_gaq() {
+    hasGaq() {
         return this.Products.isTealiumProducts && typeof window._gaq !== 'undefined'
     }
 
@@ -23,7 +23,7 @@ export default class GA {
     setEvents(action, label, category = 'Piano', eventName = 'EventoGAPiano') {
         console.log('%c log-ga-event ', Helper.consoleColor().header, `action: ${action}`, `label: ${label}`, `category: ${category}`, `event: ${eventName}`)
  
-        if (this.has_gaq())
+        if (this.hasGaq())
             window._gaq.push(['_trackEvent', category, action, label, null, true])
 
         window.dataLayer.push({
