@@ -20,9 +20,9 @@ export default class GA {
             window._gaq = window._gaq || [] 
     }
 
-    setEvents(action, label, category = 'Piano', eventName = 'EventoGAPiano', calledBy = '') {
-        console.log('%c log-ga-event ', Helper.consoleColor().header, calledBy, `action: ${action}`, `label: ${label}`, `category: ${category}`, `event: ${eventName}`)
- 
+    setEvents(calledBy = '', action, label, category = 'Piano', eventName = 'EventoGAPiano') {
+        console.log('%c log-ga-event ', Helper.consoleColor().header, `calledBy: ${calledBy}`, `action: ${action}`, `label: ${label}`, `category: ${category}`, `event: ${eventName}`)
+
         if (this.has_gaq())
             window._gaq.push(['_trackEvent', category, action, label, null, true])
 
@@ -34,10 +34,10 @@ export default class GA {
         })
     }
 
-    setEventsError(action, label, category = 'Piano Erro', eventName = 'EventoGAPiano', calledBy = '') {
-        console.log('%c log-ga-error-event ', Helper.consoleColor().header, calledBy, `action: ${action}`, `label: ${label}`, `category: ${category}`, `event: ${eventName}`)
+    setEventsError(calledBy = '', action, label, category = 'Piano Erro', eventName = 'EventoGAPiano') {
+        console.log('%c log-ga-error-event ', Helper.consoleColor().header, `calledBy: ${calledBy}`, `action: ${action}`, `label: ${label}`, `category: ${category}`, `event: ${eventName}`)
 
-        if (this.Products.isProductValor)
+        if (this.has_gaq())
             window._gaq.push(['_trackEvent', category, action, label, null, true])
 
         window.dataLayer.push({
