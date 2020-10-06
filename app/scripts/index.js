@@ -114,7 +114,8 @@ window.Piano.variaveis = {
         if (!window.nomeProdutoPiano) {
             GA.setEventsError(
                 'Nome do produto não definido.',
-                window.location.href
+                window.location.href,
+                'getNomeProduto()'
             )
             return
         }
@@ -129,7 +130,8 @@ window.Piano.variaveis = {
             GA.setEventsError(
                 'ServiceID não definido.',
                 `${document.location.href
-                } nomeProduto: ${window.Piano.variaveis.getNomeProduto()}`
+                } nomeProduto: ${window.Piano.variaveis.getNomeProduto()}`,
+                'getServicoId()'
             )
 
             return '0000'
@@ -145,7 +147,8 @@ window.Piano.variaveis = {
         if (!codProd) {
             GA.setEventsError(
                 'Ao obter código do produto',
-                `${nomeProduto} - ${document.location.href}`
+                `${nomeProduto} - ${document.location.href}`,
+                'getCodigoProduto()'
             )
 
             window.Piano.autenticacao.defineUsuarioPiano(
@@ -413,7 +416,8 @@ window.Piano.metricas = {
                     window.Piano.metricas.identificarPassagemRegister(
                         window.regrasTiny
                     ),
-                    window.Piano.metricas.montaRotuloGA()
+                    window.Piano.metricas.montaRotuloGA(),
+                    'executaAposPageview'
                 )
             window.executouPageview = true
         }
@@ -515,7 +519,7 @@ window.Piano.register = {
             `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/register-piano/${versao}/scripts/nova-tela-register.js`
         )
         Helpers.setCookie(window.Piano.variaveis.constante.cookie.UTP, '', -1)
-        GA.setEvents('Exibicao Register', window.Piano.metricas.montaRotuloGA())
+        GA.setEvents('Exibicao Register', window.Piano.metricas.montaRotuloGA(), 'window.Piano.register.mostrarBarreira')
         Helpers.setCookie(
             window.Piano.variaveis.constante.cookie.RTIEX,
             true,
@@ -530,7 +534,7 @@ window.Piano.helper = {
             'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/helper/register.js'
         )
         Helpers.setCookie(window.Piano.variaveis.constante.cookie.UTP, '', -1)
-        GA.setEvents('Exibicao Register', window.Piano.metricas.montaRotuloGA())
+        GA.setEvents('Exibicao Register', window.Piano.metricas.montaRotuloGA(), 'window.Piano.helper.mostrarBarreira')
         Helpers.setCookie(
             window.Piano.variaveis.constante.cookie.RTIEX,
             true,
@@ -541,7 +545,7 @@ window.Piano.helper = {
 
 window.Piano.paywall = {
     redirecionarBarreira(url) {
-        GA.setEvents('Barreira', window.Piano.metricas.montaRotuloGA())
+        GA.setEvents('Barreira', window.Piano.metricas.montaRotuloGA(), 'window.Piano.paywall.redirecionarBarreira')
         Helpers.setCookie(window.Piano.variaveis.constante.cookie.UTP, '', -1)
         setTimeout(function () {
             window.location.href = url
@@ -736,7 +740,8 @@ window.Piano.registerPaywall = {
             ) {
                 GA.setEvents(
                     'Exibicao Register',
-                    window.Piano.metricas.montaRotuloGA()
+                    window.Piano.metricas.montaRotuloGA(),
+                    'window.Piano.registerPaywall.mostrarBarreira'
                 )
                 Helpers.setCookie(
                     window.Piano.variaveis.constante.cookie.RTIEX,
@@ -744,7 +749,7 @@ window.Piano.registerPaywall = {
                     1
                 )
             } else {
-                GA.setEvents('Barreira', window.Piano.metricas.montaRotuloGA())
+                GA.setEvents('Barreira', window.Piano.metricas.montaRotuloGA(), 'window.Piano.registerPaywall.mostrarBarreira')
             }
         }
     },
@@ -839,7 +844,8 @@ window.Piano.xmlHttpRequest = {
                 } else {
                     GA.setEventsError(
                         'Erro na função gerar script na página.',
-                        `url: ${urlScript} StatusErro: ${this.status} Stack: ${this.statusText}`
+                        `url: ${urlScript} StatusErro: ${this.status} Stack: ${this.statusText}`,
+                        'geraScriptNaPagina'
                     )
                 }
             }
@@ -883,12 +889,14 @@ window.Piano.xmlHttpRequest = {
             ) {
                 GA.setEventsError(
                     'Api de inadimplente',
-                    `${xhr.status} - ${hrefAssinaturaInadimplente}`
+                    `${xhr.status} - ${hrefAssinaturaInadimplente}`,
+                    'fazRequisicaoBarramentoApiObterAssinaturaInadimplente'
                 )
             } else {
                 GA.setEventsError(
                     'Api de inadimplente',
-                    `${'Status Desconhecido - '}${hrefAssinaturaInadimplente}`
+                    `${'Status Desconhecido - '}${hrefAssinaturaInadimplente}`,
+                    'fazRequisicaoBarramentoApiObterAssinaturaInadimplente'
                 )
             }
         }
@@ -992,7 +1000,8 @@ window.Piano.xmlHttpRequest = {
                         } catch (error) {
                             GA.setEventsError(
                                 'Erro ao chamar a função showSaveSubscription do Aldebaran.',
-                                `URL: ${document.location.href} GLBID: ${glbid} Erro: ${error}`
+                                `URL: ${document.location.href} GLBID: ${glbid} Erro: ${error}`,
+                                'fazRequisicaoBarramentoApiAutorizacaoAcesso'
                             )
                         }
                     }
@@ -1009,7 +1018,8 @@ window.Piano.xmlHttpRequest = {
             .catch(() => {
                 GA.setEventsError(
                     'API de autorizacao de acesso',
-                    `${xhr.status} - ${glbid}`
+                    `${xhr.status} - ${glbid}`,
+                    'fazRequisicaoBarramentoApiAutorizacaoAcesso'
                 )
 
                 window.Piano.autenticacao.defineUsuarioPiano(
@@ -1056,7 +1066,8 @@ window.Piano.google = {
         } catch (error) {
             GA.setEventsError(
                 'Erro ao executar o Aldebaran',
-                `Error: ${error} - Entitlements: ${window.swgEntitlements.entitlements[0].subscriptionToken}`
+                `Error: ${error} - Entitlements: ${window.swgEntitlements.entitlements[0].subscriptionToken}`,
+                'isSpecificGoogleUser'
             )
         }
     },
@@ -1179,14 +1190,16 @@ window.Piano.util = {
         ) {
             GA.setEventsError(
                 'Variavel tipoConteudoPiano nao esta definida',
-                document.location.href
+                document.location.href,
+                'temVariaveisObrigatorias'
             )
             return false
         }
         if (typeof window.Piano.variaveis.getNomeProduto() === 'undefined') {
             GA.setEventsError(
                 'Variavel nomeProdutoPiano nao esta definida',
-                document.location.href
+                document.location.href,
+                'temVariaveisObrigatorias'
             )
             return false
         }
@@ -1526,7 +1539,8 @@ function pianoInit() {
                         } catch (error) {
                             GA.setEventsError(
                                 'Piano nao foi carregada corretamente!',
-                                document.location.href
+                                document.location.href,
+                                'pianoInit'
                             )
                         }
                     }
@@ -1534,7 +1548,7 @@ function pianoInit() {
             })
         })
     } else {
-        GA.setEventsError('Entitlements não carregado', document.location.href)
+        GA.setEventsError('Entitlements não carregado', document.location.href, 'pianoInit')
         if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
             window.tinyCpt.Piano.construtor.initTp(() => loadPianoExperiences())
         }
