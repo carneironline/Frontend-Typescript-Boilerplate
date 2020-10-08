@@ -21,8 +21,9 @@ export default class PaywallGAModule {
         if (!window.Piano) return
 
         this.GA.setEvents(
+            'paywallLoad',
             this.metrics.paywall.viewName,
-            window.Piano.experience.name
+            window.Piano.experience.name,
         )
 
         Helpers.setCookie(window.Piano.variaveis.constante.cookie.RTIEX, true, 1)

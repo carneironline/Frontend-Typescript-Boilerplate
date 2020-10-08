@@ -9,17 +9,21 @@ export default class GA {
         this.setGlobalVars()
     }
 
+    hasGaq() {
+        return this.Products.isTealiumProducts && typeof window._gaq !== 'undefined'
+    }
+
     setGlobalVars() {
         window.dataLayer = window.dataLayer || []
 
-        if (this.Products.isProductValor && typeof _gaq === 'undefined')
+        if (this.Products.isTealiumProducts)
             window._gaq = window._gaq || []
     }
 
-    setEvents(action, label, category = 'Piano', eventName = 'EventoGAPiano') {
-        console.log('%c log-ga-event ', Helper.consoleColor().header, `action: ${action}`, `label: ${label}`, `category: ${category}`, `event: ${eventName}`)
+    setEvents(calledBy = '', action, label, category = 'Piano', eventName = 'EventoGAPiano') {
+        console.log('%c log-ga-event ', Helper.consoleColor().header, `calledBy: ${calledBy}`, `action: ${action}`, `label: ${label}`, `category: ${category}`, `event: ${eventName}`)
 
-        if (this.Products.isProductValor)
+        if (this.hasGaq())
             window._gaq.push(['_trackEvent', category, action, label, null, true])
 
         window.dataLayer.push({
@@ -30,10 +34,10 @@ export default class GA {
         })
     }
 
-    setEventsError(action, label, category = 'Piano Erro', eventName = 'EventoGAPiano') {
-        console.log('%c log-ga-error-event ', Helper.consoleColor().header, `action: ${action}`, `label: ${label}`, `category: ${category}`, `event: ${eventName}`)
+    setEventsError(calledBy = '', action, label, category = 'Piano Erro', eventName = 'EventoGAPiano') {
+        console.log('%c log-ga-error-event ', Helper.consoleColor().header, `calledBy: ${calledBy}`, `action: ${action}`, `label: ${label}`, `category: ${category}`, `event: ${eventName}`)
 
-        if (this.Products.isProductValor)
+        if (this.hasGaq())
             window._gaq.push(['_trackEvent', category, action, label, null, true])
 
         window.dataLayer.push({

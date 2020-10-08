@@ -22,7 +22,15 @@ export default class Products {
     }
 
     get isProductValor() {
-        return !!(this.productName && this.productName === 'valor')
+        return this.productName === 'valor'
+    }
+
+    get isAutoEsporte() {
+        return this.productName  === 'auto-esporte' 
+    }
+
+    get isTealiumProducts() {
+        return (this.isProductValor || this.isAutoEsporte)
     }
 
     get productId() {
