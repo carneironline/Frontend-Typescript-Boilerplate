@@ -9,7 +9,7 @@ export default class GA {
         this.setGlobalVars()
     }
 
-    has_gaq() {
+    hasGaq() {
         return this.Products.isTealiumProducts && typeof window._gaq !== 'undefined'
     }
 
@@ -17,13 +17,13 @@ export default class GA {
         window.dataLayer = window.dataLayer || []
 
         if (this.Products.isTealiumProducts)
-            window._gaq = window._gaq || [] 
+            window._gaq = window._gaq || []
     }
 
     setEvents(calledBy = '', action, label, category = 'Piano', eventName = 'EventoGAPiano') {
         console.log('%c log-ga-event ', Helper.consoleColor().header, `calledBy: ${calledBy}`, `action: ${action}`, `label: ${label}`, `category: ${category}`, `event: ${eventName}`)
 
-        if (this.has_gaq())
+        if (this.hasGaq())
             window._gaq.push(['_trackEvent', category, action, label, null, true])
 
         window.dataLayer.push({
@@ -37,7 +37,7 @@ export default class GA {
     setEventsError(calledBy = '', action, label, category = 'Piano Erro', eventName = 'EventoGAPiano') {
         console.log('%c log-ga-error-event ', Helper.consoleColor().header, `calledBy: ${calledBy}`, `action: ${action}`, `label: ${label}`, `category: ${category}`, `event: ${eventName}`)
 
-        if (this.has_gaq())
+        if (this.hasGaq())
             window._gaq.push(['_trackEvent', category, action, label, null, true])
 
         window.dataLayer.push({
