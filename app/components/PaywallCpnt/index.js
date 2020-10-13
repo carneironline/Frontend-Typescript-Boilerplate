@@ -76,8 +76,26 @@ class PaywallCpnt {
         return str
     }
 
+    getLogoutUrl() {
+        const loginDomain = window.tinyCpt.isProduction
+            ? 'https://login.globo.com/'
+            : 'https://login.qa.globoi.com/'
+        const serviceId = window.tinyCpt.Piano?.variaveis?.getServicoId() || null
+        const urlReturn = encodeURIComponent(document.location.href)
+        let str = ''
+
+        if (serviceId)
+            str = `${loginDomain}logout?url=${loginDomain}login/${serviceId}?url=${urlReturn}`
+
+        return str
+    }
+
     get loginUrl() {
         return this.getLoginUrl()
+    }
+
+    get logoutUrl() {
+        return this.getLogoutUrl()
     }
 
     get registerUrl() {
