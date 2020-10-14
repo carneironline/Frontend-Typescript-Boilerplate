@@ -1,6 +1,7 @@
 import PaywallGAModule from '../PaywallCpnt/ga'
 import SwgModule from '../../scripts/Swg'
 import FbModule from '../../scripts/FB'
+import Helpers from '../../scripts/Helpers'
 
 class PaywallDefaultCpnt {
     constructor(superClass) {
@@ -30,10 +31,45 @@ class PaywallDefaultCpnt {
         `
     }
 
+    tagLogout() {
+        if (
+            (!window.glbPaywall.logoutText) ) {
+            return ''
+        }
+
+        return `
+        <div class="paywall-cpt-wrap__text-center">
+            <a id="PaywallDefaultCpntLogout" href="${this.super.logoutUrl}" data-is-logout="true" data-ga-action="Clique em link" data-ga-label="Link 2 - Faça logout" data-ga-resetUtp="false" data-href-target=" ${window.glbPaywall.targetBlank} ">
+                ${window.glbPaywall.logoutText}
+            </a>
+        </div>
+        `
+    }
+
+    redirectLogout() {
+        const logout = document.querySelector('#PaywallDefaultCpntLogout')
+
+        if(!logout) return null
+        
+        logout.addEventListener('click', redirect)
+        
+        function redirect(evt) {
+            evt.preventDefault()
+            evt.stopImmediatePropagation()
+            
+            Helpers.deleteCookie('GLBID')
+            Helpers.deleteCookie('_utp')
+
+            setTimeout(() => {
+                location.href = evt.target.href
+            }, 500)
+        }
+    }
+
     tagLogin() {
         if (
             (!window.glbPaywall.loginText && !this.super.loginUrl) ||
-            window.glbPaywall.hideLogin
+            window.glbPaywall.hideLogin || window.glbPaywall.logoutText
         ) {
             return ''
         }
@@ -143,6 +179,8 @@ class PaywallDefaultCpnt {
                 this.activeTemplateSettings()
             })
         }
+
+        this.redirectLogout()
 
         this.GA.paywallLoad()
     }
@@ -274,8 +312,10 @@ class PaywallDefaultCpnt {
 	  <div class="paywall-cpt ${this.templateVars.productClass}">
         <div class="paywall-cpt-wrap">
             ${this.tagTitle()}
-
+            
             ${this.tagLogin()}
+            
+            ${this.tagLogout()}
 
             ${this.tagBannerTop()}
 
