@@ -60,7 +60,7 @@ export default {
         'cod_prod': 'gq'
     },
     'crescer': {
-        'id': '6697',
+        'id': '6620',
         'cod_prod': 'crescer'
     },
     'galileu': {
@@ -128,7 +128,7 @@ export default {
         'cod_prod': 'gq'
     },
     'edigital-crescer': {
-        'id': '6697',
+        'id': '6620',
         'cod_prod': 'crescer'
     },
     'edigital-galileu': {
