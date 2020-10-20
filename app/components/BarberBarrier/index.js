@@ -33,12 +33,12 @@ class BarberBarrier {
         return `
             <div class="${this.classMain}"
         >
-            <div class="box-paywall-image">
-                <a class="box-paywall-login-url" href="${window.glbPaywall.barberBarrier.urlTop}">
-                    <img class="box-paywall-top" src="${window.glbPaywall.barberBarrier.imageTop}" alt="">
+            <div class="${this.classMain}-image">
+                <a class="${this.classMain}-login-url" href="${window.glbPaywall.barberBarrier.urlTop}">
+                    <img class="${this.classMain}-top" src="${window.glbPaywall.barberBarrier.imageTop}" alt="">
                 </a>
-                <a class="box-paywall-promo-url" href="${window.glbPaywall.barberBarrier.urlBottom}">
-                    <img class="box-paywall-bottom" src="${window.glbPaywall.barberBarrier.imageBottom}" alt="">
+                <a class="${this.classMain}-promo-url" href="${window.glbPaywall.barberBarrier.urlBottom}">
+                    <img class="${this.classMain}-bottom" src="${window.glbPaywall.barberBarrier.imageBottom}" alt="">
                 </a>
             </div>
         </div>
@@ -64,23 +64,10 @@ class BarberBarrier {
             background: rgba(0, 0, 0, 0.7); 
         }
 
-        ${this.styleClassMain} a, picture { 
-        }
 
         ${this.styleClassMain} * {-webkit-transition: all .3s ease-in-out;transition: all .3s ease-in-out; }
 
-        ${this.styleClassMain} .back-drop {
-            background: rgba(0, 0, 0, 0.7); 
-            position: fixed; 
-            z-index: 99999998; 
-            width: 100%; 
-            height: 100%; 
-            top: 0px; 
-            left: 0px; 
-            display:none;
-        }
-
-        ${this.styleClassMain} .box-paywall-image {
+        ${this.styleClassMain}-image {
             display: flex;
             flex-direction: column;
             justify-content: center; 
@@ -92,13 +79,13 @@ class BarberBarrier {
             padding: 0 20px;
         }
 
-        ${this.styleClassMain} .box-paywall-login-url {
+        ${this.styleClassMain}-login-url {
             display: flex;
             flex-direction: column;
         }
 
-        ${this.styleClassMain} .box-paywall-top, 
-        ${this.styleClassMain} .box-paywall-bottom {
+        ${this.styleClassMain}-top, 
+        ${this.styleClassMain}-bottom {
             display: block;
             border: none;
             width: 100%;
