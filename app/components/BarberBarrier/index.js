@@ -41,7 +41,6 @@ class BarberBarrier {
                     <img class="box-paywall-bottom" src="${window.glbPaywall.barberBarrier.imageBottom}" alt="">
                 </a>
             </div>
-            <div class='back-drop'></div>
         </div>
         `
     }
@@ -53,7 +52,7 @@ class BarberBarrier {
             display: flex;
             flex-direction: column;
             justify-content: center; 
-            align-content: center;
+            align-items: center;
             width: 100vw; 
             height: 100vh;
             position: fixed; 
@@ -85,7 +84,7 @@ class BarberBarrier {
             display: flex;
             flex-direction: column;
             justify-content: center; 
-            align-content: center;
+            align-items: center;
             max-width: 400px; 
             margin: 0 auto; 
             border-radius: 4px;
@@ -96,14 +95,6 @@ class BarberBarrier {
         ${this.styleClassMain} .box-paywall-login-url {
             display: flex;
             flex-direction: column;
-        }
-
-        ${this.styleClassMain} .box-paywall-login-url .box-paywall-top { 
-        
-        }
-
-        ${this.styleClassMain} .box-paywall-promo-url .box-paywall-bottom { 
-       
         }
 
         ${this.styleClassMain} .box-paywall-top, 
