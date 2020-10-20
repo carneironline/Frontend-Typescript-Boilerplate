@@ -49,11 +49,25 @@ class BarberBarrier {
     style() {
         return `
         <style>
-        ${this.styleClassMain} a, picture { 
+        ${this.styleClassMain} { 
             display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-content: center;
+            width: 100vw; 
+            height: 100vh;
+            position: fixed; 
+            z-index: 99999999; 
+            background: transparent; 
+            box-sizing: border-box; 
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.7); 
         }
 
-        
+        ${this.styleClassMain} a, picture { 
+        }
+
         ${this.styleClassMain} * {-webkit-transition: all .3s ease-in-out;transition: all .3s ease-in-out; }
 
         ${this.styleClassMain} .back-drop {
@@ -64,6 +78,7 @@ class BarberBarrier {
             height: 100%; 
             top: 0px; 
             left: 0px; 
+            display:none;
         }
 
         ${this.styleClassMain} .box-paywall-image {
@@ -71,36 +86,32 @@ class BarberBarrier {
             flex-direction: column;
             justify-content: center; 
             align-content: center;
-            width: 100%; 
-            max-width: 300px; 
+            max-width: 400px; 
             margin: 0 auto; 
-            position: fixed; 
-            z-index: 99999999; 
-            background: transparent; 
-            box-sizing: border-box; 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%); 
             border-radius: 4px;
+            overflow: hidden;
+            padding: 0 20px;
         }
 
         ${this.styleClassMain} .box-paywall-login-url {
-        display: flex;
-        flex-direction: column;
+            display: flex;
+            flex-direction: column;
         }
 
         ${this.styleClassMain} .box-paywall-login-url .box-paywall-top { 
-        max-width: 300px;
+        
         }
 
         ${this.styleClassMain} .box-paywall-promo-url .box-paywall-bottom { 
-        max-width: 300px;
+       
         }
 
         ${this.styleClassMain} .box-paywall-top, 
         ${this.styleClassMain} .box-paywall-bottom {
-        display: block;
-        border: none;
+            display: block;
+            border: none;
+            width: 100%;
+            height: auto;
         }
         </style>
         `
