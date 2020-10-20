@@ -56,7 +56,7 @@ export default {
         'cod_prod': 'globo-rural'
     },
     'gq': {
-        'id': '6622',
+        'id': '6697',
         'cod_prod': 'gq'
     },
     'crescer': {
@@ -124,7 +124,7 @@ export default {
         'cod_prod': 'globo-rural'
     },
     'edigital-gq': {
-        'id': '6622',
+        'id': '6697',
         'cod_prod': 'gq'
     },
     'edigital-crescer': {

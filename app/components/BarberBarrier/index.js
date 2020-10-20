@@ -33,15 +33,14 @@ class BarberBarrier {
         return `
             <div class="${this.classMain}"
         >
-            <div class="box-paywall-image">
-                <a class="box-paywall-login-url" href="${window.glbPaywall.barberBarrier.urlTop}">
-                    <img class="box-paywall-top" src="${window.glbPaywall.barberBarrier.imageTop}" alt="">
+            <div class="${this.classMain}-image">
+                <a class="${this.classMain}-login-url" href="${window.glbPaywall.barberBarrier.urlTop}">
+                    <img class="${this.classMain}-top" src="${window.glbPaywall.barberBarrier.imageTop}" alt="">
                 </a>
-                <a class="box-paywall-promo-url" href="${window.glbPaywall.barberBarrier.urlBottom}">
-                    <img class="box-paywall-bottom" src="${window.glbPaywall.barberBarrier.imageBottom}" alt="">
+                <a class="${this.classMain}-promo-url" href="${window.glbPaywall.barberBarrier.urlBottom}">
+                    <img class="${this.classMain}-bottom" src="${window.glbPaywall.barberBarrier.imageBottom}" alt="">
                 </a>
             </div>
-            <div class='back-drop'></div>
         </div>
         `
     }
@@ -49,58 +48,48 @@ class BarberBarrier {
     style() {
         return `
         <style>
-        ${this.styleClassMain} a, picture { 
-            display: flex;
-        }
-
-        
-        ${this.styleClassMain} * {-webkit-transition: all .3s ease-in-out;transition: all .3s ease-in-out; }
-
-        ${this.styleClassMain} .back-drop {
-            background: rgba(0, 0, 0, 0.7); 
-            position: fixed; 
-            z-index: 99999998; 
-            width: 100%; 
-            height: 100%; 
-            top: 0px; 
-            left: 0px; 
-        }
-
-        ${this.styleClassMain} .box-paywall-image {
+        ${this.styleClassMain} { 
             display: flex;
             flex-direction: column;
             justify-content: center; 
-            align-content: center;
-            width: 100%; 
-            max-width: 300px; 
-            margin: 0 auto; 
+            align-items: center;
+            width: 100vw; 
+            height: 100vh;
             position: fixed; 
             z-index: 99999999; 
             background: transparent; 
             box-sizing: border-box; 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%); 
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.7); 
+        }
+
+
+        ${this.styleClassMain} * {-webkit-transition: all .3s ease-in-out;transition: all .3s ease-in-out; }
+
+        ${this.styleClassMain}-image {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+            max-width: 400px; 
+            margin: 0 auto; 
             border-radius: 4px;
+            overflow: hidden;
+            padding: 0 20px;
         }
 
-        ${this.styleClassMain} .box-paywall-login-url {
-        display: flex;
-        flex-direction: column;
+        ${this.styleClassMain}-login-url {
+            display: flex;
+            flex-direction: column;
         }
 
-        ${this.styleClassMain} .box-paywall-login-url .box-paywall-top { 
-        max-width: 300px;
-        }
-
-        ${this.styleClassMain} .box-paywall-promo-url .box-paywall-bottom { 
-        max-width: 300px;
-        }
-
-        ${this.styleClassMain} .box-paywall-top, 
-        ${this.styleClassMain} .box-paywall-bottom {
-        display: block;
-        border: none;
+        ${this.styleClassMain}-top, 
+        ${this.styleClassMain}-bottom {
+            display: block;
+            border: none;
+            width: 100%;
+            height: auto;
         }
         </style>
         `
