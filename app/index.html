@@ -45,7 +45,7 @@
             logoutText: 'Já é assinante? Faça login em outra conta.',
             topMobi: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/banner_jornalismoSWG_mob.png',
             topDesk: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/banner_jornalismoSWG_desk.png',
-            topLink: encodeURIComponent(window.location.origin + window.location.pathname + '?ofertaSwg=sim'),
+            topLink: '@registerUrl', // PseudoVars '@loginUrl', '@registerUrl'
             leftMobi: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/register_jornalismoSWG_mob_01.png',
             leftDesk: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/register_jornalismoSWG_desk_01.png',
             leftLink: encodeURIComponent(window.location.origin + window.location.pathname + '?ofertaSwg=sim'),
@@ -65,7 +65,7 @@
                 imageTop: 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/mobi/exclusivo-top_01.jpg',
                 urlTop: '//facebook.com.br',
                 imageBottom: 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/mobi/b4_03.png',
-                urlBottom: '//google.com.br'
+                urlBottom: '@urlLogin'
             },
             // only: 'barberBarrier',
         };

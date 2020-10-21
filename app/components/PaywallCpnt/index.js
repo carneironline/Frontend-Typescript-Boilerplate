@@ -50,11 +50,35 @@ class PaywallCpnt {
             loginPreText: 'Já possui cadastro?',
         }
 
+        this.checkPseudoVars()
+
         window.glbPaywall = { ...templateSettings, ...window.glbPaywall }
 
         if (this.debug) this.setDebugTemplateSettings()
 
         callback()
+    }
+
+    checkPseudoVars() {
+        const checkLinkProps = ['topLink', 'leftLink', 'rightLink', 'middleTextLink']
+        const checkBarberBarrierLinkProps = ['urlTop', 'urlBottom']
+        const pseudoVars = ['@loginUrl', '@registerUrl']
+
+        checkLinkProps.forEach(prop => {
+            pseudoVars.forEach(pseudoVar => {
+                if(window.glbPaywall[prop] === pseudoVar)
+                    window.glbPaywall[prop] = pseudoVar.includes('login') ? this.getLoginUrl() : this.getLoginUrl('register')
+            })
+        })
+
+        checkBarberBarrierLinkProps.forEach(prop => {
+            if(window.glbPaywall.barberBarrier && window.glbPaywall.barberBarrier[prop] === '@urlLogin')
+                window.glbPaywall.barberBarrier[prop] = this.getLoginUrl()
+
+            if(window.glbPaywall.barberBarrier && window.glbPaywall.barberBarrier[prop] === '@urlRegister')
+                window.glbPaywall.barberBarrier[prop] = this.getLoginUrl('register')
+        })
+
     }
 
     getLoginUrl(type = '') {
