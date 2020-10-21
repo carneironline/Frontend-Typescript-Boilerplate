@@ -158,9 +158,7 @@ class PaywallDefaultCpnt {
 
         if (this.elCpt) this.elCpt.remove()
 
-        const elToRemove = document.querySelectorAll(
-            '.protected-content, #infoarte-main-content'
-        )
+        const elToRemove = document.querySelectorAll('.protected-content, #infoarte-main-content')
 
         elToRemove.forEach((element) => {
             element.remove()
@@ -170,8 +168,8 @@ class PaywallDefaultCpnt {
     createTemplate() {
         this.bodyAdjust()
         this.removeElements()
-        this.elBody.insertAdjacentHTML('beforeend', this.addStyle)
-        this.elBody.insertAdjacentHTML('beforeend', this.template)
+        this.addStyle()
+        this.addTemplate()
         this.activeTemplateSettings()
 
         if (window.matchMedia('(min-width: 1024px)').matches) {
@@ -181,7 +179,6 @@ class PaywallDefaultCpnt {
         }
 
         this.redirectLogout()
-
         this.GA.paywallLoad()
     }
 
@@ -209,102 +206,12 @@ class PaywallDefaultCpnt {
         }, 1000)
     }
 
-    activeEvents() {
-        const clickTargets = this.elCptWrap.querySelectorAll('a')
-
-        clickTargets.forEach((element) => {
-            element.addEventListener(
-                'click',
-                function (evt) {
-                    evt.preventDefault()
-
-                    const isLogin = Boolean(element.dataset.isLogin) || false
-                    const url = element.getAttribute('href') || false
-                    const isUrlSwg = url
-                        ? url.toLowerCase().includes('ofertaswg')
-                        : false
-                    const notBlank = element.dataset.hrefTarget || true
-
-                    this.GA.trigger(element)
-
-                    if (!isLogin && isUrlSwg) this.SWG.setUtms()
-
-                    if (url && !isUrlSwg) {
-                        setTimeout(function () {
-                            notBlank
-                                ? (window.location.href = url)
-                                : window.open(url)
-                        }, 300)
-                    }
-                }.bind(this)
-            )
-        })
-    }
-
-    evtWheel(currentTop, topWithFullElement) {
-        let newtop = currentTop
-
-        window.addEventListener(
-            'wheel',
-            function (evt) {
-                const step = currentTop / 100
-                const multiplier = 20
-
-                if (evt.deltaY >= 1) {
-                    const elTop = newtop - step * multiplier
-                    newtop =
-                        elTop < topWithFullElement ? topWithFullElement : elTop
-
-                    this.elCpt.style.top = `${newtop}px`
-                }
-
-                if (evt.deltaY <= -1) {
-                    const elTop = newtop + step * multiplier
-                    newtop = elTop > currentTop ? currentTop : elTop
-
-                    this.elCpt.style.top = `${newtop}px`
-                }
-            }.bind(this)
-        )
-    }
-
-    evtTouch(currentTop, topWithFullElement) {
-        let newtop = currentTop
-        let touchstartY = 0
-        let touchendY = 0
-
-        window.addEventListener('touchstart', function (evt) {
-            touchstartY = evt.changedTouches[0].screenY
-        })
-
-        window.addEventListener(
-            'touchmove',
-            function (evt) {
-                const multiplier = 20
-                touchendY = evt.changedTouches[0].screenY
-
-                if (touchendY < touchstartY) {
-                    const diff = Math.abs(touchstartY) - Math.abs(touchendY)
-                    const elTop = newtop - diff
-                    newtop =
-                        elTop < topWithFullElement ? topWithFullElement : elTop
-
-                    this.elCpt.style.top = `${newtop}px`
-                }
-
-                if (touchendY > touchstartY) {
-                    const diff = touchendY - touchstartY
-                    const elTop = newtop + diff
-                    newtop = elTop > currentTop ? currentTop : elTop
-
-                    this.elCpt.style.top = `${newtop}px`
-                }
-            }.bind(this)
-        )
-    }
-
     get templateVars() {
         return window.glbPaywall
+    }
+
+    addTemplate() {
+        this.elBody.insertAdjacentHTML('beforeend', this.template)
     }
 
     get template() {
@@ -333,7 +240,11 @@ class PaywallDefaultCpnt {
         return template
     }
 
-    get addStyle() {
+    addStyle() {
+        this.elBody.insertAdjacentHTML('beforeend', this.style)
+    }
+
+    get style() {
         return `<style>
         .paywall-cpt{
             opacity:0;
@@ -428,6 +339,100 @@ class PaywallDefaultCpnt {
         }
 
 	  </style>`
+    }
+
+    activeEvents() {
+        const clickTargets = this.elCptWrap.querySelectorAll('a')
+
+        clickTargets.forEach((element) => {
+            element.addEventListener(
+                'click',
+                function (evt) {
+                    evt.preventDefault()
+
+                    const isLogin = Boolean(element.dataset.isLogin) || false
+                    const url = element.getAttribute('href') || false
+                    const isUrlSwg = url
+                        ? url.toLowerCase().includes('ofertaswg')
+                        : false
+                    const notBlank = element.dataset.hrefTarget || true
+
+                    this.GA.trigger(element)
+
+                    if (!isLogin && isUrlSwg) this.SWG.setUtms()
+
+                    if (url && !isUrlSwg) {
+                        setTimeout(function () {
+                            notBlank
+                                ? (window.location.href = url)
+                                : window.open(url)
+                        }, 300)
+                    }
+                }.bind(this)
+            )
+        })
+    }
+
+    evtWheel(currentTop, topWithFullElement) {
+        let newtop = currentTop
+
+        window.addEventListener(
+            'wheel',
+            function (evt) {
+                const step = currentTop / 100
+                const multiplier = 20
+
+                if (evt.deltaY >= 1) {
+                    const elTop = newtop - step * multiplier
+                    newtop =
+                        elTop < topWithFullElement ? topWithFullElement : elTop
+
+                    this.elCpt.style.top = `${newtop}px`
+                }
+
+                if (evt.deltaY <= -1) {
+                    const elTop = newtop + step * multiplier
+                    newtop = elTop > currentTop ? currentTop : elTop
+
+                    this.elCpt.style.top = `${newtop}px`
+                }
+            }.bind(this)
+        )
+    }
+
+    evtTouch(currentTop, topWithFullElement) {
+        let newtop = currentTop
+        let touchstartY = 0
+        let touchendY = 0
+
+        window.addEventListener('touchstart', function (evt) {
+            touchstartY = evt.changedTouches[0].screenY
+        })
+
+        window.addEventListener(
+            'touchmove',
+            function (evt) {
+                const multiplier = 20
+                touchendY = evt.changedTouches[0].screenY
+
+                if (touchendY < touchstartY) {
+                    const diff = Math.abs(touchstartY) - Math.abs(touchendY)
+                    const elTop = newtop - diff
+                    newtop =
+                        elTop < topWithFullElement ? topWithFullElement : elTop
+
+                    this.elCpt.style.top = `${newtop}px`
+                }
+
+                if (touchendY > touchstartY) {
+                    const diff = touchendY - touchstartY
+                    const elTop = newtop + diff
+                    newtop = elTop > currentTop ? currentTop : elTop
+
+                    this.elCpt.style.top = `${newtop}px`
+                }
+            }.bind(this)
+        )
     }
 }
 
