@@ -71,11 +71,11 @@ class PaywallCpnt {
             })
         })
 
-        checkBarberBarrierLinkProps.forEach(prop => {
-            if(window.glbPaywall.barberBarrier && window.glbPaywall.barberBarrier[prop] === '@urlLogin')
+        checkBarberBarrierLinkProps.forEach(prop => { 
+            if(window.glbPaywall.barberBarrier && window.glbPaywall.barberBarrier[prop] === '@loginUrl')
                 window.glbPaywall.barberBarrier[prop] = this.getLoginUrl()
 
-            if(window.glbPaywall.barberBarrier && window.glbPaywall.barberBarrier[prop] === '@urlRegister')
+            if(window.glbPaywall.barberBarrier && window.glbPaywall.barberBarrier[prop] === '@registerUrl')
                 window.glbPaywall.barberBarrier[prop] = this.getLoginUrl('register')
         })
 
