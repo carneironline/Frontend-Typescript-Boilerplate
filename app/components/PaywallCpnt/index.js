@@ -72,11 +72,10 @@ class PaywallCpnt {
         })
 
         checkBarberBarrierLinkProps.forEach(prop => { 
-            if(window.glbPaywall.barberBarrier && window.glbPaywall.barberBarrier[prop] === '@loginUrl')
-                window.glbPaywall.barberBarrier[prop] = this.getLoginUrl()
-
-            if(window.glbPaywall.barberBarrier && window.glbPaywall.barberBarrier[prop] === '@registerUrl')
-                window.glbPaywall.barberBarrier[prop] = this.getLoginUrl('register')
+            pseudoVars.forEach(pseudoVar => {
+                if(window.glbPaywall.barberBarrier &&  window.glbPaywall.barberBarrier[prop] === pseudoVar)
+                    window.glbPaywall.barberBarrier[prop] = pseudoVar.includes('login') ? this.getLoginUrl() : this.getLoginUrl('register')
+            })
         })
 
     }
