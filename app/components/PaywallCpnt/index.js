@@ -71,7 +71,7 @@ class PaywallCpnt {
             })
         })
 
-        checkBarberBarrierLinkProps.forEach(prop => { console.log(prop)
+        checkBarberBarrierLinkProps.forEach(prop => { 
             if(window.glbPaywall.barberBarrier && window.glbPaywall.barberBarrier[prop] === '@loginUrl')
                 window.glbPaywall.barberBarrier[prop] = this.getLoginUrl()
 
