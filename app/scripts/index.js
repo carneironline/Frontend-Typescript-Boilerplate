@@ -12,6 +12,7 @@ import EdigitalContent from '../components/EdigitalContent'
 import BannerBottomFixed from '../components/BannerBottomFixed'
 import BannerSubscribeHeader from '../components/BannerSubscribeHeader'
 import BannerCover from '../components/BannerCover'
+import AdblockCpnt from '../components/AdblockCpnt'
 
 console.table(process.env)
 
@@ -485,6 +486,13 @@ window.Piano.banner = {
 }
 
 window.Piano.components = {
+    AdblockCpnt() {
+        try {
+            new AdblockCpnt()
+        } catch (error) {
+            console.error('AdblockCpnt Component - ', error)
+        }
+    },
     BannerBottomFixed() {
         try {
             new BannerBottomFixed()
@@ -532,8 +540,11 @@ window.Piano.components = {
         if(!typeData) return null
 
         switch(typeData) {
+            case 'adblock': 
+                window.Piano.components.AdblockCpnt();
+                break;
             case 'footer': 
-            window.Piano.components.BannerBottomFixed();
+                window.Piano.components.BannerBottomFixed();
                 break;
             case 'edigital': 
                 window.Piano.components.EdigitalContent();
@@ -821,17 +832,12 @@ window.Piano.adblock = {
         script.setAttribute('onerror', 'setNptTechAdblockerCookie(true);')
         document.getElementsByTagName('head')[0].appendChild(script)
     },
-    mostrarAdBlock(params = {}) {
-        params.assetsPath = `${process.env.ASSETS_URL}/adblock-piano/v4/`
-
-        window.glbAdblock = params
-
-        window.Piano.util.adicionarCss(
-            `<link rel='stylesheet' type='text/css' href='${process.env.ASSETS_URL}/adblock-piano/v4/styles/styles.css'>`
-        )
-        window.Piano.xmlHttpRequest.geraScriptNaPagina(
-            `${process.env.ASSETS_URL}/adblock-piano/v4/scripts/adblock-piano.js`
-        )
+    mostrarAdBlock() {
+        try {
+            new AdblockCpnt()
+        } catch (error) {
+            console.error('AdblockCpnt Component - ', error)
+        }
     },
 }
 
