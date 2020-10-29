@@ -4,7 +4,7 @@ class AdblockCpnt {
     constructor() {
         this.GA = new GA() 
 
-        const path = window.tinyCpt.isDev ? `${window.tinyCpt.assetsPath}/app` : `${window.tinyCpt.assetsPath}/paywall`
+        const path = window.tinyCpt.isDev ? `${window.tinyCpt.assetsPath}/app` : `${window.tinyCpt.assetsPath}/paywall/app`
 
         this.elBody = document.querySelector('body')
      
