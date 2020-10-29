@@ -1,5 +1,9 @@
+import GA from '../../scripts/GA'
+
 class EdigitalContent {
     constructor() {
+        this.GA = new GA() 
+
         this.classMain = 'edigital-content-cpnt'
         this.classColLeft = '.col-left'
         this.classColRight = '.col-right'
@@ -18,9 +22,23 @@ class EdigitalContent {
         this.templateColLeft(settings.colLeft)
         this.templateColRight(settings.colRight)
         this.removeLoaders()
-
         this.showConsole()
+        this.setGa()
     }
+
+    setGa() {
+		const calledBy = 'EdigitalContent'
+		const action = window.glbEdigitalContent?.ga?.action || 'Mobiliario Jornal Digital';
+		const label = window.glbEdigitalContent?.ga?.label;
+		
+		if(label) {
+			this.GA.setEvents( 
+				calledBy,
+				action,
+				label,
+			)
+		}
+	}
 
     removeLoaders() {
         const classLoader = 'loader'

@@ -8,11 +8,18 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'> -->
 
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    </style>
+
     <script>
-        var nomeProdutoPiano = 'valor';
-        var tipoConteudoPiano = 'materia';
-        var Piano = {};
-        // window.ambienteUtilizadoPiano = 'prd';
+        window.nomeProdutoPiano = 'oglobo';
+        window.tipoConteudoPiano = 'materia';
+        window.ambienteUtilizadoPiano = 'dev';
 
         window.tinyCpt = {
             debug: {
@@ -77,10 +84,17 @@
     index
 
     <div>
-        <h2>Protected</h2>
+        <h3>Protected</h3>
         <div class="inline-content">content inline</div>
     </div>
 
+    <h3>Teste Componente BannerSubscribeHeader - Banner Assinatura Header</h3>
+    <div id="banner-assinatura-header" class="banner-assinatura-header"></div>
+
+    <h3>Teste Componente BannerCover - Banner Chamada de Capa</h3>
+    <div class="block--advertising-header"></div>
+    
+    <h3>Teste Analítico</h3>
     <div id="testAnalytical">
         <div class="main-content"></div>
         <div class="post-footer">
@@ -88,6 +102,7 @@
         </div>
     </div>
 
+    <h3>Teste Componente BannersConsumer</h3> 
     <div id="bannersConsumertests">
         <div>
             <div class="banner-consumer-cpnt" data-banner-consumer-name='banner-subscribe'></div>
@@ -95,6 +110,7 @@
         <div class="banner-consumer-cpnt" data-banner-consumer-name='banner-whatever'></div>
     </div>
 
+    <h3>Teste Componente SubscribeButton</h3>
     <div>
         <a class="subscribe-button subscribe-button-cpnt" data-subscribe-button-name='subscribe-button-one'
             href="https://assinaturaglobo.globo.com/crescer/vitrine/crescer/?campanha=sim&amp;utm_source=sitecrescer&amp;utm_medium=botao&amp;utm_campaign=eg_cf_botao_topo_190-3meses"

@@ -15,6 +15,8 @@ export default class Tiny {
 
     setGlobalTiny() {
         const isProduction = window.ambienteUtilizadoPiano === 'prd'
+        const isQa = window.ambienteUtilizadoPiano === 'qlt'
+        const isDev = window.ambienteUtilizadoPiano === 'dev'
 
         const defaultSettings = {
             debug: {
@@ -24,14 +26,30 @@ export default class Tiny {
                 ga: false,
             },
             isProduction,
+            isQa,
+            isDev,
+            environmentType: this.environmentType(),
             assetsPath: isProduction
                 ? 'https://static.infoglobo.com.br'
-                : 'https://static-stg.infoglobo.com.br',
+                : isQa ? 'https://static-stg.infoglobo.com.br' : 'https://tinyjs.globoi.com:8080',
         }
 
         window.tinyCpt = window.tinyCpt
             ? Object.assign(defaultSettings, window.tinyCpt)
             : defaultSettings
+    }
+
+    environmentType() {
+        const environmentType =  window.ambienteUtilizadoPiano
+        if(environmentType) {
+            switch(environmentType) {
+                case 'prd': return 'prd'; break;
+                case 'qlt': return 'qlt'; break;
+                default: return 'dev'
+            }
+        }
+
+        return null
     }
 
     setPiano(obj) {

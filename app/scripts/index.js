@@ -3,11 +3,16 @@ import TinyModule from './Tiny'
 import GAModule from './GA'
 import SwgModule from './Swg'
 import getProductsObject from './ProductsRequester'
+
 import BannersConsumer from '../components/BannersConsumer'
 import PaywallCpnt from '../components/PaywallCpnt'
 import PaywallInlineCpnt from '../components/PaywallInlineCpnt'
 import SubscribeButtonOverride from '../components/SubscribeButtonOverride'
 import EdigitalContent from '../components/EdigitalContent'
+import BannerBottomFixed from '../components/BannerBottomFixed'
+import BannerSubscribeHeader from '../components/BannerSubscribeHeader'
+import BannerCover from '../components/BannerCover'
+import AdblockCpnt from '../components/AdblockCpnt'
 
 console.table(process.env)
 
@@ -438,13 +443,14 @@ window.Piano.banner = {
             `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/footer-piano/${versao}/scripts/novo-banner-footer.js`
         )
     },
-    mostrarBotaoAssinaturaHeaderFooter(versao) {
-        window.Piano.util.adicionarCss(
-            `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/banner-header-footer-piano/${versao}/styles/styles.css'>`
-        )
-        window.Piano.xmlHttpRequest.geraScriptNaPagina(
-            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/banner-header-footer-piano/${versao}/scripts/banner-header-footer-piano.js`
-        )
+
+    // TODO Remover depois que inserir todos os Piano.componentes.show('botaoAssineHeader') na Piano
+    mostrarBotaoAssinaturaHeaderFooter() {
+        try {
+            new BannerSubscribeHeader()
+        } catch (error) {
+            console.error('BannerSubscribeHeader Component - ', error)
+        }
     },
     mostrarAvatarHeader(versao) {
         window.Piano.util.adicionarCss(
@@ -454,22 +460,24 @@ window.Piano.banner = {
             `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/avatar-header-piano/${versao}/scripts/avatar-header-piano.js`
         )
     },
+    // TODO Remover depois que inserir todos os Piano.componentes.show('footer') na Piano
     bottomFixed(params = {}) {
         window.glbBannerBottom = params
-
-        window.Piano.util.adicionarCss(
-            `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/banner-bottom-fixed/styles/banner-bottom-fixed.css'>`
-        )
-        window.Piano.xmlHttpRequest.geraScriptNaPagina(
-            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/banner-bottom-fixed/scripts/banner-bottom-fixed.js`
-        )
+        
+        try {
+            new BannerBottomFixed()
+        } catch (error) {
+            console.error('BannerBottomFixed Component - ', error)
+        }
     },
-    mostrarSWG() {
-        const css = `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/swg/v1/styles/style.css'>`
-        const scriptJs = `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/swg/v1/script/anuncio-swg.js`
 
-        window.Piano.util.adicionarCss(css)
-        window.Piano.xmlHttpRequest.geraScriptNaPagina(scriptJs)
+    // TODO Remover depois que inserir todos os Piano.componentes.show('capa') na Piano
+    mostrarSWG() {
+        try {
+            new BannerCover()
+        } catch (error) {
+            console.error('BannerCover Component - ', error)
+        }
     },
     mostrarHighlightSale(versao) {
         window.Piano.util.adicionarCss(
@@ -487,11 +495,39 @@ window.Piano.banner = {
 }
 
 window.Piano.components = {
+    AdblockCpnt() {
+        try {
+            new AdblockCpnt()
+        } catch (error) {
+            console.error('AdblockCpnt Component - ', error)
+        }
+    },
+    BannerBottomFixed() {
+        try {
+            new BannerBottomFixed()
+        } catch (error) {
+            console.error('BannerBottomFixed Component - ', error)
+        }
+    },
     BannersConsumer() {
         try {
             new BannersConsumer()
         } catch (error) {
             console.error('BannersConsumer Component - ', error)
+        }
+    },
+    BannerCover() {
+        try {
+            new BannerCover()
+        } catch (error) {
+            console.error('BannerCover Component - ', error)
+        }
+    },
+    BannerSubscribeHeader() {
+        try {
+            new BannerSubscribeHeader()
+        } catch (error) {
+            console.error('BannerSubscribeHeader Component - ', error)
         }
     },
     SubscribeButtonOverride() {
@@ -506,6 +542,29 @@ window.Piano.components = {
             new EdigitalContent()
         } catch (error) {
             console.error('EdigitalContent Component - ', error)
+        }
+    },
+    
+    show(typeData = null) {
+        if(!typeData) return null
+
+        switch(typeData) {
+            case 'adblock': 
+                window.Piano.components.AdblockCpnt();
+                break;
+            case 'footer': 
+                window.Piano.components.BannerBottomFixed();
+                break;
+            case 'edigital': 
+                window.Piano.components.EdigitalContent();
+                break;
+            case 'capa': 
+                window.Piano.components.BannerCover();
+                break;
+            case 'botaoAssineHeader': 
+                window.Piano.components.BannerSubscribeHeader(); 
+                break;
+            default: return null
         }
     }
 }
@@ -555,7 +614,7 @@ window.Piano.paywall = {
         window.Piano.typePaywall = typePaywall
 
         try {
-            new PaywallCpnt()
+            // new PaywallCpnt()
             window.hasPaywall = true
         } catch (error) {
             console.error('PaywallCpnt - ', error)
@@ -782,17 +841,12 @@ window.Piano.adblock = {
         script.setAttribute('onerror', 'setNptTechAdblockerCookie(true);')
         document.getElementsByTagName('head')[0].appendChild(script)
     },
-    mostrarAdBlock(params = {}) {
-        params.assetsPath = `${process.env.ASSETS_URL}/adblock-piano/v4/`
-
-        window.glbAdblock = params
-
-        window.Piano.util.adicionarCss(
-            `<link rel='stylesheet' type='text/css' href='${process.env.ASSETS_URL}/adblock-piano/v4/styles/styles.css'>`
-        )
-        window.Piano.xmlHttpRequest.geraScriptNaPagina(
-            `${process.env.ASSETS_URL}/adblock-piano/v4/scripts/adblock-piano.js`
-        )
+    mostrarAdBlock() {
+        try {
+            new AdblockCpnt()
+        } catch (error) {
+            console.error('AdblockCpnt Component - ', error)
+        }
     },
 }
 
