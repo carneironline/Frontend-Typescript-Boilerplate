@@ -21,7 +21,7 @@ export default class PaywallGAModule {
         if (!window.Piano) return
 
         this.GA.setEvents(
-            'paywallLoad',
+            'PaywallGAModule',
             this.metrics.paywall.viewName,
             window.Piano.experience.name,
         )
