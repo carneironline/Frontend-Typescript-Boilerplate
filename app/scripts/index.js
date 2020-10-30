@@ -18,15 +18,15 @@ import AdblockCpnt from '../components/AdblockCpnt'
 
 console.table(process.env)
 
+getProductsObject(window.ambienteUtilizadoPiano, (productsJson) => {
+    window.productsObject = JSON.parse(productsJson)
+})
+
 const Tiny = new TinyModule() 
 const PianoModule = new Piano()  
 const GA = new GAModule()  
 const Krux = new KruxModule()  
 const Adblock = new AdblockCpnt()
-
-getProductsObject(window.ambienteUtilizadoPiano, function (productsJson) {
-    window.productsObject = JSON.parse(productsJson)
-})
 
 window.Piano.banner = {
     mostrarFooter(versao) {
@@ -181,21 +181,6 @@ window.Piano.register = {
     },
 }
 
-window.Piano.helper = {
-    mostrarBarreira() {
-        window.Piano.xmlHttpRequest.geraScriptNaPagina(
-            'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/helper/register.js'
-        )
-        Helpers.setCookie(window.Piano.variaveis.constante.cookie.UTP, '', -1)
-        GA.setEvents('window.Piano.helper.mostrarBarreira', 'Exibicao Register', window.Piano.metricas.montaRotuloGA())
-        Helpers.setCookie(
-            window.Piano.variaveis.constante.cookie.RTIEX,
-            true,
-            1
-        )
-    },
-}
-
 window.Piano.paywall = {
     redirecionarBarreira(url) {
         GA.setEvents('window.Piano.paywall.redirecionarBarreira', 'Barreira', window.Piano.metricas.montaRotuloGA())
@@ -229,75 +214,6 @@ window.Piano.paywall = {
         window.Piano.util.adicionarCss(`<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/nao-barreira/styles/styles.css'>`)
         window.Piano.xmlHttpRequest.geraScriptNaPagina(`https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/barreira/nao-barreira/scripts/index.js`)
     },
-}
-
-function analyticalUnblockedForPiano() {
-    const event = new CustomEvent('analyticalUnblockedForPiano')
-    document.dispatchEvent(event)
-}
-
-function analyticalBlockedForPiano() {
-    const event = new CustomEvent('analyticalBlockedForPiano')
-    document.dispatchEvent(event)
-}
-
-function analyticalPostIsOpened() {
-    const event = new CustomEvent('analyticalPostIsOpened')
-    document.dispatchEvent(event)
-}
-
-function analyticalPostIsLoading() {
-    const event = new CustomEvent('analyticalPostIsLoading')
-    document.dispatchEvent(event)
-}
-
-function checkExperiencesHasChange() {
-    return new Promise((resolve) => {
-        let count = 0
-
-        const interval = setInterval(() => {
-            if (
-                window.tp !== 'undefined' &&
-                window.tp.experience &&
-                window.tp.experience._getLastExecutionResult() &&
-                window.tp.experience._getLastExecutionResult().result &&
-                window.tp.experience._getLastExecutionResult().result.events
-            ) {
-                const experiences = window.tp.experience._getLastExecutionResult()
-                    .result.events
-                const experiencesClone = Array.from(
-                    window.tp.experience._getLastExecutionResult().result.events
-                )
-                const experiencesChanged = Object.is(
-                    JSON.stringify(experiences),
-                    JSON.stringify(experiencesClone)
-                )
-
-                if (experiencesChanged) {
-                    experiences.forEach((item) => {
-                        if (item.eventType === 'runJs') {
-                            if (
-                                item.eventParams.snippet !== 'undefined' &&
-                                item.eventParams.snippet.includes(
-                                    'paywall.analytic'
-                                )
-                            ) {
-                                resolve(true)
-                                clearInterval(interval)
-                            }
-                        }
-                    })
-                }
-
-                if (count === 10) {
-                    resolve(false)
-                    clearInterval(interval)
-                }
-
-                count++
-            }
-        }, 100)
-    })
 }
 
 window.Piano.checkPianoActive = function () {
@@ -812,255 +728,6 @@ window.Piano.autenticacao = {
     },
 }
 
-window.Piano.util = {
-    isSection() {
-        return window.Piano.variaveis.getTipoConteudoPiano() === 'section'
-    },
-    temVariaveisObrigatorias() {
-        if (
-            typeof window.Piano.variaveis.getTipoConteudoPiano() === 'undefined'
-        ) {
-            GA.setEventsError(
-                'temVariaveisObrigatorias',
-                'Variavel tipoConteudoPiano nao esta definida',
-                document.location.href,
-            )
-            return false
-        }
-        if (typeof window.Piano.variaveis.getNomeProduto() === 'undefined') {
-            GA.setEventsError(
-                'temVariaveisObrigatorias',
-                'Variavel nomeProdutoPiano nao esta definida',
-                document.location.href,
-            )
-            return false
-        }
-        return true
-    },
-    extraiParametrosCampanhaDaUrl() {
-        const url = window.Piano.util.getWindowLocationSearch()
-        const chavesCampanha = ['utm_medium', 'utm_source']
-        const valoresCampanha = []
-
-        for (
-            let idxParamCampanha = 0;
-            idxParamCampanha < chavesCampanha.length;
-            idxParamCampanha++
-        ) {
-            const chaveCampanha = chavesCampanha[idxParamCampanha]
-            if (url.indexOf(`${chaveCampanha}=`) !== -1) {
-                const regex = new RegExp(`[?(&)]${chaveCampanha}=([^&#]*)`)
-                const valorCampanha = url.match(regex)[1]
-                if (valorCampanha) {
-                    valoresCampanha.push(valorCampanha)
-                }
-            }
-        }
-        if (valoresCampanha.length > 0) {
-            window.tp.push([
-                'setCustomVariable',
-                'utm',
-                valoresCampanha.join(';'),
-            ])
-        }
-        if (url.indexOf('utm_campaign=') !== -1) {
-            const regex = new RegExp('utm_campaign=(\\w+)')
-            const campanha = url.match(regex)[1]
-            if (campanha) {
-                window.tp.push(['setCustomVariable', 'campanha', campanha])
-            }
-        }
-    },
-    isOrigemBuscador() {
-        const { userAgent } = navigator
-        const regexRobos = new RegExp(
-            '(ia_archiver)|(Googlebot)|(Mediapartners-Google)|(AdsBot-Google)|(msnbot)|(Yahoo! Slurp)|(ZyBorg)|(Ask Jeeves/Teoma)|(bingbot)|(cXensebot)'
-        )
-        const ehRobo = regexRobos.test(userAgent)
-        window.tp.push(['setCustomVariable', 'buscador', ehRobo])
-
-        return ehRobo
-    },
-    montaUrlStg() {
-        return window.Piano.variaveis.getAmbientePiano() !== 'prd' ? '-stg' : ''
-    },
-    temParametroNaUrl(paramName) {
-        const parametros = window.Piano.util.getWindowLocationSearch()
-        return parametros.indexOf(paramName) !== -1
-    },
-    getValorParametroNaUrl(parametro) {
-        if (window.Piano.util.temParametroNaUrl(parametro)) {
-            const parametros = window.Piano.util.getWindowLocationSearch()
-            const regex = new RegExp(`[?(&)]${parametro}=([^&#]*)`)
-            return parametros.match(regex)[1]
-        }
-        return 'sem parametro'
-    },
-    isDebug() {
-        const parametro = window.Piano.variaveis.constante.util.DEBUG
-        const valorParametro = window.Piano.util.getValorParametroNaUrl(
-            parametro
-        )
-        if (valorParametro === 'true') {
-            Helpers.setCookie(parametro, valorParametro, 1)
-            return true
-        }
-        if (valorParametro === 'false') {
-            Helpers.setCookie(parametro, '', -1)
-            return false
-        }
-        if (Helpers.getCookie(window.Piano.variaveis.constante.util.DEBUG)) {
-            return true
-        }
-        return false
-    },
-    isDominioOGlobo() {
-        const regex = new RegExp('://(.*?)/')
-        const url = window.Piano.util.getWindowLocationHref()
-        if (
-            url.match(regex)[1].indexOf('oglobo') > -1 ||
-            (url.match(regex)[1].indexOf('globoi') > -1 &&
-                url.match(regex)[1].indexOf('edg') === -1)
-        ) {
-            return url.match(regex)[1]
-        }
-        return ''
-    },
-    callbackMeter(meterData) {
-        window.regrasTiny = meterData
-        window.Piano.metricas.executaAposPageview(false)
-    },
-    callbackMeterExpired(meterData) {
-        window.regrasTiny = meterData
-        window.Piano.variaveis.isCallbackMetterExpired = true
-        window.Piano.metricas.executaAposPageview(true)
-    },
-    getWindowLocationSearch() {
-        return window.location.search
-    },
-    getWindowLocationHref() {
-        return window.location.href
-    },
-    adicionarCss(cssPath) {
-        const e = document.createElement('div')
-        e.innerHTML = cssPath
-        document.body.insertBefore(e, document.body.lastChild)
-    },
-    isRevista() {
-        const revistas = [
-            'epoca',
-            'auto-esporte',
-            'vogue',
-            'glamour',
-            'casa-vogue',
-            'marie-claire',
-            'casa-e-jardim',
-            'quem-acontece',
-            'globo-rural',
-            'gq',
-            'monet',
-            'crescer',
-            'galileu',
-            'epoca-negocios',
-            'pegn',
-            'edigital-epoca',
-            'edigital-auto-esporte',
-            'edigital-vogue',
-            'edigital-glamour',
-            'edigital-casa-vogue',
-            'edigital-marie-claire',
-            'edigital-casa-e-jardim',
-            'edigital-quem-acontece',
-            'edigital-globo-rural',
-            'edigital-gq',
-            'edigital-monet',
-            'edigital-crescer',
-            'edigital-galileu',
-            'edigital-epoca-negocios',
-            'edigital-pegn',
-        ]
-        if (revistas.indexOf(window.Piano.variaveis.getNomeProduto()) > -1)
-            return true
-        return false
-    },
-    recarregaPiano(tipoConteudo, isExclusivo, nomeProduto, postOpened) {
-        const postElement = window.analiticoPost
-        window.tipoConteudoPiano = tipoConteudo
-        window.conteudoExclusivo = isExclusivo
-        window.nomeProdutoPiano = nomeProduto
-        window.tp = []
-
-        if (typeof window.regrasTiny !== 'undefined') {
-            window.regrasTiny.nomeExperiencia = ''
-        }
-
-        if (postElement) {
-            if (!postOpened) {
-                analyticalPostIsOpened()
-            } else {
-                analyticalPostIsLoading()
-
-                window.Piano.construtor.initTp(() => {
-                    loadPianoExperiences()
-
-                    checkExperiencesHasChange().then(function (changed) {
-                        if (changed) {
-                            analyticalBlockedForPiano()
-                        } else {
-                            analyticalUnblockedForPiano()
-                        }
-                    })
-                })
-            }
-        }
-    },
-    isValor() {
-        if (window.Piano.variaveis.getNomeProduto() === 'valor') return true
-        return false
-    },
-}
-
-window.Piano.configuracao = {
-    jsonConfiguracaoTinyPass: {
-        int: {
-            idSandboxTinypass: 'dXu7dvFKRi',
-            idSandboxTinypassRevistas: 'MctFgRCEsu',
-            setSandBox: 'true',
-            urlSandboxPiano:
-                'https://sandbox.tinypass.com/xbuilder/experience/load?aid=dXu7dvFKRi',
-            urlSandboxPianoRevistas:
-                'https://sandbox.tinypass.com/xbuilder/experience/load?aid=MctFgRCEsu',
-            urlVerificaLeitor: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.Piano.variaveis.getServicoId()}/autorizacao-acesso`,
-            urlDominioPaywall: 'https://assinatura.globostg.globoi.com/',
-            urlDominioSiteOGlobo: `${window.Piano.util.isDominioOGlobo()}/`,
-        },
-        qlt: {
-            idSandboxTinypass: 'GTCopIDc5z',
-            idSandboxTinypassRevistas: 'VnaP3rYVKc',
-            setSandBox: 'false',
-            urlSandboxPiano:
-                'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
-            urlSandboxPianoRevistas:
-                'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
-            urlVerificaLeitor: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.Piano.variaveis.getServicoId()}/autorizacao-acesso`,
-            urlDominioPaywall: 'https://assinatura.globostg.globoi.com/',
-            urlDominioSiteOGlobo: `${window.Piano.util.isDominioOGlobo()}/`,
-        },
-        prd: {
-            idSandboxTinypass: 'GTCopIDc5z',
-            idSandboxTinypassRevistas: 'VnaP3rYVKc',
-            setSandBox: 'false',
-            urlSandboxPiano:
-                'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
-            urlSandboxPianoRevistas:
-                'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
-            urlVerificaLeitor: `https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.Piano.variaveis.getServicoId()}/autorizacao-acesso`,
-            urlDominioPaywall: 'https://assinatura.oglobo.globo.com/',
-            urlDominioSiteOGlobo: `${window.Piano.util.isDominioOGlobo()}/`,
-        },
-    },
-}
-
 window.Piano.construtor = {
     async initTp(callback = null) {
         window.tp = window.tp || []
@@ -1131,27 +798,6 @@ window.Piano.construtor = {
     },
 }
 
-function loadPianoExperiences() {
-    const a = document.createElement('script')
-    a.type = 'text/javascript'
-    a.async = true
-    if (window.Piano.util.isRevista() || window.Piano.util.isValor()) {
-        a.src =
-            window.Piano.configuracao.jsonConfiguracaoTinyPass[
-                window.Piano.variaveis.getAmbientePiano()
-            ].urlSandboxPianoRevistas
-    } else {
-        a.src =
-            window.Piano.configuracao.jsonConfiguracaoTinyPass[
-                window.Piano.variaveis.getAmbientePiano()
-            ].urlSandboxPiano
-    }
-
-    const b = document.getElementsByTagName('script')[0]
-
-    b.parentNode.insertBefore(a, b)
-}
-
 function pianoInit() {
     window.Piano.checkPianoActive()
 
@@ -1166,7 +812,7 @@ function pianoInit() {
                     if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
                         try {
                             window.tinyCpt.Piano.construtor.initTp(() =>
-                                loadPianoExperiences()
+                                PianoModule.loadPianoExperiences()
                             )
                         } catch (error) {
                             GA.setEventsError(
@@ -1182,7 +828,7 @@ function pianoInit() {
     } else {
         GA.setEventsError('pianoInit', 'Entitlements não carregado', document.location.href)
         if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
-            window.tinyCpt.Piano.construtor.initTp(() => loadPianoExperiences())
+            window.tinyCpt.Piano.construtor.initTp(() => PianoModule.loadPianoExperiences())
         }
     }
 }
