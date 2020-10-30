@@ -2,7 +2,7 @@ import GA from '../../scripts/GA'
 import Products from '../../scripts/Products'
 
 class AdblockCpnt {
-    constructor() {
+    init() {
         this.Products = new Products()
         this.GA = new GA() 
 
@@ -27,11 +27,11 @@ class AdblockCpnt {
             footerTextBtn: 'Saiba mais',
         }
 
-        this.init()
+        this.start()
         this.showConsole()
     }
 
-    init() {
+    start() {
         this.setTemplateSettings()
 
         if (this.templateSettings.display && this.templateSettings.display !== false) {
@@ -531,8 +531,7 @@ class AdblockCpnt {
         const setNptTechAdblockerCookie = function (adblocker) {
             const d = new Date()
             d.setTime(d.getTime() + 60 * 60 * 24 * 2 * 1000)
-            document.cookie = `__adblocker=${adblocker ? 'true' : 'false'
-                }; expires=${d.toUTCString()}; path=/`
+            document.cookie = `__adblocker=${adblocker ? 'true' : 'false'}; expires=${d.toUTCString()}; path=/`
         }
 
         const script = document.createElement('script')
