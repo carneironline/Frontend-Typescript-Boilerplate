@@ -199,7 +199,7 @@ window.Piano.paywall = {
             window.hasPaywall = true
         } catch (error) {
             console.error('PaywallCpnt - ', error)
-            window.Piano.triggerAdvertising()
+            PianoModule.triggerAdvertising()
         }
     },
     analytic() {
@@ -216,76 +216,12 @@ window.Piano.paywall = {
     },
 }
 
-window.Piano.checkPianoActive = function () {
-    let count = 0
-
-    const interval = setInterval(function () {
-        if (
-            window.tp !== 'undefined' &&
-            window.tp.experience &&
-            window.tp.experience._getLastExecutionResult() &&
-            window.tp.experience._getLastExecutionResult().result &&
-            window.tp.experience._getLastExecutionResult().result.events
-        ) {
-            window.Piano.checkPaywall(
-                window.tp.experience._getLastExecutionResult().result.events
-            )
-            clearInterval(interval)
-        } else {
-            if (count === 10) {
-                window.Piano.triggerAdvertising()
-                clearInterval(interval)
-            }
-
-            count++
-        }
-    }, 500)
-}
-
-window.Piano.checkPaywall = function (PianoResultEvents = null) {
-    let hasRunJsWithPaywall = false
-
-    if (PianoResultEvents) {
-        PianoResultEvents.forEach((item) => {
-            if (item.eventType === 'runJs') {
-                if (
-                    item.eventParams.snippet !== 'undefined' &&
-                    (item.eventParams.snippet.includes('paywall.show') ||
-                        item.eventParams.snippet.includes('paywall.analytic') ||
-                        item.eventParams.snippet.includes('paywall.naoBarreiraGcom') ||
-                        item.eventParams.snippet.includes('paywall.barreiraBarbeira') ||
-                        item.eventParams.snippet.includes('mostrarBarreira'))
-                ) {
-                    window.hasPaywall = true
-                    hasRunJsWithPaywall = true
-                    window.Piano.triggerPaywallOpened()
-                }
-            }
-        })
-
-        if (!hasRunJsWithPaywall) window.Piano.triggerAdvertising()
-    }
-}
-
-window.Piano.triggerAdvertising = function () {
-    window.hasPaywall = false
-    console.log('%c dispatchEvent clearForAds ', Helpers.consoleColor().header)
-    const event = new CustomEvent('clearForAds')
-    document.dispatchEvent(event)
-}
-
-window.Piano.triggerPaywallOpened = function () {
-    console.log('%c dispatchEvent blockForAds ', Helpers.consoleColor().header)
-    const event = new CustomEvent('blockForAds')
-    document.dispatchEvent(event)
-}
-
 window.Piano.registerPaywall = {
     mostrarBarreira(versao = null, tipo = null) {
         window.Piano.typePaywall = tipo
 
         if (!versao || !window.Piano.typePaywall) {
-            window.Piano.triggerAdvertising()
+            PianoModule.triggerAdvertising()
         } else {
             window.Piano.util.adicionarCss(
                 `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/register-paywall-piano/${versao}/styles/styles.css'>`
@@ -294,7 +230,7 @@ window.Piano.registerPaywall = {
                 `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/register-paywall-piano/${versao}/scripts/register-paywall-piano.js`,
                 (data) => {
                     if (data.status !== 200) {
-                        window.Piano.triggerAdvertising()
+                        PianoModule.triggerAdvertising()
                     } else {
                         window.hasPaywall = true
                     }
@@ -346,25 +282,17 @@ window.Piano.adblock = {
 
 window.Piano.bloqueios = {
     liberarEsc() {
-        window.Piano.xmlHttpRequest.geraScriptNaPagina(
-            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/bloqueio/liberaTeclado.js`
-        )
+        window.Piano.xmlHttpRequest.geraScriptNaPagina(`https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/bloqueio/liberaTeclado.js`)
     },
     bloqueiaViewMode() {
-        window.Piano.xmlHttpRequest.geraScriptNaPagina(
-            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/bloqueio/bloqueiaViewmode.js`
-        )
+        window.Piano.xmlHttpRequest.geraScriptNaPagina(`https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/bloqueio/bloqueiaViewmode.js`)
     },
 }
 
 window.Piano.parceiro = {
     mostraFooterParceiro(versao) {
-        window.Piano.util.adicionarCss(
-            `<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/footer-parceiros-piano/${versao}/styles/styles.css'>`
-        )
-        window.Piano.xmlHttpRequest.geraScriptNaPagina(
-            `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/footer-parceiros-piano/${versao}/scripts/footer-parceiros-piano.js`
-        )
+        window.Piano.util.adicionarCss(`<link rel='stylesheet' type='text/css' href='https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/footer-parceiros-piano/${versao}/styles/styles.css'>`)
+        window.Piano.xmlHttpRequest.geraScriptNaPagina(`https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/footer-parceiros-piano/${versao}/scripts/footer-parceiros-piano.js`)
     },
 }
 
@@ -556,11 +484,7 @@ window.Piano.xmlHttpRequest = {
                 }
 
                 if (respJson.autorizado === true) {
-                    window.Piano.metricas.setaVariaveis(
-                        respJson.usuarioId,
-                        'Globo ID',
-                        'O Globo'
-                    )
+                    window.Piano.metricas.setaVariaveis(respJson.usuarioId, 'Globo ID', 'O Globo')
                 }
             })
             .catch(() => {
@@ -570,12 +494,7 @@ window.Piano.xmlHttpRequest = {
                     `${xhr.status} - ${glbid}`,
                 )
 
-                window.Piano.autenticacao.defineUsuarioPiano(
-                    true,
-                    'erro',
-                    true,
-                    ' '
-                )
+                window.Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, ' ')
             })
     },
 }
@@ -728,78 +647,8 @@ window.Piano.autenticacao = {
     },
 }
 
-window.Piano.construtor = {
-    async initTp(callback = null) {
-        window.tp = window.tp || []
-        window.tp.push(['setTags', [window.Piano.variaveis.getTipoConteudoPiano()],])
-        if (window.Piano.util.isRevista() || window.Piano.util.isValor()) {
-            window.tp.push(['setAid', window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].idSandboxTinypassRevistas,])
-        } else {
-            window.tp.push(['setAid', window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].idSandboxTinypass,])
-        }
-        window.tp.push(['setSandbox', window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].setSandBox,])
-        window.tp.push(['setDebug', window.Piano.util.isDebug()])
-        const cleanUrl = window.Piano.util.getWindowLocationHref().split('?')[0]
-        window.tp.push(['setPageURL', cleanUrl])
-        window.tp.push(['setZone', window.Piano.variaveis.getNomeProduto()])
-        window.tp.push(['setCustomVariable', 'nomeProduto', window.Piano.variaveis.getNomeProduto(),])
-        window.Piano.janelaAnonima.detectPrivateMode(function (isPrivate) {
-            window.tp.push(['setCustomVariable', 'anonimo', isPrivate])
-        })
-
-        if (window.Piano.variaveis.isConteudoExclusivo()) {
-            window.tp.push(['setCustomVariable', 'conteudoExclusivo', true])
-        }
-
-        if (Helpers.getCookie(window.Piano.variaveis.constante.cookie.DEFERRED_FLOW_NOT_ACCEPTED_COOKIE) === "true") {
-            Helpers.setCookie(window.Piano.variaveis.constante.cookie.DEFERRED_FLOW_NOT_ACCEPTED_COOKIE, false, -1)
-
-            window.Piano.autenticacao.defineUsuarioPiano(
-                false,
-                'deferred_flow_nao_aceito',
-                true,
-                ''
-            )
-        } else if (typeof swg !== 'undefined' && typeof window.swgEntitlements !== 'undefined' && window.swgEntitlements?.enablesThis()) {
-            window.Piano.google.isSpecificGoogleUser(window.swgEntitlements);
-            window.Piano.autenticacao.defineUsuarioPiano(
-                true,
-                'autorizado',
-                true,
-                ''
-            )
-
-        } else {
-            await window.Piano.autenticacao.verificaUsuarioLogadoNoBarramento(
-                Helpers.getCookie(window.Piano.variaveis.constante.cookie.GCOM),
-                Helpers.getCookie(window.Piano.variaveis.constante.cookie.UTP)
-            )
-        }
-
-        window.Piano.regionalizacao.getRegion()
-        window.Piano.krux.obtemSegmentacao()
-
-        window.tp.push(['setCustomVariable', 'bannerContadorLigado', true])
-        window.Piano.util.isOrigemBuscador() ||
-            window.Piano.util.extraiParametrosCampanhaDaUrl()
-        window.tp.push([
-            'addHandler',
-            'meterActive',
-            window.Piano.util.callbackMeter,
-        ])
-
-        window.tp.push([
-            'addHandler',
-            'meterExpired',
-            window.Piano.util.callbackMeterExpired,
-        ])
-
-        if (callback) callback()
-    },
-}
-
 function pianoInit() {
-    window.Piano.checkPianoActive()
+    PianoModule.checkPianoActive()
 
     if (window.tinyCpt.isProduction && window.tinyCpt.Swg.global) {
         window.SWG.push((subscriptions) => {
