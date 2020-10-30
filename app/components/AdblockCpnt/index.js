@@ -1,7 +1,9 @@
 import GA from '../../scripts/GA'
+import Products from '../../scripts/Products'
 
 class AdblockCpnt {
     constructor() {
+        this.Products = new Products()
         this.GA = new GA() 
 
         const path = window.tinyCpt.isDev ? `${window.tinyCpt.assetsPath}/app` : `${window.tinyCpt.assetsPath}/paywall/app`
@@ -54,10 +56,23 @@ class AdblockCpnt {
         console.groupEnd()
 
         console.groupEnd()
-	}
+    }
+    
+    checkPseudoVars() {
+        const checkLinkProps = ['urlSignin', 'urlSignup']
+        const pseudoVars = ['@loginUrl', '@registerUrl']
+
+        checkLinkProps.forEach(prop => {
+            pseudoVars.forEach(pseudoVar => {
+                if(window.glbAdblock[prop] === pseudoVar)
+                    window.glbAdblock[prop] = pseudoVar.includes('login') ? this.Products.getLoginUrl() : this.Products.getRegisterUrl()
+            })
+        })
+    }
 
     setTemplateSettings() {
         if (window.glbAdblock) {
+            this.checkPseudoVars()
             this.templateSettings = { ...this.templateSettings, ...window.glbAdblock }
             window.glbAdblock = this.templateSettings
         }
