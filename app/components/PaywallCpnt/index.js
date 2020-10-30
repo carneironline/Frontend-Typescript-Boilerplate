@@ -1,13 +1,20 @@
 import Products from '../../scripts/Products'
 import PaywallDefaultCpnt from '../PaywallDefaultCpnt'
 import BarberBarrier from '../BarberBarrier'
+import Tiny from '../../scripts/Tiny'
 
 class PaywallCpnt {
     constructor() {
+        this.Tiny = new Tiny()
         this.Products = new Products()
         this.debug = window.tinyCpt.debug.paywall
-        this.setTemplateSettings(() => {
-            this.init()
+        this.componentName = 'PaywallCpnt'
+        this.componentActive = null
+
+        this.Tiny.setActiveComponent(this.componentName, () => {
+            this.setTemplateSettings(() => {
+                this.init()
+            })
         })
     }
 
@@ -120,10 +127,11 @@ class PaywallCpnt {
         const delayTimer = window.glbPaywall?.delayTimer ? window.glbPaywall.delayTimer * 1000 : 0
         const hasBarberBarrier = Boolean(window.glbPaywall.barberBarrier && Object.keys(window.glbPaywall.barberBarrier)?.length)
         const hasOnlyBarberBarrier = window.glbPaywall?.only === 'barberBarrier'
+        const media = window.matchMedia("(max-width: 1023px)").matches
 
         setTimeout(() => {
-            if ((hasBarberBarrier && window.matchMedia("(max-width: 1023px)").matches) || hasOnlyBarberBarrier) {
-                this.componentActive = 'BarberBarrier'
+            if ((hasBarberBarrier && media) || hasOnlyBarberBarrier) {
+                this.componentActive = 'BarberBarrier' 
                 new BarberBarrier(this)
             } else {
                 this.componentActive = 'PaywallDefaultCpnt'

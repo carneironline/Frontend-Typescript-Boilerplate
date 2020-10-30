@@ -605,7 +605,7 @@ window.Piano.paywall = {
         window.Piano.typePaywall = typePaywall
 
         try {
-            // new PaywallCpnt()
+            new PaywallCpnt()
             window.hasPaywall = true
         } catch (error) {
             console.error('PaywallCpnt - ', error)
