@@ -27,6 +27,7 @@ export default class Piano {
         this.addGlobalProps('util', this.useful)
         this.addGlobalProps('configuracao', this.configuration)
         this.addGlobalProps('helper', this.helper)
+        this.addGlobalProps('construtor', this.construtor)
     }
 
     get vars() {
@@ -566,15 +567,9 @@ export default class Piano {
                                 window.tp.experience._getLastExecutionResult().result &&
                                 window.tp.experience._getLastExecutionResult().result.events
                             ) {
-                                const experiences = window.tp.experience._getLastExecutionResult()
-                                    .result.events
-                                const experiencesClone = Array.from(
-                                    window.tp.experience._getLastExecutionResult().result.events
-                                )
-                                const experiencesChanged = Object.is(
-                                    JSON.stringify(experiences),
-                                    JSON.stringify(experiencesClone)
-                                )
+                                const experiences = window.tp.experience._getLastExecutionResult().result.events
+                                const experiencesClone = Array.from(window.tp.experience._getLastExecutionResult().result.events)
+                                const experiencesChanged = Object.is(JSON.stringify(experiences), JSON.stringify(experiencesClone) )
 
                                 if (experiencesChanged) {
                                     experiences.forEach((item) => {
@@ -690,6 +685,68 @@ export default class Piano {
         }
     }
 
+    get construtor() {
+        return {
+            async initTp(callback = null) {
+                const cleanUrl = window.Piano.util.getWindowLocationHref().split('?')[0]
+
+                window.tp = window.tp || []
+                window.tp.push(['setTags', [window.Piano.variaveis.getTipoConteudoPiano()],])
+
+                if (window.Piano.util.isRevista() || window.Piano.util.isValor()) {
+                    window.tp.push(['setAid', window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].idSandboxTinypassRevistas,])
+                } else {
+                    window.tp.push(['setAid', window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].idSandboxTinypass,])
+                }
+
+                window.tp.push(['setSandbox', window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].setSandBox,])
+                window.tp.push(['setDebug', window.Piano.util.isDebug()])
+                window.tp.push(['setPageURL', cleanUrl])
+                window.tp.push(['setZone', window.Piano.variaveis.getNomeProduto()])
+                window.tp.push(['setCustomVariable', 'nomeProduto', window.Piano.variaveis.getNomeProduto(),])
+
+                window.Piano.janelaAnonima.detectPrivateMode(function (isPrivate) {
+                    window.tp.push(['setCustomVariable', 'anonimo', isPrivate])
+                })
+        
+                if (window.Piano.variaveis.isConteudoExclusivo()) {
+                    window.tp.push(['setCustomVariable', 'conteudoExclusivo', true])
+                }
+        
+                if (Helpers.getCookie(window.Piano.variaveis.constante.cookie.DEFERRED_FLOW_NOT_ACCEPTED_COOKIE) === "true") {
+                    Helpers.setCookie(window.Piano.variaveis.constante.cookie.DEFERRED_FLOW_NOT_ACCEPTED_COOKIE, false, -1)
+        
+                    window.Piano.autenticacao.defineUsuarioPiano(
+                        false,
+                        'deferred_flow_nao_aceito',
+                        true,
+                        ''
+                    )
+                } else if (typeof swg !== 'undefined' && typeof window.swgEntitlements !== 'undefined' && window.swgEntitlements?.enablesThis()) {
+                    window.Piano.google.isSpecificGoogleUser(window.swgEntitlements);
+                    window.Piano.autenticacao.defineUsuarioPiano(true, 'autorizado', true, '')
+        
+                } else {
+                    await window.Piano.autenticacao.verificaUsuarioLogadoNoBarramento(
+                        Helpers.getCookie(window.Piano.variaveis.constante.cookie.GCOM),
+                        Helpers.getCookie(window.Piano.variaveis.constante.cookie.UTP)
+                    )
+                }
+        
+                window.Piano.regionalizacao.getRegion()
+                window.Piano.krux.obtemSegmentacao()
+        
+                window.tp.push(['setCustomVariable', 'bannerContadorLigado', true])
+                window.Piano.util.isOrigemBuscador() || window.Piano.util.extraiParametrosCampanhaDaUrl()
+                window.tp.push(['addHandler', 'meterActive', window.Piano.util.callbackMeter, ])
+        
+                window.tp.push([ 'addHandler', 'meterExpired', window.Piano.util.callbackMeterExpired, ])
+        
+                if (callback) callback()
+            },
+        }
+    }
+
     setExperience() {
         let experienceName = ''
         window.Piano.experience = {}
@@ -722,6 +779,68 @@ export default class Piano {
         const b = document.getElementsByTagName('script')[0]
     
         b.parentNode.insertBefore(a, b)
+    }
+
+    checkPaywall(PianoResultEvents = null) {
+        let hasRunJsWithPaywall = false
+    
+        if (PianoResultEvents) {
+            PianoResultEvents.forEach((item) => {
+                if (item.eventType === 'runJs') {
+                    if (
+                        item.eventParams.snippet !== 'undefined' &&
+                        (item.eventParams.snippet.includes('paywall.show') ||
+                            item.eventParams.snippet.includes('paywall.analytic') ||
+                            item.eventParams.snippet.includes('paywall.naoBarreiraGcom') ||
+                            item.eventParams.snippet.includes('paywall.barreiraBarbeira') ||
+                            item.eventParams.snippet.includes('mostrarBarreira'))
+                    ) {
+                        window.hasPaywall = true
+                        hasRunJsWithPaywall = true
+                        this.triggerPaywallOpened()
+                    }
+                }
+            })
+    
+            if (!hasRunJsWithPaywall) this.triggerAdvertising()
+        }
+    }
+
+    checkPianoActive() {
+        let count = 0
+    
+        const interval = setInterval(() => {
+            if (
+                window.tp !== 'undefined' &&
+                window.tp.experience &&
+                window.tp.experience._getLastExecutionResult() &&
+                window.tp.experience._getLastExecutionResult().result &&
+                window.tp.experience._getLastExecutionResult().result.events
+            ) {
+                this.checkPaywall(window.tp.experience._getLastExecutionResult().result.events)
+                clearInterval(interval)
+            } else {
+                if (count === 10) {
+                    this.triggerAdvertising()
+                    clearInterval(interval)
+                }
+    
+                count++
+            }
+        }, 500)
+    }
+
+    triggerAdvertising() {
+        window.hasPaywall = false
+        console.log('%c dispatchEvent clearForAds ', Helpers.consoleColor().header)
+        const event = new CustomEvent('clearForAds')
+        document.dispatchEvent(event)
+    }
+
+    triggerPaywallOpened() {
+        console.log('%c dispatchEvent blockForAds ', Helpers.consoleColor().header)
+        const event = new CustomEvent('blockForAds')
+        document.dispatchEvent(event)
     }
 
     addGlobalProps(propName, value) {

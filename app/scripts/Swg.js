@@ -38,7 +38,7 @@ export default class Swg {
         if (!Helpers.isDefined(window.tinyCpt)) return
 
         window.tinyCpt.Swg = {
-            global: typeof swg !== 'undefined' ? swg : null,
+            global: typeof swg !== 'undefined' ? window.swg : null,
         }
     }
 
