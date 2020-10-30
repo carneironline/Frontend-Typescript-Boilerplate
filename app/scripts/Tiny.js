@@ -8,6 +8,8 @@ export default class Tiny {
         window.Piano = window.Piano || {}
         window.PaywallAnalytics = window.PaywallAnalytics || {}
 
+        this.activeComponents = []
+
         this.setGlobalTiny()
         this.Products.setGlobal()
         this.init()
@@ -32,6 +34,7 @@ export default class Tiny {
             assetsPath: isProduction
                 ? 'https://static.infoglobo.com.br'
                 : isQa ? 'https://static-stg.infoglobo.com.br' : 'https://tinyjs.globoi.com:8080',
+            activeComponents: this.activeComponents
         }
 
         window.tinyCpt = window.tinyCpt
@@ -54,6 +57,19 @@ export default class Tiny {
 
     setPiano(obj) {
         window.tinyCpt.Piano = obj
+    }
+
+    setActiveComponent(component, callback = null) {
+        if(!this.checkActiveComponent(component)) {
+            window.tinyCpt.activeComponents.push(component)
+            
+            if(callback)
+                callback()
+        }
+    }
+
+    checkActiveComponent(component) { 
+        return window.tinyCpt.activeComponents?.includes(component)
     }
 
     init() {}
