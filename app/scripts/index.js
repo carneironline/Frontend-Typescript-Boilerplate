@@ -825,22 +825,8 @@ window.Piano.comunicado = {
     },
 }
 
+// TODO Remover depois que inserir todos os Piano.componentes.show('adblock') na Piano
 window.Piano.adblock = {
-    detecta() {
-        document.cookie =
-            '__adblocker=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
-        const setNptTechAdblockerCookie = function (adblocker) {
-            const d = new Date()
-            d.setTime(d.getTime() + 60 * 60 * 24 * 2 * 1000)
-            document.cookie = `__adblocker=${adblocker ? 'true' : 'false'
-                }; expires=${d.toUTCString()}; path=/`
-        }
-        const script = document.createElement('script')
-        script.setAttribute('async', true)
-        script.setAttribute('src', 'https://www.npttech.com/advertising.js')
-        script.setAttribute('onerror', 'setNptTechAdblockerCookie(true);')
-        document.getElementsByTagName('head')[0].appendChild(script)
-    },
     mostrarAdBlock() {
         try {
             new AdblockCpnt()
@@ -1610,11 +1596,13 @@ function pianoInit() {
 }
 
 async function tinyInit() {
-    window.Piano.adblock.detecta()
+    const Adblock = new AdblockCpnt
+    Adblock.checksAdblockIsEnabled()
+    
     Tiny.setPiano(window.Piano)
-    const Swg = new SwgModule()
-
+    
     try {
+        const Swg = new SwgModule()
         await Swg.init()
     } catch (e) {
         console.error(e)
