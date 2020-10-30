@@ -39,4 +39,49 @@ export default class Products {
             ? productsId[this.productName].id
             : null
     }
+
+    get loginDomain() {
+        const loginDomain = window.tinyCpt.isProduction
+            ? 'https://login.globo.com/'
+            : 'https://login.qa.globoi.com/'
+
+        return loginDomain
+    }
+
+    get serviceId() {
+        return window.tinyCpt.Piano?.variaveis?.getServicoId() || null
+    }
+
+    get returnUrl() {
+        return encodeURIComponent(window.location.href)
+    }
+
+    getLoginUrl() {
+        let str = ''
+
+        if (this.serviceId) {
+            str = `${this.loginDomain}login/${this.serviceId}?url=${this.returnUrl}`
+        }
+
+        return str
+    }
+
+    getRegisterUrl() {
+        let str = ''
+
+        if (this.serviceId) {
+            str = `${this.loginDomain}cadastro/${this.serviceId}?url=${this.returnUrl}`
+        }
+
+        return str
+    }
+
+    getLogoutUrl() {
+        let str = ''
+
+        if (this.serviceId)
+            str = `${this.loginDomain}logout?url=${this.loginDomain}login/${this.serviceId}?url=${this.returnUrl}`
+
+        return str
+    }
 }
