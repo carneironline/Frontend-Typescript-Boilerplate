@@ -8,17 +8,20 @@ export default class Tiny {
         window.Piano = window.Piano || {}
         window.PaywallAnalytics = window.PaywallAnalytics || {}
 
+        this.isProduction = window.ambienteUtilizadoPiano === 'prd'
+        this.isQa = window.ambienteUtilizadoPiano === 'qlt'
+        this.isDev = window.ambienteUtilizadoPiano === 'dev'
+
         this.activeComponents = []
 
         this.setGlobalTiny()
         this.Products.setGlobal()
-        this.init()
     }
 
     setGlobalTiny() {
-        const isProduction = window.ambienteUtilizadoPiano === 'prd'
-        const isQa = window.ambienteUtilizadoPiano === 'qlt'
-        const isDev = window.ambienteUtilizadoPiano === 'dev'
+        const {isProduction} = this
+        const {isQa} = this
+        const {isDev} = this
 
         const defaultSettings = {
             debug: {
@@ -31,15 +34,23 @@ export default class Tiny {
             isQa,
             isDev,
             environmentType: this.environmentType(),
-            assetsPath: isProduction
-                ? 'https://static.infoglobo.com.br'
-                : isQa ? 'https://static-stg.infoglobo.com.br' : 'https://tinyjs.globoi.com:8080',
+            assetsPath: this.getAssetsPath(),
             activeComponents: this.activeComponents
         }
 
         window.tinyCpt = window.tinyCpt
             ? Object.assign(defaultSettings, window.tinyCpt)
             : defaultSettings
+    }
+
+    getAssetsPath() {
+        if(this.isProduction)
+            return 'https://static.infoglobo.com.br'
+
+        if(this.isQa)
+            return 'https://static-stg.infoglobo.com.br'
+
+        return 'https://tinyjs.globoi.com:8080'
     }
 
     environmentType() {
@@ -71,6 +82,4 @@ export default class Tiny {
     checkActiveComponent(component) { 
         return window.tinyCpt.activeComponents?.includes(component)
     }
-
-    init() {}
 }
