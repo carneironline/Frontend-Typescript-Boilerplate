@@ -40,6 +40,13 @@ export default class Products {
             : null
     }
 
+    get isOidcLogin() {
+        return typeof productsId[this.productName] !== 'undefined' &&
+            typeof productsId[this.productName].isOidcLogin !== 'undefined'
+            ? productsId[this.productName].isOidcLogin
+            : false
+    }
+
     get loginDomain() {
         const loginDomain = window.tinyCpt.isProduction
             ? 'https://login.globo.com/'
@@ -47,6 +54,15 @@ export default class Products {
 
         return loginDomain
     }
+
+    get oidcLoginDomain(){
+        const oidcLoginDomain = window.tinyCpt.isProduction
+            ? 'https://www.oidcservice-qa.globoi.com/'
+            : 'https://www.oidcservice.globo.com/'
+
+        return oidcLoginDomain
+    }
+
 
     get serviceId() {
         return window.tinyCpt.Piano?.variaveis?.getServicoId() || null
@@ -57,10 +73,28 @@ export default class Products {
     }
 
     getLoginUrl() {
+        if (this.isOidcLogin) {
+            return this.getOidcLoginUrl()
+        }
+
+        return this.getOldLoginUrl()
+    }
+
+    getOldLoginUrl() {
         let str = ''
 
         if (this.serviceId) {
             str = `${this.loginDomain}login/${this.serviceId}?url=${this.returnUrl}`
+        }
+
+        return str
+    }
+
+    getOidcLoginUrl() {
+        let str = ''
+
+        if (this.serviceId) {
+            str = `${this.oidcLoginDomain}login/productName=${this.productName}&redirectTo=${this.returnUrl}&oldServiceId=${this.serviceId}`
         }
 
         return str
