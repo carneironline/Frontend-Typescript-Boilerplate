@@ -422,12 +422,27 @@ class AdblockCpntTemplates {
             border: solid 1px #121214;
             z-index: 99999999;
 
-        }   
+        } 
+        
+        @media only screen and (max-width: 767px) {
+            #detecta-adblock {
+                padding: 0;
+            }
+        }
+        
 
         ${main} {
             width: 940px;
             font-family: 'Raleway';
             background: #fff;
+        }
+
+        @media only screen and (max-width: 767px) {
+            ${main} {
+                width: auto;
+                height: 100vh;
+                flex-direction: column;
+            }
         }
         
         ${main}-main {
@@ -440,11 +455,25 @@ class AdblockCpntTemplates {
             padding-top: 40px;
         }
 
+        @media only screen and (max-width: 767px) {
+            ${main}-main {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
         ${main}-main-image {
             width: 187px;
             height: 189px;
             background: #ccc 0% 0% no-repeat;
             margin-right: 40px;
+        }
+
+        @media only screen and (max-width: 767px) {
+            ${main}-main-image {
+                margin-right: unset;
+                margin-bottom: 20px;
+            }
         }
 
         ${main}-main-text {
@@ -455,8 +484,22 @@ class AdblockCpntTemplates {
             font-size: 70px;
         }
 
+        @media only screen and (max-width: 767px) {
+            ${main}-main-text__title {
+                font-size: 30px;
+                text-align: center;
+            }
+        }
+        
         ${main}-main-text__description {
             font-size: 36.7px;
+        }
+
+        @media only screen and (max-width: 767px) {
+            ${main}-main-text__description {
+                font-size: 16.7px;
+                text-align: center;
+            }
         }
 
         ${main}-readmore {
@@ -467,6 +510,15 @@ class AdblockCpntTemplates {
             padding: 35px 0;
         }
 
+        @media only screen and (max-width: 767px) {
+            ${main}-readmore {
+                flex-direction: column;
+                align-items: center;
+                padding: 20px;
+                text-align: center;
+            }
+        }
+
         ${main}-btn-readmore {
             color: #0094FB;
             font-size: 26px;
@@ -474,6 +526,12 @@ class AdblockCpntTemplates {
             margin-left: 10px;
         }
 
+        @media only screen and (max-width: 767px) {
+            ${main}-btn-readmore {
+                margin-left: unset;
+                padding-top: 10px;
+            }
+        }
         
         </style>
         `

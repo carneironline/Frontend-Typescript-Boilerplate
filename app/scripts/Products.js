@@ -2,10 +2,13 @@ import productsId from '../mocks/products/products-id'
 
 export default class Products {
     constructor() {
+        
         this.name = typeof window.nomeProdutoPiano !== 'undefined' ? window.nomeProdutoPiano : null
         this.id = this.productId
         this.code = this.productCode
+    }
 
+    init() {
         window.tinyCpnt.Product = this
     }
 
@@ -21,16 +24,12 @@ export default class Products {
         return (this.isProductValor || this.isAutoEsporte)
     }
 
-    get productId() {
-        return typeof productsId[this.name] !== 'undefined' && typeof productsId[this.name].id !== 'undefined'
-            ? productsId[this.name].id
-            : null
+    get productId() { 
+        return productsId[this.name].id
     }
 
     get productCode() {
-        return typeof productsId[this.name] !== 'undefined' && typeof productsId[this.name].cod_prod !== 'undefined'
-            ? productsId[this.name].cod_prod
-            : null
+        return productsId[this.name].cod_prod
     }
 
     get loginDomain() {
@@ -42,7 +41,7 @@ export default class Products {
     }
 
     get serviceId() {
-        return window.tinyCpnt.Piano?.variaveis?.getServicoId() || null
+        return productsId[this.name].id
     }
 
     get returnUrl() {

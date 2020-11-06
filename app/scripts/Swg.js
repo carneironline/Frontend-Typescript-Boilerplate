@@ -4,20 +4,27 @@ export default class Swg {
     constructor() {
         window.SWG = window.SWG || [] // TODO: Understand why this variable exists
         window.swgEntitlements = window.swgEntitlements || null
-        this.debug = Helpers.isDefined(window.tinyCpnt)
-            ? window.tinyCpnt.debug.swg
-            : false
+        this.debug = Helpers.isDefined(window.tinyCpnt) ? window.tinyCpnt.debug.swg : false
         this.disabled = false
         this.content = null
-        this.localProductPiano =
-            typeof window.nomeProdutoPiano !== 'undefined'
-                ? window.nomeProdutoPiano
-                : null
+        this.localProductPiano = window.tinyCpnt.Product.name
         this.hasProductJSON = false
         this.productJSON = null
         this.elHead = document.head
 
         this.setGlobalSWG()
+    }
+
+    async init() {
+        if (window.tinyCpnt.isProduction && !this.valorPageAllowed) return null
+        if (!this.localProductPiano) return null
+        await this.setMarkup()
+
+        if (!this.hasProductJSON) return null
+
+        await this.setSwgScript()
+        await this.setAldebaranScript()
+        await this.testSWG()
     }
 
     get valorPageAllowed() {
@@ -64,9 +71,7 @@ export default class Swg {
 
         if (this.disabled || !this.isDefined || !utmsProps) return
 
-        window.tinyCpnt.Swg.global.subscribe(
-            'br.com.infoglobo.oglobo.swg.google'
-        )
+        window.tinyCpnt.Swg.global.subscribe('br.com.infoglobo.oglobo.swg.google')
     }
 
     async getProducts() {
@@ -167,15 +172,4 @@ export default class Swg {
         })
     }
 
-    async init() {
-        if (window.tinyCpnt.isProduction && !this.valorPageAllowed) return null
-        if (!this.localProductPiano) return null
-        await this.setMarkup()
-
-        if (!this.hasProductJSON) return null
-
-        await this.setSwgScript()
-        await this.setAldebaranScript()
-        await this.testSWG()
-    }
 }

@@ -4,6 +4,7 @@ import Piano from './Piano'
 import GAModule from './GA'
 import SwgModule from './Swg'
 import KruxModule from './Krux'
+import ProductsModule from './Products'
 
 import BannersConsumer from '../components/BannersConsumer'
 import PaywallCpnt from '../components/PaywallCpnt'
@@ -17,12 +18,14 @@ import AdblockCpnt from '../components/AdblockCpnt'
 
 console.table(process.env)
 
+const Products = new ProductsModule() 
 const Tiny = new TinyModule() 
 const PianoModule = new Piano()  
 const GA = new GAModule()  
 const Krux = new KruxModule()  
 const Adblock = new AdblockCpnt()
 
+Products.init()
 GA.init()
 Krux.init()
 PianoModule.init()
@@ -328,9 +331,7 @@ window.Piano.xmlHttpRequest = {
             if (callback) callback(xhr)
         }
     },
-    fazRequisicaoBarramentoApiObterAssinaturaInadimplente(
-        hrefAssinaturaInadimplente
-    ) {
+    fazRequisicaoBarramentoApiObterAssinaturaInadimplente(hrefAssinaturaInadimplente) {
         const xhr = new XMLHttpRequest()
         xhr.open('GET', hrefAssinaturaInadimplente, false)
         xhr.setRequestHeader('Accept', 'application/json')

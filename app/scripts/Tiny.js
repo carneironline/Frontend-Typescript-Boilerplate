@@ -1,8 +1,5 @@
-import ProductsModule from './Products'
-
 export default class Tiny {
     constructor() {
-        this.Products = new ProductsModule()
         window.hasPaywall = window.hasPaywall || null
         window.tp = window.tp || []        
         window.PaywallAnalytics = window.PaywallAnalytics || {}

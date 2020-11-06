@@ -26,7 +26,7 @@ export default class Piano {
 
     static setGlobalVars() {
         window.tinyCpnt.Piano = window.tinyCpnt.Piano || this
-        window.Piano = window.Piano || this 
+        window.Piano = window.Piano || {} 
     }
 
     setInitialGlobalProps() {
@@ -121,13 +121,13 @@ export default class Piano {
                 return window.nomeProdutoPiano
             },
             getServicoId() {
-                const { id } = window.tinyCpnt.Product.id
+                const {id, name} = window.tinyCpnt.Product
         
                 if (!id) {
                     self.GA.setEventsError(
                         'getServicoId()',
                         'ServiceID não definido.',
-                        `${document.location.href} nomeProduto: ${window.Piano.variaveis.getNomeProduto()}`,
+                        `${document.location.href} nomeProduto: ${name}`,
                     )
         
                     return '0000'
@@ -651,7 +651,7 @@ export default class Piano {
                         'https://sandbox.tinypass.com/xbuilder/experience/load?aid=dXu7dvFKRi',
                     urlSandboxPianoRevistas:
                         'https://sandbox.tinypass.com/xbuilder/experience/load?aid=MctFgRCEsu',
-                    urlVerificaLeitor: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.Piano.variaveis.getServicoId()}/autorizacao-acesso`,
+                    urlVerificaLeitor: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.tinyCpnt.Product.id}/autorizacao-acesso`,
                     urlDominioPaywall: 'https://assinatura.globostg.globoi.com/',
                     urlDominioSiteOGlobo: `${window.Piano.util.isDominioOGlobo()}/`,
                 },
@@ -663,7 +663,7 @@ export default class Piano {
                         'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
                     urlSandboxPianoRevistas:
                         'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
-                    urlVerificaLeitor: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.Piano.variaveis.getServicoId()}/autorizacao-acesso`,
+                    urlVerificaLeitor: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.tinyCpnt.Product.id}/autorizacao-acesso`,
                     urlDominioPaywall: 'https://assinatura.globostg.globoi.com/',
                     urlDominioSiteOGlobo: `${window.Piano.util.isDominioOGlobo()}/`,
                 },
@@ -675,7 +675,7 @@ export default class Piano {
                         'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
                     urlSandboxPianoRevistas:
                         'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
-                    urlVerificaLeitor: `https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.Piano.variaveis.getServicoId()}/autorizacao-acesso`,
+                    urlVerificaLeitor: `https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.tinyCpnt.Product.id}/autorizacao-acesso`,
                     urlDominioPaywall: 'https://assinatura.oglobo.globo.com/',
                     urlDominioSiteOGlobo: `${window.Piano.util.isDominioOGlobo()}/`,
                 },
