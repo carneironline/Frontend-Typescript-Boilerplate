@@ -7,7 +7,7 @@ class PaywallCpnt {
     constructor() {
         this.Tiny = new Tiny()
         this.Products = new Products()
-        this.debug = window.tinyCpt.debug.paywall
+        this.debug = window.tinyCpnt.debug.paywall
         this.componentName = 'PaywallCpnt'
         this.componentActive = null
 

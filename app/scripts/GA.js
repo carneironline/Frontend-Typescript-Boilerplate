@@ -3,9 +3,13 @@ import Helper from "./Helpers"
 
 export default class GA {
     constructor() {
-        this.debug = window.tinyCpt.debug.ga
+        this.debug = window.tinyCpnt.debug.ga
         this.Products = new ProductsModule()
 
+        
+    }
+
+    init() {
         this.setGlobalVars()
     }
 
@@ -18,6 +22,8 @@ export default class GA {
 
         if (this.Products.isTealiumProducts)
             window._gaq = window._gaq || []
+
+        window.tinyCpnt.GA = this
     }
 
     setEvents(calledBy = '', action, label, category = 'Piano', eventName = 'EventoGAPiano') {

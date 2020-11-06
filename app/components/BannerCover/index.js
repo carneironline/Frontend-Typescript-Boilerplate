@@ -1,10 +1,6 @@
-import GA from '../../scripts/GA'
-
 class BannerCover {
 
-	constructor() {
-		this.GA = new GA() 
-		 
+	constructor() {		 
 		this.classMain = 'banner-cover-cpnt'
         this.styleClassMain = `.${this.classMain}`
 		this.elBody = document.body
@@ -47,7 +43,7 @@ class BannerCover {
 		const label = window.glbBannerCover?.ga?.label;
 		
 		if(label) {
-			this.GA.setEvents( 
+			window.tinyCpnt.GA.setEvents( 
 				calledBy,
 				action,
 				label,

@@ -22,7 +22,7 @@ class BannersConsumer {
     }
 
     init() {
-        if (!this.bannersFound || !window.glbBannersConsumer) return null
+        if (!this.bannersFound || !window.glbBannersConsumer || !window.glbBannersConsumer?.imageDesk) return null
 
         this.addStyle()
 
