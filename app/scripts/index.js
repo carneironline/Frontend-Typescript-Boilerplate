@@ -5,6 +5,7 @@ import GAModule from './GA'
 import SwgModule from './Swg'
 import KruxModule from './Krux'
 import getProductsObject from './ProductsRequester'
+import LoginHelper from './LoginHelper'
 
 import BannersConsumer from '../components/BannersConsumer'
 import PaywallCpnt from '../components/PaywallCpnt'
@@ -21,6 +22,8 @@ console.table(process.env)
 getProductsObject(window.ambienteUtilizadoPiano, (productsJson) => {
     window.productsObject = JSON.parse(productsJson)
 })
+
+LoginHelper.createSessionIdCookie()
 
 const Tiny = new TinyModule() 
 const PianoModule = new Piano()  
@@ -497,6 +500,176 @@ window.Piano.xmlHttpRequest = {
                 window.Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, ' ')
             })
     },
+    async verificarAutorizacaoDeAcesso(){      
+        let accessToken = this.getAccessToken()
+        
+        if (!accessToken){
+            accessToken = this.getRefreshedAccessToken()
+        }
+
+        if (!accessToken){
+            LoginHelper.deleteSession()
+        }
+
+        await this.fazRequisicaoBarramentoApiAutorizacaoAcessoV4(accessToken)
+    },
+    async getAccessToken(){
+        const url = this.getUrlForOidcService('access_token')
+
+        const accessToken = this.getToken(url)
+                                .then((token) => token)
+
+        return accessToken;
+    },
+    async getRefreshedAccessToken(){
+        const url = this.getUrlForOidcService('refresh_token')
+
+        const accessToken = this.getToken(url)
+                                .then((token) => token)
+
+        return accessToken;
+    },
+    getUrlForOidcService(requestType){
+        const sessionId = LoginHelper.getSessionId()
+
+        const oidcUrl =
+            window.Piano.configuracao.jsonConfiguracaoTinyPass[
+                window.Piano.variaveis.getAmbientePiano()
+            ].urlOidcService
+        
+        return `${oidcUrl}${requestType}?sessionId=${sessionId}&productName=${window.Piano.variaveis.getNomeProduto()}`
+    },
+    async getToken(url){
+        const accessToken = await fetch(url, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        })
+        .then((response) => response.json())
+
+        return accessToken;
+    },
+    async fazRequisicaoBarramentoApiAutorizacaoAcessoV4(accessToken) {
+        const codigoProduto = window.Piano.variaveis.getCodigoProduto()
+
+        if (codigoProduto === 'error') {
+            return
+        }
+
+        const data = JSON.stringify({
+            'token-acesso': accessToken,
+            codigoProduto,
+        })
+
+        const xhr = new XMLHttpRequest()
+
+        const url =
+            window.Piano.configuracao.jsonConfiguracaoTinyPass[
+                window.Piano.variaveis.getAmbientePiano()
+            ].urlVerificaLeitorV4
+
+        await fetch(url, {
+            method: 'post',
+            body: data,
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((respJson) => {
+                let respostaDeTermoDeUso = ''
+                let respostaDeMotivo = ''
+                let hrefAssinaturaInadimplente = ''
+                let _jsonLeitorAux = {}
+
+                if (typeof respJson.motivo !== 'undefined') {
+                    respostaDeMotivo = respJson.motivo.toLowerCase()
+                }
+
+                if (typeof respJson.temTermoDeUso !== 'undefined') {
+                    respostaDeTermoDeUso = respJson.temTermoDeUso
+                }
+
+                if (typeof respJson.link !== 'undefined') {
+                    hrefAssinaturaInadimplente = window.Piano.inadimplente.getLinkAssinatura(
+                        respJson.link
+                    )
+                }
+
+                const isAutorizado = window.Piano.autenticacao.isAutorizado(
+                    respostaDeTermoDeUso,
+                    respostaDeMotivo,
+                    respJson.autorizado,
+                    hrefAssinaturaInadimplente
+                )
+
+                window.Piano.autenticacao.defineUsuarioPiano(
+                    respJson.autorizado,
+                    respostaDeMotivo,
+                    isAutorizado,
+                    respostaDeTermoDeUso
+                )
+
+                const cookieUTP = Helpers.getCookie(
+                    window.Piano.variaveis.constante.cookie.UTP
+                )
+
+                if (cookieUTP !== '') {
+                    _jsonLeitorAux = JSON.parse(decodeURI(atob(cookieUTP)))
+                }
+
+                let _jsonLeitor = {
+                    ..._jsonLeitorAux,
+                    autorizado: respJson.autorizado,
+                    motivo: respostaDeMotivo,
+                    logado: isAutorizado,
+                    temTermoDeUso: respostaDeTermoDeUso,
+                    accessToken,
+                    produto: window.Piano.variaveis.getNomeProduto(),
+                    codProduto: codigoProduto,
+                    uuid: respJson.usuarioId,
+                }
+
+                _jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)))
+
+                Helpers.setCookie(
+                    window.Piano.variaveis.constante.cookie.UTP,
+                    _jsonLeitor,
+                    1
+                )
+
+                if (typeof swg !== 'undefined') {
+                    if (window.Piano.google.showSaveSubscription(respJson)) {
+                        try {
+                            const swgService = new SwgService()
+                            swgService.saveSubscription(accessToken)
+                        } catch (error) {
+                            GA.setEventsError(
+                                'fazRequisicaoBarramentoApiAutorizacaoAcessoV4',
+                                'Erro ao chamar a função showSaveSubscription do Aldebaran.',
+                                `URL: ${document.location.href} GLBID: ${accessToken} Erro: ${error}`,
+                            )
+                        }
+                    }
+                }
+
+                if (respJson.autorizado === true) {
+                    window.Piano.metricas.setaVariaveis(respJson.usuarioId, 'Globo ID', 'O Globo')
+                }
+            })
+            .catch(() => {
+                GA.setEventsError(
+                    'fazRequisicaoBarramentoApiAutorizacaoAcessoV4',
+                    'API de autorizacao de acesso',
+                    `${xhr.status} - ${accessToken}`,
+                )
+
+                window.Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, ' ')
+            })
+    },
 }
 
 window.Piano.google = {
@@ -617,9 +790,16 @@ window.Piano.autenticacao = {
                 )
             }
 
-            await window.Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(
-                glbid
-            )
+            const sessionId = LoginHelper.getSessionId();
+
+            if (sessionId){
+                await window.Piano.xmlHttpRequest.verificarAutorizacaoDeAcesso()
+            }
+            else {
+                await window.Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(
+                    glbid
+                )
+            }
         }
     },
     isAutorizado(termoDeUso, motivo, autorizado, hrefAssinaturaInadimplente) {

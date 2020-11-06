@@ -57,8 +57,8 @@ export default class Products {
 
     get oidcLoginDomain(){
         const oidcLoginDomain = window.tinyCpt.isProduction
-            ? 'https://www.oidcservice-qa.globoi.com/'
-            : 'https://www.oidcservice.globo.com/'
+            ? 'https://www.oidcservice.globo.com/'
+            : 'https://www.oidcservice-qa.globoi.com/'
 
         return oidcLoginDomain
     }
@@ -94,7 +94,7 @@ export default class Products {
         let str = ''
 
         if (this.serviceId) {
-            str = `${this.oidcLoginDomain}login/productName=${this.productName}&redirectTo=${this.returnUrl}&oldServiceId=${this.serviceId}`
+            str = `${this.oidcLoginDomain}login?productName=${this.productName}&redirectTo=${this.returnUrl}&oldServiceId=${this.serviceId}`
         }
 
         return str

@@ -5,20 +5,21 @@ const SESSION_ID = 'SESSION_ID'
 export default class LoginHelper {
 
     static createSessionIdCookie(){
-        var sessionId = this.getSessionId()
-
+        const sessionId = this.getSessionId()
         if (sessionId){
             this.setCookie(sessionId)
         }
     }
 
     static getSessionId(){
-        var urlParams = new URLSearchParams(window.location.search);
+        const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(SESSION_ID)
     }
 
     static setCookie(value) {
-        Helpers.setCookie(SESSION_ID, value, 28)
+        if (!this.getCookie(SESSION_ID)){
+            Helpers.setCookie(SESSION_ID, value, 28)
+        }
     }
 
     static getCookie(name){
