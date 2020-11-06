@@ -4,7 +4,6 @@ import Piano from './Piano'
 import GAModule from './GA'
 import SwgModule from './Swg'
 import KruxModule from './Krux'
-import getProductsObject from './ProductsRequester'
 
 import BannersConsumer from '../components/BannersConsumer'
 import PaywallCpnt from '../components/PaywallCpnt'
@@ -18,15 +17,15 @@ import AdblockCpnt from '../components/AdblockCpnt'
 
 console.table(process.env)
 
-getProductsObject(window.ambienteUtilizadoPiano, (productsJson) => {
-    window.productsObject = JSON.parse(productsJson)
-})
-
 const Tiny = new TinyModule() 
 const PianoModule = new Piano()  
 const GA = new GAModule()  
 const Krux = new KruxModule()  
 const Adblock = new AdblockCpnt()
+
+GA.init()
+Krux.init()
+PianoModule.init()
 
 window.Piano.banner = {
     mostrarFooter(versao) {
@@ -650,7 +649,7 @@ window.Piano.autenticacao = {
 function pianoInit() {
     PianoModule.checkPianoActive()
 
-    if (window.tinyCpt.isProduction && window.tinyCpt.Swg.global) {
+    if (window.tinyCpnt.isProduction && window.tinyCpnt.Swg.global) {
         window.SWG.push((subscriptions) => {
             window.swg = subscriptions
 
@@ -658,9 +657,9 @@ function pianoInit() {
                 entitlementsPromise.then((entitlements) => {
                     window.swgEntitlements = entitlements
 
-                    if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
+                    if (window.tinyCpnt.Piano.util.temVariaveisObrigatorias()) {
                         try {
-                            window.tinyCpt.Piano.construtor.initTp(() =>
+                            window.tinyCpnt.Piano.construtor.initTp(() =>
                                 PianoModule.loadPianoExperiences()
                             )
                         } catch (error) {
@@ -676,8 +675,8 @@ function pianoInit() {
         })
     } else {
         GA.setEventsError('pianoInit', 'Entitlements não carregado', document.location.href)
-        if (window.tinyCpt.Piano.util.temVariaveisObrigatorias()) {
-            window.tinyCpt.Piano.construtor.initTp(() => PianoModule.loadPianoExperiences())
+        if (window.tinyCpnt.Piano.util.temVariaveisObrigatorias()) {
+            window.tinyCpnt.Piano.construtor.initTp(() => PianoModule.loadPianoExperiences())
         }
     }
 }

@@ -10,7 +10,7 @@ class PaywallDefaultCpnt {
         this.SWG = new SwgModule()
         this.FB = new FbModule(this.GA.metrics.fb)
         this.elBody = document.body
-        this.debug = window.tinyCpt.debug.paywall
+        this.debug = window.tinyCpnt.debug.paywall
 
         this.init()
     }

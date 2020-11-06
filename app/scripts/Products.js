@@ -2,31 +2,19 @@ import productsId from '../mocks/products/products-id'
 
 export default class Products {
     constructor() {
-        this.productName =
-            typeof window.nomeProdutoPiano !== 'undefined'
-                ? window.nomeProdutoPiano
-                : null
-    }
+        this.name = typeof window.nomeProdutoPiano !== 'undefined' ? window.nomeProdutoPiano : null
+        this.id = this.productId
+        this.code = this.productCode
 
-    setGlobal() {
-        const productsSettings = {
-            Product: {
-                name: this.productName,
-                // id: this.productId
-            },
-        }
-
-        window.tinyCpt = window.tinyCpt
-            ? Object.assign(productsSettings, window.tinyCpt)
-            : productsSettings
+        window.tinyCpnt.Product = this
     }
 
     get isProductValor() {
-        return this.productName === 'valor'
+        return this.name === 'valor'
     }
 
     get isAutoEsporte() {
-        return this.productName  === 'auto-esporte' 
+        return this.name  === 'auto-esporte' 
     }
 
     get isTealiumProducts() {
@@ -34,14 +22,19 @@ export default class Products {
     }
 
     get productId() {
-        return typeof productsId[this.productName] !== 'undefined' &&
-            typeof productsId[this.productName].id !== 'undefined'
-            ? productsId[this.productName].id
+        return typeof productsId[this.name] !== 'undefined' && typeof productsId[this.name].id !== 'undefined'
+            ? productsId[this.name].id
+            : null
+    }
+
+    get productCode() {
+        return typeof productsId[this.name] !== 'undefined' && typeof productsId[this.name].cod_prod !== 'undefined'
+            ? productsId[this.name].cod_prod
             : null
     }
 
     get loginDomain() {
-        const loginDomain = window.tinyCpt.isProduction
+        const loginDomain = window.tinyCpnt.isProduction
             ? 'https://login.globo.com/'
             : 'https://login.qa.globoi.com/'
 
@@ -49,7 +42,7 @@ export default class Products {
     }
 
     get serviceId() {
-        return window.tinyCpt.Piano?.variaveis?.getServicoId() || null
+        return window.tinyCpnt.Piano?.variaveis?.getServicoId() || null
     }
 
     get returnUrl() {

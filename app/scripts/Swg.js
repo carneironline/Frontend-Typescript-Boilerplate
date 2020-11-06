@@ -4,8 +4,8 @@ export default class Swg {
     constructor() {
         window.SWG = window.SWG || [] // TODO: Understand why this variable exists
         window.swgEntitlements = window.swgEntitlements || null
-        this.debug = Helpers.isDefined(window.tinyCpt)
-            ? window.tinyCpt.debug.swg
+        this.debug = Helpers.isDefined(window.tinyCpnt)
+            ? window.tinyCpnt.debug.swg
             : false
         this.disabled = false
         this.content = null
@@ -31,13 +31,13 @@ export default class Swg {
     }
 
     get isDefined() {
-        return !!window.tinyCpt.Swg.global
+        return !!window.tinyCpnt.Swg.global
     }
 
     setGlobalSWG() {
-        if (!Helpers.isDefined(window.tinyCpt)) return
+        if (!Helpers.isDefined(window.tinyCpnt)) return
 
-        window.tinyCpt.Swg = {
+        window.tinyCpnt.Swg = {
             global: typeof swg !== 'undefined' ? window.swg : null,
         }
     }
@@ -56,7 +56,7 @@ export default class Swg {
             urlParams.set(`utm_${name}`, value)
         })
 
-        if (window.tinyCpt.debug.swg) {
+        if (window.tinyCpnt.debug.swg) {
             console.log('log-method', 'setUtms')
             console.log('log-method-setUtms', utmsProps)
             console.log('log-method-setUtms', location)
@@ -64,13 +64,13 @@ export default class Swg {
 
         if (this.disabled || !this.isDefined || !utmsProps) return
 
-        window.tinyCpt.Swg.global.subscribe(
+        window.tinyCpnt.Swg.global.subscribe(
             'br.com.infoglobo.oglobo.swg.google'
         )
     }
 
     async getProducts() {
-        const url = window.tinyCpt.isProduction
+        const url = window.tinyCpnt.isProduction
             ? 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/swg/prod/products.json'
             : 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/swg/dev/products.json'
 
@@ -152,8 +152,8 @@ export default class Swg {
 
             const interval = setInterval(() => {
                 if (window.swg) {
-                    window.tinyCpt.Swg.global = window.swg
-                    resolve(window.tinyCpt.Swg.global)
+                    window.tinyCpnt.Swg.global = window.swg
+                    resolve(window.tinyCpnt.Swg.global)
                     clearInterval(interval)
                 }
 
@@ -168,7 +168,7 @@ export default class Swg {
     }
 
     async init() {
-        if (window.tinyCpt.isProduction && !this.valorPageAllowed) return null
+        if (window.tinyCpnt.isProduction && !this.valorPageAllowed) return null
         if (!this.localProductPiano) return null
         await this.setMarkup()
 
