@@ -548,6 +548,7 @@ window.Piano.xmlHttpRequest = {
             },
         })
         .then((response) => response.json())
+        .catch(() => LoginHelper.deleteSession())
 
         return accessToken;
     },
