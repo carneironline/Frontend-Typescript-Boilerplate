@@ -640,7 +640,7 @@ export default class Piano {
                     urlSandboxPianoRevistas:
                         'https://sandbox.tinypass.com/xbuilder/experience/load?aid=MctFgRCEsu',
                     urlVerificaLeitor: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.Piano.variaveis.getServicoId()}/autorizacao-acesso`,
-                    urlVerificaLeitorV4: `https://apiqlt-ig.infoglobo.com.br/relacionamento/autorizacao-acesso/${window.Piano.variaveis.getServicoId()}/solicitacao-autorizacao`,
+                    urlVerificaLeitorV4: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v4/autorizacao-acesso/${window.Piano.variaveis.getServicoId()}/solicitacao-autorizacao`,
                     urlOidcService: `https://www.oidcservice-qa.globoi.com/`,
                     urlDominioPaywall: 'https://assinatura.globostg.globoi.com/',
                     urlDominioSiteOGlobo: `${window.Piano.util.isDominioOGlobo()}/`,
@@ -654,7 +654,7 @@ export default class Piano {
                     urlSandboxPianoRevistas:
                         'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
                     urlVerificaLeitor: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.Piano.variaveis.getServicoId()}/autorizacao-acesso`,
-                    urlVerificaLeitorV4: `https://apiqlt-ig.infoglobo.com.br/relacionamento/autorizacao-acesso/${window.Piano.variaveis.getServicoId()}/solicitacao-autorizacao`,
+                    urlVerificaLeitorV4: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v4/autorizacao-acesso/${window.Piano.variaveis.getServicoId()}/solicitacao-autorizacao`,
                     urlOidcService: `https://www.oidcservice-qa.globoi.com/`,
                     urlDominioPaywall: 'https://assinatura.globostg.globoi.com/',
                     urlDominioSiteOGlobo: `${window.Piano.util.isDominioOGlobo()}/`,
@@ -668,7 +668,7 @@ export default class Piano {
                     urlSandboxPianoRevistas:
                         'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
                     urlVerificaLeitor: `https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.Piano.variaveis.getServicoId()}/autorizacao-acesso`,
-                    urlVerificaLeitorV4: `https://api.infoglobo.com.br/relacionamento/autorizacao-acesso/${window.Piano.variaveis.getServicoId()}/solicitacao-autorizacao`,
+                    urlVerificaLeitorV4: `https://api.infoglobo.com.br/relacionamento/v4/autorizacao-acesso/${window.Piano.variaveis.getServicoId()}/solicitacao-autorizacao`,
                     urlOidcService: `https://www.oidcservice.globo.com/`,
                     urlDominioPaywall: 'https://assinatura.oglobo.globo.com/',
                     urlDominioSiteOGlobo: `${window.Piano.util.isDominioOGlobo()}/`,

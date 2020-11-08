@@ -501,10 +501,10 @@ window.Piano.xmlHttpRequest = {
             })
     },
     async verificarAutorizacaoDeAcesso(){      
-        let accessToken = this.getAccessToken()
+        let accessToken = await this.getAccessToken()
         
         if (!accessToken){
-            accessToken = this.getRefreshedAccessToken()
+            accessToken = await this.getRefreshedAccessToken()
         }
 
         if (!accessToken){
@@ -516,16 +516,16 @@ window.Piano.xmlHttpRequest = {
     async getAccessToken(){
         const url = this.getUrlForOidcService('access_token')
 
-        const accessToken = this.getToken(url)
-                                .then((token) => token)
+        const accessToken = await this.getToken(url)
+                                .then((token) => token.access_token)
 
         return accessToken;
     },
     async getRefreshedAccessToken(){
         const url = this.getUrlForOidcService('refresh_token')
 
-        const accessToken = this.getToken(url)
-                                .then((token) => token)
+        const accessToken = await this.getToken(url)
+                                .then((token) => token.access_token)
 
         return accessToken;
     },
@@ -581,6 +581,7 @@ window.Piano.xmlHttpRequest = {
         })
             .then((response) => response.json())
             .then((respJson) => {
+                
                 let respostaDeTermoDeUso = ''
                 let respostaDeMotivo = ''
                 let hrefAssinaturaInadimplente = ''
@@ -651,7 +652,7 @@ window.Piano.xmlHttpRequest = {
                             GA.setEventsError(
                                 'fazRequisicaoBarramentoApiAutorizacaoAcessoV4',
                                 'Erro ao chamar a função showSaveSubscription do Aldebaran.',
-                                `URL: ${document.location.href} GLBID: ${accessToken} Erro: ${error}`,
+                                `URL: ${document.location.href} AccessToken: ${accessToken} Erro: ${error}`,
                             )
                         }
                     }
@@ -748,7 +749,12 @@ window.Piano.autenticacao = {
         return glbid !== ''
     },
     async verificaUsuarioLogadoNoBarramento(glbid, utp) {
-        if (window.Piano.autenticacao.isLogadoCadun(glbid, utp)) {
+        const sessionId = LoginHelper.getSessionId();
+
+        if (sessionId){
+            await window.Piano.xmlHttpRequest.verificarAutorizacaoDeAcesso()
+        }
+        else if (window.Piano.autenticacao.isLogadoCadun(glbid, utp)) {
             if (utp) {
                 const _leitor = JSON.parse(decodeURI(atob(utp)))
 
@@ -790,17 +796,10 @@ window.Piano.autenticacao = {
                     -1
                 )
             }
-
-            const sessionId = LoginHelper.getSessionId();
-
-            if (sessionId){
-                await window.Piano.xmlHttpRequest.verificarAutorizacaoDeAcesso()
-            }
-            else {
-                await window.Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(
-                    glbid
-                )
-            }
+            
+            await window.Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(
+                glbid
+            )
         }
     },
     isAutorizado(termoDeUso, motivo, autorizado, hrefAssinaturaInadimplente) {
