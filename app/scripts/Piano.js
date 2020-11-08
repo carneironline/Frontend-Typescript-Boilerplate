@@ -1,36 +1,49 @@
 import Helpers from './Helpers'
-import GA from './GA'
+import GAModule from './GA'
 
 export default class Piano {
     constructor() {
-        this.debug = window.tinyCpt.debug
+        this.GA = new GAModule()
+        this.debug = window.tinyCpnt.debug
         this.content = null
-        this.setExperience()
+    }
+
+    init() {       
+        Piano.setGlobalVars()
         this.setInitialGlobalProps()
+        this.setExperience()
+
     }
 
     get isDefined() {
-        if (typeof window.tinyCpt !== 'undefined' && typeof window.tinyCpt.Piano !== 'undefined') {
-            this.content = window.tinyCpt.Piano
+        if (typeof window.tinyCpnt !== 'undefined' && typeof window.tinyCpnt.Piano !== 'undefined') {
+            this.content = window.tinyCpnt.Piano
             return true
         }
 
         return false
     }
 
+    static setGlobalVars() {
+        window.tinyCpnt.Piano = window.tinyCpnt.Piano || this
+        window.Piano = window.Piano || {} 
+    }
+
     setInitialGlobalProps() {
-        this.addGlobalProps('typePaywall', null)
-        this.addGlobalProps('variaveis', this.vars)
-        this.addGlobalProps('janelaAnonima', this.incognitoWindow)
-        this.addGlobalProps('regionalizacao', this.regionalization)
-        this.addGlobalProps('metricas', this.metrics)
-        this.addGlobalProps('util', this.useful)
-        this.addGlobalProps('configuracao', this.configuration)
-        this.addGlobalProps('helper', this.helper)
-        this.addGlobalProps('construtor', this.construtor)
+        Piano.addGlobalProps('typePaywall', null)
+        Piano.addGlobalProps('variaveis', this.vars)
+        Piano.addGlobalProps('janelaAnonima', this.incognitoWindow)
+        Piano.addGlobalProps('regionalizacao', this.regionalization)
+        Piano.addGlobalProps('metricas', this.metrics)
+        Piano.addGlobalProps('util', this.useful)
+        Piano.addGlobalProps('configuracao', this.configuration)
+        Piano.addGlobalProps('helper', this.helpers)
+        Piano.addGlobalProps('construtor', this.construtores)
     }
 
     get vars() {
+        const self = this
+
         return {
             ambientesAceitos: 'int,qlt,prd',
             statusHttpObterAutorizacaoAcesso: '400,404,406,500,502,503,504',
@@ -97,7 +110,7 @@ export default class Piano {
             },
             getNomeProduto() {
                 if (!window.nomeProdutoPiano) {
-                    GA.setEventsError(
+                    self.GA.setEventsError(
                         'getNomeProduto()',
                         'Nome do produto não definido.',
                         window.location.href,
@@ -108,13 +121,13 @@ export default class Piano {
                 return window.nomeProdutoPiano
             },
             getServicoId() {
-                const { id } = window.productsObject[window.Piano.variaveis.getNomeProduto()]
+                const {id, name} = window.tinyCpnt.Product
         
                 if (!id) {
-                    GA.setEventsError(
+                    self.GA.setEventsError(
                         'getServicoId()',
                         'ServiceID não definido.',
-                        `${document.location.href} nomeProduto: ${window.Piano.variaveis.getNomeProduto()}`,
+                        `${document.location.href} nomeProduto: ${name}`,
                     )
         
                     return '0000'
@@ -123,10 +136,10 @@ export default class Piano {
                 return id
             },
             getCodigoProduto() {
-                const codProd = window.productsObject[window.Piano.variaveis.getNomeProduto()].cod_prod
+                const codProd = window.tinyCpnt.Product.code
         
                 if (!codProd) {
-                    GA.setEventsError(
+                    self.GA.setEventsError(
                         'getCodigoProduto()',
                         'Ao obter código do produto',
                         `${window.nomeProduto} - ${document.location.href}`,
@@ -187,8 +200,7 @@ export default class Piano {
                         }
                     )
                 } else if (
-                    window.indexedDB &&
-                    /Firefox/.test(window.navigator.userAgent)
+                    window.indexedDB && /Firefox/.test(window.navigator.userAgent)
                 ) {
                     let db
                     try {
@@ -338,7 +350,7 @@ export default class Piano {
                     window.Piano.metricas.setLimiteContagem(window.regrasTiny)
 
                     if (expirou === false)
-                        GA.setEvents(
+                        self.GA.setEvents(
                             'executaAposPageview',
                             window.Piano.metricas.identificarPassagemRegister(
                                 window.regrasTiny
@@ -363,7 +375,7 @@ export default class Piano {
             },
             temVariaveisObrigatorias() {
                 if (typeof window.Piano.variaveis.getTipoConteudoPiano() === 'undefined') {
-                    GA.setEventsError(
+                    self.GA.setEventsError(
                         'temVariaveisObrigatorias',
                         'Variavel tipoConteudoPiano nao esta definida',
                         document.location.href,
@@ -372,7 +384,7 @@ export default class Piano {
                     return false
                 }
                 if (typeof window.Piano.variaveis.getNomeProduto() === 'undefined') {
-                    GA.setEventsError(
+                    self.GA.setEventsError(
                         'temVariaveisObrigatorias',
                         'Variavel nomeProdutoPiano nao esta definida',
                         document.location.href,
@@ -639,8 +651,8 @@ export default class Piano {
                         'https://sandbox.tinypass.com/xbuilder/experience/load?aid=dXu7dvFKRi',
                     urlSandboxPianoRevistas:
                         'https://sandbox.tinypass.com/xbuilder/experience/load?aid=MctFgRCEsu',
-                    urlVerificaLeitor: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.Piano.variaveis.getServicoId()}/autorizacao-acesso`,
-                    urlVerificaLeitorV4: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v4/autorizacao-acesso/${window.Piano.variaveis.getServicoId()}/solicitacao-autorizacao`,
+                    urlVerificaLeitor: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.tinyCpnt.Product.id}/autorizacao-acesso`,
+                    urlVerificaLeitorV4: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v4/autorizacao-acesso/${window.tinyCpnt.Product.id}/solicitacao-autorizacao`,
                     urlOidcService: `https://www.oidcservice-qa.globoi.com/`,
                     urlDominioPaywall: 'https://assinatura.globostg.globoi.com/',
                     urlDominioSiteOGlobo: `${window.Piano.util.isDominioOGlobo()}/`,
@@ -653,8 +665,8 @@ export default class Piano {
                         'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
                     urlSandboxPianoRevistas:
                         'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
-                    urlVerificaLeitor: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.Piano.variaveis.getServicoId()}/autorizacao-acesso`,
-                    urlVerificaLeitorV4: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v4/autorizacao-acesso/${window.Piano.variaveis.getServicoId()}/solicitacao-autorizacao`,
+                    urlVerificaLeitor: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.tinyCpnt.Product.id}/autorizacao-acesso`,
+                    urlVerificaLeitorV4: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v4/autorizacao-acesso/${window.tinyCpnt.Product.id}/solicitacao-autorizacao`,
                     urlOidcService: `https://www.oidcservice-qa.globoi.com/`,
                     urlDominioPaywall: 'https://assinatura.globostg.globoi.com/',
                     urlDominioSiteOGlobo: `${window.Piano.util.isDominioOGlobo()}/`,
@@ -667,8 +679,8 @@ export default class Piano {
                         'https://experience.tinypass.com/xbuilder/experience/load?aid=GTCopIDc5z',
                     urlSandboxPianoRevistas:
                         'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
-                    urlVerificaLeitor: `https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.Piano.variaveis.getServicoId()}/autorizacao-acesso`,
-                    urlVerificaLeitorV4: `https://api.infoglobo.com.br/relacionamento/v4/autorizacao-acesso/${window.Piano.variaveis.getServicoId()}/solicitacao-autorizacao`,
+                    urlVerificaLeitor: `https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.tinyCpnt.Product.id}/autorizacao-acesso`,
+                    urlVerificaLeitorV4: `https://api.infoglobo.com.br/relacionamento/v4/autorizacao-acesso/${window.tinyCpnt.Product.id}/solicitacao-autorizacao`,
                     urlOidcService: `https://www.oidcservice.globo.com/`,
                     urlDominioPaywall: 'https://assinatura.oglobo.globo.com/',
                     urlDominioSiteOGlobo: `${window.Piano.util.isDominioOGlobo()}/`,
@@ -677,26 +689,25 @@ export default class Piano {
         }
     }
 
-    get helper() {
+    get helpers() {
         return {
             mostrarBarreira() {
                 window.Piano.xmlHttpRequest.geraScriptNaPagina('https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/helper/register.js')
         
                 Helpers.setCookie(window.Piano.variaveis.constante.cookie.UTP, '', -1)
         
-                GA.setEvents('window.Piano.helper.mostrarBarreira', 'Exibicao Register', window.Piano.metricas.montaRotuloGA())
+                self.GA.setEvents('window.Piano.helper.mostrarBarreira', 'Exibicao Register', window.Piano.metricas.montaRotuloGA())
         
                 Helpers.setCookie(window.Piano.variaveis.constante.cookie.RTIEX, true, 1)
             },
         }
     }
 
-    get construtor() {
+    get construtores() {
         return {
             async initTp(callback = null) {
                 const cleanUrl = window.Piano.util.getWindowLocationHref().split('?')[0]
 
-                window.tp = window.tp || []
                 window.tp.push(['setTags', [window.Piano.variaveis.getTipoConteudoPiano()],])
 
                 if (window.Piano.util.isRevista() || window.Piano.util.isValor()) {
@@ -849,7 +860,10 @@ export default class Piano {
         document.dispatchEvent(event)
     }
 
-    addGlobalProps(propName, value) {
+    static addGlobalProps(propName, value) { 
+        Piano.setGlobalVars()
         window.Piano[propName] = value
+        window.tinyCpnt.Piano[propName] = value
+
     }
 }

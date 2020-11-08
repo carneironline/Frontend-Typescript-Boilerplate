@@ -2,42 +2,34 @@ import productsId from '../mocks/products/products-id'
 
 export default class Products {
     constructor() {
-        this.productName =
-            typeof window.nomeProdutoPiano !== 'undefined'
-                ? window.nomeProdutoPiano
-                : null
+        
+        this.name = typeof window.nomeProdutoPiano !== 'undefined' ? window.nomeProdutoPiano : null
+        this.id = this.productId
+        this.code = this.productCode
     }
 
-    setGlobal() {
-        const productsSettings = {
-            Product: {
-                name: this.productName,
-                // id: this.productId
-            },
-        }
-
-        window.tinyCpt = window.tinyCpt
-            ? Object.assign(productsSettings, window.tinyCpt)
-            : productsSettings
+    init() {
+        window.tinyCpnt.Product = this
     }
 
     get isProductValor() {
-        return this.productName === 'valor'
+        return this.name === 'valor'
     }
 
     get isAutoEsporte() {
-        return this.productName  === 'auto-esporte' 
+        return this.name  === 'auto-esporte' 
     }
 
     get isTealiumProducts() {
         return (this.isProductValor || this.isAutoEsporte)
     }
 
-    get productId() {
-        return typeof productsId[this.productName] !== 'undefined' &&
-            typeof productsId[this.productName].id !== 'undefined'
-            ? productsId[this.productName].id
-            : null
+    get productId() { 
+        return productsId[this.name].id
+    }
+
+    get productCode() {
+        return productsId[this.name].cod_prod
     }
 
     get isOidcLogin() {
@@ -48,7 +40,7 @@ export default class Products {
     }
 
     get loginDomain() {
-        const loginDomain = window.tinyCpt.isProduction
+        const loginDomain = window.tinyCpnt.isProduction
             ? 'https://login.globo.com/'
             : 'https://login.qa.globoi.com/'
 
@@ -65,7 +57,7 @@ export default class Products {
 
 
     get serviceId() {
-        return window.tinyCpt.Piano?.variaveis?.getServicoId() || null
+        return productsId[this.name].id
     }
 
     get returnUrl() {

@@ -25,9 +25,17 @@ export default class Helpers {
     }
     
 
-    static consoleColor() {
+    static consoleColor(type = 'info') {
+        let colorBg = '#1e4c9a'
+        let colorText = '#fff'
+
+        switch(type) {
+            case 'error':  colorBg = '#f00'; break;
+            case 'warning':  colorBg = '#ff0'; colorText = '#000'; break;
+        }
+
         return {
-            header: 'background: #1e4c9a; color: #fff; font-weight:bold'
+            header: `background: ${colorBg}; color: ${colorText}; font-weight:bold; font-size:14px; padding:2px;`
         }
     }
 }

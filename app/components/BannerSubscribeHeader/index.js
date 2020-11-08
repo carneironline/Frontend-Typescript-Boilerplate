@@ -1,9 +1,6 @@
-import GA from '../../scripts/GA'
-
 class BannerSubscribeHeader {
 
 	constructor() {
-		this.GA = new GA() 
 		 
 		this.classMain = 'banner-subscribe-header-cpnt'
         this.styleClassMain = `.${this.classMain}`
@@ -45,7 +42,7 @@ class BannerSubscribeHeader {
 		const label = window.glbBannerSubscribeHeader?.ga?.label;
 		
 		if(label) {
-			this.GA.setEvents( 
+			window.tinyCpnt.GA.setEvents( 
 				calledBy,
 				action,
 				label,

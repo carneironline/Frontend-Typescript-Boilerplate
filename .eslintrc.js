@@ -53,6 +53,7 @@ module.exports = {
     'no-new': 'off',
     'react/sort-comp': 'off',
     'no-underscore-dangle': 'off',
-    'prettier/prettier': 'off'
+    'prettier/prettier': 'off',
+    'default-case': 'off',
   },
 };

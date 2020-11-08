@@ -1,9 +1,6 @@
-import GA from '../../scripts/GA'
-
 class BannerBottomFixed {
 
 	constructor() {
-		this.GA = new GA() 
 		 
 		this.classMain = 'banner-bottom-fixed-cpnt'
         this.styleClassMain = `.${this.classMain}`
@@ -46,7 +43,7 @@ class BannerBottomFixed {
 		const label = window.glbBannerBottomFixed?.ga?.label;
 		
 		if(label) {
-			this.GA.setEvents( 
+			window.tinyCpnt.GA.setEvents( 
 				calledBy,
 				action,
 				label,
@@ -87,7 +84,7 @@ class BannerBottomFixed {
 		element.addEventListener('click', (evt) => {
 			evt.preventDefault()
 
-			this.GA.setEvents( 
+			window.tinyCpnt.GA.setEvents( 
 				'BannerBottomFixed => click',
 				'Clique',
 				'Assine (link para pagamento) - Posicao 1',

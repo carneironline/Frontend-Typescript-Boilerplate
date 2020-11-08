@@ -1,11 +1,7 @@
-import ProductsModule from './Products'
-
 export default class Tiny {
     constructor() {
-        this.Products = new ProductsModule()
         window.hasPaywall = window.hasPaywall || null
-        window.tp = window.tp || []
-        window.Piano = window.Piano || {}
+        window.tp = window.tp || []        
         window.PaywallAnalytics = window.PaywallAnalytics || {}
 
         this.isProduction = window.ambienteUtilizadoPiano === 'prd'
@@ -15,7 +11,6 @@ export default class Tiny {
         this.activeComponents = []
 
         this.setGlobalTiny()
-        this.Products.setGlobal()
     }
 
     setGlobalTiny() {
@@ -38,8 +33,8 @@ export default class Tiny {
             activeComponents: this.activeComponents
         }
 
-        window.tinyCpt = window.tinyCpt
-            ? Object.assign(defaultSettings, window.tinyCpt)
+        window.tinyCpnt = window.tinyCpnt
+            ? Object.assign(defaultSettings, window.tinyCpnt)
             : defaultSettings
     }
 
@@ -67,12 +62,12 @@ export default class Tiny {
     }
 
     setPiano(obj) {
-        window.tinyCpt.Piano = obj
+        window.tinyCpnt.Piano = obj
     }
 
     setActiveComponent(component, callback = null) {
         if(!this.checkActiveComponent(component)) {
-            window.tinyCpt.activeComponents.push(component)
+            window.tinyCpnt.activeComponents.push(component)
             
             if(callback)
                 callback()
@@ -80,6 +75,6 @@ export default class Tiny {
     }
 
     checkActiveComponent(component) { 
-        return window.tinyCpt.activeComponents?.includes(component)
+        return window.tinyCpnt.activeComponents?.includes(component)
     }
 }

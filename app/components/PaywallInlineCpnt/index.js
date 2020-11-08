@@ -4,7 +4,7 @@ export default class PaywallInlineCpnt {
 	constructor() {
 		this.Piano = new PianoModule();
 
-		this.domain = window.tinyCpt.isProduction ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/';
+		this.domain = window.tinyCpnt.isProduction ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/';
 		this.paywallId = 'paywall-inline'
 
 		this.setTemplateSettings(() => {
@@ -20,7 +20,7 @@ export default class PaywallInlineCpnt {
 			buttonLink: 'https://google.com?l1',
 			loginPreText: 'Já possui cadastro? ',
 			loginText: 'Faça login',
-			loginLink: window.tinyCpt.isProduction ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/',
+			loginLink: window.tinyCpnt.isProduction ? 'https://login.globo.com/' : 'https://login.qa.globoi.com/',
 			offerLink: "https://google.com?l1",
 			imageMobi: "https://via.placeholder.com/300x150",
 			imageDesk: "https://via.placeholder.com/804x128",
@@ -80,7 +80,7 @@ export default class PaywallInlineCpnt {
 	}
 
 	getUrlLoginRegister(type = '') {
-		const serviceId = window.tinyCpt.Piano.variaveis.getServicoId() || null;
+		const serviceId = window.tinyCpnt.Piano.variaveis.getServicoId() || null;
 		let str = '';
 
 		if (!this.debug && this.Piano.isDefined) {

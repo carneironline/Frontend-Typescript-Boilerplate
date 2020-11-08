@@ -1,13 +1,13 @@
 import Helpers from './Helpers'
-import TinyModule from './Tiny'
-import PianoModule from './Piano'
+import Piano from './Piano'
 
 export default class Krux {
     constructor() {
-        this.Tiny = new TinyModule()
-        this.Piano = new PianoModule()
+        window.tinyCpnt.Krux = this
+    }
 
-        this.Piano.addGlobalProps('krux', this.methods)
+    init() {
+        Piano.addGlobalProps('krux', this.methods)
     }
 
     get methods() {
@@ -19,12 +19,12 @@ export default class Krux {
                 const parametro = window.Piano.variaveis.constante.krux.KRUXLIGADO
                 const valorParametro = window.Piano.util.getValorParametroNaUrl(parametro)
         
-                if (valorParametro === 'false' && !this.Tiny.isProduction) {
+                if (valorParametro === 'false' && !window.tinyCpnt.isProduction) {
                     Helpers.setCookie(parametro, valorParametro, 1)
                     return false
                 }
         
-                if (valorParametro === 'true' || this.Tiny.isProduction) {
+                if (valorParametro === 'true' || window.tinyCpnt.isProduction) {
                     Helpers.setCookie(parametro, '', -1)
                     return true
                 }
