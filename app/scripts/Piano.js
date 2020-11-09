@@ -621,7 +621,7 @@ export default class Piano {
                         analyticalPostIsLoading()
 
                         window.Piano.construtor.initTp(() => {
-                            window.tinyCpnt.Piano.construtor.loadPianoExperiences()
+                            Piano.loadPianoExperiences()
 
                             checkExperiencesHasChange().then(function (changed) {
                                 if (changed) {
@@ -776,7 +776,7 @@ export default class Piano {
             Helpers.setCookie(this.content.variaveis.constante.cookie.UTP, '', -1)
     }
 
-    loadPianoExperiences() {
+    static loadPianoExperiences() {
         const a = document.createElement('script')
         a.type = 'text/javascript'
         a.async = true
