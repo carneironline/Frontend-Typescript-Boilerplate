@@ -8,7 +8,7 @@ export default class Piano {
         this.content = null
     }
 
-    init() {       
+    init() {
         Piano.setGlobalVars()
         this.setInitialGlobalProps()
         this.setExperience()
@@ -26,7 +26,7 @@ export default class Piano {
 
     static setGlobalVars() {
         window.tinyCpnt.Piano = window.tinyCpnt.Piano || this
-        window.Piano = window.Piano || {} 
+        window.Piano = window.Piano || {}
     }
 
     setInitialGlobalProps() {
@@ -97,7 +97,7 @@ export default class Piano {
                 }
 
                 if (Helpers.getCookie(window.Piano.variaveis.constante.cookie.AMBIENTE)) {
-                    return Helpers.getCookie( window.Piano.variaveis.constante.cookie.AMBIENTE)
+                    return Helpers.getCookie(window.Piano.variaveis.constante.cookie.AMBIENTE)
                 }
 
                 return window.Piano.variaveis.ambientesAceitos.indexOf(window.ambienteUtilizadoPiano) > -1 ? window.ambienteUtilizadoPiano : 'prd'
@@ -121,35 +121,35 @@ export default class Piano {
                 return window.nomeProdutoPiano
             },
             getServicoId() {
-                const {id, name} = window.tinyCpnt.Product
-        
+                const { id, name } = window.tinyCpnt.Product
+
                 if (!id) {
                     self.GA.setEventsError(
                         'getServicoId()',
                         'ServiceID não definido.',
                         `${document.location.href} nomeProduto: ${name}`,
                     )
-        
+
                     return '0000'
                 }
-        
+
                 return id
             },
             getCodigoProduto() {
                 const codProd = window.tinyCpnt.Product.code
-        
+
                 if (!codProd) {
                     self.GA.setEventsError(
                         'getCodigoProduto()',
                         'Ao obter código do produto',
                         `${window.nomeProduto} - ${document.location.href}`,
                     )
-        
+
                     window.Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, ' ')
 
                     return 'error'
                 }
-        
+
                 return codProd
             },
         }
@@ -176,7 +176,7 @@ export default class Piano {
             isIE10OrLater(userAgent) {
                 const ua = userAgent.toLowerCase()
                 const match = /(?:msie|rv:)\s?([\d\.]+)/.exec(ua)
-        
+
                 if (ua.indexOf('msie') === 0 && ua.indexOf('trident') === 0) {
                     return false
                 }
@@ -187,7 +187,7 @@ export default class Piano {
             },
             detectPrivateMode(callback) {
                 let isPrivate
-        
+
                 if (window.webkitRequestFileSystem) {
                     window.webkitRequestFileSystem(
                         window.TEMPORARY,
@@ -208,7 +208,7 @@ export default class Piano {
                     } catch (e) {
                         isPrivate = true
                     }
-        
+
                     if (typeof isPrivate === 'undefined') {
                         window.Piano.janelaAnonima.retry(
                             function isDone() {
@@ -241,13 +241,13 @@ export default class Piano {
                     } catch (e) {
                         isPrivate = true
                     }
-        
+
                     if (typeof isPrivate === 'undefined') {
                         isPrivate = false
                         window.localStorage.removeItem('test')
                     }
                 }
-        
+
                 window.Piano.janelaAnonima.retry(
                     function isDone() {
                         return typeof isPrivate !== 'undefined'
@@ -283,7 +283,7 @@ export default class Piano {
             enviaEventosGA(_GAAcao, _GARotulo) {
                 // TODO: arquivo tinypass.js, inserido pela Piano, utiliza essa função
                 const isProductValor = !!(typeof window.nomeProdutoPiano !== 'undefined' && window.nomeProdutoPiano === 'valor')
-        
+
                 if (isProductValor)
                     window._gaq.push([
                         '_trackEvent',
@@ -301,7 +301,7 @@ export default class Piano {
                         eventoGARotulo: _GARotulo,
                     })
             },
-        
+
             montaRotuloGA() {
                 // TODO: at Piano as setExperience() | Check on old tiny before remove
                 if (window.regrasTiny && window.regrasTiny.nomeExperiencia) {
@@ -317,11 +317,11 @@ export default class Piano {
             setLimiteContagem(metricas) {
                 window._GALimite = '-'
                 window._GAContagem = '-'
-        
+
                 if (!metricas) return
-        
+
                 window._GAContagem = `${metricas.views}`
-        
+
                 if (window._GAContagem.length === 1) {
                     window._GAContagem = `0${window._GAContagem}`
                 }
@@ -332,7 +332,7 @@ export default class Piano {
                 let passagem = window.Piano.variaveis.constante.metricas.EVENTO_SEM_ACAO
 
                 if (Helpers.getCookie(window.Piano.variaveis.constante.cookie.RTIEX)) {
-                    passagem =  regras.fluxo.indexOf('hardwall') !== -1 ? 'register-hardwall-passou' : 'register-contagem-passou'
+                    passagem = regras.fluxo.indexOf('hardwall') !== -1 ? 'register-hardwall-passou' : 'register-contagem-passou'
 
                     Helpers.setCookie(
                         window.Piano.variaveis.constante.cookie.RTIEX,
@@ -397,7 +397,7 @@ export default class Piano {
                 const url = window.Piano.util.getWindowLocationSearch()
                 const chavesCampanha = ['utm_medium', 'utm_source']
                 const valoresCampanha = []
-        
+
                 for (let idxParamCampanha = 0; idxParamCampanha < chavesCampanha.length; idxParamCampanha++) {
                     const chaveCampanha = chavesCampanha[idxParamCampanha]
 
@@ -432,7 +432,7 @@ export default class Piano {
                 const ehRobo = regexRobos.test(userAgent)
 
                 window.tp.push(['setCustomVariable', 'buscador', ehRobo])
-        
+
                 return ehRobo
             },
             montaUrlStg() {
@@ -476,7 +476,7 @@ export default class Piano {
                 const regex = new RegExp('://(.*?)/')
                 const url = window.Piano.util.getWindowLocationHref()
 
-                if (url.match(regex)[1].indexOf('oglobo') > -1 || (url.match(regex)[1].indexOf('globoi') > -1 && url.match(regex)[1].indexOf('edg') === -1) ) {
+                if (url.match(regex)[1].indexOf('oglobo') > -1 || (url.match(regex)[1].indexOf('globoi') > -1 && url.match(regex)[1].indexOf('edg') === -1)) {
                     return url.match(regex)[1]
                 }
 
@@ -581,7 +581,7 @@ export default class Piano {
                             ) {
                                 const experiences = window.tp.experience._getLastExecutionResult().result.events
                                 const experiencesClone = Array.from(window.tp.experience._getLastExecutionResult().result.events)
-                                const experiencesChanged = Object.is(JSON.stringify(experiences), JSON.stringify(experiencesClone) )
+                                const experiencesChanged = Object.is(JSON.stringify(experiences), JSON.stringify(experiencesClone))
 
                                 if (experiencesChanged) {
                                     experiences.forEach((item) => {
@@ -609,20 +609,20 @@ export default class Piano {
                         }, 100)
                     })
                 }
-        
+
                 if (typeof window.regrasTiny !== 'undefined') {
                     window.regrasTiny.nomeExperiencia = ''
                 }
-        
+
                 if (postElement) {
                     if (!postOpened) {
                         analyticalPostIsOpened()
                     } else {
                         analyticalPostIsLoading()
-        
+
                         window.Piano.construtor.initTp(() => {
-                            this.loadPianoExperiences()
-        
+                            window.tinyCpnt.Piano.construtor.loadPianoExperiences()
+
                             checkExperiencesHasChange().then(function (changed) {
                                 if (changed) {
                                     analyticalBlockedForPiano()
@@ -687,11 +687,11 @@ export default class Piano {
         return {
             mostrarBarreira() {
                 window.Piano.xmlHttpRequest.geraScriptNaPagina('https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/helper/register.js')
-        
+
                 Helpers.setCookie(window.Piano.variaveis.constante.cookie.UTP, '', -1)
-        
+
                 self.GA.setEvents('window.Piano.helper.mostrarBarreira', 'Exibicao Register', window.Piano.metricas.montaRotuloGA())
-        
+
                 Helpers.setCookie(window.Piano.variaveis.constante.cookie.RTIEX, true, 1)
             },
         }
@@ -719,14 +719,14 @@ export default class Piano {
                 window.Piano.janelaAnonima.detectPrivateMode(function (isPrivate) {
                     window.tp.push(['setCustomVariable', 'anonimo', isPrivate])
                 })
-        
+
                 if (window.Piano.variaveis.isConteudoExclusivo()) {
                     window.tp.push(['setCustomVariable', 'conteudoExclusivo', true])
                 }
-        
+
                 if (Helpers.getCookie(window.Piano.variaveis.constante.cookie.DEFERRED_FLOW_NOT_ACCEPTED_COOKIE) === "true") {
                     Helpers.setCookie(window.Piano.variaveis.constante.cookie.DEFERRED_FLOW_NOT_ACCEPTED_COOKIE, false, -1)
-        
+
                     window.Piano.autenticacao.defineUsuarioPiano(
                         false,
                         'deferred_flow_nao_aceito',
@@ -736,23 +736,23 @@ export default class Piano {
                 } else if (typeof swg !== 'undefined' && typeof window.swgEntitlements !== 'undefined' && window.swgEntitlements?.enablesThis()) {
                     window.Piano.google.isSpecificGoogleUser(window.swgEntitlements);
                     window.Piano.autenticacao.defineUsuarioPiano(true, 'autorizado', true, '')
-        
+
                 } else {
                     await window.Piano.autenticacao.verificaUsuarioLogadoNoBarramento(
                         Helpers.getCookie(window.Piano.variaveis.constante.cookie.GCOM),
                         Helpers.getCookie(window.Piano.variaveis.constante.cookie.UTP)
                     )
                 }
-        
+
                 window.Piano.regionalizacao.getRegion()
                 window.Piano.krux.obtemSegmentacao()
-        
+
                 window.tp.push(['setCustomVariable', 'bannerContadorLigado', true])
                 window.Piano.util.isOrigemBuscador() || window.Piano.util.extraiParametrosCampanhaDaUrl()
-                window.tp.push(['addHandler', 'meterActive', window.Piano.util.callbackMeter, ])
-        
-                window.tp.push([ 'addHandler', 'meterExpired', window.Piano.util.callbackMeterExpired, ])
-        
+                window.tp.push(['addHandler', 'meterActive', window.Piano.util.callbackMeter,])
+
+                window.tp.push(['addHandler', 'meterExpired', window.Piano.util.callbackMeterExpired,])
+
                 if (callback) callback()
             },
         }
@@ -786,15 +786,15 @@ export default class Piano {
             a.src =
                 window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].urlSandboxPiano
         }
-    
+
         const b = document.getElementsByTagName('script')[0]
-    
+
         b.parentNode.insertBefore(a, b)
     }
 
     checkPaywall(PianoResultEvents = null) {
         let hasRunJsWithPaywall = false
-    
+
         if (PianoResultEvents) {
             PianoResultEvents.forEach((item) => {
                 if (item.eventType === 'runJs') {
@@ -812,14 +812,14 @@ export default class Piano {
                     }
                 }
             })
-    
+
             if (!hasRunJsWithPaywall) this.triggerAdvertising()
         }
     }
 
     checkPianoActive() {
         let count = 0
-    
+
         const interval = setInterval(() => {
             if (
                 window.tp !== 'undefined' &&
@@ -835,7 +835,7 @@ export default class Piano {
                     this.triggerAdvertising()
                     clearInterval(interval)
                 }
-    
+
                 count++
             }
         }, 500)
@@ -854,7 +854,7 @@ export default class Piano {
         document.dispatchEvent(event)
     }
 
-    static addGlobalProps(propName, value) { 
+    static addGlobalProps(propName, value) {
         Piano.setGlobalVars()
         window.Piano[propName] = value
         window.tinyCpnt.Piano[propName] = value
