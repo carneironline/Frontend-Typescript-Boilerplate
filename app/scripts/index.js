@@ -1,6 +1,6 @@
 import Helpers from './Helpers'
 import TinyModule from './Tiny'
-import Piano from './Piano'
+import PianoClass from './Piano'
 import GAModule from './GA'
 import SwgModule from './Swg'
 import KruxModule from './Krux'
@@ -18,11 +18,11 @@ import AdblockCpnt from '../components/AdblockCpnt'
 
 console.table(process.env)
 
-const Products = new ProductsModule() 
-const Tiny = new TinyModule() 
-const PianoModule = new Piano()  
-const GA = new GAModule()  
-const Krux = new KruxModule()  
+const Products = new ProductsModule()
+const Tiny = new TinyModule()
+const PianoModule = new PianoClass()
+const GA = new GAModule()
+const Krux = new KruxModule()
 const Adblock = new AdblockCpnt()
 
 Products.init()
@@ -59,7 +59,7 @@ window.Piano.banner = {
     // TODO Remover depois que inserir todos os Piano.componentes.show('footer') na Piano
     bottomFixed(params = {}) {
         window.glbBannerBottom = params
-        
+
         try {
             new BannerBottomFixed()
         } catch (error) {
@@ -140,25 +140,25 @@ window.Piano.components = {
             console.error('EdigitalContent Component - ', error)
         }
     },
-    
-    show(typeData = null) {
-        if(!typeData) return null
 
-        switch(typeData) {
-            case 'adblock': 
+    show(typeData = null) {
+        if (!typeData) return null
+
+        switch (typeData) {
+            case 'adblock':
                 window.Piano.components.AdblockCpnt();
                 break;
-            case 'footer': 
+            case 'footer':
                 window.Piano.components.BannerBottomFixed();
                 break;
-            case 'edigital': 
+            case 'edigital':
                 window.Piano.components.EdigitalContent();
                 break;
-            case 'capa': 
+            case 'capa':
                 window.Piano.components.BannerCover();
                 break;
-            case 'botaoAssineHeader': 
-                window.Piano.components.BannerSubscribeHeader(); 
+            case 'botaoAssineHeader':
+                window.Piano.components.BannerSubscribeHeader();
                 break;
             default: return null
         }
@@ -660,9 +660,7 @@ function pianoInit() {
 
                     if (window.tinyCpnt.Piano.util.temVariaveisObrigatorias()) {
                         try {
-                            window.tinyCpnt.Piano.construtor.initTp(() =>
-                                PianoModule.loadPianoExperiences()
-                            )
+                            window.tinyCpnt.Piano.construtor.initTp(() => PianoClass.loadPianoExperiences())
                         } catch (error) {
                             GA.setEventsError(
                                 'pianoInit',
@@ -677,16 +675,16 @@ function pianoInit() {
     } else {
         GA.setEventsError('pianoInit', 'Entitlements não carregado', document.location.href)
         if (window.tinyCpnt.Piano.util.temVariaveisObrigatorias()) {
-            window.tinyCpnt.Piano.construtor.initTp(() => PianoModule.loadPianoExperiences())
+            window.tinyCpnt.Piano.construtor.initTp(() => PianoClass.loadPianoExperiences())
         }
     }
 }
 
 async function tinyInit() {
     Adblock.checksAdblockIsEnabled()
-    
+
     Tiny.setPiano(window.Piano)
-    
+
     try {
         const Swg = new SwgModule()
         await Swg.init()
