@@ -33,9 +33,9 @@ export default class Products {
     }
 
     get isOidcLogin() {
-        return typeof productsId[this.productName] !== 'undefined' &&
-            typeof productsId[this.productName].isOidcLogin !== 'undefined'
-            ? productsId[this.productName].isOidcLogin
+        return typeof productsId[this.name] !== 'undefined' &&
+            typeof productsId[this.name].isOidcLogin !== 'undefined'
+            ? productsId[this.name].isOidcLogin
             : false
     }
 
@@ -48,7 +48,7 @@ export default class Products {
     }
 
     get oidcLoginDomain(){
-        const oidcLoginDomain = window.tinyCpt.isProduction
+        const oidcLoginDomain = window.tinyCpnt.isProduction
             ? 'https://www.oidcservice.globo.com/'
             : 'https://www.oidcservice-qa.globoi.com/'
 
@@ -68,7 +68,6 @@ export default class Products {
         if (this.isOidcLogin) {
             return this.getOidcLoginUrl()
         }
-
         return this.getOldLoginUrl()
     }
 
