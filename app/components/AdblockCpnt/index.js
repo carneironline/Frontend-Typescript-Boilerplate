@@ -1,5 +1,5 @@
 import Templates from './templates'
- 
+
 class AdblockCpnt {
     init() {
 
@@ -7,7 +7,7 @@ class AdblockCpnt {
 
         this.elBody = document.querySelector('body')
         this.version = 'v2'
-     
+
         this.templateSettings = {
             template: 'default',
             assetsPath: `${path}/components/AdblockCpnt/`,
@@ -55,14 +55,14 @@ class AdblockCpnt {
 
         console.groupEnd()
     }
-    
+
     checkPseudoVars() {
         const checkLinkProps = ['urlSignin', 'urlSignup']
         const pseudoVars = ['@loginUrl', '@registerUrl']
 
         checkLinkProps.forEach(prop => {
             pseudoVars.forEach(pseudoVar => {
-                if(window.glbAdblock[prop] === pseudoVar)
+                if (window.glbAdblock[prop] === pseudoVar)
                     window.glbAdblock[prop] = pseudoVar.includes('login') ? window.tinyCpnt.Product.getLoginUrl() : window.tinyCpnt.Product.getRegisterUrl()
             })
         })
@@ -94,7 +94,7 @@ class AdblockCpnt {
         const showRequirements = document.getElementById('showRequirements')
 
         if (showRequirements) {
-            const requirementEl = document.querySelector( '.adblock-cpt__requisitos')
+            const requirementEl = document.querySelector('.adblock-cpt__requisitos')
             const btnVoltar = document.querySelector('.adblock-cpt__requisitos-voltar')
 
             this.elBody.setAttribute('style', 'overflow: hidden;')
@@ -121,16 +121,16 @@ class AdblockCpnt {
 
     setGAOnLoad() {
         const calledBy = 'AdblockCpnt'
-		const action = window.glbAdblock?.ga?.action || 'Adblock ativado';
-		const label = window.glbAdblock?.ga?.label;
-		
-		if(label) {
-			window.tinyCpnt.GA.setEvents( 
-				calledBy,
-				action,
-				label,
-			)
-		}
+        const action = window.glbAdblock?.ga?.action || 'Adblock ativado';
+        const label = window.glbAdblock?.ga?.label;
+
+        if (label) {
+            window.tinyCpnt.GA.setEvents(
+                calledBy,
+                action,
+                label,
+            )
+        }
     }
 
     setGAOnCLick(evt) {
@@ -139,16 +139,16 @@ class AdblockCpnt {
         if (!evt.target.dataset.ga) return
 
         const calledBy = 'AdblockCpnt'
-		const action = window.glbAdblock?.ga?.action || 'Adblock ativado';
+        const action = window.glbAdblock?.ga?.action || 'Adblock ativado';
         const label = evt.target.dataset.ga
-		
-		if(label) {
-			window.tinyCpnt.GA.setEvents( 
-				calledBy,
-				action,
-				label,
-			)
-		}
+
+        if (label) {
+            window.tinyCpnt.GA.setEvents(
+                calledBy,
+                action,
+                label,
+            )
+        }
 
         if (evt.target.href) {
             setTimeout(() => {
@@ -164,14 +164,14 @@ class AdblockCpnt {
     addStyle() {
         this.elBody.insertAdjacentHTML('beforeend', this.style())
     }
-    
+
     style() {
         return Templates.get(this.version).style()
     }
 
     checksAdblockIsEnabled() {
         document.cookie = '__adblocker=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
-        
+
         const setNptTechAdblockerCookie = function (adblocker) {
             const d = new Date()
             d.setTime(d.getTime() + 60 * 60 * 24 * 2 * 1000)
@@ -182,7 +182,7 @@ class AdblockCpnt {
         script.setAttribute('async', true)
         script.setAttribute('src', 'https://www.npttech.com/advertising.js')
         script.setAttribute('onerror', 'setNptTechAdblockerCookie(true);')
-        
+
         document.getElementsByTagName('head')[0].appendChild(script)
     }
 }
