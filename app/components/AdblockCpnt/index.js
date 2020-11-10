@@ -22,6 +22,7 @@ class AdblockCpnt {
             footerTitle: 'Ainda não está pronto para assinar?',
             footerDescription: 'Ou desative seu bloqueador de anúncios e leia a matéria.',
             footerTextBtn: 'Saiba mais',
+            footerTextBtnUrl: '//facebook.com',
         }
 
         this.start()
@@ -56,7 +57,7 @@ class AdblockCpnt {
     }
 
     checkPseudoVars() {
-        const checkLinkProps = ['urlSignin', 'urlSignup']
+        const checkLinkProps = ['btnUrl', 'urlSignin', 'urlSignup', 'footerTextBtnUrl']
         const pseudoVars = ['@loginUrl', '@registerUrl']
 
         checkLinkProps.forEach(prop => {
