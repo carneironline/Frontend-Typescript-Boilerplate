@@ -2,16 +2,16 @@ class AdblockCpntTemplates {
     static get(version = null) {
         const data = {}
 
-        switch(version) {
-            case 'v1': 
+        switch (version) {
+            case 'v1':
                 data.style = this.styleV1
                 data.html = this.templateV1
                 break;
-            case 'v2': 
+            case 'v2':
                 data.style = this.styleV2
                 data.html = this.templateV2
                 break;
-            default: 
+            default:
                 data.style = this.styleV1
                 data.html = this.templateV1
         }
@@ -91,9 +91,9 @@ class AdblockCpntTemplates {
 
         #detecta-adblock, #detecta-adblock * {
             box-sizing: border-box;
-        
+
         }
-        
+
         #detecta-adblock {
             width: 100%;
             position: fixed;
@@ -101,7 +101,7 @@ class AdblockCpntTemplates {
             z-index: 99999;
             top: 0;
             padding: 20px;
-            display: flex;  
+            display: flex;
             align-items: center;
             justify-content: center;
         }
@@ -110,11 +110,11 @@ class AdblockCpntTemplates {
                 padding: 0;
             }
         }
-        
+
         .adblock-cpnt, .adblock-cpnt * {
             box-sizing: border-box;
         }
-        
+
         .adblock-cpnt {
             max-width: 960px;
             border-radius: 8px;
@@ -130,7 +130,7 @@ class AdblockCpntTemplates {
         @media only screen and (max-width: 767px) {
             .adblock-cpnt {
                 width: 100%;
-                min-width: unset;  
+                min-width: unset;
                 height: 90vh;
                 display: flex;
                 flex-direction: column;
@@ -138,13 +138,13 @@ class AdblockCpntTemplates {
                 top: calc(50% + 28px);
                 overflow: unset;
                 position: unset;
-            } 
+            }
         }
-        
+
         .adblock-cpnt a {
             color: #41BFE2;
         }
-        
+
         .adblock-cpnt__header {
             padding: 40px 0;
             color: #fff;
@@ -161,10 +161,10 @@ class AdblockCpntTemplates {
                 height: auto;
                 text-align: center;
                 padding: 0;
-            } 
+            }
         }
-        
-        
+
+
         .adblock-cpnt__col1 {
             width: 50%;
             display: flex;
@@ -174,9 +174,9 @@ class AdblockCpntTemplates {
         @media only screen and (max-width: 767px) {
             .adblock-cpnt__col1 {
                 display: none;
-            } 
+            }
         }
-        
+
         .adblock-cpnt__col1 img {
             display: block;
             max-width: 100%;
@@ -185,9 +185,9 @@ class AdblockCpntTemplates {
         @media only screen and (max-width: 767px) {
             .adblock-cpnt__col1 img {
                 width: 130px;
-            } 
+            }
         }
-        
+
         .adblock-cpnt__col2 {
             width: 50%;
             display: flex;
@@ -199,14 +199,14 @@ class AdblockCpntTemplates {
             .adblock-cpnt__col2 {
                 width: 100%;
                 padding: 20px;
-            } 
+            }
         }
-        
-        
+
+
         .adblock-cpnt__col2 > div {
             margin-bottom: 15px;
         }
-        
+
         .adblock-cpnt__title {
             font-weight: 700;
             font-size: 30px;
@@ -214,12 +214,12 @@ class AdblockCpntTemplates {
             letter-spacing: 0.22px;
             line-height: 32px;
         }
-        
+
         .adblock-cpnt__text {
             font-size: 16px;
             letter-spacing: 0.05px;
         }
-        
+
         .adblock-cpnt__footer {
             background: #fff;
             display: flex;
@@ -233,9 +233,9 @@ class AdblockCpntTemplates {
                 text-align: center;
                 justify-content: center;
                 padding: 20px;
-            } 
+            }
         }
-        
+
         .adblock-cpnt__footer-info {
             font-size: 17px;
             color: #545454;
@@ -246,18 +246,18 @@ class AdblockCpntTemplates {
         @media only screen and (max-width: 767px) {
             .adblock-cpnt__footer-info {
                 padding-right: 0;
-            } 
+            }
         }
-        
+
         .adblock-cpnt__footer-info :nth-child(1) {
             font-size: 17px;
             font-weight: 700;
         }
-        
+
         .adblock-cpnt__footer-info :nth-child(2) {
             font-size: 15px;
         }
-        
+
         .adblock-cpnt__footer-btn {
             font-weight: 700;
             font-size: 18px;
@@ -270,12 +270,12 @@ class AdblockCpntTemplates {
                 margin-top: 10px;
             }
         }
-        
+
         .adblock-cpnt__footer-btn a {
             text-decoration: none;
         }
-        
-        
+
+
         .adblock-btn {
             display: inline-block;
             background: #41BFE2;
@@ -287,7 +287,7 @@ class AdblockCpntTemplates {
             text-decoration: none;
             padding: 10px 20px;
         }
-        
+
         .adblock-cpnt__requisitos {
             position: absolute;
             top: 0;
@@ -304,51 +304,51 @@ class AdblockCpntTemplates {
                 overflow-y: scroll;
             }
         }
-        
+
         .adblock-cpnt__requisitos.is-show {
             opacity: 1;
             visibility: visible;
             animation: opacityUp .2s linear 0s;
             overflow-y: scroll;
         }
-        
+
         @keyframes opacityUp {
             from {
                 opacity: 0;
             }
             to {
-                opacity: 1; 
+                opacity: 1;
             }
         }
-        
+
         .adblock-cpnt__requisitos h2, .adblock-cpnt__requisitos h4, .adblock-cpnt__requisitos ol {
             margin: 0;
         }
-        
+
         .adblock-cpnt__requisitos h2 {
             border-bottom: solid 1px rgba(65, 191, 226, .5);
             padding-bottom: 10px;
         }
-        
+
         .adblock-cpnt__requisitos h4 {
             margin: 20px 0 5px;
         }
-        
+
         .adblock-cpnt__requisitos h4:first-of-type {
             margin-top: 10px;
         }
-        
+
         .adblock-cpnt__requisitos ol li {
             margin-bottom: 5px;
         }
-        
+
         .adblock-cpnt__requisitos-voltar {
             padding: 0;
             border: none;
             position: absolute;
             top: 20px;
             right: 20px;
-        
+
             background: #41BFE2;
             border-radius: 3px;
             font-weight: 700;
@@ -367,7 +367,7 @@ class AdblockCpntTemplates {
                 margin-top: 20px;
             }
         }
-        
+
         #detecta-adblock .backdrop-adblock {
             background: rgba(0, 0, 0, 0.8);
             position: absolute;
@@ -381,21 +381,25 @@ class AdblockCpntTemplates {
     }
 
     static templateV2(templateSettings) {
+
         const main = 'adblock-cpnt'
 
         return `
         <div class='${main}'>
 
             <div class='${main}-main'>
-                <div class='${main}-main-image'></div>
+                <div class='${main}-main-image'>
+                    <img src="${templateSettings.assetsPath}assets/board.svg" />
+                </div>
 
                 <div class='${main}-main-text'>
-                    <div class='${main}-main-text__title'>Pra que parar aqui?</div>
-                    <div class='${main}-main-text__description'>Temos uma oferta especial para você!</div>
+                    <div class='${main}-main-text__title'>${templateSettings.title}</div>
+                    <div class='${main}-main-text__description'>${templateSettings.description}</div>
+                    <a href='${templateSettings.btnUrl}' class='${main}-main-text__button'>${templateSettings.btnText}</a>
                 </div>
             </div>
 
-            <div class='${main}-readmore'>Ou desative seu bloqueador de anúncios e leia a matéria. <a href="" class="${main}-btn-readmore">Saiba mais</a></div>
+            <div class='${main}-readmore'>${templateSettings.footerDescription} <a href="" class="${main}-btn-readmore">${templateSettings.footerTextBtn}</a></div>
 
         </div>
         `
@@ -407,7 +411,7 @@ class AdblockCpntTemplates {
         return `
         <style>
         @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
-        
+
         #detecta-adblock {
             width: 100%;
             position: fixed;
@@ -415,21 +419,21 @@ class AdblockCpntTemplates {
             z-index: 99999;
             top: 0;
             padding: 20px;
-            display: flex;  
+            display: flex;
             align-items: center;
             justify-content: center;
             background: #000000bd;
             border: solid 1px #121214;
             z-index: 99999999;
 
-        } 
-        
+        }
+
         @media only screen and (max-width: 767px) {
             #detecta-adblock {
                 padding: 0;
             }
         }
-        
+
 
         ${main} {
             width: 940px;
@@ -444,7 +448,7 @@ class AdblockCpntTemplates {
                 flex-direction: column;
             }
         }
-        
+
         ${main}-main {
             width: inherit;
             height: 387px;
@@ -465,8 +469,11 @@ class AdblockCpntTemplates {
         ${main}-main-image {
             width: 187px;
             height: 189px;
-            background: #ccc 0% 0% no-repeat;
             margin-right: 40px;
+        }
+
+        ${main}-main-image img {
+            transform: scale(1.8);
         }
 
         @media only screen and (max-width: 767px) {
@@ -477,7 +484,7 @@ class AdblockCpntTemplates {
         }
 
         ${main}-main-text {
-            
+
         }
 
         ${main}-main-text__title {
@@ -490,7 +497,7 @@ class AdblockCpntTemplates {
                 text-align: center;
             }
         }
-        
+
         ${main}-main-text__description {
             font-size: 36.7px;
         }
@@ -500,6 +507,19 @@ class AdblockCpntTemplates {
                 font-size: 16.7px;
                 text-align: center;
             }
+        }
+
+        ${main}-main-text__button{
+            font-size: 38px;
+            color: #fff;
+            text-transform: uppercase;
+            text-decoration: none;
+            background: #0293fa;
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin-left: 81px;
+            margin-top: 75px;
+            display: inline-block;
         }
 
         ${main}-readmore {
@@ -532,7 +552,7 @@ class AdblockCpntTemplates {
                 padding-top: 10px;
             }
         }
-        
+
         </style>
         `
     }
