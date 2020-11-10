@@ -434,6 +434,10 @@ class AdblockCpntTemplates {
             }
         }
 
+        ${main}, ${main} * {
+            box-sizing: border-box;
+        }
+
 
         ${main} {
             width: 940px;
@@ -445,6 +449,7 @@ class AdblockCpntTemplates {
             ${main} {
                 width: auto;
                 height: 100vh;
+                display: flex;
                 flex-direction: column;
             }
         }
@@ -456,13 +461,15 @@ class AdblockCpntTemplates {
             color: #fff;
             display: flex;
             justify-content: center;
-            padding-top: 40px;
+            padding: 40px 30px 0;
         }
 
         @media only screen and (max-width: 767px) {
             ${main}-main {
+                flex: 1;
                 flex-direction: column;
                 align-items: center;
+                padding: 0px 10px 0;
             }
         }
 
@@ -470,6 +477,7 @@ class AdblockCpntTemplates {
             width: 187px;
             height: 189px;
             margin-right: 40px;
+            display: table;
         }
 
         ${main}-main-image img {
@@ -478,6 +486,8 @@ class AdblockCpntTemplates {
 
         @media only screen and (max-width: 767px) {
             ${main}-main-image {
+                width: 107px;
+                height: 109px;
                 margin-right: unset;
                 margin-bottom: 20px;
             }
@@ -485,6 +495,14 @@ class AdblockCpntTemplates {
 
         ${main}-main-text {
 
+        }
+
+        @media only screen and (max-width: 767px) {
+            ${main}-main-text {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
         }
 
         ${main}-main-text__title {
@@ -520,6 +538,14 @@ class AdblockCpntTemplates {
             margin-left: 81px;
             margin-top: 75px;
             display: inline-block;
+        }
+
+        @media only screen and (max-width: 767px) {
+            ${main}-main-text__button {
+                margin-left: unset;
+                font-size: 28px;
+                margin-top: 25px;
+            }
         }
 
         ${main}-readmore {
