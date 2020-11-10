@@ -28,5 +28,6 @@ export default class LoginHelper {
 
     static deleteSession(){
         Helpers.deleteCookie(SESSION_ID)
+        window.location.reload()
     }
 }
