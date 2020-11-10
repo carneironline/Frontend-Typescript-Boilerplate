@@ -511,7 +511,13 @@ window.Piano.xmlHttpRequest = {
             LoginHelper.deleteSession()
         }
 
-        await this.fazRequisicaoBarramentoApiAutorizacaoAcessoV4(accessToken)
+        let requestComFalha = await this.fazRequisicaoBarramentoApiAutorizacaoAcessoV4(accessToken)
+
+        if (requestComFalha){
+            accessToken = await this.getRefreshedAccessToken()
+            requestComFalha = this.fazRequisicaoBarramentoApiAutorizacaoAcessoV4(accessToken)
+            requestComFalha ? LoginHelper.deleteSession() : null;
+        }
     },
     async getAccessToken(){
         const url = this.getUrlForOidcService('access_token')
@@ -553,6 +559,8 @@ window.Piano.xmlHttpRequest = {
         return accessToken;
     },
     async fazRequisicaoBarramentoApiAutorizacaoAcessoV4(accessToken) {
+        let requestComFalha = false
+
         const codigoProduto = window.Piano.variaveis.getCodigoProduto()
 
         if (codigoProduto === 'error') {
@@ -668,9 +676,11 @@ window.Piano.xmlHttpRequest = {
                     'API de autorizacao de acesso',
                     `${xhr.status} - ${accessToken}`,
                 )
-
+                requestComFalha = false
                 window.Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, ' ')
             })
+
+        return requestComFalha
     },
 }
 
