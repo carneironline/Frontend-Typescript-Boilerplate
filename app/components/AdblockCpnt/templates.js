@@ -399,7 +399,7 @@ class AdblockCpntTemplates {
                 </div>
             </div>
 
-            <div class='${main}-readmore'>${templateSettings.footerDescription} <a href="" class="${main}-btn-readmore">${templateSettings.footerTextBtn}</a></div>
+            <div class='${main}-readmore'>${templateSettings.footerDescription} <a href="${templateSettings.footerTextBtnUrl}" class="${main}-btn-readmore">${templateSettings.footerTextBtn}</a></div>
 
         </div>
         `
