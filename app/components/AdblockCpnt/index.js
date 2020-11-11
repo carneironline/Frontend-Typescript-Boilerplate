@@ -166,7 +166,7 @@ class AdblockCpnt {
     }
 
     style() {
-        return Templates.get(this.version).style()
+        return Templates.get(this.version).style(this.templateSettings)
     }
 
     checksAdblockIsEnabled() {

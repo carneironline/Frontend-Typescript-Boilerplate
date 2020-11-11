@@ -405,12 +405,23 @@ class AdblockCpntTemplates {
         `
     }
 
-    static styleV2() {
+    static styleV2(templateSettings) {
         const main = '.adblock-cpnt'
 
         return `
         <style>
-        @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+        @font-face {
+            font-family: 'Futura';
+            src: url('${templateSettings.assetsPath}assets/fonts/Futura-Medium.eot');
+            src: url('${templateSettings.assetsPath}assets/fonts/Futura-Medium.eot?#iefix') format('embedded-opentype'),
+                url('${templateSettings.assetsPath}assets/fonts/Futura-Medium.woff2') format('woff2'),
+                url('${templateSettings.assetsPath}assets/fonts/Futura-Medium.woff') format('woff'),
+                url('${templateSettings.assetsPath}assets/fonts/Futura-Medium.ttf') format('truetype'),
+                url('${templateSettings.assetsPath}assets/fonts/Futura-Medium.svg#Futura-Medium') format('svg');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
 
         #detecta-adblock {
             width: 100%;
@@ -441,7 +452,7 @@ class AdblockCpntTemplates {
 
         ${main} {
             width: 940px;
-            font-family: 'Raleway';
+            font-family: 'Futura';
             background: #fff;
         }
 
@@ -507,12 +518,14 @@ class AdblockCpntTemplates {
 
         ${main}-main-text__title {
             font-size: 70px;
+            margin-top: -16px;
         }
 
         @media only screen and (max-width: 767px) {
             ${main}-main-text__title {
                 font-size: 30px;
                 text-align: center;
+                margin-top: unset;
             }
         }
 
