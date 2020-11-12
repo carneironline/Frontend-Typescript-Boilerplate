@@ -5,7 +5,7 @@ class BannerCover {
         this.styleClassMain = `.${this.classMain}`
 		this.elBody = document.body
         this.elCpnt = null
-		this.elTarget = document.querySelector('.block--advertising-header')
+		this.elTarget = document.querySelector('.banner-cover-cpnt-aim, .block--advertising-header')
 		
 		if(!this.elTarget) return null
 
