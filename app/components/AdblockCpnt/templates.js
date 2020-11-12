@@ -429,20 +429,12 @@ class AdblockCpntTemplates {
             height: 100vh;
             z-index: 99999;
             top: 0;
-            padding: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: #000000bd;
-            border: solid 1px #121214;
             z-index: 99999999;
 
-        }
-
-        @media only screen and (max-width: 767px) {
-            #detecta-adblock {
-                padding: 0;
-            }
         }
 
         ${main}, ${main} * {
