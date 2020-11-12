@@ -467,12 +467,11 @@ class AdblockCpntTemplates {
 
         ${main}-main {
             width: inherit;
-            height: 387px;
             background: #004F96 0% 0% no-repeat;
             color: #fff;
             display: flex;
             justify-content: center;
-            padding: 40px 30px 0;
+            padding: 40px 30px 80px;
         }
 
         @media only screen and (max-width: 767px) {
@@ -518,7 +517,11 @@ class AdblockCpntTemplates {
 
         ${main}-main-text__title {
             font-size: 70px;
+            margin-left: -4px;
             margin-top: -16px;
+            margin-bottom: 30px;
+            display: table;
+            line-height: 1.1;
         }
 
         @media only screen and (max-width: 767px) {
@@ -531,6 +534,8 @@ class AdblockCpntTemplates {
 
         ${main}-main-text__description {
             font-size: 36.7px;
+            display: table;
+            line-height: 1.3;
         }
 
         @media only screen and (max-width: 767px) {
@@ -550,7 +555,7 @@ class AdblockCpntTemplates {
             border-radius: 4px;
             margin-left: 81px;
             margin-top: 75px;
-            display: inline-block;
+            display: table;
         }
 
         @media only screen and (max-width: 767px) {
@@ -567,6 +572,7 @@ class AdblockCpntTemplates {
             display: flex;
             justify-content: center;
             padding: 35px 0;
+            line-height: 1.3;
         }
 
         @media only screen and (max-width: 767px) {
