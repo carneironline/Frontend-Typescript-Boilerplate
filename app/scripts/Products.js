@@ -85,10 +85,14 @@ export default class Products {
         let str = ''
 
         if (this.serviceId) {
-            str = `${this.oidcLoginDomain}login?productName=${this.productName}&redirectTo=${this.returnUrl}&oldServiceId=${this.serviceId}`
+            str = `${this.oidcLoginDomain}login?productName=${this.name}&redirectTo=${this.returnUrl}&oldServiceId=${this.serviceId}`
         }
 
         return str
+    }
+
+    getOidcLoginDomainUrl() {
+        return this.oidcLoginDomain
     }
 
     getRegisterUrl() {

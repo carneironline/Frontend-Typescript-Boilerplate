@@ -501,6 +501,7 @@ window.Piano.xmlHttpRequest = {
             })
     },
     async verificarAutorizacaoDeAcesso(){      
+
         let accessToken = await this.getAccessToken()
         
         if (!accessToken){
@@ -508,7 +509,7 @@ window.Piano.xmlHttpRequest = {
         }
 
         if (!accessToken){
-            LoginHelper.deleteSession()
+            LoginHelper.logout()
         }
 
         let requestComFalha = await this.fazRequisicaoBarramentoApiAutorizacaoAcessoV4(accessToken)
@@ -516,7 +517,7 @@ window.Piano.xmlHttpRequest = {
         if (requestComFalha){
             accessToken = await this.getRefreshedAccessToken()
             requestComFalha = this.fazRequisicaoBarramentoApiAutorizacaoAcessoV4(accessToken)
-            requestComFalha ? LoginHelper.deleteSession() : null;
+            requestComFalha ? LoginHelper.logout() : null;
         }
     },
     async getAccessToken(){
@@ -538,10 +539,7 @@ window.Piano.xmlHttpRequest = {
     getUrlForOidcService(requestType){
         const sessionId = LoginHelper.getSessionId()
 
-        const oidcUrl =
-            window.Piano.configuracao.jsonConfiguracaoTinyPass[
-                window.Piano.variaveis.getAmbientePiano()
-            ].urlOidcService
+        const oidcUrl = Products.getOidcLoginDomainUrl()
         
         return `${oidcUrl}${requestType}?sessionId=${sessionId}&productName=${window.Piano.variaveis.getNomeProduto()}`
     },
@@ -554,7 +552,10 @@ window.Piano.xmlHttpRequest = {
             },
         })
         .then((response) => response.json())
-        .catch(() => LoginHelper.deleteSession())
+        .catch((err) => {
+            LoginHelper.logout()
+            console.log(err)
+        })
 
         return accessToken;
     },
@@ -764,6 +765,9 @@ window.Piano.autenticacao = {
 
         if (sessionId && isOidcLogin){
             await window.Piano.xmlHttpRequest.verificarAutorizacaoDeAcesso()
+        }
+        else if (isOidcLogin){
+            LoginHelper.logout()
         }
         else if (window.Piano.autenticacao.isLogadoCadun(glbid, utp)) {
             if (utp) {

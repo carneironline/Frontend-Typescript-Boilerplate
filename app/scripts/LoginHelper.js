@@ -1,6 +1,8 @@
 import Helpers from './Helpers'
+import Products from './Products'
 
 const SESSION_ID = 'SESSION_ID'
+const GLBID = 'GLBID'
 
 export default class LoginHelper {
 
@@ -26,8 +28,25 @@ export default class LoginHelper {
         return Helpers.getCookie(name)
     }
 
-    static deleteSession(){
-        Helpers.deleteCookie(SESSION_ID)
-        window.location.reload()
+    static logout(){
+        let sessionId = Helpers.getCookie(SESSION_ID)
+
+        if (sessionId){
+            Helpers.deleteCookie(GLBID)
+            Helpers.deleteCookie(SESSION_ID)
+    
+            let urlParts = window.location.href.split('?')
+            let urlParams = new URLSearchParams(window.location.search)
+    
+            urlParams.delete(SESSION_ID)
+            urlParams.delete(GLBID)
+    
+            var newUrl = urlParts[0] + '?' + urlParams.toString()
+            
+            window.location = newUrl
+    
+            let logoutUrl = Products.getLogoutUrl()
+            window.location = `${logoutUrl}?url=${newUrl}`
+        }
     }
 }
