@@ -759,9 +759,10 @@ window.Piano.autenticacao = {
         return glbid !== ''
     },
     async verificaUsuarioLogadoNoBarramento(glbid, utp) {
-        const sessionId = LoginHelper.getSessionId();
+        const sessionId = LoginHelper.getSessionId()
+        const {isOidcLogin} = Products
 
-        if (sessionId){
+        if (sessionId && isOidcLogin){
             await window.Piano.xmlHttpRequest.verificarAutorizacaoDeAcesso()
         }
         else if (window.Piano.autenticacao.isLogadoCadun(glbid, utp)) {
