@@ -739,6 +739,8 @@ window.Piano.google = {
     },
 }
 
+window.Piano.resetUtp = PianoModule.resetUtp
+
 window.Piano.autenticacao = {
     isLogadoCadun(glbid, utp) {
         if (!glbid) {
