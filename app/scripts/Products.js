@@ -106,6 +106,22 @@ export default class Products {
     }
 
     getLogoutUrl() {
+        if (this.isOidcLogin) {
+            return this.getOidcLogoutUrl()
+        }
+        return this.getOldLogoutUrl()
+    }
+
+    getOidcLogoutUrl() {
+        let str = ''
+
+        if (this.serviceId)
+            str = `${this.loginDomain}logout?url=${this.getOidcLoginUrl}`
+
+        return str
+    }
+
+    getOldLogoutUrl() {
         let str = ''
 
         if (this.serviceId)
