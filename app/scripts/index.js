@@ -4,6 +4,7 @@ import PianoClass from './Piano'
 import GAModule from './GA'
 import SwgModule from './Swg'
 import KruxModule from './Krux'
+import LoginHelper from './LoginHelper'
 import ProductsModule from './Products'
 
 import BannersConsumer from '../components/BannersConsumer'
@@ -18,11 +19,14 @@ import AdblockCpnt from '../components/AdblockCpnt'
 
 console.table(process.env)
 
-const Products = new ProductsModule()
-const Tiny = new TinyModule()
-const PianoModule = new PianoClass()
-const GA = new GAModule()
-const Krux = new KruxModule()
+LoginHelper.createSessionIdCookie()
+
+const Products = new ProductsModule() 
+const Tiny = new TinyModule() 
+const PianoModule = new Piano()  
+const GA = new GAModule()  
+const Krux = new KruxModule()  
+
 const Adblock = new AdblockCpnt()
 
 Products.init()
@@ -497,6 +501,189 @@ window.Piano.xmlHttpRequest = {
                 window.Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, ' ')
             })
     },
+    async verificarAutorizacaoDeAcesso(){      
+
+        let accessToken = await this.getAccessToken()
+        
+        if (!accessToken){
+            accessToken = await this.getRefreshedAccessToken()
+        }
+
+        if (!accessToken){
+            LoginHelper.logout()
+        }
+
+        let requestComFalha = await this.fazRequisicaoBarramentoApiAutorizacaoAcessoV4(accessToken)
+
+        if (requestComFalha){
+            accessToken = await this.getRefreshedAccessToken()
+            requestComFalha = this.fazRequisicaoBarramentoApiAutorizacaoAcessoV4(accessToken)
+            requestComFalha ? LoginHelper.logout() : null;
+        }
+    },
+    async getAccessToken(){
+        const url = this.getUrlForOidcService('access_token')
+
+        const accessToken = await this.getToken(url)
+                                .then((token) => token.access_token)
+
+        return accessToken;
+    },
+    async getRefreshedAccessToken(){
+        const url = this.getUrlForOidcService('refresh_token')
+
+        const accessToken = await this.getToken(url)
+                                .then((token) => token.access_token)
+
+        return accessToken;
+    },
+    getUrlForOidcService(requestType){
+        const sessionId = LoginHelper.getSessionId()
+
+        const oidcUrl = Products.getOidcLoginDomainUrl()
+        
+        return `${oidcUrl}${requestType}?sessionId=${sessionId}&productName=${window.Piano.variaveis.getNomeProduto()}`
+    },
+    async getToken(url){
+        const accessToken = await fetch(url, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        })
+        .then((response) => response.json())
+        .catch((err) => {
+            LoginHelper.logout()
+            console.log(err)
+        })
+
+        return accessToken;
+    },
+    async fazRequisicaoBarramentoApiAutorizacaoAcessoV4(accessToken) {
+        let requestComFalha = false
+
+        const codigoProduto = window.Piano.variaveis.getCodigoProduto()
+
+        if (codigoProduto === 'error') {
+            return
+        }
+
+        const data = JSON.stringify({
+            'token-acesso': accessToken,
+            codigoProduto,
+        })
+
+        const xhr = new XMLHttpRequest()
+
+        const url =
+            window.Piano.configuracao.jsonConfiguracaoTinyPass[
+                window.Piano.variaveis.getAmbientePiano()
+            ].urlVerificaLeitorV4
+
+        await fetch(url, {
+            method: 'post',
+            body: data,
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((respJson) => {
+                
+                let respostaDeTermoDeUso = ''
+                let respostaDeMotivo = ''
+                let hrefAssinaturaInadimplente = ''
+                let _jsonLeitorAux = {}
+
+                if (typeof respJson.motivo !== 'undefined') {
+                    respostaDeMotivo = respJson.motivo.toLowerCase()
+                }
+
+                if (typeof respJson.temTermoDeUso !== 'undefined') {
+                    respostaDeTermoDeUso = respJson.temTermoDeUso
+                }
+
+                if (typeof respJson.link !== 'undefined') {
+                    hrefAssinaturaInadimplente = window.Piano.inadimplente.getLinkAssinatura(
+                        respJson.link
+                    )
+                }
+
+                const isAutorizado = window.Piano.autenticacao.isAutorizado(
+                    respostaDeTermoDeUso,
+                    respostaDeMotivo,
+                    respJson.autorizado,
+                    hrefAssinaturaInadimplente
+                )
+
+                window.Piano.autenticacao.defineUsuarioPiano(
+                    respJson.autorizado,
+                    respostaDeMotivo,
+                    isAutorizado,
+                    respostaDeTermoDeUso
+                )
+
+                const cookieUTP = Helpers.getCookie(
+                    window.Piano.variaveis.constante.cookie.UTP
+                )
+
+                if (cookieUTP !== '') {
+                    _jsonLeitorAux = JSON.parse(decodeURI(atob(cookieUTP)))
+                }
+
+                let _jsonLeitor = {
+                    ..._jsonLeitorAux,
+                    autorizado: respJson.autorizado,
+                    motivo: respostaDeMotivo,
+                    logado: isAutorizado,
+                    temTermoDeUso: respostaDeTermoDeUso,
+                    accessToken,
+                    produto: window.Piano.variaveis.getNomeProduto(),
+                    codProduto: codigoProduto,
+                    uuid: respJson.usuarioId,
+                }
+
+                _jsonLeitor = btoa(encodeURI(JSON.stringify(_jsonLeitor)))
+
+                Helpers.setCookie(
+                    window.Piano.variaveis.constante.cookie.UTP,
+                    _jsonLeitor,
+                    1
+                )
+
+                if (typeof swg !== 'undefined') {
+                    if (window.Piano.google.showSaveSubscription(respJson)) {
+                        try {
+                            const swgService = new SwgService()
+                            swgService.saveSubscription(accessToken)
+                        } catch (error) {
+                            GA.setEventsError(
+                                'fazRequisicaoBarramentoApiAutorizacaoAcessoV4',
+                                'Erro ao chamar a função showSaveSubscription do Aldebaran.',
+                                `URL: ${document.location.href} AccessToken: ${accessToken} Erro: ${error}`,
+                            )
+                        }
+                    }
+                }
+
+                if (respJson.autorizado === true) {
+                    window.Piano.metricas.setaVariaveis(respJson.usuarioId, 'Globo ID', 'O Globo')
+                }
+            })
+            .catch(() => {
+                GA.setEventsError(
+                    'fazRequisicaoBarramentoApiAutorizacaoAcessoV4',
+                    'API de autorizacao de acesso',
+                    `${xhr.status} - ${accessToken}`,
+                )
+                requestComFalha = false
+                window.Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, ' ')
+            })
+
+        return requestComFalha
+    },
 }
 
 window.Piano.google = {
@@ -553,6 +740,8 @@ window.Piano.google = {
     },
 }
 
+window.Piano.resetUtp = PianoModule.resetUtp
+
 window.Piano.autenticacao = {
     isLogadoCadun(glbid, utp) {
         if (!glbid) {
@@ -574,7 +763,16 @@ window.Piano.autenticacao = {
         return glbid !== ''
     },
     async verificaUsuarioLogadoNoBarramento(glbid, utp) {
-        if (window.Piano.autenticacao.isLogadoCadun(glbid, utp)) {
+        const sessionId = LoginHelper.getSessionId()
+        const {isOidcLogin} = Products
+
+        if (sessionId && isOidcLogin){
+            await window.Piano.xmlHttpRequest.verificarAutorizacaoDeAcesso()
+        }
+        else if (isOidcLogin){
+            LoginHelper.logout()
+        }
+        else if (window.Piano.autenticacao.isLogadoCadun(glbid, utp)) {
             if (utp) {
                 const _leitor = JSON.parse(decodeURI(atob(utp)))
 
@@ -616,7 +814,7 @@ window.Piano.autenticacao = {
                     -1
                 )
             }
-
+            
             await window.Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(
                 glbid
             )
