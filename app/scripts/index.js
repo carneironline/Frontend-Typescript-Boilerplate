@@ -23,7 +23,7 @@ LoginHelper.createSessionIdCookie()
 
 const Products = new ProductsModule() 
 const Tiny = new TinyModule() 
-const PianoModule = new Piano()  
+const PianoModule = new PianoClass()  
 const GA = new GAModule()  
 const Krux = new KruxModule()  
 
