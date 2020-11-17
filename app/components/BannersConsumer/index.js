@@ -25,7 +25,6 @@ class BannersConsumer {
        
         if (!this.bannersFound || !window.glbBannersConsumer) return null
         
-        console.log('INIT', this.bannersFound, window.glbBannersConsumer, 't3')
         this.addStyle()
 
         this.bannersFound.forEach((element) => {
