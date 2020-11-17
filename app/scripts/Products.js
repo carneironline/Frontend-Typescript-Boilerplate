@@ -2,41 +2,78 @@ import productsId from '../mocks/products/products-id'
 
 export default class Products {
     constructor() {
-        this.productName =
-            typeof window.nomeProdutoPiano !== 'undefined'
-                ? window.nomeProdutoPiano
-                : null
+        
+        this.name = typeof window.nomeProdutoPiano !== 'undefined' ? window.nomeProdutoPiano : null
+        this.id = this.productId
+        this.code = this.productCode
     }
 
-    setGlobal() {
-        const productsSettings = {
-            Product: {
-                name: this.productName,
-                // id: this.productId
-            },
-        }
-
-        window.tinyCpt = window.tinyCpt
-            ? Object.assign(productsSettings, window.tinyCpt)
-            : productsSettings
+    init() {
+        window.tinyCpnt.Product = this
     }
 
     get isProductValor() {
-        return this.productName === 'valor'
+        return this.name === 'valor'
     }
 
     get isAutoEsporte() {
-        return this.productName  === 'auto-esporte' 
+        return this.name  === 'auto-esporte' 
     }
 
     get isTealiumProducts() {
         return (this.isProductValor || this.isAutoEsporte)
     }
 
-    get productId() {
-        return typeof productsId[this.productName] !== 'undefined' &&
-            typeof productsId[this.productName].id !== 'undefined'
-            ? productsId[this.productName].id
-            : null
+    get productId() { 
+        return productsId[this.name].id
+    }
+
+    get productCode() {
+        return productsId[this.name].cod_prod
+    }
+
+    get loginDomain() {
+        const loginDomain = window.tinyCpnt.isProduction
+            ? 'https://login.globo.com/'
+            : 'https://login.qa.globoi.com/'
+
+        return loginDomain
+    }
+
+    get serviceId() {
+        return productsId[this.name].id
+    }
+
+    get returnUrl() {
+        return encodeURIComponent(window.location.href)
+    }
+
+    getLoginUrl() {
+        let str = ''
+
+        if (this.serviceId) {
+            str = `${this.loginDomain}login/${this.serviceId}?url=${this.returnUrl}`
+        }
+
+        return str
+    }
+
+    getRegisterUrl() {
+        let str = ''
+
+        if (this.serviceId) {
+            str = `${this.loginDomain}cadastro/${this.serviceId}?url=${this.returnUrl}`
+        }
+
+        return str
+    }
+
+    getLogoutUrl() {
+        let str = ''
+
+        if (this.serviceId)
+            str = `${this.loginDomain}logout?url=${this.loginDomain}login/${this.serviceId}?url=${this.returnUrl}`
+
+        return str
     }
 }

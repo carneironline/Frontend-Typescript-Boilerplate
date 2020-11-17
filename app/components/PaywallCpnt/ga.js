@@ -1,12 +1,7 @@
 import Helpers from '../../scripts/Helpers'
-import PianoModule from '../../scripts/Piano'
-import GAModule from '../../scripts/GA'
 
 export default class PaywallGAModule {
     constructor() {
-        this.Piano = new PianoModule()
-        this.GA = new GAModule()
-
         this.metrics = {
             paywall: {},
             fb: {
@@ -20,8 +15,8 @@ export default class PaywallGAModule {
     paywallLoad() {
         if (!window.Piano) return
 
-        this.GA.setEvents(
-            'paywallLoad',
+        window.tinyCpnt.GA.setEvents(
+            'PaywallGAModule',
             this.metrics.paywall.viewName,
             window.Piano.experience.name,
         )
@@ -49,13 +44,13 @@ export default class PaywallGAModule {
             eventoGAInteracao: false,
         }
 
-        if (resetUtp) this.Piano.resetUtp()
+        if (resetUtp) window.tinyCpnt.Piano.resetUtp()
 
         this.setDatalayer(data)
     }
 
     paywallType() {
-        const type = window.tinyCpt?.Piano?.typePaywall ? window.tinyCpt.Piano.typePaywall.toLowerCase() : 'paywall'
+        const type = window.tinyCpnt?.Piano?.typePaywall ? window.tinyCpnt.Piano.typePaywall.toLowerCase() : 'paywall'
 
         switch (type) {
             case 'register':

@@ -1,6 +1,6 @@
 export default class Fb {
     constructor(data = null) {
-        this.debug = window.tinyCpt.debug
+        this.debug = window.tinyCpnt.debug
         this.disabled = false
         this.fb = data
     }

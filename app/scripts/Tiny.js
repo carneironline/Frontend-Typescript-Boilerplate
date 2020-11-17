@@ -1,20 +1,22 @@
-import ProductsModule from './Products'
-
 export default class Tiny {
     constructor() {
-        this.Products = new ProductsModule()
         window.hasPaywall = window.hasPaywall || null
-        window.tp = window.tp || []
-        window.Piano = window.Piano || {}
+        window.tp = window.tp || []        
         window.PaywallAnalytics = window.PaywallAnalytics || {}
 
+        this.isProduction = window.ambienteUtilizadoPiano === 'prd'
+        this.isQa = window.ambienteUtilizadoPiano === 'qlt'
+        this.isDev = window.ambienteUtilizadoPiano === 'dev'
+
+        this.activeComponents = []
+
         this.setGlobalTiny()
-        this.Products.setGlobal()
-        this.init()
     }
 
     setGlobalTiny() {
-        const isProduction = window.ambienteUtilizadoPiano === 'prd'
+        const {isProduction} = this
+        const {isQa} = this
+        const {isDev} = this
 
         const defaultSettings = {
             debug: {
@@ -24,19 +26,55 @@ export default class Tiny {
                 ga: false,
             },
             isProduction,
-            assetsPath: isProduction
-                ? 'https://static.infoglobo.com.br'
-                : 'https://static-stg.infoglobo.com.br',
+            isQa,
+            isDev,
+            environmentType: this.environmentType(),
+            assetsPath: this.getAssetsPath(),
+            activeComponents: this.activeComponents
         }
 
-        window.tinyCpt = window.tinyCpt
-            ? Object.assign(defaultSettings, window.tinyCpt)
+        window.tinyCpnt = window.tinyCpnt
+            ? Object.assign(defaultSettings, window.tinyCpnt)
             : defaultSettings
     }
 
-    setPiano(obj) {
-        window.tinyCpt.Piano = obj
+    getAssetsPath() {
+        if(this.isProduction)
+            return 'https://static.infoglobo.com.br'
+
+        if(this.isQa)
+            return 'https://static-stg.infoglobo.com.br'
+
+        return 'https://tinyjs.globoi.com:8080'
     }
 
-    init() {}
+    environmentType() {
+        const environmentType =  window.ambienteUtilizadoPiano
+        if(environmentType) {
+            switch(environmentType) {
+                case 'prd': return 'prd'; break;
+                case 'qlt': return 'qlt'; break;
+                default: return 'dev'
+            }
+        }
+
+        return null
+    }
+
+    setPiano(obj) {
+        window.tinyCpnt.Piano = obj
+    }
+
+    setActiveComponent(component, callback = null) {
+        if(!this.checkActiveComponent(component)) {
+            window.tinyCpnt.activeComponents.push(component)
+            
+            if(callback)
+                callback()
+        }
+    }
+
+    checkActiveComponent(component) { 
+        return window.tinyCpnt.activeComponents?.includes(component)
+    }
 }

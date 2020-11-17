@@ -1,11 +1,20 @@
+import Products from '../../scripts/Products'
 import PaywallDefaultCpnt from '../PaywallDefaultCpnt'
 import BarberBarrier from '../BarberBarrier'
+import Tiny from '../../scripts/Tiny'
 
 class PaywallCpnt {
     constructor() {
-        this.debug = window.tinyCpt.debug.paywall
-        this.setTemplateSettings(() => {
-            this.init()
+        this.Tiny = new Tiny()
+        this.Products = new Products()
+        this.debug = window.tinyCpnt.debug.paywall
+        this.componentName = 'PaywallCpnt'
+        this.componentActive = null
+
+        this.Tiny.setActiveComponent(this.componentName, () => {
+            this.setTemplateSettings(() => {
+                this.init()
+            })
         })
     }
 
@@ -67,62 +76,29 @@ class PaywallCpnt {
         checkLinkProps.forEach(prop => {
             pseudoVars.forEach(pseudoVar => {
                 if(window.glbPaywall[prop] === pseudoVar)
-                    window.glbPaywall[prop] = pseudoVar.includes('login') ? this.getLoginUrl() : this.getLoginUrl('register')
+                    window.glbPaywall[prop] = pseudoVar.includes('login') ? this.Products.getLoginUrl() : this.Products.getRegisterUrl()
             })
         })
 
         checkBarberBarrierLinkProps.forEach(prop => { 
             pseudoVars.forEach(pseudoVar => {
                 if(window.glbPaywall.barberBarrier &&  window.glbPaywall.barberBarrier[prop] === pseudoVar)
-                    window.glbPaywall.barberBarrier[prop] = pseudoVar.includes('login') ? this.getLoginUrl() : this.getLoginUrl('register')
+                    window.glbPaywall.barberBarrier[prop] = pseudoVar.includes('login') ? this.Products.getLoginUrl() : this.Products.getRegisterUrl()
             })
         })
 
     }
 
-    getLoginUrl(type = '') {
-        const loginDomain = window.tinyCpt.isProduction
-            ? 'https://login.globo.com/'
-            : 'https://login.qa.globoi.com/'
-        const serviceId = window.tinyCpt.Piano?.variaveis?.getServicoId() || null
-        const urlReturn = encodeURIComponent(document.location.href)
-        let str = ''
-
-        if (serviceId) {
-            if (type === 'register') {
-                str = `${loginDomain}cadastro/${serviceId}?url=${urlReturn}`
-            } else {
-                str = `${loginDomain}login/${serviceId}?url=${urlReturn}`
-            }
-        }
-
-        return str
-    }
-
-    getLogoutUrl() {
-        const loginDomain = window.tinyCpt.isProduction
-            ? 'https://login.globo.com/'
-            : 'https://login.qa.globoi.com/'
-        const serviceId = window.tinyCpt.Piano?.variaveis?.getServicoId() || null
-        const urlReturn = encodeURIComponent(document.location.href)
-        let str = ''
-
-        if (serviceId)
-            str = `${loginDomain}logout?url=${loginDomain}login/${serviceId}?url=${urlReturn}`
-
-        return str
-    }
-
     get loginUrl() {
-        return this.getLoginUrl()
+        return this.Products.getLoginUrl()
     }
 
     get logoutUrl() {
-        return this.getLogoutUrl()
+        return this.Products.getLogoutUrl()
     }
 
     get registerUrl() {
-        return this.getLoginUrl('register')
+        return this.Products.getRegisterUrl()
     }
 
     setDebugTemplateSettings() {
@@ -151,10 +127,11 @@ class PaywallCpnt {
         const delayTimer = window.glbPaywall?.delayTimer ? window.glbPaywall.delayTimer * 1000 : 0
         const hasBarberBarrier = Boolean(window.glbPaywall.barberBarrier && Object.keys(window.glbPaywall.barberBarrier)?.length)
         const hasOnlyBarberBarrier = window.glbPaywall?.only === 'barberBarrier'
+        const media = window.matchMedia("(max-width: 1023px)").matches
 
         setTimeout(() => {
-            if ((hasBarberBarrier && window.matchMedia("(max-width: 1023px)").matches) || hasOnlyBarberBarrier) {
-                this.componentActive = 'BarberBarrier'
+            if ((hasBarberBarrier && media) || hasOnlyBarberBarrier) {
+                this.componentActive = 'BarberBarrier' 
                 new BarberBarrier(this)
             } else {
                 this.componentActive = 'PaywallDefaultCpnt'
@@ -163,6 +140,24 @@ class PaywallCpnt {
 
             this.showConsole()
         }, delayTimer)
+    }
+
+    checksAdblockIsEnabled() {
+        document.cookie = '__adblocker=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
+        
+        const setNptTechAdblockerCookie = function (adblocker) {
+            const d = new Date()
+            d.setTime(d.getTime() + 60 * 60 * 24 * 2 * 1000)
+            document.cookie = `__adblocker=${adblocker ? 'true' : 'false'
+                }; expires=${d.toUTCString()}; path=/`
+        }
+
+        const script = document.createElement('script')
+        script.setAttribute('async', true)
+        script.setAttribute('src', 'https://www.npttech.com/advertising.js')
+        script.setAttribute('onerror', 'setNptTechAdblockerCookie(true);')
+        
+        document.getElementsByTagName('head')[0].appendChild(script)
     }
 }
 
