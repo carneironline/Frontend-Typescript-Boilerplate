@@ -112,7 +112,7 @@ class BannerCover {
 				
 				margin: 0 auto 0px;
 				max-width: 1260px;
-				padding: 40px 0px 40px;
+				padding: 0px 0px 40px;
 			}
 			
 			@media (max-width: 1023px) {
