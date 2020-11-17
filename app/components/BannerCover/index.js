@@ -60,7 +60,7 @@ class BannerCover {
 	}
 
 	add() { 
-		this.elTarget.insertAdjacentHTML('beforeend', this.render())
+		this.elTarget.insertAdjacentHTML('afterend', this.render())
 		this.elCpnt = document.querySelector(`${this.styleClassMain}`)
 	}
 
