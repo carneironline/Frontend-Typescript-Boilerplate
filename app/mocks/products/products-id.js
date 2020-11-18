@@ -52,7 +52,7 @@ export default {
         'cod_prod': 'marie-claire'
     },
     'globo-rural': {
-        'id': '6697',
+        'id': '6621',
         'cod_prod': 'globo-rural'
     },
     'gq': {
