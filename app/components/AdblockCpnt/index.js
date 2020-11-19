@@ -23,6 +23,7 @@ class AdblockCpnt {
             footerDescription: 'Ou desative seu bloqueador de anúncios e leia a matéria.',
             footerTextBtn: 'Saiba mais',
             footerTextBtnUrl: '//facebook.com',
+            readmoreTitle: 'Adicione O Globo nas suas permissões',
         }
 
         this.start()
@@ -91,20 +92,14 @@ class AdblockCpnt {
     }
 
     activeWallRequirements() {
-        const showRequirements = document.getElementById('showRequirements')
+        const readmoreBox = document.querySelector('.adblock-cpnt-readmore-box')
+        const readmoreBoxToggle = document.querySelectorAll('.adblock-cpnt-readmore-box-toggle')
 
-        if (showRequirements) {
-            const requirementEl = document.querySelector('.adblock-cpt__requisitos')
-            const btnVoltar = document.querySelector('.adblock-cpt__requisitos-voltar')
-
-            this.elBody.setAttribute('style', 'overflow: hidden;')
-
-            showRequirements.addEventListener('click', () => {
-                requirementEl.classList.add('is-show')
-            })
-
-            btnVoltar.addEventListener('click', () => {
-                requirementEl.classList.remove('is-show')
+        if (readmoreBox) {
+            readmoreBoxToggle.forEach((element) => {
+                element.addEventListener('click', () => {
+                    readmoreBox.classList.toggle('is-hide')
+                })
             })
         }
     }
