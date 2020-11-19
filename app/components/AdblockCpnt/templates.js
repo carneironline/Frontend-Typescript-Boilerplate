@@ -658,6 +658,21 @@ class AdblockCpntTemplates {
             flex: 1;
         }
 
+        ${main}-readmore-box__list h4 {
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        ${main}-readmore-box__list ol {
+            list-style-type: decimal;
+            list-style-position: inside;
+            padding-left: 20px;
+        }    
+
+        ${main}-readmore-box__list ol li {
+            line-height: 1.8;
+        } 
+
         ${main}-readmore-box__btn-back {
             background: #0293fa;
             border-radius: 3px;

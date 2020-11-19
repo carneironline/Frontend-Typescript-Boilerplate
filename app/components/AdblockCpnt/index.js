@@ -95,6 +95,8 @@ class AdblockCpnt {
         const readmoreBox = document.querySelector('.adblock-cpnt-readmore-box')
         const readmoreBoxToggle = document.querySelectorAll('.adblock-cpnt-readmore-box-toggle')
 
+        this.elBody.setAttribute('style', 'overflow: hidden;')
+
         if (readmoreBox) {
             readmoreBoxToggle.forEach((element) => {
                 element.addEventListener('click', () => {
