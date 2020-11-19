@@ -80,14 +80,14 @@ class BannerCover {
 
 		element.addEventListener('click', (evt) => {
 			evt.preventDefault()
-
+			
 			setTimeout(() => {
-				window.open(evt.target.href)
+				window.open(element.href)
 			}, 500)
 		})
 	}
 
-	render() {
+	render() { 
         return `
         <div class="${this.classMain} ${this.classMain}--hide">            
             <a class="${this.classMain}-target" href="${window.glbBannerCover.url}" target="_blank">    
