@@ -60,7 +60,7 @@ class BannerCover {
 	}
 
 	add() { 
-		this.elTarget.insertAdjacentHTML('beforeend', this.render())
+		this.elTarget.insertAdjacentHTML('afterend', this.render())
 		this.elCpnt = document.querySelector(`${this.styleClassMain}`)
 	}
 
@@ -80,14 +80,14 @@ class BannerCover {
 
 		element.addEventListener('click', (evt) => {
 			evt.preventDefault()
-
+			
 			setTimeout(() => {
-				window.open(evt.target.href)
+				window.open(element.href)
 			}, 500)
 		})
 	}
 
-	render() {
+	render() { 
         return `
         <div class="${this.classMain} ${this.classMain}--hide">            
             <a class="${this.classMain}-target" href="${window.glbBannerCover.url}" target="_blank">    
@@ -112,7 +112,7 @@ class BannerCover {
 				
 				margin: 0 auto 0px;
 				max-width: 1260px;
-				padding: 40px 0px 40px;
+				padding: 0px 0px 40px;
 			}
 			
 			@media (max-width: 1023px) {

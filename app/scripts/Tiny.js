@@ -45,7 +45,7 @@ export default class Tiny {
         if(this.isQa)
             return 'https://static-stg.infoglobo.com.br'
 
-        return 'https://tinyjs.globoi.com:8080'
+        return `${globalThis.location.protocol}//${globalThis.location.host}`
     }
 
     environmentType() {

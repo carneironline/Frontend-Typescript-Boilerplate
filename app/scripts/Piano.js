@@ -39,6 +39,7 @@ export default class Piano {
         Piano.addGlobalProps('configuracao', this.configuration)
         Piano.addGlobalProps('helper', this.helpers)
         Piano.addGlobalProps('construtor', this.construtores)
+        Piano.addGlobalProps('resetUtp', this.resetUtp)
     }
 
     get vars() {

@@ -399,8 +399,39 @@ class AdblockCpntTemplates {
                 </div>
             </div>
 
-            <div class='${main}-readmore'>${templateSettings.footerDescription} <a href="${templateSettings.footerTextBtnUrl}" class="${main}-btn-readmore">${templateSettings.footerTextBtn}</a></div>
+            <div class='${main}-readmore'>${templateSettings.footerDescription} <a class="${main}-btn-readmore ${main}-readmore-box-toggle">${templateSettings.footerTextBtn}</a></div>
 
+            <div class='${main}-readmore-box is-hide'>
+                <h2>${templateSettings.readmoreTitle}</h2>
+
+                <div class='${main}-readmore-box__list'>
+                    <h4>Adblock Plus</h4>
+                    <ol>
+                        <li>Clique no ícone do Adblock Plus, localizado à direita da barra de endereço do seu navegador</li>
+                        <li>Um menu drop-down aparecerá na tela</li>
+                        <li>Clique em “Enabled on this site” para desativar o bloqueio da publicidade</li>
+                        <li>Após o clique, o texto será substituído por “Disabled on this site”</li>
+                        <li>Recarregue a página que você estava tentando acessar</li>
+                    </ol>
+                    <h4>AdBlock Pro</h4>
+                    <ol>
+                        <li>Clique no ícone do AdBlock Pro, localizado à direita da barra de endereços do seu navegador</li>
+                        <li>Um menu drop-down aparecerá na tela</li>
+                        <li>Clique no primeiro ícone (ligar) para para desativar o bloqueio da publicidade</li>
+                        <li>Recarregue a página que você estava tentando acessar</li>
+                    </ol>
+                    <h4>AdBlock</h4>
+                    <ol>
+                        <li>Clique no ícone do AdBlock Pro, localizado à direita da barra de endereços do seu navegador</li>
+                        <li>Um menu drop-down aparecerá na tela</li>
+                        <li>Clique em “Don’t run on pages on this domain” para desativar o bloqueio da publicidade</li>
+                        <li>Uma nova janela abrirá e você precisará clicar no botão “Exclude”</li>
+                        <li>Após o clique, a página será recarregada</li>
+                    </ol>
+                </div>
+                
+                <button class="${main}-readmore-box__btn-back ${main}-readmore-box-toggle" type="button">Voltar</button>
+            </div>
         </div>
         `
     }
@@ -446,6 +477,7 @@ class AdblockCpntTemplates {
             width: 940px;
             font-family: 'Futura';
             background: #fff;
+            position: relative;
         }
 
         @media only screen and (max-width: 767px) {
@@ -537,7 +569,7 @@ class AdblockCpntTemplates {
             }
         }
 
-        ${main}-main-text__button{
+        ${main}-main-text__button {
             font-size: 38px;
             color: #fff;
             text-transform: uppercase;
@@ -581,6 +613,7 @@ class AdblockCpntTemplates {
             font-size: 26px;
             text-decoration: underline;
             margin-left: 10px;
+            cursor: pointer;
         }
 
         @media only screen and (max-width: 767px) {
@@ -588,6 +621,113 @@ class AdblockCpntTemplates {
                 margin-left: unset;
                 padding-top: 10px;
             }
+        }
+
+        ${main}-readmore-box {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background: #fff;
+            top: 0;
+            left: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: opacity .3s;
+
+            visibility: visible;
+            opacity: 1;
+
+        }
+
+        ${main}-readmore-box.is-hide {
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        ${main}-readmore-box h2 {
+            margin: 0;
+            padding-bottom: 20px;
+            border-bottom: solid 1px #ddd;
+            font-size: 22px;
+        }
+
+        ${main}-readmore-box__list {
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        ${main}-readmore-box__list h4 {
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        ${main}-readmore-box__list ol {
+            list-style-type: decimal;
+            list-style-position: inside;
+            padding-left: 20px;
+        }    
+
+        ${main}-readmore-box__list ol li {
+            line-height: 1.8;
+        } 
+
+        ${main}-readmore-box__btn-back {
+            background: #0293fa;
+            border-radius: 3px;
+            font-weight: 700;
+            font-size: 19px;
+            color: #FFFFFF;
+            text-align: center;
+            text-decoration: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            text-transform: uppercase;
+            margin-top: 30px;
+            max-width: 120px;
+        }
+
+        @media only screen and (max-width: 767px) {
+            ${main}-readmore-box__btn-back {
+                max-width: unset;
+            }
+        }
+
+        /* BARS */
+        ${main}-readmore-box__list::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ${main}-readmore-box__list::-webkit-scrollbar-button {
+            width: 15px;
+            height: 15px;
+        }
+        ${main}-readmore-box__list::-webkit-scrollbar-thumb {
+            background: #e1e1e1;
+            border: 42px none #ffffff;
+            border-radius: 100px;
+        }
+        ${main}-readmore-box__list::-webkit-scrollbar-thumb:hover {
+            background: #ffffff;
+        }
+        ${main}-readmore-box__list::-webkit-scrollbar-thumb:active {
+            background: #000000;
+        }
+        ${main}-readmore-box__list::-webkit-scrollbar-track {
+            background: #666666;
+            border: 0px none #ffffff;
+            border-radius: 54px;
+        }
+        ${main}-readmore-box__list::-webkit-scrollbar-track:hover {
+            background: #666666;
+        }
+        ${main}-readmore-box__list::-webkit-scrollbar-track:active {
+            background: #333333;
+        }
+        ${main}-readmore-box__list::-webkit-scrollbar-corner {
+            background: transparent;
         }
 
         </style>
