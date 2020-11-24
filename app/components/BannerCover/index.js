@@ -7,6 +7,8 @@ class BannerCover {
         this.elCpnt = null
         this.elTarget = document.querySelector('.banner-cover-cpnt, .block--advertising-header')
         this.isProductOGlobo = window.tinyCpnt.Product.name === 'oglobo'
+        this.isProductValor = window.tinyCpnt.Product.name === 'valor'
+        this.isProductMagazines = window.tinyCpnt.Product.name !== 'oglobo' && window.tinyCpnt.Product.name !== 'valor'
 
         if (!this.elTarget) return null
 
@@ -114,12 +116,14 @@ class BannerCover {
 
 				margin: 0 auto 0px;
 				max-width: 1260px;
-				${this.isProductOGlobo ? 'padding: 0px 0px 40px' : 'padding: 0px 0px 0px'};
+                padding: 40px 0px 40px;
 			}
 
 			@media (max-width: 1023px) {
 				${this.styleClassMain}-box {
-					${this.isProductOGlobo ? 'padding: 40px 0px 40px' : 'padding: 40px 0px 0px'};
+                    ${this.isProductOGlobo ? 'padding: 40px 0px 40px;' : ''}
+                    ${this.isProductValor ? 'padding: 40px 0px 0px;' : ''}
+                    ${this.isProductMagazines ? 'padding: 20px 0px 20px;' : ''}
 				}
 			}
 
@@ -147,22 +151,16 @@ class BannerCover {
 				width: calc(21%);
 				text-align: right;
 			}
-			@media (max-width: 1023px){
-				${this.styleClassMain}-image {
-					width: unset;
-				}
-
-			}
 
 			${this.styleClassMain}-image-img {
 				position: absolute;
 				right: 0;
-				top: -74px;
-				max-width: 80%;
+				top: 0;
+                max-width: 80%;
+                transform: translate(0, -50%);
 			}
 			@media (max-width: 1023px) {
 				${this.styleClassMain}-image-img {
-					position: unset;
 					max-width: 87%;
 				}
 			}
