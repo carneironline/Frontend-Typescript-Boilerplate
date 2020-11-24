@@ -6,6 +6,7 @@ class BannerCover {
         this.elBody = document.body
         this.elCpnt = null
         this.elTarget = document.querySelector('.banner-cover-cpnt, .block--advertising-header')
+        this.isProductOGlobo = window.tinyCpnt.Product.name === 'oglobo'
 
         if (!this.elTarget) return null
 
@@ -60,7 +61,7 @@ class BannerCover {
     }
 
     add() {
-        const insertPosition = window.tinyCpnt.Product.name === 'oglobo' ? 'afterend' : 'beforeend'
+        const insertPosition = this.isProductOGlobo ? 'afterend' : 'beforeend'
         this.elTarget.insertAdjacentHTML(insertPosition, this.render())
         this.elCpnt = document.querySelector(`${this.styleClassMain}-box`)
     }
@@ -113,12 +114,12 @@ class BannerCover {
 
 				margin: 0 auto 0px;
 				max-width: 1260px;
-				padding: 0px 0px 40px;
+				${this.isProductOGlobo ? 'padding: 0px 0px 40px' : 'padding: 0px 0px 0px'};
 			}
 
 			@media (max-width: 1023px) {
 				${this.styleClassMain}-box {
-					padding: 40px 0px 40px;
+					${this.isProductOGlobo ? 'padding: 40px 0px 40px' : 'padding: 40px 0px 0px'};
 				}
 			}
 
