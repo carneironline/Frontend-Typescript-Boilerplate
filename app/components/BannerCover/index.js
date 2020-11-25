@@ -76,16 +76,16 @@ class BannerCover {
     }
 
     fixVerticalPadding() {
-        const a = document.querySelector('.banner-cover-cpnt-box')
-        const b = document.querySelector('.banner-cover-cpnt-text')
-        const c = document.querySelector('.banner-cover-cpnt-image-img')
+        const elBox = document.querySelector('.banner-cover-cpnt-box')
+        const elText = document.querySelector('.banner-cover-cpnt-text')
+        const elImage = document.querySelector('.banner-cover-cpnt-image-img')
         let count = 0
 
         const inteval = setInterval(() => {
-            if (c?.height) {
-                if (c.height > b.offsetHeight) {
-                    const verticalPadding = ((c.height - b.offsetHeight) / 2) + 20
-                    a.style.padding = `${verticalPadding}px 0`
+            if (elImage?.height) {
+                if (elImage.height > elText.offsetHeight) {
+                    const verticalPadding = ((elImage.height - elText.offsetHeight) / 2) + 20
+                    elBox.style.padding = `${verticalPadding}px 0`
                 }
 
                 clearInterval(inteval)
