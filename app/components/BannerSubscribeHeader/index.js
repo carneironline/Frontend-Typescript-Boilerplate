@@ -1,28 +1,30 @@
 class BannerSubscribeHeader {
 
-	constructor() {
-		 
-		this.classMain = 'banner-subscribe-header-cpnt'
+    constructor() {
+
+        this.classMain = 'banner-subscribe-header-cpnt'
         this.styleClassMain = `.${this.classMain}`
-		this.elBody = document.body
+        this.elBody = document.body
         this.elCpnt = null
         this.elTarget = document.querySelector('#banner-assinatura-header')
 
-		this.init()
-		this.showConsole()
-	}
+        if (!this.elTarget) return null
 
-	init() {
-		window.glbBannerSubscribeHeader = window.glbBannerSubscribeHeader ? { ...this.settings(), ...window.glbBannerSubscribeHeader } : this.settings()
+        this.init()
+        this.showConsole()
+    }
 
-		this.addStyle()
-		this.add()
-		this.show()
-		this.click()
-		this.setGa()
-	}
+    init() {
+        window.glbBannerSubscribeHeader = window.glbBannerSubscribeHeader ? { ...this.settings(), ...window.glbBannerSubscribeHeader } : this.settings()
 
-	showConsole() {
+        this.addStyle()
+        this.add()
+        this.show()
+        this.click()
+        this.setGa()
+    }
+
+    showConsole() {
         console.groupCollapsed('BannerSubscribeHeader Component')
 
         console.group('Constructor')
@@ -34,74 +36,74 @@ class BannerSubscribeHeader {
         console.groupEnd()
 
         console.groupEnd()
-	}
+    }
 
-	setGa() {
-		const calledBy = 'BannerSubscribeHeader'
-		const action = window.glbBannerSubscribeHeader?.ga?.action || 'Mobiliario Botao';
-		const label = window.glbBannerSubscribeHeader?.ga?.label;
-		
-		if(label) {
-			window.tinyCpnt.GA.setEvents( 
-				calledBy,
-				action,
-				label,
-			)
-		}
-	}
-	
-	settings() {
-		return {
-			image: 'https://via.placeholder.com/180x40',
-			url: '//google.com',
-		}
-	}
+    setGa() {
+        const calledBy = 'BannerSubscribeHeader'
+        const action = window.glbBannerSubscribeHeader?.ga?.action || 'Mobiliario Botao';
+        const label = window.glbBannerSubscribeHeader?.ga?.label;
 
-	add() { 
-		this.elTarget.insertAdjacentHTML('beforeend', this.render())
-		this.elCpnt = document.querySelector(`${this.styleClassMain}`)
-	}
+        if (label) {
+            window.tinyCpnt.GA.setEvents(
+                calledBy,
+                action,
+                label,
+            )
+        }
+    }
 
-	show() {
-		setTimeout(() => {
-			this.elCpnt.classList.remove(`${this.classMain}--hide`)
-		}, 500)
-	}
-	
-	addStyle() {
+    settings() {
+        return {
+            image: 'https://via.placeholder.com/180x40',
+            url: '//google.com',
+        }
+    }
+
+    add() {
+        this.elTarget.insertAdjacentHTML('beforeend', this.render())
+        this.elCpnt = document.querySelector(`${this.styleClassMain}`)
+    }
+
+    show() {
+        setTimeout(() => {
+            this.elCpnt.classList.remove(`${this.classMain}--hide`)
+        }, 500)
+    }
+
+    addStyle() {
         this.elBody.insertAdjacentHTML('beforeend', this.style())
-	}
-	
-	click() {
-		const element = document.querySelector(`${this.styleClassMain}-target`)	
+    }
 
-		element.addEventListener('click', (evt) => {
-			evt.preventDefault()
+    click() {
+        const element = document.querySelector(`${this.styleClassMain}-target`)
 
-			setTimeout(() => {
-				window.open(evt.target.href)
-			}, 500)
-		})
-	}
+        element.addEventListener('click', (evt) => {
+            evt.preventDefault()
 
-	render() {
-		return `
+            setTimeout(() => {
+                window.open(evt.target.href)
+            }, 500)
+        })
+    }
+
+    render() {
+        return `
         <div class="${this.classMain} ${this.classMain}--hide" >
-            <a 
-                class="${this.classMain}-target" 
+            <a
+                class="${this.classMain}-target"
                 href="${window.glbBannerSubscribeHeader.url}"
             >
                 Assinatura
             </a>
         </div>
 		`
-	}
+    }
 
-	style() {
-		return `
+    style() {
+        return `
 		<style>
 			 ${this.styleClassMain} {
-				cursor: pointer; 
+				cursor: pointer;
 				opacity: 1;
                 transition: opacity .4s;
                 margin-left: 10px;
@@ -109,7 +111,7 @@ class BannerSubscribeHeader {
 			}
 
 			${this.styleClassMain}--hide {
-				opacity: 0; 
+				opacity: 0;
             }
 
             ${this.styleClassMain}-target {
@@ -135,7 +137,7 @@ class BannerSubscribeHeader {
                     height: 44px;
                 }
             }
-            
+
             @media (min-width:1024px)  {
                 ${this.styleClassMain}-target {
                     width: 180px;
@@ -144,7 +146,7 @@ class BannerSubscribeHeader {
             }
 		</style>
 		`
-	}
+    }
 }
 
 export default BannerSubscribeHeader
