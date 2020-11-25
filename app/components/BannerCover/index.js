@@ -158,6 +158,7 @@ class BannerCover {
 				top: 0;
                 max-width: 80%;
                 transform: translate(0, -50%);
+                max-height: 100px;
 			}
 			@media (max-width: 1023px) {
 				${this.styleClassMain}-image-img {
