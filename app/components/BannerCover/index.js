@@ -24,6 +24,7 @@ class BannerCover {
         this.show()
         this.click()
         this.setGa()
+        this.fixVerticalPadding()
     }
 
     showConsole() {
@@ -74,6 +75,31 @@ class BannerCover {
         }, 500)
     }
 
+    fixVerticalPadding() {
+        const a = document.querySelector('.banner-cover-cpnt-box')
+        const b = document.querySelector('.banner-cover-cpnt-text')
+        const c = document.querySelector('.banner-cover-cpnt-image-img')
+        let count = 0
+
+        const inteval = setInterval(() => {
+            if (c?.height) {
+                if (c.height > b.offsetHeight) {
+                    const verticalPadding = ((c.height - b.offsetHeight) / 2) + 20
+                    a.style.padding = `${verticalPadding}px 0`
+                }
+
+                clearInterval(inteval)
+            }
+
+            if (count === 5)
+                clearInterval(inteval)
+
+            count++
+        }, 1000);
+
+
+    }
+
     addStyle() {
         this.elBody.insertAdjacentHTML('beforeend', this.style())
     }
@@ -116,7 +142,7 @@ class BannerCover {
 
 				margin: 0 auto 0px;
 				max-width: 1260px;
-                padding: 40px 0px 40px;
+                padding: 20px 0px;
 			}
 
 			@media (max-width: 1023px) {
@@ -156,15 +182,17 @@ class BannerCover {
 				position: absolute;
 				right: 0;
 				top: 0;
-                max-width: 80%;
+                width: auto;
                 transform: translate(0, -50%);
                 max-height: 100px;
-			}
-			@media (max-width: 1023px) {
+            }
+            @media (max-width: 1023px) {
 				${this.styleClassMain}-image-img {
-					max-width: 87%;
+                    max-width: 90%;
 				}
 			}
+
+
 
 			${this.styleClassMain}-text {
 				font-family: 'Source Sans Pro', sans-serif;
