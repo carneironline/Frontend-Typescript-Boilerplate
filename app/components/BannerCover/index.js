@@ -99,7 +99,7 @@ class BannerCover {
                     <img class="${this.classMain}-image-img" alt="" src="${window.glbBannerCover.image}"/>
                 </div>
                 <div class="${this.classMain}-text">
-                    <div class="main-title">${window.glbBannerCover.text}</div>
+                    ${window.glbBannerCover.text}
                 </div>
             </a>
         </div>
@@ -121,9 +121,9 @@ class BannerCover {
 
 			@media (max-width: 1023px) {
 				${this.styleClassMain}-box {
-                    ${this.isProductOGlobo ? 'padding: 40px 0px 40px;' : ''}
+                    ${this.isProductOGlobo ? 'padding: 40px 0px;' : ''}
                     ${this.isProductValor ? 'padding: 40px 0px 0px;' : ''}
-                    ${this.isProductMagazines ? 'padding: 20px 0px 20px;' : ''}
+                    ${this.isProductMagazines ? 'padding: 20px 0px;' : ''}
 				}
 			}
 
@@ -169,8 +169,13 @@ class BannerCover {
 				font-family: 'Source Sans Pro', sans-serif;
 				width: 60%;
 				padding: 15px 10% 15px 20px;
-				color: darkslategray;
-			}
+                color: darkslategray;
+                font-size: 16px;
+            }
+
+            ${this.styleClassMain}-text strong {
+				font-weight: bold;
+            }
 
 			@media (max-width: 1023px) {
 				${this.styleClassMain}-text {
