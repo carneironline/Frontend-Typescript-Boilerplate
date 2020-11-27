@@ -39,6 +39,7 @@ export default class Piano {
         Piano.addGlobalProps('configuracao', this.configuration)
         Piano.addGlobalProps('helper', this.helpers)
         Piano.addGlobalProps('construtor', this.construtores)
+        Piano.addGlobalProps('resetUtp', this.resetUtp)
     }
 
     get vars() {
@@ -768,13 +769,18 @@ export default class Piano {
         let experienceName = ''
         window.Piano.experience = {}
 
-        if (window.regrasTiny && window.regrasTiny.nomeExperiencia)
-            experienceName = window.subsegmentacaoPiano ? `${window.regrasTiny.nomeExperiencia} - ${window.subsegmentacaoPiano}` : window.regrasTiny.nomeExperiencia
+        const interval = setInterval(() => {
+            if (window.regrasTiny && window.regrasTiny.nomeExperiencia)
+                experienceName = window.subsegmentacaoPiano ? `${window.regrasTiny.nomeExperiencia} - ${window.subsegmentacaoPiano}` : window.regrasTiny.nomeExperiencia
 
-        if (window.nomeExperiencia)
-            experienceName = window.subsegmentacaoPiano ? `${window.nomeExperiencia} - ${window.subsegmentacaoPiano}` : window.nomeExperiencia
+            if (window.nomeExperiencia)
+                experienceName = window.subsegmentacaoPiano ? `${window.nomeExperiencia} - ${window.subsegmentacaoPiano}` : window.nomeExperiencia
 
-        window.Piano.experience.name = experienceName
+            if (experienceName) {
+                window.Piano.experience.name = experienceName
+                clearInterval(interval)
+            }
+        }, 100);
     }
 
     resetUtp() {
@@ -786,6 +792,7 @@ export default class Piano {
         const a = document.createElement('script')
         a.type = 'text/javascript'
         a.async = true
+
         if (window.Piano.util.isRevista() || window.Piano.util.isValor()) {
             a.src = window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].urlSandboxPianoRevistas
         } else {
