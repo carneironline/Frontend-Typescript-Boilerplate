@@ -510,6 +510,7 @@ window.Piano.xmlHttpRequest = {
         }
 
         if (!accessToken){
+            console.log("Logout -> Undefined Access Token")
             LoginHelper.logout()
         }
 
@@ -554,8 +555,8 @@ window.Piano.xmlHttpRequest = {
         })
         .then((response) => response.json())
         .catch((err) => {
-            LoginHelper.logout()
-            console.log(err)
+            console.log(err);
+            return undefined;
         })
 
         return accessToken;

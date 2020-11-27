@@ -30,7 +30,7 @@ export default class LoginHelper {
 
     static logout(){
         const sessionId = Helpers.getCookie(SESSION_ID)
-
+        console.log("Logout Function")
         if (sessionId){
             Helpers.deleteCookie(GLBID)
             Helpers.deleteCookie(SESSION_ID)
