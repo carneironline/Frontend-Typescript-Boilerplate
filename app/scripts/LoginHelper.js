@@ -29,23 +29,23 @@ export default class LoginHelper {
     }
 
     static logout(){
-        let sessionId = Helpers.getCookie(SESSION_ID)
+        const sessionId = Helpers.getCookie(SESSION_ID)
 
         if (sessionId){
             Helpers.deleteCookie(GLBID)
             Helpers.deleteCookie(SESSION_ID)
     
-            let urlParts = window.location.href.split('?')
-            let urlParams = new URLSearchParams(window.location.search)
+            const urlParts = window.location.href.split('?')
+            const urlParams = new URLSearchParams(window.location.search)
     
             urlParams.delete(SESSION_ID)
             urlParams.delete(GLBID)
     
-            var newUrl = urlParts[0] + '?' + urlParams.toString()
+            const newUrl = `${urlParts[0]  }?${  urlParams.toString()}`
             
             window.location = newUrl
     
-            let logoutUrl = Products.getLogoutUrl()
+            const logoutUrl = Products.getLogoutUrl()
             window.location = `${logoutUrl}?url=${newUrl}`
         }
     }
