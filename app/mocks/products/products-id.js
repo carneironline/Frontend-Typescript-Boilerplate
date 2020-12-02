@@ -7,186 +7,186 @@ export default {
     'blogs': {
         'id': '3981',
         'cod_prod': 'OG03',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'kogut': {
         'id': '3981',
         'cod_prod': 'OG03',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'blogAnalitico': {
         'id': '3981',
         'cod_prod': 'OG03',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'acervo': {
         'id': '3981',
         'cod_prod': 'OG04',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'edigital-oglobo': {
         'id': '3981',
         'cod_prod': 'OG01',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },    
     'monet': {
         'id': '6618',
         'cod_prod': 'monet',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'auto-esporte': {
         'id': '6613',
         'cod_prod': 'auto-esporte',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'epoca': {
         'id': '6612',
         'cod_prod': 'epoca',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'vogue': {
         'id': '6614',
         'cod_prod': 'vogue',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'glamour': {
         'id': '6616',
         'cod_prod': 'glamour',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'casa-vogue': {
         'id': '6610',
         'cod_prod': 'casa-vogue',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'marie-claire': {
         'id': '6609',
         'cod_prod': 'marie-claire',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'globo-rural': {
         'id': '6697',
         'cod_prod': 'globo-rural',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'gq': {
         'id': '6622',
         'cod_prod': 'gq',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'crescer': {
         'id': '6620',
         'cod_prod': 'crescer',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'galileu': {
         'id': '6697',
         'cod_prod': 'galileu',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'epoca-negocios': {
         'id': '6611',
         'cod_prod': 'epoca-negocios',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'casa-e-jardim': {
         'id': '6619',
         'cod_prod': 'casa-jardim',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'quem-acontece': {
         'id': '6697',
         'cod_prod': 'quem',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'pegn': {
         'id': '6615',
         'cod_prod': 'pequenas-empresas',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'valor': {
         'id': '6668',
         'cod_prod': 'valordigital',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'oglobo-clube': {
         'id': '5415',
         'cod_prod': 'oglobo-clube',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },        
     'edigital-monet': {
         'id': '6618',
         'cod_prod': 'monet',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'edigital-auto-esporte': {
         'id': '6613',
         'cod_prod': 'auto-esporte',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'edigital-epoca': {
         'id': '6612',
         'cod_prod': 'epoca',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'edigital-vogue': {
         'id': '6614',
         'cod_prod': 'vogue',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'edigital-glamour': {
         'id': '6616',
         'cod_prod': 'glamour',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'edigital-casa-vogue': {
         'id': '6610',
         'cod_prod': 'casa-vogue',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'edigital-marie-claire': {
         'id': '6609',
         'cod_prod': 'marie-claire',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'edigital-globo-rural': {
         'id': '6697',
         'cod_prod': 'globo-rural',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'edigital-gq': {
         'id': '6622',
         'cod_prod': 'gq',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'edigital-crescer': {
         'id': '6620',
         'cod_prod': 'crescer',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'edigital-galileu': {
         'id': '6697',
         'cod_prod': 'galileu',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'edigital-epoca-negocios': {
         'id': '6611',
         'cod_prod': 'epoca-negocios',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'edigital-casa-e-jardim': {
         'id': '6619',
         'cod_prod': 'casa-jardim',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'edigital-quem-acontece': {
         'id': '6697',
         'cod_prod': 'quem',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'edigital-pegn': {
         'id': '6615',
         'cod_prod': 'pequenas-empresas',
-        'isOidcLogin': false
+        'isOidcLogin': true
     }
 }
