@@ -335,21 +335,19 @@ export default class Piano {
                 if (Helpers.getCookie(window.Piano.variaveis.constante.cookie.RTIEX)) {
                     passagem = regras.fluxo.indexOf('hardwall') !== -1 ? 'register-hardwall-passou' : 'register-contagem-passou'
 
-                    Helpers.setCookie(
-                        window.Piano.variaveis.constante.cookie.RTIEX,
-                        '',
-                        -1
-                    )
+                    Helpers.setCookie(window.Piano.variaveis.constante.cookie.RTIEX, '', -1)
                 }
 
                 return passagem
             },
             executaAposPageview(expirou) {
+                console.log('%c executaAposPageview', Helpers.consoleColor().header)
+
                 if (!window.Piano.variaveis.executouPageview()) {
                     window.regrasTiny.fluxo = window.tpContext ? window.tpContext.toLowerCase() : '-'
                     window.regrasTiny.nomeExperiencia = window.nomeExperiencia ? window.nomeExperiencia : ''
                     window.Piano.metricas.setLimiteContagem(window.regrasTiny)
-
+                    
                     if (expirou === false)
                         self.GA.setEvents(
                             'executaAposPageview',
@@ -486,11 +484,13 @@ export default class Piano {
             callbackMeter(meterData) {
                 window.regrasTiny = meterData
                 window.Piano.metricas.executaAposPageview(false)
+                console.log('%c callbackMeter', Helpers.consoleColor().header, meterData)
             },
             callbackMeterExpired(meterData) {
                 window.regrasTiny = meterData
                 window.Piano.variaveis.isCallbackMetterExpired = true
                 window.Piano.metricas.executaAposPageview(true)
+                console.log('%c callbackMeterExpired', Helpers.consoleColor().header, meterData)
             },
             getWindowLocationSearch() {
                 return window.location.search
