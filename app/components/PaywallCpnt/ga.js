@@ -16,7 +16,7 @@ export default class PaywallGAModule {
         if (!window.Piano || !window.glbPaywall?.ga?.label) return
 
         window.tinyCpnt.GA.setEvents(
-            'paywallLoad',
+            'PaywallCpnt',
             this.metrics.paywall.viewName,
             window.glbPaywall.ga.label,
         )
