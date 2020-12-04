@@ -1,40 +1,54 @@
 import ProductsModule from './Products'
+import Helper from "./Helpers"
 
 export default class GA {
     constructor() {
-        this.debug = window.tinyCpt.debug.ga
+        this.debug = window.tinyCpnt.debug.ga
         this.Products = new ProductsModule()
+
+        
+    }
+
+    init() {
+        this.setGlobalVars()
+    }
+
+    hasGaq() {
+        return this.Products.isTealiumProducts && typeof window._gaq !== 'undefined'
     }
 
     setGlobalVars() {
         window.dataLayer = window.dataLayer || []
 
-        if (this.Products.isProductValor && typeof _gaq === 'undefined')
+        if (this.Products.isTealiumProducts)
             window._gaq = window._gaq || []
+
+        window.tinyCpnt.GA = this
     }
 
-    setEvents(action, label, category = 'Piano') {
-        if (window.tinyCpt.debug.ga)
-            console.log('log-ga-event', category, action, label)
+    setEvents(calledBy = '', action, label, category = 'Piano', eventName = 'EventoGAPiano') {
+        console.log(`%c log-ga-event `, Helper.consoleColor().header, `calledBy: ${calledBy} | action: ${action} | label: ${label} | category: ${category} | event: ${eventName}`)
 
-        if (this.Products.isProductValor)
-            _gaq.push(['_trackEvent', category, action, label, , true])
+        if (this.hasGaq())
+            window._gaq.push(['_trackEvent', category, action, label, null, true])
 
-        dataLayer.push({
-            event: 'EventoGAPiano',
+        window.dataLayer.push({
+            event: eventName,
             eventoGACategoria: category,
             eventoGAAcao: action,
             eventoGARotulo: label,
         })
     }
 
-    setEventsError(action, label) {
-        if (this.Products.isProductValor)
-            _gaq.push(['_trackEvent', 'Piano Erro', action, label, , true])
+    setEventsError(calledBy = '', action, label, category = 'Piano Erro', eventName = 'EventoGAPiano') {
+        console.log('%c log-ga-error-event ', Helper.consoleColor('error').header, `calledBy: ${calledBy} | action: ${action} | label: ${label} | category: ${category} | event: ${eventName}`)
 
-        dataLayer.push({
-            event: 'EventoGAPiano',
-            eventoGACategoria: 'Piano Erro',
+        if (this.hasGaq())
+            window._gaq.push(['_trackEvent', category, action, label, null, true])
+
+        window.dataLayer.push({
+            event: eventName,
+            eventoGACategoria: category,
             eventoGAAcao: action,
             eventoGARotulo: label,
         })

@@ -1,15 +1,7 @@
-import Helpers from '../Helpers'
-import PianoModule from '../Piano'
-import GAModule from '../GA'
+import Helpers from '../../scripts/Helpers'
 
 export default class PaywallGAModule {
     constructor() {
-        this.Piano = new PianoModule()
-        this.GA = new GAModule()
-
-        window.dataLayer = window.dataLayer || []
-        this.debug = window.tinyCpt.debug.paywall
-        this.disabled = false
         this.metrics = {
             paywall: {},
             fb: {
@@ -21,48 +13,44 @@ export default class PaywallGAModule {
     }
 
     paywallLoad() {
-        if (!this.Piano.isDefined) return
+        if (!window.Piano || !window.glbPaywall?.ga?.label) return
 
-        const _Piano = this.Piano.content
-
-        this.GA.setEvents(
+        window.tinyCpnt.GA.setEvents(
+            'PaywallCpnt',
             this.metrics.paywall.viewName,
-            window.Piano.experience.name
+            window.glbPaywall.ga.label,
         )
-        Helpers.setCookie(_Piano.variaveis.constante.cookie.RTIEX, true, 1)
+
+        Helpers.setCookie(window.Piano.variaveis.constante.cookie.RTIEX, true, 1)
     }
 
     trigger(element) {
-        if (this.disabled) return
-
         const resetUtp = element.dataset.gaResetutp || null
         const imageTop = element.dataset.gaImagePosition
         const label =
             imageTop === 'top'
                 ? element.dataset.gaLabel + this.metrics.paywall.label
                 : element.dataset.gaLabel
+        const action = element.dataset.gaAction || null
+
+        if (!action) return null
 
         const data = {
             event: 'EventoGA',
             eventoGACategoria: this.metrics.paywall.name,
-            eventoGAAcao: element.dataset.gaAction || action,
+            eventoGAAcao: action,
             eventoGARotulo: label,
             eventoGAValor: 0,
             eventoGAInteracao: false,
         }
 
-        if (resetUtp) this.Piano.resetUtp()
+        if (resetUtp) window.tinyCpnt.Piano.resetUtp()
 
         this.setDatalayer(data)
     }
 
     paywallType() {
-        const type =
-            typeof window.tinyCpt.Piano !== 'undefined' &&
-            typeof window.tinyCpt.Piano.typePaywall !== 'undefined' &&
-            window.tinyCpt.Piano.typePaywall
-                ? window.tinyCpt.Piano.typePaywall.toLowerCase()
-                : 'paywall'
+        const type = window.tinyCpnt?.Piano?.typePaywall ? window.tinyCpnt.Piano.typePaywall.toLowerCase() : 'paywall'
 
         switch (type) {
             case 'register':
@@ -76,6 +64,12 @@ export default class PaywallGAModule {
                 this.metrics.paywall.name = 'Register exclusivo'
                 this.metrics.paywall.label = 'Assine agora'
                 this.metrics.fb.pixel.name = 'ViewLoginExclusivo'
+                break
+            case 'suspenso':
+                this.metrics.paywall.viewName = 'Suspenso'
+                this.metrics.paywall.name = 'Suspenso'
+                this.metrics.paywall.label = 'Assine agora'
+                this.metrics.fb.pixel.name = 'ViewPaywallSuspenso'
                 break
             case 'paywall':
                 this.metrics.paywall.viewName = 'Barreira'
@@ -93,7 +87,7 @@ export default class PaywallGAModule {
 
     setDatalayer(data = {}) {
         if (Object.keys(data).length) {
-            dataLayer.push(data)
+            window.dataLayer.push(data)
         }
     }
 }

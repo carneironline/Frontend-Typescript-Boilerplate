@@ -24,6 +24,80 @@
     }
   },
   {
+    "productName": "Valor",
+    "pianoProductName": "valor",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Valor"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "Valor",
+      "productID": "valor.globo.com:basic"
+    }
+  },
+  {
+    "productName": "Blog Analitico",
+    "pianoProductName": "blogAnalitico",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Blog Analitico"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "Blog Analitico",
+      "productID": "oglobo.globo.com:br.com.infoglobo.oglobo.site.google"
+    }
+  },
+
+  {
+    "productName": "Valor",
+    "pianoProductName": "valor",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Valor"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "Valor",
+      "productID": "valor.globo.com:basic"
+    }
+  },
+
+  {
     "productName": "Blogs",
     "pianoProductName": "blogs",
     "@context": "http://schema.org",
@@ -381,6 +455,30 @@
       ],
       "name": "Glamour",
       "productID": "revistaglamour.globo.com:basico"
+    }
+  },
+  {
+    "productName": "Valor",
+    "pianoProductName": "valor",
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "isAccessibleForFree": false,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Valor"
+    },
+    "hasPart": {
+      "@type": "WebPageElement",
+      "isAccessibleForFree": "false",
+      "cssSelector": ".paywall"
+    },
+    "isPartOf": {
+      "@type": [
+        "CreativeWork",
+        "Product"
+      ],
+      "name": "Valor",
+      "productID": "valor.globo.com:basic"
     }
   }
 ]

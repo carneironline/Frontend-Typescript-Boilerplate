@@ -4,35 +4,48 @@ export default class Swg {
     constructor() {
         window.SWG = window.SWG || [] // TODO: Understand why this variable exists
         window.swgEntitlements = window.swgEntitlements || null
-        this.debug = Helpers.isDefined(window.tinyCpt)
-            ? window.tinyCpt.debug.swg
-            : false
+        this.debug = Helpers.isDefined(window.tinyCpnt) ? window.tinyCpnt.debug.swg : false
         this.disabled = false
         this.content = null
-        this.localProductPiano =
-            typeof window.nomeProdutoPiano !== 'undefined'
-                ? window.nomeProdutoPiano
-                : null
+        this.localProductPiano = window.tinyCpnt.Product.name
         this.hasProductJSON = false
         this.productJSON = null
         this.elHead = document.head
-        this.isValor =
-            window.location.host.includes('valor.qa.globoi.com') ||
-            window.location.host.includes('valor.globo.com') ||
-            false
 
         this.setGlobalSWG()
     }
 
+    async init() {
+        if (window.tinyCpnt.isProduction && !this.valorPageAllowed) return null
+        if (!this.localProductPiano) return null
+        await this.setMarkup()
+
+        if (!this.hasProductJSON) return null
+
+        await this.setSwgScript()
+        await this.setAldebaranScript()
+        await this.testSWG()
+    }
+
+    get valorPageAllowed() {
+        if (
+            window.location.pathname ===
+            '/publicacoes/suplementos/noticia/2020/06/29/hora-de-reforcar-o-caixa.ghtml'
+        )
+            return true
+
+        return false
+    }
+
     get isDefined() {
-        return !!window.tinyCpt.Swg.global
+        return !!window.tinyCpnt.Swg.global
     }
 
     setGlobalSWG() {
-        if (!Helpers.isDefined(window.tinyCpt)) return
+        if (!Helpers.isDefined(window.tinyCpnt)) return
 
-        window.tinyCpt.Swg = {
-            global: typeof swg !== 'undefined' ? swg : null,
+        window.tinyCpnt.Swg = {
+            global: typeof swg !== 'undefined' ? window.swg : null,
         }
     }
 
@@ -40,11 +53,9 @@ export default class Swg {
         const urlParams = new URLSearchParams(
             window.location.search.substring(1)
         )
-        const utmsProps =
-            typeof window.glbPaywall.swg !== 'undefined' &&
-            typeof window.glbPaywall.swg.utms !== 'undefined'
-                ? window.glbPaywall.swg.utms
-                : null
+        const utmsProps = window.glbPaywall?.swg?.utms
+            ? window.glbPaywall.swg.utms
+            : null
 
         utmsProps.forEach((item) => {
             const name = item.name.toLowerCase()
@@ -52,7 +63,7 @@ export default class Swg {
             urlParams.set(`utm_${name}`, value)
         })
 
-        if (window.tinyCpt.debug.swg) {
+        if (window.tinyCpnt.debug.swg) {
             console.log('log-method', 'setUtms')
             console.log('log-method-setUtms', utmsProps)
             console.log('log-method-setUtms', location)
@@ -60,13 +71,11 @@ export default class Swg {
 
         if (this.disabled || !this.isDefined || !utmsProps) return
 
-        window.tinyCpt.Swg.global.subscribe(
-            'br.com.infoglobo.oglobo.swg.google'
-        )
+        window.tinyCpnt.Swg.global.subscribe('br.com.infoglobo.oglobo.swg.google')
     }
 
     async getProducts() {
-        const url = window.tinyCpt.isProduction
+        const url = window.tinyCpnt.isProduction
             ? 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/swg/prod/products.json'
             : 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/swg/dev/products.json'
 
@@ -95,7 +104,7 @@ export default class Swg {
     }
 
     async markupTemplate() {
-        if (this.isValor) {
+        if (!this.valorPageAllowed) {
             this.hasProductJSON = true
             return
         }
@@ -134,7 +143,9 @@ export default class Swg {
 
     setAldebaranScript() {
         const element = document.createElement('script')
-        const url = process.env.ALDEBARAN_URL
+        const url = this.valorPageAllowed
+            ? 'https://s3.glbimg.com/v1/AUTH_addc5e8f316f48ea9181af37160b22b4/aldebaran/js/bundle.js'
+            : process.env.ALDEBARAN_URL
 
         element.src = url
         this.elHead.insertAdjacentElement('beforeend', element)
@@ -146,8 +157,8 @@ export default class Swg {
 
             const interval = setInterval(() => {
                 if (window.swg) {
-                    window.tinyCpt.Swg.global = window.swg
-                    resolve(window.tinyCpt.Swg.global)
+                    window.tinyCpnt.Swg.global = window.swg
+                    resolve(window.tinyCpnt.Swg.global)
                     clearInterval(interval)
                 }
 
@@ -161,15 +172,4 @@ export default class Swg {
         })
     }
 
-    async init() {
-        if(window.tinyCpt.isProduction && this.isValor) return
-        if (!this.localProductPiano) return
-        await this.setMarkup()
-
-        if (!this.hasProductJSON) return 
-
-        await this.setSwgScript()
-        await this.setAldebaranScript() 
-        await this.testSWG()
-    }
 }

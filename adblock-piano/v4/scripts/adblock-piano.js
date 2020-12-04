@@ -1,4 +1,4 @@
-;(function () {
+; (function () {
     const bodyEl = document.querySelector('body')
     window.dataLayer = window.dataLayer || []
 
@@ -141,7 +141,7 @@
     function setLoadGa() {
         const evtAction = 'Adblock ativado'
         const evtName = 'EventoGAPiano'
-        const evtLabel = window.Piano ? Piano.metricas.montaRotuloGA() : ''
+        const evtLabel = window.Piano ? `Adblock ${Piano.metricas.montaRotuloGA()}` : ''
 
         setGa(evtName, 'Piano', evtAction, evtLabel)
     }
