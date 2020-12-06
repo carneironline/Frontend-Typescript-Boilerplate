@@ -105,7 +105,7 @@ export default {
         'isOidcLogin': true
     },
     'valor': {
-        'id': '6668',
+        'id': '6608',
         'cod_prod': 'valordigital',
         'isOidcLogin': true
     },
