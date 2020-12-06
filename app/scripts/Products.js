@@ -116,7 +116,7 @@ export default class Products {
         let str = ''
 
         if (this.serviceId)
-            str = `${this.loginDomain}logout?url=${this.getOidcLoginUrl}`
+            str = `${this.loginDomain}logout?url=${this.getOidcLoginUrl()}`
 
         return str
     }
