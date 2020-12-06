@@ -18,7 +18,7 @@
     </style>
 
     <script>
-        window.nomeProdutoPiano = 'valor';
+        window.nomeProdutoPiano = 'oglobo';
         window.tipoConteudoPiano = 'materia';
         window.ambienteUtilizadoPiano = 'dev';
 
@@ -64,9 +64,9 @@
             middleTextLink: '//google.com',
             swg: {
                 utms: [
-                    { name: 'Campanha', value: 'register_swg' },
-                    { name: 'Midia', value: 'barreiraPaywall' },
-                    { name: 'Origem', value: 'siteoglobo' }
+                { name: 'Campanha', value: 'register_swg' },
+                { name: 'Midia', value: 'barreiraPaywall' },
+                { name: 'Origem', value: 'siteoglobo' }
                 ]
             },
             barberBarrier: {
@@ -90,6 +90,9 @@
                 label: 'adblock - deslogado 90 - oferta - {Campanha}'
             }
         };
+
+        "use strict"; !function () { for (var t, e; !(t = window.document.getElementsByTagName("head")[0]);)window.document.getElementsByTagName("html")[0].appendChild(window.document.createElement("head")); "function" != typeof window.document.querySelectorAll && ((e = window.document.createElement("script")).type = "text/javascript", e.charset = "utf-8", e.setAttribute("crossorigin", "anonymous"), e.async = !0, e.src = (window.document.location.protocol || "http:") + "//api.deep.bi/v3/sizzle.js", t.appendChild(e)), (e = window.document.createElement("script")).type = "text/javascript", e.charset = "utf-8", e.setAttribute("crossorigin", "anonymous"), e.async = !0, e.src = (window.document.location.protocol || "http:") + "//api.deep.bi/v3/init.js", t.appendChild(e) }();
+
 
     </script>
 </head>
@@ -127,11 +130,11 @@
     <h3>Teste Componente SubscribeButton</h3>
     <div>
         <a class="subscribe-button subscribe-button-cpnt" data-subscribe-button-name='subscribe-button-one'
-            href="https://assinaturaglobo.globo.com/crescer/vitrine/crescer/?campanha=sim&amp;utm_source=sitecrescer&amp;utm_medium=botao&amp;utm_campaign=eg_cf_botao_topo_190-3meses"
-            title="Assine" rel="noopener" target="_blank">Assine</a>
+        href="https://assinaturaglobo.globo.com/crescer/vitrine/crescer/?campanha=sim&amp;utm_source=sitecrescer&amp;utm_medium=botao&amp;utm_campaign=eg_cf_botao_topo_190-3meses"
+        title="Assine" rel="noopener" target="_blank">Assine</a>
         <a href="https://assinaturaglobo.globo.com/crescer/vitrine/crescer/?campanha=sim&amp;utm_source=sitecrescer&amp;utm_medium=botao&amp;utm_campaign=eg_cf_botao_rodape_190-3meses"
-            title="Assine a revista" class="subscribe-magazine subscribe-button-cpnt"
-            data-subscribe-button-name='subscribe-button-two' rel="noopener" target="_blank">Assine a revista</a>
+        title="Assine a revista" class="subscribe-magazine subscribe-button-cpnt"
+        data-subscribe-button-name='subscribe-button-two' rel="noopener" target="_blank">Assine a revista</a>
     </div>
 
 
@@ -167,7 +170,7 @@
             buttonElement.innerHTML = buttonElement.dataset.close
 
             if (hiddenContentElement)
-                hiddenContentElement.classList.remove('hidden-content')
+            hiddenContentElement.classList.remove('hidden-content')
         })
     </script>
 
