@@ -25,17 +25,29 @@ export default class Helpers {
     }
     
 
-    static consoleColor(type = 'info') {
+    static consoleColor(type = 'default') {
         let colorBg = '#1e4c9a'
         let colorText = '#fff'
 
         switch(type) {
             case 'error':  colorBg = '#f00'; break;
             case 'warning':  colorBg = '#ff0'; colorText = '#000'; break;
+            case 'ga':  colorBg = '#06aa48'; colorText = '#000'; break;
+            case 'ga-error':  colorBg = '#f00'; colorText = '#fff'; break;
         }
 
         return {
-            header: `background: ${colorBg}; color: ${colorText}; font-weight:bold; font-size:14px; padding:2px;`
+            header: `background: ${colorBg}; color: ${colorText}; font-weight:bold; font-size:14px; padding:2px; margin-right:5px;`,
+            title: `background: ${colorBg}; color: ${colorText}; font-weight:bold; font-size:14px; padding:2px;`,
         }
+    }
+
+    static console(text = '', title = '', type = 'default') {
+        switch(type) {
+            case 'ga': title = 'log-ga-event'; break;
+            case 'ga-error': title = 'log-ga-event-error'; break;
+        }
+
+        console.log(`%c %c${title} `, Helpers.consoleColor().header, Helpers.consoleColor(type).title, text)
     }
 }
