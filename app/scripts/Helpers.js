@@ -24,6 +24,9 @@ export default class Helpers {
         this.setCookie(name, '', -1)
     }
     
+    static getQuery(query) {
+        return new URLSearchParams(document.location.search).get(query)
+    }
 
     static consoleColor(type = 'default') {
         let colorBg = '#1e4c9a'
