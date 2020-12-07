@@ -27,7 +27,9 @@ export default class GA {
     }
 
     setEvents(calledBy = '', action, label, category = 'Piano', eventName = 'EventoGAPiano') {
-        console.log(`%c log-ga-event `, Helper.consoleColor().header, `calledBy: ${calledBy} | action: ${action} | label: ${label} | category: ${category} | event: ${eventName}`)
+
+        const consoleText = `calledBy: ${calledBy} | action: ${action} | label: ${label} | category: ${category} | event: ${eventName}`
+        Helper.console(consoleText, '', 'ga')
 
         if (this.hasGaq())
             window._gaq.push(['_trackEvent', category, action, label, null, true])
@@ -41,7 +43,8 @@ export default class GA {
     }
 
     setEventsError(calledBy = '', action, label, category = 'Piano Erro', eventName = 'EventoGAPiano') {
-        console.log('%c log-ga-error-event ', Helper.consoleColor('error').header, `calledBy: ${calledBy} | action: ${action} | label: ${label} | category: ${category} | event: ${eventName}`)
+        const consoleText = `calledBy: ${calledBy} | action: ${action} | label: ${label} | category: ${category} | event: ${eventName}`
+        Helper.console(consoleText, '', 'ga-error')
 
         if (this.hasGaq())
             window._gaq.push(['_trackEvent', category, action, label, null, true])
