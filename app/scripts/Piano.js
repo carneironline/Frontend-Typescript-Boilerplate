@@ -41,8 +41,6 @@ export default class Piano {
     }
 
     get vars() {
-        const self = this
-
         return {
             ambientesAceitos: 'int,qlt,prd',
             statusHttpObterAutorizacaoAcesso: '400,404,406,500,502,503,504',
@@ -251,7 +249,7 @@ export default class Piano {
                     function isDone() {
                         return typeof isPrivate !== 'undefined'
                     },
-                    function next(isTimeout) {
+                    function next() {
                         callback(isPrivate)
                     }
                 )
