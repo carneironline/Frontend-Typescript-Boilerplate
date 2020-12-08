@@ -21,6 +21,7 @@ export default class LoginHelper {
     static setCookie(value) {
         if (!this.getCookie(SESSION_ID)){
             Helpers.setCookie(SESSION_ID, value, 28)
+            this.removeQueryFromUrl()
         }
     }
 
@@ -28,9 +29,20 @@ export default class LoginHelper {
         return Helpers.getCookie(name)
     }
 
+    static removeQueryFromUrl(){ 
+        const urlParts = window.location.href.split('?')
+        const urlParams = new URLSearchParams(window.location.search)
+
+        urlParams.delete(SESSION_ID)
+        urlParams.delete(GLBID)
+
+        const newUrl = `${urlParts[0]}?${urlParams.toString()}`
+        window.history.pushState('object', document.title, newUrl);
+    }
+
     static logout(){
         const sessionId = Helpers.getCookie(SESSION_ID)
-        console.log("Logout Function")
+        
         if (sessionId){
             Helpers.deleteCookie(GLBID)
             Helpers.deleteCookie(SESSION_ID)
@@ -41,7 +53,7 @@ export default class LoginHelper {
             urlParams.delete(SESSION_ID)
             urlParams.delete(GLBID)
     
-            const newUrl = `${urlParts[0]  }?${  urlParams.toString()}`
+            const newUrl = `${urlParts[0]}?${urlParams.toString()}`
             
             window.location = newUrl
     
