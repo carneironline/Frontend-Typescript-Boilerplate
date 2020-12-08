@@ -21,7 +21,7 @@ export default class LoginHelper {
     static setCookie(value) {
         if (!this.getCookie(SESSION_ID)){
             Helpers.setCookie(SESSION_ID, value, 28)
-            this.removeQueryFromUrl()
+            // this.removeQueryFromUrl()
         }
     }
 
