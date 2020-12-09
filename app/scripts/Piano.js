@@ -738,7 +738,7 @@ export default class Piano {
                     const glbid = Helpers.getCookie(window.Piano.variaveis.constante.cookie.GCOM) 
                     || Helpers.getQuery('GLBID') 
                     || Helpers.getQuery('glbid') 
-                    || null
+                    || ''
 
                     await window.Piano.autenticacao.verificaUsuarioLogadoNoBarramento(
                         glbid,
