@@ -539,7 +539,7 @@ window.Piano.xmlHttpRequest = {
         return accessToken;
     },
     getUrlForOidcService(requestType){
-        const sessionId = LoginHelper.getSessionId()
+        const sessionId = LoginHelper.getCookie()
 
         const oidcUrl = Products.getOidcLoginDomainUrl()
         
@@ -764,7 +764,7 @@ window.Piano.autenticacao = {
         return glbid !== ''
     },
     async verificaUsuarioLogadoNoBarramento(glbid, utp) {
-        const sessionId = LoginHelper.getSessionId()
+        const sessionId = LoginHelper.getCookie()
         const {isOidcLogin} = Products
 
         if (sessionId && isOidcLogin){

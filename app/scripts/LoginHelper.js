@@ -19,14 +19,14 @@ export default class LoginHelper {
     }
 
     static setCookie(value) {
-        if (!this.getCookie(SESSION_ID)){
+        if (!this.getCookie()){
             Helpers.setCookie(SESSION_ID, value, 28)
-            // this.removeQueryFromUrl()
+            this.removeQueryFromUrl()
         }
     }
 
-    static getCookie(name){
-        return Helpers.getCookie(name)
+    static getCookie(){
+        return Helpers.getCookie(SESSION_ID)
     }
 
     static removeQueryFromUrl(){ 
@@ -54,11 +54,9 @@ export default class LoginHelper {
             urlParams.delete(GLBID)
     
             const newUrl = `${urlParts[0]}?${urlParams.toString()}`
-            
-            window.location = newUrl
-    
+                
             const logoutUrl = Products.getLogoutUrl()
-            window.location = `${logoutUrl}?url=${newUrl}`
+            window.location.href = `${logoutUrl}?url=${newUrl}`
         }
     }
 }
