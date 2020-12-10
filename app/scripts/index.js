@@ -504,15 +504,6 @@ window.Piano.xmlHttpRequest = {
     async verificarAutorizacaoDeAcesso(){      
 
         let accessToken = await this.getAccessToken()
-        
-        if (!accessToken){
-            accessToken = await this.getRefreshedAccessToken()
-        }
-
-        if (!accessToken){
-            console.log("Logout -> Undefined Access Token")
-            LoginHelper.logout()
-        }
 
         let requestComFalha = await this.fazRequisicaoBarramentoApiAutorizacaoAcessoV4(accessToken)
 
@@ -555,8 +546,8 @@ window.Piano.xmlHttpRequest = {
         })
         .then((response) => response.json())
         .catch((err) => {
-            console.log(err);
-            return undefined;
+            console.error(`Could not get access token. Err: ${err}`)
+            LoginHelper.logout()
         })
 
         return accessToken;
@@ -597,6 +588,10 @@ window.Piano.xmlHttpRequest = {
                 let respostaDeMotivo = ''
                 let hrefAssinaturaInadimplente = ''
                 let _jsonLeitorAux = {}
+
+                if (typeof respJson.motivo !== 'undefined' && typeof respJson.motivo === 'NAO_AUTENTICADO_GLOBO_ID') {
+                    requestComFalha = true
+                }
 
                 if (typeof respJson.motivo !== 'undefined') {
                     respostaDeMotivo = respJson.motivo.toLowerCase()
@@ -679,7 +674,7 @@ window.Piano.xmlHttpRequest = {
                     'API de autorizacao de acesso',
                     `${xhr.status} - ${accessToken}`,
                 )
-                requestComFalha = false
+                requestComFalha = true
                 window.Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, ' ')
             })
 
