@@ -822,7 +822,7 @@ if(!isAppIos) {
             }
         },
         isAutorizado(termoDeUso, motivo, autorizado, hrefAssinaturaInadimplente) {
-            if (autorizado || motivo === 'indisponivel' || termoDeUso !== false) {
+            if (autorizado || motivo === 'contingencia' || termoDeUso !== false) {
                 if (autorizado && hrefAssinaturaInadimplente)
                     window.Piano.xmlHttpRequest.fazRequisicaoBarramentoApiObterAssinaturaInadimplente(
                         hrefAssinaturaInadimplente
