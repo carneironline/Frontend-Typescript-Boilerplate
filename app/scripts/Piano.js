@@ -1,5 +1,5 @@
 import Helpers from './Helpers'
-import DeepBI from './DeepBI'
+// import DeepBI from './DeepBI'
 
 export default class Piano {
     constructor() {
@@ -755,7 +755,7 @@ export default class Piano {
 
                 window.Piano.regionalizacao.getRegion()
                 window.Piano.krux.obtemSegmentacao()
-                DeepBI.setSegmentation()
+                // DeepBI.setSegmentation()
 
                 window.tp.push(['setCustomVariable', 'bannerContadorLigado', true])
                 window.Piano.util.isOrigemBuscador() || window.Piano.util.extraiParametrosCampanhaDaUrl()
