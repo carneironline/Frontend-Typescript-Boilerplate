@@ -115,8 +115,10 @@ export default class Products {
     getOidcLogoutUrl() {
         let str = ''
 
-        if (this.serviceId)
-            str = `${this.loginDomain}logout?url=${this.getOidcLoginUrl()}`
+        if (this.serviceId){
+            const encodedUrl = encodeURIComponent(`${this.getOidcLoginUrl()}`)     
+            str = `${this.loginDomain}logout?url=${encodedUrl}`
+        }
 
         return str
     }
