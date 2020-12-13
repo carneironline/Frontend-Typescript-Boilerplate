@@ -748,7 +748,6 @@ export default class Piano {
 
                 window.Piano.regionalizacao.getRegion()
                 window.Piano.krux.obtemSegmentacao()
-                DeepBI.setSegmentation()
 
                 window.tp.push(['setCustomVariable', 'bannerContadorLigado', true])
                 window.Piano.util.isOrigemBuscador() || window.Piano.util.extraiParametrosCampanhaDaUrl()
@@ -784,21 +783,22 @@ export default class Piano {
             Helpers.setCookie(this.content.variaveis.constante.cookie.UTP, '', -1)
     }
 
-    static loadPianoExperiences() {
-        const a = document.createElement('script')
-        a.type = 'text/javascript'
-        a.async = true
+    static loadPianoExperiences() { 
+        DeepBI.setSegmentations(() => {
+            const a = document.createElement('script')
+            const b = document.getElementsByTagName('script')[0]
+            let sandboxUrl = window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].urlSandboxPiano
 
-        if (window.Piano.util.isRevista() || window.Piano.util.isValor()) {
-            a.src = window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].urlSandboxPianoRevistas
-        } else {
-            a.src =
-                window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].urlSandboxPiano
-        }
+            a.type = 'text/javascript'
+            a.async = true
 
-        const b = document.getElementsByTagName('script')[0]
+            if (window.Piano.util.isRevista() || window.Piano.util.isValor()) 
+                sandboxUrl = window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].urlSandboxPianoRevistas
+    
+            a.src = sandboxUrl
 
-        b.parentNode.insertBefore(a, b)
+            b.parentNode.insertBefore(a, b)
+        })
     }
 
     checkPaywall(PianoResultEvents = null) {
