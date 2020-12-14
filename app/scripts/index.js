@@ -22,9 +22,9 @@ const isAppIos = window.navigator.userAgent?.toLocaleLowerCase()?.includes('ipho
 const isValor = window.nomeProdutoPiano === 'valor'
 
 
-if(!isAppIos && !isValor ) {
+if(isAppIos && isValor ) false
 
-
+ else {
     console.table(process.env)
 
     LoginHelper.createSessionIdCookie()
@@ -895,5 +895,4 @@ if(!isAppIos && !isValor ) {
     }
 
     tinyInit()
-
-}
+ }
