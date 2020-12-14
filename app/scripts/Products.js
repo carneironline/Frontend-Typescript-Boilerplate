@@ -32,6 +32,13 @@ export default class Products {
         return productsId[this.name].cod_prod
     }
 
+    get isOidcLogin() {
+        return typeof productsId[this.name] !== 'undefined' &&
+            typeof productsId[this.name].isOidcLogin !== 'undefined'
+            ? productsId[this.name].isOidcLogin
+            : false
+    }
+
     get loginDomain() {
         const loginDomain = window.tinyCpnt.isProduction
             ? 'https://login.globo.com/'
@@ -39,6 +46,15 @@ export default class Products {
 
         return loginDomain
     }
+
+    get oidcLoginDomain(){
+        const oidcLoginDomain = window.tinyCpnt.isProduction
+            ? 'https://www.oidcservice.globo.com/'
+            : 'https://www.oidcservice-qa.globoi.com/'
+
+        return oidcLoginDomain
+    }
+
 
     get serviceId() {
         return productsId[this.name].id
@@ -49,6 +65,13 @@ export default class Products {
     }
 
     getLoginUrl() {
+        if (this.isOidcLogin) {
+            return this.getOidcLoginUrl()
+        }
+        return this.getOldLoginUrl()
+    }
+
+    getOldLoginUrl() {
         let str = ''
 
         if (this.serviceId) {
@@ -56,6 +79,20 @@ export default class Products {
         }
 
         return str
+    }
+
+    getOidcLoginUrl() {
+        let str = ''
+
+        if (this.serviceId) {
+            str = `${this.oidcLoginDomain}login?productName=${this.name}&redirectTo=${this.returnUrl}&oldServiceId=${this.serviceId}`
+        }
+
+        return str
+    }
+
+    getOidcLoginDomainUrl() {
+        return this.oidcLoginDomain
     }
 
     getRegisterUrl() {
@@ -69,6 +106,24 @@ export default class Products {
     }
 
     getLogoutUrl() {
+        if (this.isOidcLogin) {
+            return this.getOidcLogoutUrl()
+        }
+        return this.getOldLogoutUrl()
+    }
+
+    getOidcLogoutUrl() {
+        let str = ''
+
+        if (this.serviceId){
+            const encodedUrl = encodeURIComponent(`${this.getOidcLoginUrl()}`)     
+            str = `${this.loginDomain}logout?url=${encodedUrl}`
+        }
+
+        return str
+    }
+
+    getOldLogoutUrl() {
         let str = ''
 
         if (this.serviceId)
