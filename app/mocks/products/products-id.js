@@ -67,7 +67,7 @@ export default {
     'globo-rural': {
         'id': '6621',
         'cod_prod': 'globo-rural',
-        'isOidcLogin': true
+        'isOidcLogin': false
     },
     'gq': {
         'id': '6622',
@@ -152,7 +152,7 @@ export default {
     'edigital-globo-rural': {
         'id': '6697',
         'cod_prod': 'globo-rural',
-        'isOidcLogin': true
+        'isOidcLogin': false
     },
     'edigital-gq': {
         'id': '6622',
