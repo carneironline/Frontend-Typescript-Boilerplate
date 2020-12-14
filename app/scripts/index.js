@@ -22,7 +22,7 @@ const isAppIos = window.navigator.userAgent?.toLocaleLowerCase()?.includes('ipho
 const isValor = window.nomeProdutoPiano === 'valor'
 
 
-if(!isAppIos && !isValor ) {
+if(isAppIos && !isValor ) {
 
 
     console.table(process.env)
