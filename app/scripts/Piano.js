@@ -1,10 +1,8 @@
 import Helpers from './Helpers'
-import GAModule from './GA'
-import DeepBI from './DeepBI'
+// import DeepBI from './DeepBI'
 
 export default class Piano {
     constructor() {
-        this.GA = new GAModule()
         this.debug = window.tinyCpnt.debug
         this.content = null
     }
@@ -44,8 +42,6 @@ export default class Piano {
     }
 
     get vars() {
-        const self = this
-
         return {
             ambientesAceitos: 'int,qlt,prd',
             statusHttpObterAutorizacaoAcesso: '400,404,406,500,502,503,504',
@@ -112,7 +108,7 @@ export default class Piano {
             },
             getNomeProduto() {
                 if (!window.nomeProdutoPiano) {
-                    self.GA.setEventsError(
+                    window.tinyCpnt.GA.setEventsError(
                         'getNomeProduto()',
                         'Nome do produto não definido.',
                         window.location.href,
@@ -126,7 +122,7 @@ export default class Piano {
                 const { id, name } = window.tinyCpnt.Product
 
                 if (!id) {
-                    self.GA.setEventsError(
+                    window.tinyCpnt.GA.setEventsError(
                         'getServicoId()',
                         'ServiceID não definido.',
                         `${document.location.href} nomeProduto: ${name}`,
@@ -141,7 +137,7 @@ export default class Piano {
                 const codProd = window.tinyCpnt.Product.code
 
                 if (!codProd) {
-                    self.GA.setEventsError(
+                    window.tinyCpnt.GA.setEventsError(
                         'getCodigoProduto()',
                         'Ao obter código do produto',
                         `${window.nomeProduto} - ${document.location.href}`,
@@ -254,7 +250,7 @@ export default class Piano {
                     function isDone() {
                         return typeof isPrivate !== 'undefined'
                     },
-                    function next(isTimeout) {
+                    function next() {
                         callback(isPrivate)
                     }
                 )
@@ -336,23 +332,21 @@ export default class Piano {
                 if (Helpers.getCookie(window.Piano.variaveis.constante.cookie.RTIEX)) {
                     passagem = regras.fluxo.indexOf('hardwall') !== -1 ? 'register-hardwall-passou' : 'register-contagem-passou'
 
-                    Helpers.setCookie(
-                        window.Piano.variaveis.constante.cookie.RTIEX,
-                        '',
-                        -1
-                    )
+                    Helpers.setCookie(window.Piano.variaveis.constante.cookie.RTIEX, '', -1)
                 }
 
                 return passagem
             },
             executaAposPageview(expirou) {
+                Helpers.console('', 'executaAposPageview')
+
                 if (!window.Piano.variaveis.executouPageview()) {
                     window.regrasTiny.fluxo = window.tpContext ? window.tpContext.toLowerCase() : '-'
                     window.regrasTiny.nomeExperiencia = window.nomeExperiencia ? window.nomeExperiencia : ''
                     window.Piano.metricas.setLimiteContagem(window.regrasTiny)
-
+                    
                     if (expirou === false)
-                        self.GA.setEvents(
+                        window.tinyCpnt.GA.setEvents(
                             'executaAposPageview',
                             window.Piano.metricas.identificarPassagemRegister(
                                 window.regrasTiny
@@ -377,7 +371,7 @@ export default class Piano {
             },
             temVariaveisObrigatorias() {
                 if (typeof window.Piano.variaveis.getTipoConteudoPiano() === 'undefined') {
-                    self.GA.setEventsError(
+                    window.tinyCpnt.GA.setEventsError(
                         'temVariaveisObrigatorias',
                         'Variavel tipoConteudoPiano nao esta definida',
                         document.location.href,
@@ -386,7 +380,7 @@ export default class Piano {
                     return false
                 }
                 if (typeof window.Piano.variaveis.getNomeProduto() === 'undefined') {
-                    self.GA.setEventsError(
+                    window.tinyCpnt.GA.setEventsError(
                         'temVariaveisObrigatorias',
                         'Variavel nomeProdutoPiano nao esta definida',
                         document.location.href,
@@ -487,11 +481,13 @@ export default class Piano {
             callbackMeter(meterData) {
                 window.regrasTiny = meterData
                 window.Piano.metricas.executaAposPageview(false)
+                Helpers.console(meterData, 'callbackMeter')
             },
             callbackMeterExpired(meterData) {
                 window.regrasTiny = meterData
                 window.Piano.variaveis.isCallbackMetterExpired = true
                 window.Piano.metricas.executaAposPageview(true)
+                Helpers.console(meterData, 'callbackMeterExpired')
             },
             getWindowLocationSearch() {
                 return window.location.search
@@ -654,6 +650,8 @@ export default class Piano {
                     urlSandboxPianoRevistas:
                         'https://sandbox.tinypass.com/xbuilder/experience/load?aid=MctFgRCEsu',
                     urlVerificaLeitor: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.tinyCpnt.Product.id}/autorizacao-acesso`,
+                    urlVerificaLeitorV4: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v4/autorizacao-acesso/${window.tinyCpnt.Product.id}/solicitacao-autorizacao`,
+                    urlOidcService: `https://www.oidcservice-qa.globoi.com/`,
                     urlDominioPaywall: 'https://assinatura.globostg.globoi.com/',
                     urlDominioSiteOGlobo: `${window.Piano.util.isDominioOGlobo()}/`,
                 },
@@ -666,6 +664,8 @@ export default class Piano {
                     urlSandboxPianoRevistas:
                         'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
                     urlVerificaLeitor: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.tinyCpnt.Product.id}/autorizacao-acesso`,
+                    urlVerificaLeitorV4: `https://apiqlt-ig.infoglobo.com.br/relacionamento/v4/autorizacao-acesso/${window.tinyCpnt.Product.id}/solicitacao-autorizacao`,
+                    urlOidcService: `https://www.oidcservice-qa.globoi.com/`,
                     urlDominioPaywall: 'https://assinatura.globostg.globoi.com/',
                     urlDominioSiteOGlobo: `${window.Piano.util.isDominioOGlobo()}/`,
                 },
@@ -678,6 +678,8 @@ export default class Piano {
                     urlSandboxPianoRevistas:
                         'https://experience.tinypass.com/xbuilder/experience/load?aid=VnaP3rYVKc',
                     urlVerificaLeitor: `https://api.infoglobo.com.br/relacionamento/v3/funcionalidade/${window.tinyCpnt.Product.id}/autorizacao-acesso`,
+                    urlVerificaLeitorV4: `https://api.infoglobo.com.br/relacionamento/v4/autorizacao-acesso/${window.tinyCpnt.Product.id}/solicitacao-autorizacao`,
+                    urlOidcService: `https://www.oidcservice.globo.com/`,
                     urlDominioPaywall: 'https://assinatura.oglobo.globo.com/',
                     urlDominioSiteOGlobo: `${window.Piano.util.isDominioOGlobo()}/`,
                 },
@@ -692,7 +694,7 @@ export default class Piano {
 
                 Helpers.setCookie(window.Piano.variaveis.constante.cookie.UTP, '', -1)
 
-                self.GA.setEvents('window.Piano.helper.mostrarBarreira', 'Exibicao Register', window.Piano.metricas.montaRotuloGA())
+                window.tinyCpnt.GA.setEvents('window.Piano.helper.mostrarBarreira', 'Exibicao Register', window.Piano.metricas.montaRotuloGA())
 
                 Helpers.setCookie(window.Piano.variaveis.constante.cookie.RTIEX, true, 1)
             },
@@ -740,15 +742,19 @@ export default class Piano {
                     window.Piano.autenticacao.defineUsuarioPiano(true, 'autorizado', true, '')
 
                 } else {
+                    const glbid = Helpers.getCookie(window.Piano.variaveis.constante.cookie.GCOM) 
+                    || Helpers.getQuery('GLBID') 
+                    || Helpers.getQuery('glbid') 
+                    || ''
+
                     await window.Piano.autenticacao.verificaUsuarioLogadoNoBarramento(
-                        Helpers.getCookie(window.Piano.variaveis.constante.cookie.GCOM),
+                        glbid,
                         Helpers.getCookie(window.Piano.variaveis.constante.cookie.UTP)
                     )
                 }
 
                 window.Piano.regionalizacao.getRegion()
                 window.Piano.krux.obtemSegmentacao()
-
                 window.tp.push(['setCustomVariable', 'bannerContadorLigado', true])
                 window.Piano.util.isOrigemBuscador() || window.Piano.util.extraiParametrosCampanhaDaUrl()
                 window.tp.push(['addHandler', 'meterActive', window.Piano.util.callbackMeter,])
@@ -852,13 +858,13 @@ export default class Piano {
 
     triggerAdvertising() {
         window.hasPaywall = false
-        console.log('%c dispatchEvent clearForAds ', Helpers.consoleColor().header)
+        Helpers.console('DispatchEvent clearForAds', 'triggerAdvertising')
         const event = new CustomEvent('clearForAds')
         document.dispatchEvent(event)
     }
 
     triggerPaywallOpened() {
-        console.log('%c dispatchEvent blockForAds ', Helpers.consoleColor().header)
+        Helpers.console('DispatchEvent blockForAds', 'triggerPaywallOpened')
         const event = new CustomEvent('blockForAds')
         document.dispatchEvent(event)
     }

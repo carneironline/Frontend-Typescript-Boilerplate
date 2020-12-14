@@ -13,12 +13,12 @@ export default class PaywallGAModule {
     }
 
     paywallLoad() {
-        if (!window.Piano) return
+        if (!window.Piano || !window.glbPaywall?.ga?.label) return
 
         window.tinyCpnt.GA.setEvents(
-            'PaywallGAModule',
+            'PaywallCpnt',
             this.metrics.paywall.viewName,
-            window.Piano.experience.name,
+            window.glbPaywall.ga.label,
         )
 
         Helpers.setCookie(window.Piano.variaveis.constante.cookie.RTIEX, true, 1)
