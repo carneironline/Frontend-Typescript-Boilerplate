@@ -55,8 +55,8 @@ export default class LoginHelper {
     
             const newUrl = `${urlParts[0]}?${urlParams.toString()}`
                 
-            const logoutUrl = Products.getLogoutUrl()
-            window.location.href = `${logoutUrl}?url=${newUrl}`
+            const logoutUrl = Products.getLogoutUrlWithRedirectTo(newUrl)
+            window.location.href = `${logoutUrl}`
         }
     }
 }
