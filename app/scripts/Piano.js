@@ -1,6 +1,6 @@
 import Helpers from './Helpers'
-import GAModule from './GA'
 import DeepBI from './DeepBI'
+import GAModule from './GA'
 
 export default class Piano {
     constructor() {
@@ -783,7 +783,7 @@ export default class Piano {
             Helpers.setCookie(this.content.variaveis.constante.cookie.UTP, '', -1)
     }
 
-    static loadPianoExperiences() { 
+    static loadPianoExperiences() {
         DeepBI.setSegmentations(() => {
             const a = document.createElement('script')
             const b = document.getElementsByTagName('script')[0]
@@ -792,9 +792,9 @@ export default class Piano {
             a.type = 'text/javascript'
             a.async = true
 
-            if (window.Piano.util.isRevista() || window.Piano.util.isValor()) 
+            if (window.Piano.util.isRevista() || window.Piano.util.isValor())
                 sandboxUrl = window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].urlSandboxPianoRevistas
-    
+
             a.src = sandboxUrl
 
             b.parentNode.insertBefore(a, b)
