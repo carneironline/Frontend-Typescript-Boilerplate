@@ -1,33 +1,33 @@
 function MetricasBuilder() {
 
-    var nomeExperiencia = undefined;
-    var views = undefined;
-    var maxViews = undefined;
-    var fluxo = undefined;
+    let nomeExperiencia;
+    let views;
+    let maxViews;
+    let fluxo;
 
-    var clazz = {
+    const clazz = {
 
-        setNomeExperiencia: function (valor) {
+        setNomeExperiencia (valor) {
             nomeExperiencia = valor;
             return this;
         },
 
-        setViews: function (valor) {
+        setViews (valor) {
             views = valor;
             return this;
         },
 
-        setMaxViews: function (valor) {
+        setMaxViews (valor) {
             maxViews = valor;
             return this;
         },
 
-        setFluxo: function (valor) {
+        setFluxo (valor) {
             fluxo = valor;
             return this;
         },
 
-        build: function () {
+        build () {
             return { nomeExperiencia, views, maxViews, fluxo };
         }
 
