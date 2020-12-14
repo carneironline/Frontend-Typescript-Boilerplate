@@ -112,6 +112,10 @@ export default class Products {
         return this.getOldLogoutUrl()
     }
 
+    getLogoutUrlWithRedirectTo(redirectTo) {
+        return `${this.loginDomain}logout?url=${redirectTo}`
+    }
+
     getOidcLogoutUrl() {
         let str = ''
 
