@@ -121,7 +121,7 @@ export default class Products {
 
         if (this.serviceId){
             const encodedUrl = encodeURIComponent(`${this.getOidcLoginUrl()}`)     
-            str = `${this.loginDomain}logout?url=${encodedUrl}`
+            str = `${this.oidcLoginDomain}logout?redirectTo=${encodedUrl}`
         }
 
         return str

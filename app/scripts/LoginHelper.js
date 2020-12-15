@@ -2,6 +2,7 @@ import Helpers from './Helpers'
 import Products from './Products'
 
 const SESSION_ID = 'SESSION_ID'
+const FORCE_LOGOUT = 'forceLogout'
 const GLBID = 'GLBID'
 
 export default class LoginHelper {
@@ -14,7 +15,7 @@ export default class LoginHelper {
     }
 
     static getSessionId(){
-        const urlParams = new URLSearchParams(window.location.search);
+        const urlParams = new URLSearchParams(window.location.search)
         return urlParams.get(SESSION_ID)
     }
 
@@ -38,6 +39,15 @@ export default class LoginHelper {
         window.history.pushState('object', document.title, newUrl);
     }
 
+    static ifContainsForceLogoutParamLogout(){
+        const urlParams = new URLSearchParams(window.location.search)
+        const forceLogout = urlParams.get(FORCE_LOGOUT)
+
+        if (forceLogout === 'true'){
+            this.logout()
+        }
+    }
+
     static logout(){
         const sessionId = Helpers.getCookie(SESSION_ID)
         
@@ -50,6 +60,7 @@ export default class LoginHelper {
     
             urlParams.delete(SESSION_ID)
             urlParams.delete(GLBID)
+            urlParams.delete(FORCE_LOGOUT)
     
             const newUrl = `${urlParts[0]}?${urlParams.toString()}`
                 

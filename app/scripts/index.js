@@ -25,6 +25,7 @@ if(!isAppIos) {
     console.table(process.env)
 
     LoginHelper.createSessionIdCookie()
+    LoginHelper.ifContainsForceLogoutParamLogout()
 
     const Products = new ProductsModule()
     const Tiny = new TinyModule()
