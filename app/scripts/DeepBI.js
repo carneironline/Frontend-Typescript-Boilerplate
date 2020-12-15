@@ -11,22 +11,24 @@ export default class DeepBI {
           return null
       }
 
-        const interval = setInterval(() => { 
+        const interval = setInterval(() => {
                 if (window.deepTracker?.scoringManager) {
                     DeepBI.setDeepOptions()
                     clearInterval(interval);
 
                       window.deepTracker.getScore({type: "profile"}).then(function(score) {
-                        if (!(Object.entries(score).length === 0)) {
-                            console.log("entries")
-                            const atribute = Object.keys(score)
-                            const value = Object.values(score)
+                          const obj = score ? score : {}
+
+                          if (!(Object.entries(obj).length === 0))  {
+                                const atribute = Object.keys(score)
+                                const value = Object.values(score)
 
                             for (let i = 0; i < Object.entries(score).length; i++) {
                                 window.tp.push(['setCustomVariable', atribute[i], value[i].toString(),])
                             }
                         } else {
-                          console.log('rfv call failed');
+                            console.log('rfv call failed');
+                            window.tp.push(['setCustomVariable', 'JanelaAnonima', true,])
                         }
 
                         if(callback)
