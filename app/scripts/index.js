@@ -19,19 +19,22 @@ import AdblockCpnt from '../components/AdblockCpnt'
 
 // TODO | Paleativo para problema de barreira no App Ios
 const isAppIos = window.navigator.userAgent?.toLocaleLowerCase()?.includes('iphone')
+const isValor = window.nomeProdutoPiano === 'valor'
 
-if(!isAppIos) {
+
+if(isAppIos && isValor ) false
+
+ else {
 
     console.table(process.env)
 
     LoginHelper.createSessionIdCookie()
 
-    const Products = new ProductsModule() 
-    const Tiny = new TinyModule() 
-    const PianoModule = new PianoClass()  
-    const GA = new GAModule()  
-    const Krux = new KruxModule()  
-
+    const Products = new ProductsModule()
+    const Tiny = new TinyModule()
+    const PianoModule = new PianoClass()
+    const GA = new GAModule()
+    const Krux = new KruxModule()
     const Adblock = new AdblockCpnt()
 
     Products.init()
@@ -181,6 +184,7 @@ if(!isAppIos) {
             )
             window.Piano.xmlHttpRequest.geraScriptNaPagina(
                 `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/register-piano/${versao}/scripts/nova-tela-register.js`
+
             )
             Helpers.setCookie(window.Piano.variaveis.constante.cookie.UTP, '', -1)
             GA.setEvents('window.Piano.register.mostrarBarreira', 'Exibicao Register', window.Piano.metricas.montaRotuloGA())
@@ -506,7 +510,7 @@ if(!isAppIos) {
                     window.Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, ' ')
                 })
         },
-        async verificarAutorizacaoDeAcesso(){      
+        async verificarAutorizacaoDeAcesso(){
 
             let accessToken = await this.getAccessToken()
 
@@ -538,7 +542,7 @@ if(!isAppIos) {
             const sessionId = LoginHelper.getCookie()
 
             const oidcUrl = Products.getOidcLoginDomainUrl()
-            
+
             return `${oidcUrl}${requestType}?sessionId=${sessionId}&productName=${window.Piano.variaveis.getNomeProduto()}`
         },
         async getToken(url){
@@ -586,9 +590,10 @@ if(!isAppIos) {
                     Accept: 'application/json',
                 },
             })
+
                 .then((response) => response.json())
                 .then((respJson) => {
-                    
+
                     let respostaDeTermoDeUso = ''
                     let respostaDeMotivo = ''
                     let hrefAssinaturaInadimplente = ''
@@ -684,7 +689,7 @@ if(!isAppIos) {
                 })
 
             return requestComFalha
-        },
+        }
     }
 
     window.Piano.google = {
@@ -712,7 +717,6 @@ if(!isAppIos) {
                 if (window.Piano.util.isValor()) {
                     const valorBusiness = new ValorBusiness();
                     valorBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements);
-
                 } else {
                     const oGloboBusiness = new OGloboBusiness()
                     oGloboBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements)
@@ -740,8 +744,6 @@ if(!isAppIos) {
             return false
         },
     }
-
-    window.Piano.resetUtp = PianoModule.resetUtp
 
     window.Piano.autenticacao = {
         isLogadoCadun(glbid, utp) {
@@ -815,7 +817,7 @@ if(!isAppIos) {
                         -1
                     )
                 }
-                
+
                 await window.Piano.xmlHttpRequest.fazRequisicaoBarramentoApiAutorizacaoAcesso(
                     glbid
                 )
@@ -895,4 +897,4 @@ if(!isAppIos) {
     }
 
     tinyInit()
-}
+ }

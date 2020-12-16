@@ -19,10 +19,8 @@ export default class LoginHelper {
     }
 
     static setCookie(value) {
-        if (!this.getCookie()){
-            Helpers.setCookie(SESSION_ID, value, 28)
-            this.removeQueryFromUrl()
-        }
+        Helpers.setCookie(SESSION_ID, value, 28)
+        this.removeQueryFromUrl()
     }
 
     static getCookie(){
@@ -55,8 +53,8 @@ export default class LoginHelper {
     
             const newUrl = `${urlParts[0]}?${urlParams.toString()}`
                 
-            const logoutUrl = Products.getLogoutUrl()
-            window.location.href = `${logoutUrl}?url=${newUrl}`
+            const logoutUrl = Products.getLogoutUrlWithRedirectTo(newUrl)
+            window.location.href = `${logoutUrl}`
         }
     }
 }

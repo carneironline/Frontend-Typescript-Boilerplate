@@ -743,6 +743,7 @@ export default class Piano {
                     window.Piano.autenticacao.defineUsuarioPiano(true, 'autorizado', true, '')
 
                 } else {
+
                     const glbid = Helpers.getCookie(window.Piano.variaveis.constante.cookie.GCOM)
                     || Helpers.getQuery('GLBID')
                     || Helpers.getQuery('glbid')
