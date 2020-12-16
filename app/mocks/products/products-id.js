@@ -2,7 +2,7 @@ export default {
     'oglobo': {
         'id': '3981',
         'cod_prod': 'OG03',
-        'isOidcLogin': true
+        'isOidcLogin': false
     },
     'blogs': {
         'id': '3981',
