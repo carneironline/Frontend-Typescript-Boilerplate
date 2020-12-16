@@ -4,6 +4,11 @@ export default {
         'cod_prod': 'OG03',
         'isOidcLogin': false
     },
+    'rio-gastronomia': {
+        'id': '3981',
+        'cod_prod': 'OG03',
+        'isOidcLogin': false
+    },
     'blogs': {
         'id': '3981',
         'cod_prod': 'OG03',
@@ -28,7 +33,7 @@ export default {
         'id': '3981',
         'cod_prod': 'OG01',
         'isOidcLogin': false
-    },    
+    },
     'monet': {
         'id': '6618',
         'cod_prod': 'monet',
@@ -113,7 +118,7 @@ export default {
         'id': '5415',
         'cod_prod': 'oglobo-clube',
         'isOidcLogin': false
-    },        
+    },
     'edigital-monet': {
         'id': '6618',
         'cod_prod': 'monet',
