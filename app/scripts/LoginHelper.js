@@ -1,10 +1,10 @@
-import AdblockCpntTemplates from '../components/AdblockCpnt/templates'
 import Helpers from './Helpers'
 
 const SESSION_ID = 'SESSION_ID'
 const ACCESS_TOKEN = 'ACCESS_TOKEN'
 const FORCE_LOGOUT = 'forceLogout'
 const GLBID = 'GLBID'
+const GLOBO_ID = 'GLOBO_ID'
 
 const ACCESS_TOKEN_PARAMETER = 'globo_id_token'
 
@@ -40,7 +40,6 @@ export default class LoginHelper {
     }
 
     static setAcessCookie(value) {
-        console.log(value)
         Helpers.setCookie(ACCESS_TOKEN, value, 1)
         this.removeQueryFromUrl()
     }
@@ -74,11 +73,19 @@ export default class LoginHelper {
         }
     }
 
+    static ifDoesNotContainsGLOBOIDCookieLogout(){
+        const globoid = Helpers.getCookie(GLOBO_ID);
+        if (!globoid){
+            this.logout()
+        }
+    }
+
     static logout(){
         const sessionId = Helpers.getCookie(SESSION_ID)
         if (sessionId){
             Helpers.deleteCookie(GLBID)
             Helpers.deleteCookie(SESSION_ID)
+            Helpers.deleteCookie(GLOBO_ID)
     
             const urlParts = window.location.href.split('?')
             const urlParams = new URLSearchParams(window.location.search)
