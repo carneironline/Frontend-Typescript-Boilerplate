@@ -1,4 +1,6 @@
 import productsId from '../mocks/products/products-id'
+import LoginHelper from './LoginHelper'
+
 
 export default class Products {
     constructor() {
@@ -121,7 +123,7 @@ export default class Products {
 
         if (this.serviceId){
             const encodedUrl = encodeURIComponent(`${this.getOidcLoginUrl()}`)     
-            str = `${this.oidcLoginDomain}logout?redirectTo=${encodedUrl}`
+            str = `${this.oidcLoginDomain}logout?redirectTo=${encodedUrl}&sessionId=${LoginHelper.getCookie()}`
         }
 
         return str
