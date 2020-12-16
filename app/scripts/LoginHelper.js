@@ -6,7 +6,7 @@ const FORCE_LOGOUT = 'forceLogout'
 const GLBID = 'GLBID'
 const GLOBO_ID = 'GLOBO_ID'
 
-const ACCESS_TOKEN_PARAMETER = 'globo_id_token'
+const ACCESS_TOKEN_PARAMETER = 'globo_access_token'
 
 export default class LoginHelper {
 
