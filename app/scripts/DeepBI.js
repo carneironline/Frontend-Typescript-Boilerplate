@@ -28,7 +28,7 @@ export default class DeepBI {
                             }
                         } else {
                             console.log('rfv call failed');
-                            window.tp.push(['setCustomVariable', 'JanelaAnonima', true,])
+                            window.tp.push(['setCustomVariable', 'UserWithNoScore', true,])
                         }
 
                         if(callback)
