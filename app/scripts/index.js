@@ -25,6 +25,7 @@ const isValor = window.nomeProdutoPiano === 'valor'
 if(isAppIos && isValor ) false
 
  else {
+
     console.table(process.env)
 
     LoginHelper.createSessionIdCookie()
@@ -183,6 +184,7 @@ if(isAppIos && isValor ) false
             )
             window.Piano.xmlHttpRequest.geraScriptNaPagina(
                 `https://static${window.Piano.util.montaUrlStg()}.infoglobo.com.br/paywall/register-piano/${versao}/scripts/nova-tela-register.js`
+
             )
             Helpers.setCookie(window.Piano.variaveis.constante.cookie.UTP, '', -1)
             GA.setEvents('window.Piano.register.mostrarBarreira', 'Exibicao Register', window.Piano.metricas.montaRotuloGA())
@@ -588,6 +590,7 @@ if(isAppIos && isValor ) false
                     Accept: 'application/json',
                 },
             })
+
                 .then((response) => response.json())
                 .then((respJson) => {
 
@@ -714,7 +717,6 @@ if(isAppIos && isValor ) false
                 if (window.Piano.util.isValor()) {
                     const valorBusiness = new ValorBusiness();
                     valorBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements);
-
                 } else {
                     const oGloboBusiness = new OGloboBusiness()
                     oGloboBusiness.verifyIfUserHasAccessOrDeferred(window.swgEntitlements)
