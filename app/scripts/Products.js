@@ -114,16 +114,12 @@ export default class Products {
         return this.getOldLogoutUrl()
     }
 
-    getLogoutUrlWithRedirectTo(redirectTo) {
-        return `${this.loginDomain}logout?url=${redirectTo}`
-    }
-
     getOidcLogoutUrl() {
         let str = ''
 
         if (this.serviceId){
             const encodedUrl = encodeURIComponent(`${this.getOidcLoginUrl()}`)     
-            str = `${this.oidcLoginDomain}logout?redirectTo=${encodedUrl}&sessionId=${LoginHelper.getCookie()}`
+            str = `${this.oidcLoginDomain}logout?sessionId=${LoginHelper.getCookie()}&redirectTo=${encodedUrl}`
         }
 
         return str

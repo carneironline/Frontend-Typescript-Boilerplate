@@ -25,6 +25,7 @@ if(!isAppIos) {
     console.table(process.env)
 
     LoginHelper.createSessionIdCookie()
+    LoginHelper.createTokenCookie()
     LoginHelper.ifContainsForceLogoutParamLogout()
 
     const Products = new ProductsModule()
@@ -506,6 +507,9 @@ if(!isAppIos) {
                     window.Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, ' ')
                 })
         },
+        async verificarAutorizacaoDeAcessoComToken(token){      
+            requestComFalha = this.fazRequisicaoBarramentoApiAutorizacaoAcessoV4(token)
+        },
         async verificarAutorizacaoDeAcesso(){      
 
             let accessToken = await this.getAccessToken()
@@ -762,10 +766,14 @@ if(!isAppIos) {
             return glbid !== ''
         },
         async verificaUsuarioLogadoNoBarramento(glbid, utp) {
+            const token = LoginHelper.getAcessCookie()
             const sessionId = LoginHelper.getCookie()
             const {isOidcLogin} = Products
 
-            if (sessionId && isOidcLogin){
+            if (token){
+                await window.Piano.xmlHttpRequest.verificarAutorizacaoDeAcessoComToken(token)
+            }
+            else if (sessionId && isOidcLogin){
                 await window.Piano.xmlHttpRequest.verificarAutorizacaoDeAcesso()
             }
             else if (isOidcLogin){

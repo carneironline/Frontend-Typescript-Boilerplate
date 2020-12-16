@@ -1,9 +1,12 @@
+import AdblockCpntTemplates from '../components/AdblockCpnt/templates'
 import Helpers from './Helpers'
-import Products from './Products'
 
 const SESSION_ID = 'SESSION_ID'
+const ACCESS_TOKEN = 'ACCESS_TOKEN'
 const FORCE_LOGOUT = 'forceLogout'
 const GLBID = 'GLBID'
+
+const ACCESS_TOKEN_PARAMETER = 'globo_id_token'
 
 export default class LoginHelper {
 
@@ -24,6 +27,28 @@ export default class LoginHelper {
         this.removeQueryFromUrl()
     }
 
+    static createTokenCookie(){
+        const tokenParameter = this.getAccessTokenParameter()
+        if (tokenParameter){
+            this.setAcessCookie(tokenParameter)
+        }
+    }
+
+    static getAccessTokenParameter(){
+        const urlParams = new URLSearchParams(window.location.search)
+        return urlParams.get(ACCESS_TOKEN_PARAMETER)
+    }
+
+    static setAcessCookie(value) {
+        console.log(value)
+        Helpers.setCookie(ACCESS_TOKEN, value, 1)
+        this.removeQueryFromUrl()
+    }
+
+    static getAcessCookie() {
+        return Helpers.getCookie(ACCESS_TOKEN)
+    }
+
     static getCookie(){
         return Helpers.getCookie(SESSION_ID)
     }
@@ -34,6 +59,7 @@ export default class LoginHelper {
 
         urlParams.delete(SESSION_ID)
         urlParams.delete(GLBID)
+        urlParams.delete(ACCESS_TOKEN_PARAMETER)
 
         const newUrl = `${urlParts[0]}?${urlParams.toString()}`
         window.history.pushState('object', document.title, newUrl);
@@ -50,7 +76,6 @@ export default class LoginHelper {
 
     static logout(){
         const sessionId = Helpers.getCookie(SESSION_ID)
-        
         if (sessionId){
             Helpers.deleteCookie(GLBID)
             Helpers.deleteCookie(SESSION_ID)
@@ -61,11 +86,10 @@ export default class LoginHelper {
             urlParams.delete(SESSION_ID)
             urlParams.delete(GLBID)
             urlParams.delete(FORCE_LOGOUT)
-    
+
             const newUrl = `${urlParts[0]}?${urlParams.toString()}`
-                
-            const logoutUrl = Products.getLogoutUrlWithRedirectTo(newUrl)
-            window.location.href = `${logoutUrl}`
+
+            window.location.href = `${newUrl}`
         }
     }
 }
