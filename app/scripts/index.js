@@ -405,7 +405,7 @@ if(!isAppIos) {
 
             const url =
                 window.Piano.configuracao.jsonConfiguracaoTinyPass[
-                    window.Piano.variaveis.getAmbientePiano()
+                    window.ambienteUtilizadoPiano
                 ].urlVerificaLeitor
 
             await fetch(url, {
@@ -580,7 +580,7 @@ if(!isAppIos) {
     
             const url =
                 window.Piano.configuracao.jsonConfiguracaoTinyPass[
-                    window.Piano.variaveis.getAmbientePiano()
+                    window.ambienteUtilizadoPiano
                 ].urlVerificaLeitorV4
     
             await fetch(url, {
