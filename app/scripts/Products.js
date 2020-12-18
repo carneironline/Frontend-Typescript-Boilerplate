@@ -1,4 +1,6 @@
 import productsId from '../mocks/products/products-id'
+import LoginHelper from './LoginHelper'
+
 
 export default class Products {
     constructor() {
@@ -112,16 +114,12 @@ export default class Products {
         return this.getOldLogoutUrl()
     }
 
-    getLogoutUrlWithRedirectTo(redirectTo) {
-        return `${this.loginDomain}logout?url=${redirectTo}`
-    }
-
     getOidcLogoutUrl() {
         let str = ''
 
         if (this.serviceId){
             const encodedUrl = encodeURIComponent(`${this.getOidcLoginUrl()}`)     
-            str = `${this.loginDomain}logout?url=${encodedUrl}`
+            str = `${this.oidcLoginDomain}logout?productName=${this.name}&sessionId=${LoginHelper.getCookie()}&redirectTo=${encodedUrl}`
         }
 
         return str

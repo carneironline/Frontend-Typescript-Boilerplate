@@ -29,6 +29,9 @@ if(isAppIos && isValor ) false
     console.table(process.env)
 
     LoginHelper.createSessionIdCookie()
+    LoginHelper.createTokenCookie()
+    LoginHelper.ifContainsForceLogoutParamLogout()
+    LoginHelper.ifDoesNotContainsGLOBOIDCookieLogout()
 
     const Products = new ProductsModule()
     const Tiny = new TinyModule()
@@ -407,7 +410,7 @@ if(isAppIos && isValor ) false
 
             const url =
                 window.Piano.configuracao.jsonConfiguracaoTinyPass[
-                    window.Piano.variaveis.getAmbientePiano()
+                    window.ambienteUtilizadoPiano
                 ].urlVerificaLeitor
 
             await fetch(url, {
@@ -510,7 +513,10 @@ if(isAppIos && isValor ) false
                     window.Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, ' ')
                 })
         },
-        async verificarAutorizacaoDeAcesso(){
+        async verificarAutorizacaoDeAcessoComToken(token){      
+            requestComFalha = this.fazRequisicaoBarramentoApiAutorizacaoAcessoV4(token)
+        },
+        async verificarAutorizacaoDeAcesso(){      
 
             let accessToken = await this.getAccessToken()
 
@@ -579,7 +585,7 @@ if(isAppIos && isValor ) false
 
             const url =
                 window.Piano.configuracao.jsonConfiguracaoTinyPass[
-                    window.Piano.variaveis.getAmbientePiano()
+                    window.ambienteUtilizadoPiano
                 ].urlVerificaLeitorV4
 
             await fetch(url, {
@@ -766,10 +772,14 @@ if(isAppIos && isValor ) false
             return glbid !== ''
         },
         async verificaUsuarioLogadoNoBarramento(glbid, utp) {
+            const token = LoginHelper.getAcessCookie()
             const sessionId = LoginHelper.getCookie()
             const {isOidcLogin} = Products
 
-            if (sessionId && isOidcLogin){
+            if (token){
+                await window.Piano.xmlHttpRequest.verificarAutorizacaoDeAcessoComToken(token)
+            }
+            else if (sessionId && isOidcLogin){
                 await window.Piano.xmlHttpRequest.verificarAutorizacaoDeAcesso()
             }
             else if (isOidcLogin){

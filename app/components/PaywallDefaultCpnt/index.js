@@ -58,6 +58,8 @@ class PaywallDefaultCpnt {
             evt.stopImmediatePropagation()
             
             Helpers.deleteCookie('GLBID')
+            Helpers.deleteCookie('SESSION_ID')
+            Helpers.deleteCookie('GLOBO_ID')
             Helpers.deleteCookie('_utp')
 
             setTimeout(() => {
