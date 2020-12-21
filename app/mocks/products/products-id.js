@@ -82,12 +82,12 @@ export default {
     'galileu': {
         'id': '6697',
         'cod_prod': 'galileu',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'epoca-negocios': {
         'id': '6611',
         'cod_prod': 'epoca-negocios',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'casa-e-jardim': {
         'id': '6619',
@@ -102,7 +102,7 @@ export default {
     'pegn': {
         'id': '6615',
         'cod_prod': 'pequenas-empresas',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'valor': {
         'id': '6668',
@@ -167,12 +167,12 @@ export default {
     'edigital-galileu': {
         'id': '6697',
         'cod_prod': 'galileu',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'edigital-epoca-negocios': {
         'id': '6611',
         'cod_prod': 'epoca-negocios',
-        'isOidcLogin': false
+        'isOidcLogin': true
     },
     'edigital-casa-e-jardim': {
         'id': '6619',
@@ -187,6 +187,6 @@ export default {
     'edigital-pegn': {
         'id': '6615',
         'cod_prod': 'pequenas-empresas',
-        'isOidcLogin': false
+        'isOidcLogin': true
     }
 }
