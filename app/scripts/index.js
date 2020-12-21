@@ -514,7 +514,7 @@ if(isAppIos && isValor ) false
                 })
         },
         async verificarAutorizacaoDeAcessoComToken(token){      
-            requestComFalha = this.fazRequisicaoBarramentoApiAutorizacaoAcessoV4(token)
+            this.fazRequisicaoBarramentoApiAutorizacaoAcessoV4(token)
         },
         async verificarAutorizacaoDeAcesso(){      
 
