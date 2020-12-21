@@ -72,7 +72,7 @@ export default {
     'globo-rural': {
         'id': '6621',
         'cod_prod': 'globo-rural',
-        'isOidcLogin': true
+        'isOidcLogin': false
     },
     'gq': {
         'id': '6622',
@@ -87,12 +87,12 @@ export default {
     'galileu': {
         'id': '6697',
         'cod_prod': 'galileu',
-        'isOidcLogin': true
+        'isOidcLogin': false
     },
     'epoca-negocios': {
         'id': '6611',
         'cod_prod': 'epoca-negocios',
-        'isOidcLogin': true
+        'isOidcLogin': false
     },
     'casa-e-jardim': {
         'id': '6619',
@@ -107,7 +107,7 @@ export default {
     'pegn': {
         'id': '6615',
         'cod_prod': 'pequenas-empresas',
-        'isOidcLogin': true
+        'isOidcLogin': false
     },
     'valor': {
         'id': '6668',
@@ -157,7 +157,7 @@ export default {
     'edigital-globo-rural': {
         'id': '6697',
         'cod_prod': 'globo-rural',
-        'isOidcLogin': true
+        'isOidcLogin': false
     },
     'edigital-gq': {
         'id': '6622',
@@ -172,12 +172,12 @@ export default {
     'edigital-galileu': {
         'id': '6697',
         'cod_prod': 'galileu',
-        'isOidcLogin': true
+        'isOidcLogin': false
     },
     'edigital-epoca-negocios': {
         'id': '6611',
         'cod_prod': 'epoca-negocios',
-        'isOidcLogin': true
+        'isOidcLogin': false
     },
     'edigital-casa-e-jardim': {
         'id': '6619',
@@ -192,6 +192,6 @@ export default {
     'edigital-pegn': {
         'id': '6615',
         'cod_prod': 'pequenas-empresas',
-        'isOidcLogin': true
+        'isOidcLogin': false
     }
 }
