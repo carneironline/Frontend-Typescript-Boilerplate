@@ -1,4 +1,6 @@
 import Helpers from './Helpers'
+import DeepBI from './DeepBI'
+import GAModule from './GA'
 
 export default class Piano {
     constructor() {
@@ -343,7 +345,7 @@ export default class Piano {
                     window.regrasTiny.fluxo = window.tpContext ? window.tpContext.toLowerCase() : '-'
                     window.regrasTiny.nomeExperiencia = window.nomeExperiencia ? window.nomeExperiencia : ''
                     window.Piano.metricas.setLimiteContagem(window.regrasTiny)
-                    
+
                     if (expirou === false)
                         window.tinyCpnt.GA.setEvents(
                             'executaAposPageview',
@@ -741,9 +743,10 @@ export default class Piano {
                     window.Piano.autenticacao.defineUsuarioPiano(true, 'autorizado', true, '')
 
                 } else {
-                    const glbid = Helpers.getCookie(window.Piano.variaveis.constante.cookie.GCOM) 
-                    || Helpers.getQuery('GLBID') 
-                    || Helpers.getQuery('glbid') 
+
+                    const glbid = Helpers.getCookie(window.Piano.variaveis.constante.cookie.GCOM)
+                    || Helpers.getQuery('GLBID')
+                    || Helpers.getQuery('glbid')
                     || ''
 
                     await window.Piano.autenticacao.verificaUsuarioLogadoNoBarramento(
@@ -754,7 +757,6 @@ export default class Piano {
 
                 window.Piano.regionalizacao.getRegion()
                 window.Piano.krux.obtemSegmentacao()
-
                 window.tp.push(['setCustomVariable', 'bannerContadorLigado', true])
                 window.Piano.util.isOrigemBuscador() || window.Piano.util.extraiParametrosCampanhaDaUrl()
                 window.tp.push(['addHandler', 'meterActive', window.Piano.util.callbackMeter,])
@@ -790,20 +792,21 @@ export default class Piano {
     }
 
     static loadPianoExperiences() {
-        const a = document.createElement('script')
-        a.type = 'text/javascript'
-        a.async = true
+        DeepBI.setSegmentations(() => {
+            const a = document.createElement('script')
+            const b = document.getElementsByTagName('script')[0]
+            let sandboxUrl = window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].urlSandboxPiano
 
-        if (window.Piano.util.isRevista() || window.Piano.util.isValor()) {
-            a.src = window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].urlSandboxPianoRevistas
-        } else {
-            a.src =
-                window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].urlSandboxPiano
-        }
+            a.type = 'text/javascript'
+            a.async = true
 
-        const b = document.getElementsByTagName('script')[0]
+            if (window.Piano.util.isRevista() || window.Piano.util.isValor())
+                sandboxUrl = window.Piano.configuracao.jsonConfiguracaoTinyPass[window.Piano.variaveis.getAmbientePiano()].urlSandboxPianoRevistas
 
-        b.parentNode.insertBefore(a, b)
+            a.src = sandboxUrl
+
+            b.parentNode.insertBefore(a, b)
+        })
     }
 
     checkPaywall(PianoResultEvents = null) {
