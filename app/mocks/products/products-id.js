@@ -5,7 +5,7 @@ export default {
         'isOidcLogin': false
     },
     'rio-gastronomia': {
-        'id': '3981',
+        'id': '6976',
         'cod_prod': 'OG03',
         'isOidcLogin': false
     },
