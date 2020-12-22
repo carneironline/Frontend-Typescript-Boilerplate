@@ -30,7 +30,6 @@ if(isAppIos && isValor ) false
 
     LoginHelper.createSessionIdCookie()
     LoginHelper.createTokenCookie()
-    LoginHelper.ifContainsForceLogoutParamLogout()
     LoginHelper.ifDoesNotContainsGLOBOIDCookieLogout()
 
     const Products = new ProductsModule()
@@ -514,7 +513,7 @@ if(isAppIos && isValor ) false
                 })
         },
         async verificarAutorizacaoDeAcessoComToken(token){      
-            requestComFalha = this.fazRequisicaoBarramentoApiAutorizacaoAcessoV4(token)
+            this.fazRequisicaoBarramentoApiAutorizacaoAcessoV4(token)
         },
         async verificarAutorizacaoDeAcesso(){      
 

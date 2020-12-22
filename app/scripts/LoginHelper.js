@@ -64,15 +64,6 @@ export default class LoginHelper {
         window.history.pushState('object', document.title, newUrl);
     }
 
-    static ifContainsForceLogoutParamLogout(){
-        const urlParams = new URLSearchParams(window.location.search)
-        const forceLogout = urlParams.get(FORCE_LOGOUT)
-
-        if (forceLogout === 'true'){
-            this.logout()
-        }
-    }
-
     static ifDoesNotContainsGLOBOIDCookieLogout(){
         const globoid = Helpers.getCookie(GLOBO_ID);
         if (!globoid){
