@@ -30,7 +30,6 @@ if(isAppIos && isValor ) false
 
     LoginHelper.createSessionIdCookie()
     LoginHelper.createTokenCookie()
-    LoginHelper.ifContainsForceLogoutParamLogout()
     LoginHelper.ifDoesNotContainsGLOBOIDCookieLogout()
 
     const Products = new ProductsModule()
