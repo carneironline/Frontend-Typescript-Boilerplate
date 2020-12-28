@@ -41,6 +41,13 @@ export default class Products {
             : false
     }
 
+    get isNewLoginService() {
+        return typeof productsId[this.name] !== 'undefined' &&
+            typeof productsId[this.name].isNewLoginService !== 'undefined'
+            ? productsId[this.name].isNewLoginService
+            : false
+    }
+
     get loginDomain() {
         const loginDomain = window.tinyCpnt.isProduction
             ? 'https://login.globo.com/'
@@ -86,7 +93,10 @@ export default class Products {
     getOidcLoginUrl() {
         let str = ''
 
-        if (this.serviceId) {
+        if (this.serviceId && this.isNewLoginService){
+            str = `${this.oidcLoginDomain}login?productName=${this.name}&redirectTo=${this.returnUrl}`
+        }
+        else if (this.serviceId) {
             str = `${this.oidcLoginDomain}login?productName=${this.name}&redirectTo=${this.returnUrl}&oldServiceId=${this.serviceId}`
         }
 
