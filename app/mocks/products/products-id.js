@@ -1,33 +1,33 @@
 export default {
     'oglobo': {
-        'id': '3981',
+        'id': '6907',
         'cod_prod': 'OG03',
-        'isOidcLogin': false,
-        'isNewLoginService': false
+        'isOidcLogin': true,
+        'isNewLoginService': true
     },
     'rio-gastronomia': {
         'id': '6976',
         'cod_prod': 'OG03',
         'isOidcLogin': false,
-        'isNewLoginService': true
+        'isNewLoginService': false
     },
     'blogs': {
-        'id': '3981',
+        'id': '6907',
         'cod_prod': 'OG03',
-        'isOidcLogin': false,
-        'isNewLoginService': false
+        'isOidcLogin': true,
+        'isNewLoginService': true
     },
     'kogut': {
-        'id': '3981',
+        'id': '6907',
         'cod_prod': 'OG03',
-        'isOidcLogin': false,
-        'isNewLoginService': false
+        'isOidcLogin': true,
+        'isNewLoginService': true
     },
     'blogAnalitico': {
-        'id': '3981',
+        'id': '6907',
         'cod_prod': 'OG03',
-        'isOidcLogin': false,
-        'isNewLoginService': false
+        'isOidcLogin': true,
+        'isNewLoginService': true
     },
     'acervo': {
         'id': '3981',
