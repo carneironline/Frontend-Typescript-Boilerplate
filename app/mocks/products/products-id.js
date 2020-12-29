@@ -6,10 +6,10 @@ export default {
         'isNewLoginService': true
     },
     'rio-gastronomia': {
-        'id': '6907',
+        'id': '6976',
         'cod_prod': 'OG03',
-        'isOidcLogin': true,
-        'isNewLoginService': true
+        'isOidcLogin': false,
+        'isNewLoginService': false
     },
     'blogs': {
         'id': '6907',
