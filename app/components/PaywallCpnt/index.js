@@ -2,6 +2,7 @@ import Products from '../../scripts/Products'
 import PaywallDefaultCpnt from '../PaywallDefaultCpnt'
 import BarberBarrier from '../BarberBarrier'
 import Tiny from '../../scripts/Tiny'
+import Helpers from '../../scripts/Helpers'
 
 class PaywallCpnt {
     constructor() {
@@ -75,14 +76,14 @@ class PaywallCpnt {
 
         checkLinkProps.forEach(prop => {
             pseudoVars.forEach(pseudoVar => {
-                if(window.glbPaywall[prop] === pseudoVar)
+                if (window.glbPaywall[prop] === pseudoVar)
                     window.glbPaywall[prop] = pseudoVar.includes('login') ? this.Products.getLoginUrl() : this.Products.getRegisterUrl()
             })
         })
 
-        checkBarberBarrierLinkProps.forEach(prop => { 
+        checkBarberBarrierLinkProps.forEach(prop => {
             pseudoVars.forEach(pseudoVar => {
-                if(window.glbPaywall.barberBarrier &&  window.glbPaywall.barberBarrier[prop] === pseudoVar)
+                if (window.glbPaywall.barberBarrier && window.glbPaywall.barberBarrier[prop] === pseudoVar)
                     window.glbPaywall.barberBarrier[prop] = pseudoVar.includes('login') ? this.Products.getLoginUrl() : this.Products.getRegisterUrl()
             })
         })
@@ -131,20 +132,21 @@ class PaywallCpnt {
 
         setTimeout(() => {
             if ((hasBarberBarrier && media) || hasOnlyBarberBarrier) {
-                this.componentActive = 'BarberBarrier' 
+                this.componentActive = 'BarberBarrier'
                 new BarberBarrier(this)
             } else {
                 this.componentActive = 'PaywallDefaultCpnt'
                 new PaywallDefaultCpnt(this)
             }
 
+            Helpers.deleteCookie('_utp')
             this.showConsole()
         }, delayTimer)
     }
 
     checksAdblockIsEnabled() {
         document.cookie = '__adblocker=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
-        
+
         const setNptTechAdblockerCookie = function (adblocker) {
             const d = new Date()
             d.setTime(d.getTime() + 60 * 60 * 24 * 2 * 1000)
@@ -156,7 +158,7 @@ class PaywallCpnt {
         script.setAttribute('async', true)
         script.setAttribute('src', 'https://www.npttech.com/advertising.js')
         script.setAttribute('onerror', 'setNptTechAdblockerCookie(true);')
-        
+
         document.getElementsByTagName('head')[0].appendChild(script)
     }
 }
