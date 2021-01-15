@@ -897,4 +897,3 @@ import AdblockCpnt from '../components/AdblockCpnt'
     }
 
     tinyInit()
- }
