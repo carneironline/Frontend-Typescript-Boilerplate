@@ -86,7 +86,7 @@ export default {
     'globo-rural': {
         'id': '6621',
         'cod_prod': 'globo-rural',
-        'isOidcLogin': true,
+        'isOidcLogin': false,
         'isNewLoginService': false
     },
     'gq': {
@@ -116,7 +116,7 @@ export default {
     'casa-e-jardim': {
         'id': '6619',
         'cod_prod': 'casa-jardim',
-        'isOidcLogin': true,
+        'isOidcLogin': false,
         'isNewLoginService': false
     },
     'quem-acontece': {
@@ -188,7 +188,7 @@ export default {
     'edigital-globo-rural': {
         'id': '6697',
         'cod_prod': 'globo-rural',
-        'isOidcLogin': true,
+        'isOidcLogin': false,
         'isNewLoginService': false
     },
     'edigital-gq': {
@@ -219,7 +219,7 @@ export default {
     'edigital-casa-e-jardim': {
         'id': '6619',
         'cod_prod': 'casa-jardim',
-        'isOidcLogin': true,
+        'isOidcLogin': false,
         'isNewLoginService': false
 
     },
