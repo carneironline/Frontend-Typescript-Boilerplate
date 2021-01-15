@@ -17,15 +17,6 @@ import BannerSubscribeHeader from '../components/BannerSubscribeHeader'
 import BannerCover from '../components/BannerCover'
 import AdblockCpnt from '../components/AdblockCpnt'
 
-// TODO | Paleativo para problema de barreira no App Ios
-const isAppIos = window.navigator.userAgent?.toLocaleLowerCase()?.includes('iphone')
-const isValor = window.nomeProdutoPiano === 'valor'
-
-
-if(isAppIos && isValor ) false
-
- else {
-
     console.table(process.env)
 
     LoginHelper.createSessionIdCookie()
@@ -512,10 +503,10 @@ if(isAppIos && isValor ) false
                     window.Piano.autenticacao.defineUsuarioPiano(true, 'erro', true, ' ')
                 })
         },
-        async verificarAutorizacaoDeAcessoComToken(token){      
+        async verificarAutorizacaoDeAcessoComToken(token){
             this.fazRequisicaoBarramentoApiAutorizacaoAcessoV4(token)
         },
-        async verificarAutorizacaoDeAcesso(){      
+        async verificarAutorizacaoDeAcesso(){
 
             let accessToken = await this.getAccessToken()
 
