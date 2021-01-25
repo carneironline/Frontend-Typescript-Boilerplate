@@ -4,9 +4,8 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
+    <title>Marketing Components</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'> -->
 
     <style>
         html,
@@ -17,163 +16,44 @@
         }
     </style>
 
-    <script>
-        window.nomeProdutoPiano = 'oglobo';
-        window.tipoConteudoPiano = 'materia';
-        window.ambienteUtilizadoPiano = 'int';
-
-        window.tinyCpnt = {
-            debug: {
-                tiny: true,
-                swg: true,
-                ga: true,
-                paywall: false
-            }
-        };
-
-        window.glbPaywallInline = {
-            title: 'Entenda os fatos com o Analítico, assine uma das nossas ofertas.',
-            subtitle: '',
-            showButton: false,
-            buttonText: 'EU QUERO',
-            buttonLink: 'https://ofertasglobo.oglobo.globo.com/garc/landing_oglobo_analitico/index.html?campanha=nao&utm_origem=siteoglobo&utm_midia=barreiraPaywall&utm_campanha=loginexclusivo_padrao_analitico&id_parc=6236&semtelaoferta=sim&url_retorno=',
-            loginPreText: 'Já possui cadastro? ',
-            loginText: 'Faça login ',
-            loginLink: 'https://login.globo.com/login/3981?url_retorno=' + encodeURIComponent(window.location.origin + window.location.pathname),
-            offerLink: "https://ofertasglobo.oglobo.globo.com/garc/landing_oglobo_analitico/index.html?campanha=nao&utm_origem=siteoglobo&utm_midia=barreiraPaywall&utm_campanha=loginexclusivo_padrao_analitico&id_parc=6236&semtelaoferta=sim&url_retorno=",
-            imageMobi: "https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/janeiro_2020/analitico/novo_analitico-mobi.jpg",
-            imageDesk: "https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/janeiro_2020/analitico/novo_analitico-desk.jpg",
-            imageLink: "https://ofertasglobo.oglobo.globo.com/garc/landing_oglobo_analitico/index.html?campanha=nao&utm_origem=siteoglobo&utm_midia=barreiraPaywall&utm_campanha=loginexclusivo_padrao_analitico&id_parc=6236&semtelaoferta=sim&url_retorno=" + encodeURIComponent(window.location.origin + window.location.pathname)
-        };
-
-        window.glbPaywall = {
-            title: 'Quer ler essa matéria? <br> Cadastre-se agora.',
-            loginPreText: 'Já é assinante?',
-            loginText: 'Faça seu login',
-            logoutText: 'Já é assinante? Faça login em outra conta.',
-            topMobi: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/banner_jornalismoSWG_mob.png',
-            topDesk: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/banner_jornalismoSWG_desk.png',
-            topLink: '@registerUrl', // PseudoVars '@loginUrl', '@registerUrl'
-            leftMobi: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/register_jornalismoSWG_mob_01.png',
-            leftDesk: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/register_jornalismoSWG_desk_01.png',
-            leftLink: encodeURIComponent(window.location.origin + window.location.pathname + '?ofertaSwg=sim'),
-            rightMobi: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/register_jornalismoSWG_mob_02.png',
-            rightDesk: 'https://s3.glbimg.com/v1/AUTH_65d1930a0bda476ba8d3c25c5371ec3f/piano/OGlobo/campanhas/agosto_2019/swg/register_jornalismoSWG_desk_02.png',
-            rightLink: 'https://assinatura.oglobo.globo.com/Default.aspx?id_parc=6236&cod_prod=3140&funcionalidade_id=3981&cod_produto=OG03&tipo_cliente_id=1&campanha=nao&semtelaoferta=sim&utm_origem=siteoglobo&utm_midia=barreiraPaywall&utm_campanha=register_swg&url_retorno=' + encodeURIComponent(window.location.origin + window.location.pathname),
-            middleText: 'Lorem ipsum dollor si amet',
-            middleTextLink: '//google.com',
-            swg: {
-                utms: [
-                { name: 'Campanha', value: 'register_swg' },
-                { name: 'Midia', value: 'barreiraPaywall' },
-                { name: 'Origem', value: 'siteoglobo' }
-                ]
-            },
-            barberBarrier: {
-                imageTop: 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/mobi/exclusivo-top_01.jpg',
-                urlTop: '@registerUrl',
-                imageBottom: 'https://s3.glbimg.com/v1/AUTH_7b0a6df49895459fbafe49a96fcb5bbf/tiny/mobi/b4_03.png',
-                urlBottom: '@loginUrl'
-            },
-            // only: 'barberBarrier',
-        };
-
-        window.glbAdblock = {
-            title: 'Pra que parar aqui?',
-            description: 'Temos uma oferta especial para você!',
-            btnText: 'APROVEITE',
-            btnUrl: '@loginUrl',
-            footerDescription: 'Ou desative seu bloqueador de anúncios e leia a matéria.',
-            footerTextBtn: 'Saiba mais',
-            footerTextBtnUrl: '//google.com',
-            ga: {
-                label: 'adblock - deslogado 90 - oferta - {Campanha}'
-            }
-        };
-
-        "use strict"; !function () { for (var t, e; !(t = window.document.getElementsByTagName("head")[0]);)window.document.getElementsByTagName("html")[0].appendChild(window.document.createElement("head")); "function" != typeof window.document.querySelectorAll && ((e = window.document.createElement("script")).type = "text/javascript", e.charset = "utf-8", e.setAttribute("crossorigin", "anonymous"), e.async = !0, e.src = (window.document.location.protocol || "http:") + "//api.deep.bi/v3/sizzle.js", t.appendChild(e)), (e = window.document.createElement("script")).type = "text/javascript", e.charset = "utf-8", e.setAttribute("crossorigin", "anonymous"), e.async = !0, e.src = (window.document.location.protocol || "http:") + "//api.deep.bi/v3/init.js", t.appendChild(e) }();
-
-
-    </script>
 </head>
 
 <body>
     index
 
-    <div>
-        <h3>Protected</h3>
-        <div class="inline-content">content inline</div>
-    </div>
-
-    <h3>Teste Componente BannerSubscribeHeader - Banner Assinatura Header</h3>
-    <div id="banner-assinatura-header" class="banner-assinatura-header"></div>
-
-    <h3>Teste Componente BannerCover - Banner Chamada de Capa</h3>
-    <div class="banner-cover-cpnt"></div>
-
-    <h3>Teste Analítico</h3>
-    <div id="testAnalytical">
-        <div class="main-content"></div>
-        <div class="post-footer">
-            <div class="btn-read-more"></div>
-        </div>
-    </div>
-
-    <h3>Teste Componente BannersConsumer</h3>
-    <div id="bannersConsumertests">
-        <div>
-            <div class="banner-consumer-cpnt" data-banner-consumer-name='banner-subscribe'></div>
-        </div>
-        <div class="banner-consumer-cpnt" data-banner-consumer-name='banner-whatever'></div>
-    </div>
-
-    <h3>Teste Componente SubscribeButton</h3>
-    <div>
-        <a class="subscribe-button subscribe-button-cpnt" data-subscribe-button-name='subscribe-button-one'
-        href="https://assinaturaglobo.globo.com/crescer/vitrine/crescer/?campanha=sim&amp;utm_source=sitecrescer&amp;utm_medium=botao&amp;utm_campaign=eg_cf_botao_topo_190-3meses"
-        title="Assine" rel="noopener" target="_blank">Assine</a>
-        <a href="https://assinaturaglobo.globo.com/crescer/vitrine/crescer/?campanha=sim&amp;utm_source=sitecrescer&amp;utm_medium=botao&amp;utm_campaign=eg_cf_botao_rodape_190-3meses"
-        title="Assine a revista" class="subscribe-magazine subscribe-button-cpnt"
-        data-subscribe-button-name='subscribe-button-two' rel="noopener" target="_blank">Assine a revista</a>
-    </div>
+    <a href="//google.com">BOTAO</a>
 
 
-    <script>
-        window.analiticoPost = document.querySelector('#testAnalytical')
+    <!-- CHAT -->
 
-        document.addEventListener('analyticalPostIsOpened', () => {
-            const postElement = window.analiticoPost;
-            if (!postElement) return null
-            const analyticalButton = postElement.querySelector('.btn-read-more')
 
-            analyticalButton.innerHTML = analyticalButton.dataset.open
-            postElement.querySelector('.article__content-container').classList.add('hidden-content')
-            analyticalButton.removeAttribute('disabled');
-        })
+    <!-- <% if (process.env.NODE_ENV==='production' ) { %>
+        <script type='text/javascript' src='https://c.la2-c1-ia2.salesforceliveagent.com/content/g/js/49.0/deployment.js'></script>
+        <script type='text/javascript'>
+            liveagent.init('https://d.la2-c1-ia2.salesforceliveagent.com/chat', '5721a000000GqxB', '00D1a000000aTyk');
+        </script>
 
-        document.addEventListener('analyticalPostIsLoading', () => {
-            const postElement = window.analiticoPost;
-            const analyticalButton = postElement.querySelector('.btn-read-more')
+        <script type="text/javascript">
+            if (!window._laq) { window._laq = []; }
+            window._laq.push(function () {
+                liveagent.showWhenOnline('5731a000000GrOU', document.getElementById('liveagent_button_online'));
+                liveagent.showWhenOffline('5731a000000GrOU', document.getElementById('liveagent_button_offline'));
+            });</script>
+        <% } else { %>
+            <script type='text/javascript'
+                src='https://c.la1-c1cs-ph2.salesforceliveagent.com/content/g/js/49.0/deployment.js'></script>
+            <script type='text/javascript'>
+                liveagent.init('https://d.la1-c1cs-ph2.salesforceliveagent.com/chat', '57263000000006Y', '00D630000008tdp');
+            </script>
 
-            analyticalButton.textContent = 'Carregando'
-            analyticalButton.setAttribute('disabled', 'disabled');
-        })
-
-        document.addEventListener('analyticalUnblockedForPiano', () => {
-            const postElement = window.analiticoPost;
-            if (!postElement) return null
-
-            const buttonElement = postElement.querySelector('.btn-read-more')
-            const hiddenContentElement = postElement.querySelector('.hidden-content')
-
-            buttonElement.removeAttribute('disabled');
-            buttonElement.innerHTML = buttonElement.dataset.close
-
-            if (hiddenContentElement)
-            hiddenContentElement.classList.remove('hidden-content')
-        })
-    </script>
-
+            <script type="text/javascript">
+                if (!window._laq) { window._laq = []; }
+                window._laq.push(function () {
+                    liveagent.showWhenOnline('5736300000000MH', document.getElementById('liveagent_button_online'));
+                    liveagent.showWhenOffline('5736300000000MH', document.getElementById('liveagent_button_offline'));
+                });</script>
+            <% } %>
+                END CHAT -->
 
 </body>
 

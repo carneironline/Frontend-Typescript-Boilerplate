@@ -5,8 +5,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const dotenv = require('dotenv')
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = (env, args) => {
+    const isDevelopment = args.mode === 'development'
     const localhostDomain = 'tinyjs.globoi.com'
     let currentEnv = args.qa ? 'qa' : args.mode
 
@@ -21,21 +24,56 @@ module.exports = (env, args) => {
     const dotEnvVars = Object.assign(dotEnvConfig.parsed, dotEnvParse)
 
     return {
-        entry: './app/scripts/index.js',
+        entry: './app/index.ts',
 
         output: {
-            filename: 'tiny.js',
-            path: path.resolve(__dirname, 'js'),
+            filename: 'LPHelpers.js',
+            path: path.resolve(__dirname, 'build'),
         },
 
         module: {
             rules: [
                 {
-                    test: /\.js$/,
+                    test: /\.tsx?$/,
+                    use: 'ts-loader',
                     exclude: /node_modules/,
-                    use: ['babel-loader'],
                 },
+
+                {
+                    test: /\.s(a|c)ss$/,
+                    exclude: /\.module.(s(a|c)ss)$/,
+                    loader: [
+                        'style-loader',
+                        'css-loader',
+
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                sourceMap: isDevelopment,
+                            },
+                        },
+                    ],
+                },
+
+                {
+                    test: /\.(svg|png|jpe?g|gif|ttf|eot|woff|woff2)$/i,
+                    loader: 'file-loader',
+                    options: {
+                        outputPath: 'assets',
+                        publicPath: 'assets',
+                        name(file) {
+                            return 'images/[name].[ext]'
+                        },
+                    },
+                },
+
             ],
+        },
+
+        resolve: {
+            extensions: ['.tsx', '.ts', '.js', '.scss'],
+            plugins: [new TsconfigPathsPlugin()]
+
         },
 
         devtool: 'inline-source-map',

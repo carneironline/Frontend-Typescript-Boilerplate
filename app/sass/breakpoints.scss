@@ -1,0 +1,30 @@
+
+/*
+|--------------------------------------------------------------------------
+| BREAKPOINTS
+|--------------------------------------------------------------------------
+*/
+
+// Usage example:  @media #{$media-tablet}
+
+
+$screen-sm: 'only screen and (max-width: 1023px)';
+$screen-lg: 'only screen and (min-width: 1024px)';
+$gutter: 20px;
+
+.is-hidden {
+    display: none !important;
+}
+
+.is-hidden-sm {
+    @media #{$screen-sm} {
+        display: none !important;
+    }
+}
+
+.is-hidden-lg {
+    @media #{$screen-sm} {
+        display: none !important;
+    }
+}
+
