@@ -19,4 +19,3 @@ window.LPHelpers = {
     chatCpnt: ChatCpnt
 }
 
-window.LPHelpers?.chatCpnt({ chatID: '5736300000000MH', bgColor: '#000', textColor: '#fcff2f' })
