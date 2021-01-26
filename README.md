@@ -1,5 +1,3 @@
-# README
-
 # Marketing Components
 
 Aplicação para gerar componentes usados pelo Marketing e Canais digitais nas landing Pages e aplicações similares.
