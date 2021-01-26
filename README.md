@@ -4,9 +4,8 @@ Aplicação para gerar componentes usados pelo Marketing e Canais digitais nas l
 
 ## Tecnologias
 
-Node
-
-Typescript
+- Node
+- Typescript
 
 ## Instalação
 
