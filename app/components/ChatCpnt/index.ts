@@ -1,4 +1,4 @@
-import { liveAgentInit } from './liveagent'
+import liveAgentInit from './liveagent'
 
 interface ChatCpnt {
     chatID: string;
@@ -9,6 +9,7 @@ interface ChatCpnt {
 let chatStatus: string = ''
 
 function ChatCpnt({ chatID, bgColor = '', textColor = '' }: ChatCpnt) {
+
     const classMain: string = 'chat-cpnt'
     const classAuxiliary: string = ''
 
@@ -20,7 +21,6 @@ function ChatCpnt({ chatID, bgColor = '', textColor = '' }: ChatCpnt) {
     }
 
     function checkChatObject() {
-        let count = 0
         let checkStatus: string = ''
 
         const online: any = document?.querySelector('#liveagent_button_online')
@@ -36,10 +36,11 @@ function ChatCpnt({ chatID, bgColor = '', textColor = '' }: ChatCpnt) {
     }
 
     function openChat() {
-        console.log('openChat')
+        if (chatStatus !== 'online') return null
 
-        // if (chatObject && status) chatObject?.startChat(chatID)
-
+        document.querySelector(`.${classMain}`)?.addEventListener('click', () => {
+            window.liveagent?.startChat(chatID)
+        })
     }
 
     function chatHtml() {
@@ -66,18 +67,22 @@ function ChatCpnt({ chatID, bgColor = '', textColor = '' }: ChatCpnt) {
     }
 
     function initChat() {
+        const hasChatActive = document.querySelector('.chat-cpnt')
+
+        if (hasChatActive) return null
+
         liveAgentInit(chatID, () => {
             checkChatObject()
 
-            if (chatStatus)
+            if (chatStatus) {
                 chatHtml()
+                openChat()
+            }
 
         })
     }
 
-    window.addEventListener("load", initChat);
-
-    // if (!chatObject && !status) return null
+    initChat()
 
 
 }

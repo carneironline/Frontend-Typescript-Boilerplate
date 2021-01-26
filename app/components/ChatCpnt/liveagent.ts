@@ -4,6 +4,7 @@ declare global {
             init: any;
             showWhenOnline: any;
             showWhenOffline: any;
+            startChat: any;
         };
         _laq: any;
     }
@@ -31,8 +32,6 @@ function liveAgentScript() {
 }
 
 function liveAgentInitChat() {
-
-
     if (window.liveagent) {
         if (process.env.NODE_ENV === 'production') {
             window.liveagent.init('https://d.la2-c1-ia2.salesforceliveagent.com/chat', '5721a000000GqxB', '00D1a000000aTyk');
@@ -55,7 +54,8 @@ function liveAgentActive(chatID: string) {
     });
 }
 
-export function liveAgentInit(chatID: string, callback: Function) {
+export default function liveAgentInit(chatID: string, callback: Function) {
+
     liveAgentAddHTML()
     liveAgentScript()
 
