@@ -34,7 +34,7 @@ Acesse a pasta js do vault e faça o upload do arquivo **LPHelpers.js** gerado p
 No html da página que irá utilizar o componente, basta chamar o script:
 
 ```jsx
-<script defer src="[https://s3.glbimg.com/v1/AUTH_d41344b67288452e8cf129d4d5f4447d/marketing/js/LPHelpers.js](https://s3.glbimg.com/v1/AUTH_d41344b67288452e8cf129d4d5f4447d/marketing/js/LPHelpers.js)"></script>
+<script defer src="https://s3.glbimg.com/v1/AUTH_d41344b67288452e8cf129d4d5f4447d/marketing/js/LPHelpers.js"></script>
 ```
 
 # Componentes
