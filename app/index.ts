@@ -18,4 +18,3 @@ window.LPHelpers = {
     addQueryOnLinks: AddQueryOnLinks,
     chatCpnt: ChatCpnt
 }
-

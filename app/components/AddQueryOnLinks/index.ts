@@ -31,26 +31,31 @@ function addQueryOnLinks(tagSearch = 'a') {
         return queries.join('&')
     }
 
-    document.querySelectorAll(tagSearch).forEach(function (element) {
-        let link = element.getAttribute("href");
-        console.log(link)
-        let isHttp = link?.includes("http") || link?.includes("//");
-        let classes = element.getAttribute("class");
-        let isInfracommerce = classes ? classes.includes("js-utm-is-us") : null;
+    function init() {
 
-        if (isHttp) {
-            let hasSearch = link?.includes("?");
-            let newUrl = '';
+        document.querySelectorAll(tagSearch).forEach(function (element) {
+            let link = element.getAttribute("href");
+            let isHttp = link?.includes("http") || link?.includes("//");
+            let classes = element.getAttribute("class");
+            let isInfracommerce = classes ? classes.includes("js-utm-is-us") : null;
 
-            if (isInfracommerce) {
-                newUrl = (hasSearch) ? `${link}&${queriesInfracommerce()}` : `${link}?${queriesInfracommerce()}`
-            } else {
-                newUrl = (hasSearch) ? `${link}&${queriesUrl()}` : `${link}?${queriesUrl()}`
+            if (isHttp) {
+                let hasSearch = link?.includes("?");
+                let newUrl = '';
+
+                if (isInfracommerce) {
+                    newUrl = (hasSearch) ? `${link}&${queriesInfracommerce()}` : `${link}?${queriesInfracommerce()}`
+                } else {
+                    newUrl = (hasSearch) ? `${link}&${queriesUrl()}` : `${link}?${queriesUrl()}`
+                }
+
+                element.setAttribute("href", newUrl)
             }
+        })
 
-            element.setAttribute("href", newUrl)
-        }
-    })
+    }
+
+    document.addEventListener('DOMContentLoaded', init)
 }
 
 export default addQueryOnLinks

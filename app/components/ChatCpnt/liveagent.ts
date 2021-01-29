@@ -60,13 +60,20 @@ export default function liveAgentInit(chatID: string, callback: Function) {
     liveAgentScript()
 
     liveAgentChecker((active: boolean) => {
+        let count = 0
+
         liveAgentInitChat()
         liveAgentActive(chatID)
 
-        setTimeout(() => {
+        const interval = setInterval(() => {
             if (active)
                 callback(active)
-        }, 1000);
+
+            if (count === 30)
+                clearInterval(interval)
+
+            count++
+        }, 100);
 
     })
 
@@ -84,7 +91,7 @@ function liveAgentChecker(callback: Function) {
             clearInterval(interval)
         }
 
-        if (count === 10) {
+        if (count === 30) {
             if (callback)
                 callback(false)
 

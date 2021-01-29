@@ -36,9 +36,15 @@ function ChatCpnt({ chatID, bgColor = '', textColor = '' }: ChatCpnt) {
     }
 
     function openChat() {
+        const element = document.querySelector(`.${classMain}`)
+
+        setTimeout(() => {
+            element?.classList.add('is-active')
+        }, 500);
+
         if (chatStatus !== 'online') return null
 
-        document.querySelector(`.${classMain}`)?.addEventListener('click', () => {
+        element?.addEventListener('click', () => {
             window.liveagent?.startChat(chatID)
         })
     }
@@ -66,7 +72,7 @@ function ChatCpnt({ chatID, bgColor = '', textColor = '' }: ChatCpnt) {
         insertHTML(html)
     }
 
-    function initChat() {
+    function init() {
         const hasChatActive = document.querySelector('.chat-cpnt')
 
         if (hasChatActive) return null
@@ -82,9 +88,7 @@ function ChatCpnt({ chatID, bgColor = '', textColor = '' }: ChatCpnt) {
         })
     }
 
-    initChat()
-
-
+    document.addEventListener('DOMContentLoaded', init)
 }
 
 export default ChatCpnt
