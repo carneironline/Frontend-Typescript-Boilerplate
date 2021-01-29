@@ -88,7 +88,7 @@ function ChatCpnt({ chatID, bgColor = '', textColor = '' }: ChatCpnt) {
         })
     }
 
-    document.addEventListener('DOMContentLoaded', init)
+    init()
 }
 
 export default ChatCpnt
