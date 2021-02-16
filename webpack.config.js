@@ -10,7 +10,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = (env, args) => {
     const isDevelopment = args.mode === 'development'
-    const localhostDomain = 'marketing-components.globoi.com'
+    const localhostDomain = 'localhost.frontend'
     let currentEnv = args.qa ? 'qa' : args.mode
 
     currentEnv = args.staging ? 'staging' : currentEnv
